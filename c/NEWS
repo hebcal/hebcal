@@ -3,4 +3,7 @@ Changes since 3.3b10
     per suggestion & Ambrose C. Li's and Norman Abramovitz's 
     suggestions
 
+- Fixed bug 895450: certain out of range years were causing segfaults.
+
+- Preliminary implementation of the -f FORMAT option
 
