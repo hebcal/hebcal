@@ -1,6 +1,9 @@
 /* optarg - parse command-line arguments - changed to Optarg for portability */
 /* Author: AT&T */
 
+/** NOTE: This is slated for destruction.  we're going to go to GNU-style args soon */
+
+
 #include <stdio.h>
 #include "mystring.h"
 

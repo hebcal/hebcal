@@ -36,8 +36,7 @@
 
 /* Some generally useful routines */
 
-void 
-initStr( char **s, size_t size )
+void initStr( char **s, size_t size )
 {
     /* allocate space for a string */
     if ((*s = (char *) malloc ((size + 1) * sizeof (char))) == NULL)

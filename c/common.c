@@ -164,67 +164,65 @@ int lookup_hebrew_month( const char *s )
 /* 
    returns day of week, hours and chalakim of specified molad.
  */
-molad_t 
-molad (year, m)
-     int year, m;
+molad_t molad( int year, int m)
 {
-  molad_t retMolad;
-
-  long yearl, m_elapsed, p_elapsed, h_elapsed, parts;
-
-  yearl = (long) year;
-  m_elapsed = (long) m +
-    235L * ((yearl - 1L) / 19L) +
+    molad_t retMolad;
+    
+    long yearl, m_elapsed, p_elapsed, h_elapsed, parts;
+    
+    yearl = (long) year;
+    m_elapsed = (long) m +
+        235L * ((yearl - 1L) / 19L) +
     12L * ((yearl - 1L) % 19) +
-    ((((yearl - 1L) % 19L) * 7) + 1L) / 19L;
+        ((((yearl - 1L) % 19L) * 7) + 1L) / 19L;
 
-  p_elapsed = 204L + (793L * (m_elapsed % 1080));
+    p_elapsed = 204L + (793L * (m_elapsed % 1080));
 
-  h_elapsed = 5L + (12L * m_elapsed) +
-    793L * (m_elapsed / 1080L) +
-    p_elapsed / 1080L;
+    h_elapsed = 5L + (12L * m_elapsed) +
+        793L * (m_elapsed / 1080L) +
+        p_elapsed / 1080L;
+    
+    parts = (p_elapsed % 1080) + 1080 * (h_elapsed % 24);
 
-  parts = (p_elapsed % 1080) + 1080 * (h_elapsed % 24);
-
-  retMolad.day = 1L + 29L * m_elapsed + h_elapsed / 24L;
-  retMolad.hour = (int) (h_elapsed % 24L);
-  retMolad.chalakim = (int) (parts % 1080L);
-
-  return retMolad;
+    retMolad.day = 1L + 29L * m_elapsed + h_elapsed / 24L;
+    retMolad.hour = (int) (h_elapsed % 24L);
+    retMolad.chalakim = (int) (parts % 1080L);
+    
+    return retMolad;
 
 }
 #endif
 
 
-date_t abs2hebrew (long int d)
+date_t abs2hebrew( long d )
 {
-  static int mmap[] =
-  {9, 10, 11, 12, 1, 2, 3, 4, 7, 7, 7, 8};
-  date_t hebdate, gregdate;
-  int day, month, year;
+    static int mmap[] =
+        {9, 10, 11, 12, 1, 2, 3, 4, 7, 7, 7, 8};
+    date_t hebdate, gregdate;
+    int day, month, year;
+    
+    gregdate = abs2greg (d);
+    hebdate.dd = 1;
+    hebdate.mm = 7;
+    month = mmap[gregdate.mm - 1];
+    year = 3760 + gregdate.yy;
+    
+    while (hebdate.yy = year + 1,
+           d >= hebrew2abs (hebdate))
+        year++;
+    
+    while (hebdate.mm = month,
+           hebdate.dd = max_days_in_heb_month (month, year),
+           hebdate.yy = year,
+           d > hebrew2abs (hebdate))
+        month = (month % MONTHS_IN_HEB (year)) + 1;
 
-  gregdate = abs2greg (d);
-  hebdate.dd = 1;
-  hebdate.mm = 7;
-  month = mmap[gregdate.mm - 1];
-  year = 3760 + gregdate.yy;
-
-  while (hebdate.yy = year + 1,
-	 d >= hebrew2abs (hebdate))
-    year++;
-
-  while (hebdate.mm = month,
-	 hebdate.dd = max_days_in_heb_month (month, year),
-	 hebdate.yy = year,
-	 d > hebrew2abs (hebdate))
-    month = (month % MONTHS_IN_HEB (year)) + 1;
-
-  hebdate.dd = 1;
-
-  day = (int) (d - hebrew2abs (hebdate) + 1L);
-  hebdate.dd = day;
-
-  return hebdate;
+    hebdate.dd = 1;
+    
+    day = (int) (d - hebrew2abs (hebdate) + 1L);
+    hebdate.dd = day;
+    
+    return hebdate;
 }
 
 
@@ -305,11 +303,11 @@ int days_in_heb_year( int year )
 /* true if Cheshvan is long in hebrew YEAR */
 int long_cheshvan( int year ) 
 {
-  return ((days_in_heb_year (year) % 10) == 5);
+    return ((days_in_heb_year (year) % 10) == 5);
 }
 
 /* true if Cheshvan is long in hebrew YEAR */
 int short_kislev( int year ) 
 {
-  return ((days_in_heb_year (year) % 10) == 3);
+    return ((days_in_heb_year (year) % 10) == 3);
 }
