@@ -45,6 +45,7 @@ int
   israel_sw, latlong_sw, printOmer_sw, sedraAllWeek_sw, sedrot_sw, noGreg_sw,
   printHebDates_sw, printSomeHebDates_sw, noHolidays_sw, tabs_sw, weekday_sw,  suppress_rosh_chodesh_sw,
   yearDigits_sw, yahrtzeitFile_sw, DST_scheme, DST_value;
+int iso8859_8_sw;
 long beginOmer, endOmer;
 extern hmonths_t hMonths;
 FILE *inFile, *yFile;
@@ -357,7 +358,9 @@ main_calendar (todayAbs, endAbs)
 	  if (NULL != s)
 	    {
 	      PrintGregDate (todayGreg);
-	      printf ("%s %s\n", ashkenazis_sw ? "Parshas" : "Parashat",
+	      printf ("%s %s\n",
+		      iso8859_8_sw ? "\364\370\371\372" :
+		      ashkenazis_sw ? "Parshas" : "Parashat",
 		      s);
 	    }
 	}

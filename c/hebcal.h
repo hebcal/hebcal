@@ -42,11 +42,13 @@
 #define LEAP_YR_HEB(x) ((1L + (long)(x)* 7L) % 19L < 7L ? 1 : 0)
 #define MONTHS_IN_HEB(x) (LEAP_YR_HEB(x) ? 13 :12)
 #define LANGUAGE(str) (ashkenazis_sw && (str)[1] ? ((str)[1]) : ((str)[0]))
+#define LANGUAGE2(str) (iso8859_8_sw && (str)[2] ? ((str)[2]) : (ashkenazis_sw && (str)[1] ? ((str)[1]) : ((str)[0])))
 
 extern FILE *inFile, *yFile;
 
 extern int DST_scheme,
    ashkenazis_sw, 
+   iso8859_8_sw,
    candleLighting_sw, 
    euroDates_sw,
    hebrewDates_sw,
@@ -87,7 +89,7 @@ typedef struct {
 #define YOM_TOV_ENDS 4
 typedef struct hinode{   /* holiday input structure */
    date_t date;
-   char *(name[2]);
+   char *(name[3]);
    int typeMask;
    struct hinode *next;
 } holinput_t, *holinputp_t;

@@ -432,12 +432,15 @@ void
 
    Getopt(argc, argv, "", 1);
    while (EOF !=
-	(option = Getopt(argc, argv, "acC:dDehHI:il:L:m:orsStTwxyY:z:Z:", 0)))
+	(option = Getopt(argc, argv, "acC:dDehHI:il:L:m:orsStTwxyY:z:Z:8", 0)))
    {
       switch ((char) option)
       {
 	case 'a':		/* ashkenazis hebrew */
 	   ashkenazis_sw = 1;
+	   break;
+	case '8':		/* ashkenazis hebrew */
+	   iso8859_8_sw = 1;
 	   break;
 	case 'c':		/* calculate candlelighting times on fridays */
 	   candleLighting_sw = 1;
