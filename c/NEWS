@@ -1,5 +1,5 @@
 Changes in 3.4-beta3
-- removed reference to NAN in the code.  Anybody know why slackware might not have it?
+- removed reference to NAN in the code.  It's a silly idea.
 - taught autoconf how to find libm.
 - various other autoconf/automake tricks, like "make check" from another directory
 

@@ -18,5 +18,6 @@
 ## Process this file with automake to produce Makefile.in.
 
 info_TEXINFOS = hebcal.texi
+EXTRA_DIST = gpl.texi
 
 MAINTAINERCLEANFILES = hebcal.info
