@@ -205,7 +205,7 @@ city_t cities[] =
    {"Hawaii", 19, 30, 155, 30, -10, DST_USOFA},
    {"Houston", 29, 46, 95, 22, -6, DST_USOFA},
    {"Jerusalem", 31, 47, -35, -14, 2, DST_ISRAEL},
-   {"Johannesburg", -28, -3, -26, -12, 1, DST_NONE},
+   {"Johannesburg", -26, -10, -28, -2, 2, DST_NONE},
    {"Kiev", 50, 28, -30, -29, 2, DST_EU},
    {"La Paz", -16, -30, 68, 9, -4, DST_NONE},
    {"London", 51, 30, 0, 10, 0, DST_EU},

@@ -22,6 +22,7 @@ CHANGES since version 3.2
      Tel Aviv, Tiberias
    - Added cities: Kiev, La Paz, Montreal, Moscow, Paris, Saint Petersburg
    - "hebcal cities" prints out lat/long and time zone offset from GMT.
+   - Corrected time zone for Johannesburg
 
 CHANGES since version 3.0b
    - Shabbat starts 40 minutes before sundown in Jerusalem.
