@@ -1,5 +1,5 @@
 Changes in 3.4-beta2
-- fixed massive distribution error
+- fixed massive distribution error, which left the source missing three .h files.
 - factored out cities into cities.h
 
 Changes in 3.4-beta1
