@@ -9,7 +9,6 @@
 #define __COMMON__
 
 #include "greg.h"
-#include "proto.h"
 
 #define NISAN 1
 #define IYYAR 2
@@ -27,7 +26,7 @@
 
 typedef struct hmonth 
 {
-   const char *(name[3]);
+    const char *(name[3]);
 } hmonth_t;
 
 typedef hmonth_t hmonths_t [][15];
@@ -35,9 +34,9 @@ typedef hmonth_t hmonths_t [][15];
 extern hmonths_t hMonths;
 
 typedef struct molad {
-   long int day;
-   int hour, chalakim;
-   } molad_t;
+    long int day;
+    int hour, chalakim;
+} molad_t;
 
 molad_t molad(int, int);
 date_t abs2hebrew(long);

@@ -42,8 +42,8 @@
 #define ENV_CITY "HEBCAL_CITY"
 #define ENV_OPTS "HEBCAL_OPTS"
 
-void handleArgs PROTO((int, char **));
-int main PROTO((int, char **));
+void handleArgs( int, char ** );
+int main( int, char ** );
 int ok_to_run = 1;
 
 #define YEAR 0
@@ -234,8 +234,7 @@ city_t cities[] =
 };
 
 
-void
-  print_version_data(void)
+void print_version_data(void)
 {
    printf("hebcal version " VERSION "\n");
    printf("=====Defaults=====\n");
@@ -252,75 +251,48 @@ void
 
 #define LIC_LEN 269
 #define WAR_LEN 26
-void
-  print_warranty( void )
-{
-
-   int cnum;
-   char dummy[10];
-
-   for (cnum = 0;
-	cnum < WAR_LEN;
-	cnum++)
-   {
-      puts(warranty[cnum]);
-      if (0 == (cnum + 2) % SCREEN_HEIGHT)
-      {
-	 printf(" ---MORE---    Hit Enter To Continue....");
-	 fgets(&dummy[0], 10, stdin);
-      }
-   }
-}
-
-void
-  print_copying( void )
-{
-
-   int cnum;
-   char dummy[10];
-
-   for (cnum = 0;
-	cnum < LIC_LEN;
-	cnum++)
-   {
-      puts(license[cnum]);
-      if (0 == (cnum + 2) % SCREEN_HEIGHT)
-      {
-	 printf(" ---MORE---    Hit Enter To Continue....");
-	 fgets(&dummy[0], 10, stdin);
-      }
-   }
-   for (cnum = 0;
-	cnum < WAR_LEN;
-	cnum++)
-   {
-      puts(warranty[cnum]);
-      if (0 == (cnum + 2) % SCREEN_HEIGHT)
-      {
-	 printf(" ---MORE---    Hit Enter To Continue....");
-	 fgets(&dummy[0], 10, stdin);
-      }
-   }
-}
-
-void print_city_data( void )
+void print_warranty( void )
 {
 
     int cnum;
     char dummy[10];
     
     for (cnum = 0;
-         cities[cnum].name;
+         cnum < WAR_LEN;
+         cnum++)
+    {
+        puts(warranty[cnum]);
+        if (0 == (cnum + 2) % SCREEN_HEIGHT)
+        {
+            printf(" ---MORE---    Hit Enter To Continue....");
+            fgets(&dummy[0], 10, stdin);
+        }
+    }
+}
+
+void print_copying( void )
+{
+
+    int cnum;
+    char dummy[10];
+    
+    for (cnum = 0;
+         cnum < LIC_LEN;
+         cnum++)
+    {
+        puts(license[cnum]);
+        if (0 == (cnum + 2) % SCREEN_HEIGHT)
+        {
+            printf(" ---MORE---    Hit Enter To Continue....");
+            fgets(&dummy[0], 10, stdin);
+        }
+    }
+
+    for (cnum = 0;
+         cnum < WAR_LEN;
          cnum++)
    {
-       printf("%s (%dd%d' %c lat, %dd%d' %c long, GMT %s%d:00)\n",
-              cities[cnum].name,
-              abs(cities[cnum].latdeg), abs(cities[cnum].latmin),
-              cities[cnum].latdeg < 0 ? 'S' : 'N',
-              abs(cities[cnum].longdeg), abs(cities[cnum].longmin),
-              cities[cnum].longdeg > 0 ? 'W' : 'E',
-              cities[cnum].TZ < 0 ? "" : "+", cities[cnum].TZ
-           );
+       puts(warranty[cnum]);
        if (0 == (cnum + 2) % SCREEN_HEIGHT)
        {
            printf(" ---MORE---    Hit Enter To Continue....");
@@ -329,7 +301,33 @@ void print_city_data( void )
    }
 }
 
-void print_DST_data()
+void print_city_data( void )
+{
+    
+    int cnum;
+    char dummy[10];
+    
+    for (cnum = 0;
+         cities[cnum].name;
+         cnum++)
+    {
+        printf("%s (%dd%d' %c lat, %dd%d' %c long, GMT %s%d:00)\n",
+              cities[cnum].name,
+               abs(cities[cnum].latdeg), abs(cities[cnum].latmin),
+               cities[cnum].latdeg < 0 ? 'S' : 'N',
+               abs(cities[cnum].longdeg), abs(cities[cnum].longmin),
+               cities[cnum].longdeg > 0 ? 'W' : 'E',
+               cities[cnum].TZ < 0 ? "" : "+", cities[cnum].TZ
+            );
+        if (0 == (cnum + 2) % SCREEN_HEIGHT)
+        {
+            printf(" ---MORE---    Hit Enter To Continue....");
+            fgets(&dummy[0], 10, stdin);
+        }
+    }
+}
+
+void print_DST_data(void)
 {
     
     int cnum;

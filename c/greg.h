@@ -4,8 +4,6 @@
 #ifndef __GREG__
 #define __GREG__
 
-#include "proto.h"
-
 #define LEAP(x) (!((x) % 4) && ( ((x) % 100) || !((x) % 400)))
 #define DAYS_IN(x) (LEAP((x))?366:365)
 

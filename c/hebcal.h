@@ -33,7 +33,6 @@
 #include "stdio.h"
 #include "greg.h"
 #include "myerror.h"
-#include "proto.h"
 
 #ifndef ENV_CITY_STR
 #define ENV_CITY_STR "HC_CITY"
@@ -104,20 +103,20 @@ typedef struct hsnode{  /* holiday storage structure */
    struct hsnode *next;
 } holstore_t, *holstorep_t;
 
-year_t yearData PROTO((int));
-date_t nextHebDate PROTO((date_t));
-date_t prevHebDate PROTO((date_t));
-struct hsnode *getHolstorep PROTO((void));
-int PushHoliday PROTO((struct hsnode *, struct hsnode **));
-void init_holidays PROTO((int));
-int getHebHolidays PROTO((date_t, struct hsnode **));
-void incHebGregDate PROTO((date_t *, date_t *,long *,int *,year_t *));
-void PrintGregDate PROTO((date_t));
-void main_calendar PROTO((long,long));
-void print_candlelighting_times PROTO((int, int, date_t, int));
-void reset_Omer PROTO(( int hYear));
+year_t yearData( int );
+date_t nextHebDate( date_t );
+date_t prevHebDate( date_t );
+struct hsnode *getHolstorep( void );
+int PushHoliday( struct hsnode *, struct hsnode ** );
+void init_holidays( int );
+int getHebHolidays( date_t, struct hsnode ** );
+void incHebGregDate( date_t *, date_t *,long *,int *,year_t * );
+void PrintGregDate( date_t );
+void main_calendar( long,long );
+void print_candlelighting_times( int, int, date_t, int );
+void reset_Omer( int hYear );
 
-extern char * license[];
-extern char * warranty[];
+extern const char * license[];
+extern const char * warranty[];
 #endif
 

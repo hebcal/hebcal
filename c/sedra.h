@@ -4,7 +4,7 @@
 #ifndef __SEDRA__
 #define __SEDRA__
 
-char *sedra PROTO(( long int absDate ));
-void reset_sedra PROTO(( int ));
+char *sedra( long int absDate );
+void reset_sedra( int );
 
 #endif

@@ -39,16 +39,15 @@
 void 
 initStr( char **s, size_t size )
 {
-  /* allocate space for a string */
-  if ((*s = (char *) malloc ((size + 1) * sizeof (char))) == NULL)
-      die ("\n Memory Error: Couldn't allocate string", "");
-  **s = '\0';
+    /* allocate space for a string */
+    if ((*s = (char *) malloc ((size + 1) * sizeof (char))) == NULL)
+        die ("\n Memory Error: Couldn't allocate string", "");
+    **s = '\0';
 }
 
 /* istrncasecmp performs a signed, case-insensitive comparison
    of s1 to s2, for a maximum length of n  bytes. */
-int 
-istrncasecmp( size_t n, const char *s1, const char *s2 )
+int istrncasecmp( size_t n, const char *s1, const char *s2 )
 {
     for (;
          n > 0 &&			/* while not at end of string */
@@ -78,8 +77,7 @@ int lookup_string (const char *str, const char *arr[], int size, int len)
 
 
 
-int 
-isAllNums ( const char *s )
+int isAllNums ( const char *s )
 {
 
 /* returns true if a string contains only digits */
@@ -112,10 +110,9 @@ const char *
     }
 }
 
-char *
-    hc_itoa (int i)
+char * hc_itoa (int i)
 {
-    static char ret[7];
+    static char ret[7];         /* FIX: eeeviiill */
     sprintf (ret, "%d", i);
     return ret;
 }

@@ -61,7 +61,7 @@
 
 int latdeg, latmin, longdeg, longdeg, longmin, TZ;
 
-int myclock = TWELVE;		/* Chooses a 12 hour clock */
+int myclock = TWELVE;           /* Chooses a 12 hour clock */
 
 /*
  * lambda = longitude
@@ -84,10 +84,10 @@ int myclock = TWELVE;		/* Chooses a 12 hour clock */
 
 
 /* like I really care where PI is defined.  -djs*/
-#ifdef PI		
+#ifdef PI               
 #undef PI
 #endif
-#define	PI 3.14159265358979323846
+#define PI 3.14159265358979323846
 
 #define TODEC(a, b) ((double)a + (double)b/60.0)
 #define DEGRAD (PI/180.0)
@@ -191,7 +191,7 @@ int one_time (day, tval, lo_hr, is_rise, cos_z, cos_phi, sin_phi)
 
   a_hr = a / 15.0;
   sin_del = E * sin (DEGRAD * xl);
-  cos_del = sqrt (1.0 - sin_del * sin_del);	/* cos delta must ALWAYS be >0 */
+  cos_del = sqrt (1.0 - sin_del * sin_del);     /* cos delta must ALWAYS be >0 */
   h = (cos_z - sin_del * sin_phi) / (cos_del * cos_phi);
 
   if (fabs (h) > 1.0)
@@ -200,7 +200,7 @@ int one_time (day, tval, lo_hr, is_rise, cos_z, cos_phi, sin_phi)
   h = RADDEG * acos (h);
 
   if (is_rise)
-    h = 360.0 - h;		/* Puts sunrise in correct quadrant */
+    h = 360.0 - h;              /* Puts sunrise in correct quadrant */
   h_hr = h / 15.0;
   *tval = h_hr + a_hr + ADJ (t) + lo_hr + TZ;
 
@@ -229,7 +229,7 @@ timeadj (prefixStr, tval, minadj, dayadj)
       tval += 24.0;
       *dayadj -= 1;
     }
-  hour = (int) tval;		/* Type conversion causes truncation */
+  hour = (int) tval;            /* Type conversion causes truncation */
   min = (int) ((tval - (double) hour) * 60.0 + 0.5);
   if (min >= 60)
     {
@@ -241,7 +241,7 @@ timeadj (prefixStr, tval, minadj, dayadj)
       hour -= 24;
       *dayadj += 1;
     }
-  if (myclock == TWELVE)	/* Check for 12 hour clock */
+  if (myclock == TWELVE)        /* Check for 12 hour clock */
     if (hour > 12)
       hour -= 12;
 

@@ -5,8 +5,6 @@
 #ifndef __RISE__
 #define __RISE__
 
-#include "proto.h"
-
 #define NORMAL     0
 #define NO_SUNSET  1
 #define NO_SUNRISE 2
@@ -23,8 +21,8 @@
 #define TWELVE 1
 #define TWENTYFOUR 0
 
-int suntime PROTO((double *, double *, int, int, int));
-int one_time PROTO((int, double *, double, int, double, double, double));
-char *timeadj PROTO((char *, double, int, int *));
+int suntime(double *, double *, int, int, int);
+int one_time(int, double *, double, int, double, double, double);
+char *timeadj (char *, double, int, int *);
 
 #endif

@@ -16,14 +16,14 @@
 CITY = NEW_YORK
 
 #if you run into compilation problems, try changing the cc to gcc
-CC = cc
+CC = gcc
 
 VERSION = 3.3beta7
 
 #there is no need to change anything below this line
 #-----------------------------------------------------------------
 
-#CFLAGS =  -O 
+CFLAGS =  -Wall
 LDFLAGS = -lm
 
 OBJ = start.o hebcal.o greg.o error.o danlib.o mygetopt.o rise.o \
@@ -34,7 +34,7 @@ CFILES = common.c danlib.c error.c mygetopt.c greg.c hebcal.c\
 
 HFILES = common.h danlib.h myerror.h mygetopt.h\
         greg.h hebcal.h mymath.h mystring.h mytime.h mystdio.h\
-	rise.h sedra.h proto.h
+	rise.h sedra.h 
 
 FILES = $(CFILES) $(HFILES) Makefile hebcal.1  Manual Manual.html \
 	README hebcal.dsw hebcal.dsp
@@ -46,24 +46,24 @@ hebcal:  $(OBJ)
 rise.c:	rise.h 
 
 hebcal.o:	hebcal.h common.h danlib.h myerror.h rise.h greg.h\
-                   proto.h sedra.h hebcal.c
+                    sedra.h hebcal.c
 
 sedra.o:	 sedra.h hebcal.h sedra.c
 
 gnu.o:		 gnu.c
 
-greg.o:		 greg.h myerror.h proto.h greg.c mytime.h mystring.h
+greg.o:		 greg.h myerror.h  greg.c mytime.h mystring.h
 
-error.o:	 myerror.h proto.h error.c
+error.o:	 myerror.h error.c
 
-danlib.o:	 danlib.h proto.h myerror.h  danlib.c
+danlib.o:	 danlib.h myerror.h  danlib.c
 
 mygetopt.o:	 mygetopt.h mygetopt.c
 
-common.o:	 common.h greg.h hebcal.h proto.h myerror.h common.c
+common.o:	 common.h greg.h hebcal.h myerror.h common.c
 
 start.o:	 start.c hebcal.h common.h mygetopt.h danlib.h greg.h myerror.h\
-                   proto.h mystring.h mymath.h Makefile
+                   mystring.h mymath.h Makefile
 	 $(CC) $(CFLAGS) -c start.c -o start.o -DCITY='"$(CITY)"' -DVERSION='"$(VERSION)"'
 
 print:	$(FILES) hebcal.1 Manual

@@ -44,20 +44,20 @@
 
 const char *eMonths[] =
 {
-  "UNUSED",
-  "January", "February", "March", "April", "May", "June", "July",
-  "August", "September", "October", "November", "December"
+    "UNUSED",
+    "January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"
 };
 
 int MonthLengths[][13] =
 {
-  {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},
-  {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
+    {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},
+    {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
 };
 
 const char *ShortDayNames[] =
 {
-  "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"
+    "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"
 };
 
 
@@ -68,18 +68,16 @@ const char *ShortDayNames[] =
  */
 
 
-int 
-dayOfYear (d)
-     date_t d;
+int dayOfYear( date_t d )
 {
-  int dOY = d.dd + 31 * (d.mm - 1);
-  if (d.mm > FEB)
+    int dOY = d.dd + 31 * (d.mm - 1);
+    if (d.mm > FEB)
     {
-      dOY -= (4 * d.mm + 23) / 10;
-      if (LEAP (d.yy))
-	dOY++;
+        dOY -= (4 * d.mm + 23) / 10;
+        if (LEAP (d.yy))
+            dOY++;
     }
-  return dOY;
+    return dOY;
 }
 
 
@@ -87,15 +85,13 @@ dayOfYear (d)
  * The number of days elapsed between the Gregorian date 12/31/1 BC and DATE.
  * The Gregorian date Sunday, December 31, 1 BC is imaginary.
  */
-long int 
-greg2abs (d)			/* "absolute date" */
-     date_t d;
+long int greg2abs( date_t d )			/* "absolute date" */ 
 {
-  return ((long) dayOfYear (d)	/* days this year */
-	  + 365L * (long) (d.yy - 1)	/* + days in prior years */
-	  + (long) ((d.yy - 1) / 4	/* + Julian Leap years */
-		    - (d.yy - 1) / 100	/* - century years */
-		    + (d.yy - 1) / 400));	/* + Gregorian leap years */
+    return ((long) dayOfYear (d)	/* days this year */
+            + 365L * (long) (d.yy - 1)	/* + days in prior years */
+            + (long) ((d.yy - 1) / 4	/* + Julian Leap years */
+                      - (d.yy - 1) / 100	/* - century years */
+                      + (d.yy - 1) / 400));	/* + Gregorian leap years */
 }
 
 /*
@@ -104,9 +100,7 @@ greg2abs (d)			/* "absolute date" */
  * Clamen, Software--Practice and Experience, Volume 23, Number 4
  * (April, 1993), pages 383-404 for an explanation.
  */
-date_t 
-abs2greg (theDate)
-     long theDate;
+date_t abs2greg( long theDate )
 {
   int day, year, month, mlen;
   date_t d;
@@ -147,18 +141,13 @@ abs2greg (theDate)
     }
 }
 
-void 
-incDate (dt, n)			/* decrements dt by n days */
-     date_t *dt;
-     long int n;
+void incDate (date_t *dt, long n)			/* increments dt by n days */
 {
   *dt = abs2greg (greg2abs (*dt) + n);
 }
 
 
-int 
-dayOfWeek (d1)			/* sunday = 0 */
-     date_t d1;
+int dayOfWeek(date_t d1)			/* sunday = 0 */
 {
   return (int) (greg2abs (d1) % 7L);
 }
@@ -174,7 +163,7 @@ void setDate ( date_t *d )
  */
 
     time_t time ();
-    char *ctime PROTO ((const time_t *));
+    char *ctime( const time_t * );
     
     time_t secs = time (NULL);
     char *timestr = ctime (&secs);
@@ -188,11 +177,7 @@ void setDate ( date_t *d )
 }
 
 
-long 
-day_on_or_before (day_of_week, date)
-     int day_of_week;
-     long date;
-/* Returns the absolute date of the DAYNAME on or before absolute DATE.
+/** Returns the absolute date of the DAYNAME on or before absolute DATE.
  * DAYNAME=0 means Sunday, DAYNAME=1 means Monday, and so on.
 
 
@@ -201,14 +186,15 @@ day_on_or_before (day_of_week, date)
  * absolute date d, applying it to d-1 gives the DAYNAME previous to absolute
  * date d, and applying it to d+7 gives the DAYNAME following absolute date d.
 
- */
+**/
+long day_on_or_before( int day_of_week, long date)
 {
   return date - ((date - (long) day_of_week) % 7L);
 }
 
 
 
-/* (defun calendar-nth-named-day (n dayname month year &optional day)
+/** (defun calendar-nth-named-day (n dayname month year &optional day)
    "The date of Nth DAYNAME in MONTH, YEAR before/after optional DAY.
    A DAYNAME of 0 means Sunday, 1 means Monday, and so on.  If N<0,
    return the Nth DAYNAME before MONTH DAY, YEAR (inclusive).
