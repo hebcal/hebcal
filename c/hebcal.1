@@ -1,0 +1,551 @@
+.\" $Id$  -*- nroff -*-
+.\" Copyright(c) 1994  Danny Sadinoff
+.\" See section COPYING for conditions for redistribution
+.TH HEBCAL 1 "Hebcal Version 3.1" "Danny Sadinoff"
+.\" "
+.de BP
+.sp
+.ti \-.2i
+\(**
+..
+.SH NAME
+hebcal - a Jewish calendar generator
+.SH SYNOPSIS
+.B hebcal
+[ 
+.B \-acdDehHiorsStTwy
+]
+.if n .ti +5
+.br
+[ 
+.B \-I
+.BI input_file
+]
+.if n .ti +5
+.br
+[ 
+.B \-Y
+.BI yahrtzeit_file
+]
+.if n .ti +5
+.br
+[
+.B \-C 
+.BI city
+]
+.if n .ti +5
+.br
+[
+.B \-l 
+.BI latitude 
+.B \-L 
+.BI longitude]
+.if n .ti +5
+.br
+[
+.B \-z 
+.BI timezone
+]
+.if n .ti +5
+.br
+[
+.B \-Z
+.BI daylight_savings_scheme
+]
+.if n .ti +5
+.br
+[[
+.BI month
+[
+.BI day
+]]
+.BI year
+]
+.br
+.B hebcal help
+.br
+.B hebcal info
+.br
+.B hebcal DST
+.br
+.B hebcal cities
+.br
+.B hebcal copying
+.br
+.B hebcal warranty
+.PP
+.SH DESCRIPTION
+With no arguments, 
+.B hebcal
+will print to stdout the 
+dates of the Jewish holidays in the current
+secular year.  Each line is prefixed with a gregorian date of the form
+mm/dd/yyyy.  
+.PP
+By specifying 
+.BI month,
+.BI day,
+or 
+.BI year,
+output can be limited to a particular month or date
+in a particular year.  Note that
+.BI year
+is usually a four-digit integer,  So 92 is during the Roman period,
+not the late twentieth century.  In if the hebrew dates option is
+turned on, this number represents th Jewish calendar year.
+.BI month
+is a number from 1..12, or the name of a Jewish calendar month.
+.sp
+.BI day 
+is a number from 1..31.
+.sp
+For example, the command
+.nf
+	hebcal 10 1992
+.fi
+will print out the holidays occurring in October of 1992 C.E., while
+the command
+.nf
+
+	hebcal Tish 5752
+
+.fi
+will print dates of interest in the month of Tishrei in Jewish
+calendar year 5752.
+.PP
+NOTE:  hebcal 92 is 
+.I not
+the same as hebcal 1992.  The year is assumed to be complete, so the
+former calendar preceeds the latter by nineteen centuries.
+.PP
+A few other bells and whistles include the weekly 
+.I sedra
+as well as the day of the week, the count of the 
+.I omer,
+and the Hebrew date.
+.PP
+Output from hebcal can be used to drive calendar(1).  
+Day\-to\-day use for hebcal is provided for in the \c
+.B -T \c
+and \c
+.B -t \c
+switches, which print out Jewish calendar entries for the current
+date.
+.PP
+To get a quick\-reference on\-line help, type 
+.nf
+	hebcal help
+.fi
+at the command prompt.
+.SH OPTIONS
+.TP
+.BI "\-a"
+Use Ashkenazis hebrew.
+.TP
+.B "\-c"
+Add \c
+.I approximate \c
+candle-lighting times.  See below.
+.TP
+.B "\-d"
+Print the Hebrew date for the entire date range.
+.TP
+.B "\-D"
+Print the hebrew date for dates with some event.
+.TP
+.B "\-e"
+Change the output format to European\-style dates: dd.mm.yyyy
+.TP
+.B "\-h"
+Suppress holidays in output.  User defined calendar events are
+unaffected by this switch.
+.TP
+.B "\-H"
+When the \-H switch is used, all dates specified on the command line
+are assumed to be hebrew dates.  So for instance,
+.sp
+.ft B
+\	example% hebcal \-H 5754
+.sp
+will print data for 5754, Starting in Tishrei, and ending in Elul.
+Hebcal is smart enough to detect a Hebrew month and infer that you
+want a Hebrew date range, so you could type
+.sp
+.ft B
+\	example% hebcal tish 5754
+.sp
+The \-H switch would be superfluous in this case.  Invoking hebcal with
+just the \-H switch by itself will print data for the current Hebrew
+year, starting in Tishrei.  
+.TP
+.B "\-i"
+Use the Israeli sedra scheme when used in conjunction with \c
+.B \-S \c
+or \c
+.B \-s.
+This has no effect if the \c
+.B \-S \c
+or \c
+.B \-s \c
+switches are unused.
+.TP
+.BI "\-I " "file"
+Read extra events from \c
+.I "file."
+These events are printed regardless of the \c
+.B \-h \c
+suppress holidays switch.
+.br
+There is one holiday per line in 
+.BI file,
+each with the format
+.br
+.br
+.I "month\ day\ description"
+.br
+.br
+where \c
+.I month \c
+is a string identifying the Jewish month in question \c
+.I day \c
+is a number from 1 to 30, and \c
+.I description
+is a newline-terminated string describing the holiday.
+An example might be 
+.br
+.br
+\	Adar 1 Start cleaning kitchen for Passover.
+.br
+\	Adar 1 Start cleaning kitchen for Passover.
+.TP
+.BI "\-l " "deg,min"
+Set the latitude for solar calculations to \c
+.I deg \c
+degrees and \c
+.I min \c minutes.  Negative values are south.
+.TP
+.BI "\-L " "deg,min"
+Set the longitude for solar calculations to \c
+.I deg \c
+degrees and \c
+.I min \c
+minutes.  
+.B NOTE: Negative values are EAST longitude.
+.TP
+.B "\-o"
+Add the count of the 
+.I omer
+to the output.
+.TP
+.B "\-r"
+Use a tab-delineated format, and somewhat terser
+strings.  Instead of saying \&\|' 13th day of the omer \&\|'
+hebcal will say \&\|' Omer: 13 \&\|'
+.TP
+.B "\-s"
+Add the weekly 
+.I sedra 
+to the output on Saturdays.  See \c
+.B \-i.
+.TP
+.B "\-S"
+Add the weekly 
+.I sedra 
+to the output every day.  When this option is invoked, every time a
+day is printed, the torah reading for the Saturday on or immediately
+following that date is printed.  If there is no reading for the next
+Saturday, then nothing is printed.  See
+.B \-i.
+.TP
+.B "\-t"
+Print calendar information for today's date only.  
+.B \-d 
+and
+.B \-o
+are asserted with this option. 
+.TP
+.B "\-T"
+Same as -t, only without the gregorian date.  This option is useful in
+login scripts, just to see what's happening today in the Jewish calendar.
+.TP
+.B "\-w"
+Add the day of the week to the output.
+.TP
+.B "\-y"
+Print only the last two digits of the year.
+.TP
+.BI "\-Y " "file"
+Read a table of yahrtzeit dates from \c
+.I "file."
+These events are printed regardless of the \c
+.B \-h \c
+suppress holidays switch.
+.br
+.br
+There is one death-date per line in \c
+.I file,
+each with the format
+.br
+.br
+.I "month\ day\ year\ description"
+.br
+.br
+where \c
+.I month, day \c
+and \c
+.I year \c
+form the  \c
+.B gregorian \c 
+date of death.
+.I description
+is a newline-terminated string to be printed on the \c
+.I yahrtzeit.
+An example might be 
+.br
+
+\	12 29 1957 Menachem Mendel's yahrtzeit.
+.br
+\	5 15 1930 Benjamin's yahrtzeit.
+.SH "CANDLE\-LIGHTING TIMES"
+Hebcal's candlelighting times are only approximations.
+If you ever have any doubts about it's times, consult
+your local halachic authority.  If you enter geographic
+coordinates above the artic circle or antarctic circle,
+the times are guaranteed to be wrong.
+.PP
+Hebcal contains a small database of cities with their
+associated geographic information and time-zone information.
+The geographic and time information necessary to
+calculate sundown times can come to hebcal any of three
+ways:
+.PP
+1) The default: the system manager sets a default city
+when the program is compiled.
+.br
+2) Hebcal looks in the environment variable 
+.B HEBCAL_CITY
+for the name of a city in hebcal's database, and if it
+finds one, hebcal will make that the new default city.
+.br
+3) 1 and 2 may be overridden by command line arguments, including
+those specified in the
+.B HEBCAL_OPTS
+environment variable.
+The most natural way to do this is to use the \c
+.BI "\-c " "city " \c
+command.  This will localize hebcal to \c
+.I "city. "
+A list of the cities hebcal knows about can be obtained
+by typing
+.nf
+	hebcal cities
+.fi
+at the command prompt.  If the city you want isn't on that list, you
+can directly control hebcal's geographic information with the \c
+.B \-l, \-L \-z \c
+and \c
+.BI "\-Z " "DST " \c
+switches.  Note that changing the geographic coordinates
+causes the timezone to default to Zulu and the daylight
+savings time processor to default to 'none.' To get a
+list of possible values for \c
+.I DST,
+type
+.nf
+	hebcal DST
+.fi
+at the command prompt.
+.PP
+For a status report on customizations, type 
+type
+.nf
+	hebcal info
+.fi
+at the command prompt.
+.SH EXAMPLES
+.LP
+To find the days of the \c
+.I omer \c
+in 1997, printing the days of the week:
+.RS
+.nf
+.ft B
+example% hebcal -how 1997
+.br
+4/23/97 Wed, 1st day of the Omer
+.br
+4/24/97 Thu, 2nd day of the Omer
+.br
+4/25/97 Fri, 3rd day of the Omer
+.br
+ .
+.br
+ .
+.br
+ .
+.br
+6/9/97 Mon, 48th day of the Omer
+.br
+6/10/97 Tue, 49th day of the Omer
+.RE
+.LP
+To print only the weekly \c
+.I sedrot \c
+of Nisan 5770
+.RS
+.nf
+.ft B
+example% hebcal -hs Nisan 5770
+.br
+3/20/2010 Parashat Vayikra
+.br
+3/27/2010 Parashat Tzav
+.br
+4/10/2010 Parashat Shmini
+.br
+.RE
+.LP 
+To find out what's happening in the Jewish calendar today , use
+.RS
+.nf
+.ft B
+example% hebcal -TS
+.br
+19 of Nisan, 5752
+.br
+Parshat Achrei Mot
+.br
+Pesach V (CH"M)
+.\" "
+.br
+4th day of the Omer
+.br
+.RE
+.SH ENVIRONMENT
+.BI Hebcal
+uses two environment variables:
+.TP 
+.B HEBCAL_CITY
+.BI "Hebcal " \c
+uses this value as the default city for sunset calculations.  A list
+of available cities is available with from hebcal with the command:
+.br
+hebcal cities
+.TP
+.B HEBCAL_OPTS
+The value of this variable is automatically processed as if it were
+typed at the command line \c
+.I before \c
+any other actual command\-line\-arguments.
+.SH AUTHOR
+Danny Sadinoff
+.SH SEE ALSO
+calendar(1), emacs(1), hcal(1), hdate(1), omer(1), remind(1), rise(1)
+.PP
+The original motivation for the algorithms in this
+program was the \c
+.I "Tur Shulchan Aruch.  "
+.PP
+For version 3, much of the program was rewritten using
+Emacs 19's calendar routines by Edward M. Reingold and
+Nachum Dershowitz.  Their program is extremely clear and
+provides many instructive examples of fine calendar code in
+emacs-LISP.
+.PP
+A well written treatment of the Jewish
+calendar for the layman can be found in \c
+.I Understanding the Jewish Calendar \c
+by Rabbi Nathan Bushwick.  A more complete bibliography on the topic
+can be found there, as well as in the \c
+.I Encyclopedia Judaica \c
+entry on the calendar.  
+.SH DIAGNOSTICS
+.TP
+.B hebcal help
+Prints a shorter version of this manpage, with comments on each option.
+.TP
+.B hebcal info
+Prints the version number and default values of the program. 
+.TP
+.B hebcal DST
+Prints a list of available daylight savings time schemes, suitable as
+arguments to the \c
+.BI "\-Z " "DST " \c
+option.
+.TP
+.B hebcal cities
+Prints a list of cities which hebcal knows about, suitable as
+arguments to the \c
+.BI "\-C " "city " \c
+option.  If your city does not appear on this list, put the necessary
+defaults in the
+.B DST_OPTS \c
+ environment variable.
+.TP
+.B hebcal copying
+Prints the GNU license, with information about copying the program.
+See below.
+.TP
+.B hebcal warranty
+Tells you how there's NO WARRANTY for hebcal.
+.SH DISCLAIMER
+This is just a program I wrote during summer school and
+while avoiding my senior project.  It should not be invested
+with any sort of halachic authority.
+.SH BUGS
+Hebrew dates are only valid before sundown on that
+secular date.  An option to control this will be added
+in a later release.
+.PP
+Negative longitudes are EAST of Greenwich.
+.PP
+Some combinations of options produce weird results, e.g. 
+.br
+hebcal -dH nisan 5744
+.br
+hebcal -dH 5744
+.br
+This comes into play when you use the 
+.B ENV_OPT
+environment variable.
+.PP
+The sunup/sundown routines aren't accurate enough.  If you enter
+geographic coordinates above the artic circle or antarctic circle, the
+times are guaranteed to be wrong.
+.PP
+Hebcal performs no checking for changes between the julian and
+gregorian calendar, so secular dates before 1752 are untrustworthy.
+.PP
+Hebcal cannot handle date computations before 2 C.E.  sorry.
+.SH BUG REPORTS TO
+Danny Sadinoff
+.br
+sadinoff@panix.com 
+.SH COPYING
+Copyright (c) 1994 Danny Sadinoff
+.PP
+Permission is granted to make and distribute verbatim copies of
+this manual provided the copyright notice and this permission notice
+are preserved on all copies.
+.PP
+Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided that the
+entire resulting derived work is distributed under the terms of a
+permission notice identical to this one.
+.PP
+Permission is granted to copy and distribute translations of this
+manual into another language, under the above conditions for modified
+versions, except that this permission notice may be included in
+translations approved by the Free Software Foundation instead of in
+the original English.
+.PP
+For a full text of the copyright and lack of warranty information, 
+type 
+.br
+hebcal copying
+.br
+or 
+.br
+hebcal warranty
+.br 
+at the command line.

@@ -1,0 +1,140 @@
+Hebcal 3.1  - a program for printing Jewish calendars
+  by Danny Sadinoff
+
+DESCRIPTION
+Hebcal is a program which prints out the days in the Jewish calendar
+for a given gregorian year.  Hebcal is fairly flexible in terms of which
+events in the Jewish calendar it displays.  Each of the following can
+be individualy turned on or off:
+
+  The Hebrew date
+  Jewish Holdiays (including Yom Ha'atzmaut and Yom HaShoah etc.)
+  The weekly Sedrah
+  The day of the week
+  The days of the Omer
+
+CHANGES since version 3.0b
+   - Shabbat starts 40 minutes before sundown in Jerusalem.
+   - Added a -m option to set when havdalah takes place.  It defaults to
+     72 minutes after sundown.
+   - The environment variables that hebcal reads are no longer
+     configurable at compilation time.  That was a needless piece of
+     complexity. 
+   
+CHANGES since version 2.1
+   The changes to hebcal since version 2.1 are too numerous to mention
+   here;  see the file CHANGES in the distribution.  A brief overview
+   follows: 
+
+   - The biggest change is the addition of candlelighting times. 
+   - All of the algorithms have been speeded up. 
+   - Numerous errors, especially Yahrtzeit handling, have been
+     corrected.
+   - Hebcal can now print Hebrew date ranges, something I've wanted
+     since version 1.  You can now query hebcal with 
+       hebcal Nisan 5754 
+       to get the holidays of Nisan 5754.
+
+TODO:
+   I'm porting hebcal to perl5, which will solve, once and for all,
+   everyone's porting headaches.
+
+INSTALLATION 
+Since you're reading this, you have already successfully unpacked the
+source files.  The next step is to customize the program for your
+city.  If you live in the New York area, you can go ahead and run
+"make".
+
+Otherwise, take a look at the Makefile.  There is a list of names of
+the cities that hebcal is coded to understand.   IF your city is on
+the list, simply change the NEW_YORK in CITY = NEW_YORK to your city
+name.  
+
+If your city is NOT on the list, then in order to customize hebcal to
+your city, you will need to pass it the lattitude, longitude, timezone
+and daylight savings code (see the manual).  
+
+Suppose you live in Oshkosh, Wisconsin.
+Your lattitude is 44d1'29", and your longitude is 88d32'33".
+You are in timezone Z-6, with the daylight savings scheme normal to
+the US.  We'll round the geographic coordinates to the nearest minute.
+
+In order to get candlelighting times for the current year, you would
+type
+	hebcal -ch -l44,1 -L 88,33 -z-6 -Zusa
+
+Now this can get rough on the fingers if you do it a lot, so the
+HEBCAL_OPTS environment variable is available for you to use.  Every
+time hebcal is run, it checks this variable.  If it is non-empty, the
+arguments in that variable are read as though they were typed at the
+command line before the ones you actually type.  
+
+So you might set HEBCAL_OPTS to be 
+   -l44,1 -L 88,33 -z-6 -Zusa
+and if you type 
+    hebcal -ch
+hebcal will think you typed 
+    hebcal -l44,1 -L 88,33 -z-6 -Zusa  -ch
+
+REMEMBER: negative longitudes are EAST of Greenwich.
+
+For information on setting environment variables, consult your local
+guru.
+
+The names "HEBCAL_OPTS" and "CITY" can be changed in the makefile,
+where they are the values of the variables ENV_OPTS and ENV_CITY,
+respectively. 
+
+To sum up, on the first installation, adjust the CITY makefile
+variable according to where you are.  
+
+Once an install is complete, there are three ways to change cities, or
+pick a city not on the list:
+  1) change the CITY environment variable
+  2) change the HEBCAL_OPTS variable to reflect the new city's coordinates.
+  3) pass a -C city argument to hebcal.
+
+You can check where hebcal thinks it is by typing 
+    hebcal info
+at the command line.
+
+-----------
+
+The file hebcal.1 is the manual page, and is created when you compile
+the program.  
+
+For information on using man in conjunction with local
+manpages, see the manpage for man.  If you want to see what the
+manpage would look like, type
+    make MANUAL
+at the command line, and the shell will deposit a text version of the
+manpage in the file MANUAL.
+
+
+DISTRIBUTION
+   Hebcal is distributed under the GNU Public License.  The program
+   and its source code may be freely distributed.  For details, see
+   the file COPYING in the distribution.
+   
+   If you are going to use this program, please drop me a line.
+   I'd like to know who you are, what version you're using, and how
+   you're using hebcal, and anything else you'd like to tell me, so
+   that I can adjust the program to meet users' needs.
+
+   I am NOT demanding payment for the use of my program, but writing
+   this program DID take time.  The "free" in the GNU public license
+   refers to distribution, not necessarily payment. Feel free to send
+   $10 or multiples of $18 or just a postcard to me at my US Mail
+   address.
+
+   send US Mail to:        send email to:
+    Danny Sadinoff	   sadinoff@pobox.com           
+    1 Cove La.             
+    Great Neck, NY 11024
+
+   Email respondents will receive notifications of new versions as
+   they come out, as will US Mail responents (if they send me postage
+   for a disk).
+
+   The latest version of the code will be available from 
+   http://pobox.com/~sadinoff/hebcal
