@@ -197,10 +197,6 @@ holinput_t inp_holidays[] =
       {IYYAR, 18},
       {"Lag B'Omer", NULL, "\354\"\342 \341\362\345\356\370"},
       0},
-   {
-      {IYYAR, 28},
-      {"Yom Yerushalayim", NULL, "\351\345\355 \351\370\345\371\354\351\355"},
-      0},
 
    {
       {SIVAN, 5},
@@ -248,6 +244,7 @@ holinput_t inp_holidays[] =
 #define HOLIDAY_YOM_HAATZMA_UT  LANGUAGE2(var_hol_names[20].name)
 #define HOLIDAY_YOM_HASHOAH     LANGUAGE2(var_hol_names[21].name)
 #define HOLIDAY_YOM_HAZIKARON   LANGUAGE2(var_hol_names[22].name)
+#define HOLIDAY_YOM_YERUSHALAYIM   LANGUAGE2(var_hol_names[23].name)
 
 struct variable_holiday_names {
    char *(name[3]);
@@ -275,6 +272,7 @@ struct variable_holiday_names {
   {{"Yom HaAtzma'ut", NULL, "\351\345\355 \344\362\366\356\340\345\372"}},
   {{"Yom HaShoah", NULL, "\351\345\355 \344\371\345\340\344"}},
   {{"Yom HaZikaron", NULL, "\351\345\355 \344\346\353\370\345\357"}},
+  {{"Yom Yerushalayim", NULL, "\351\345\355 \351\370\345\371\354\351\355"}},
 };
 
 /*-------------------------------------------------------------------------*/
@@ -449,6 +447,19 @@ static void load_variable_holidays( int hYear )
         PushHoliday (tmpholp, &var_holidays[NISAN][27]);
         
         tmpholp = getHolstorep ();
+        tmpholp->name = HOLIDAY_YOM_HAZIKARON;
+        if (passover % 7L == SUN)
+            tempDt.dd = 3;
+        else if (passover % 7L == SAT)
+            tempDt.dd = 4;
+        else
+            tempDt.dd = 5;
+        PushHoliday (tmpholp, &var_holidays[IYYAR][tempDt.dd - 1]);
+    }
+
+    if (hYear > 5708)
+    {                            /* only really makes sense after 1948 */
+        tmpholp = getHolstorep ();
         tmpholp->name = HOLIDAY_YOM_HAATZMA_UT;
         if (passover % 7L == SUN)
             tempDt.dd = 3;
@@ -457,11 +468,15 @@ static void load_variable_holidays( int hYear )
         else
             tempDt.dd = 5;
         PushHoliday (tmpholp, &var_holidays[IYYAR][tempDt.dd]);
-        tmpholp = getHolstorep ();
-        tmpholp->name = HOLIDAY_YOM_HAZIKARON;
-        PushHoliday (tmpholp, &var_holidays[IYYAR][tempDt.dd - 1]);
     }
-    
+
+    if (hYear > 5727)
+    {                            /* only really makes sense after 1967 */
+        tmpholp = getHolstorep ();
+        tmpholp->name = HOLIDAY_YOM_YERUSHALAYIM;
+        PushHoliday (tmpholp, &var_holidays[IYYAR][28]);
+    }
+
     tmpholp = getHolstorep ();
     tmpholp->name = HOLIDAY_TZOM_TAMMUZ;
     if (tishaBav % 7L == SAT)
