@@ -129,7 +129,7 @@ holinput_t inp_holidays[] =
       0},
    {
       {SHVAT, 15},
-      {"Tu B'Shvat", NULL, "\350\345 \341\371\341\350"},
+      {"Tu B'Shvat", NULL, "\350\"\345 \341\371\341\350"},
       0},
    {
       {NISAN, 14},
@@ -171,7 +171,7 @@ holinput_t inp_holidays[] =
 
    {
       {IYYAR, 18},
-      {"Lag B'Omer", NULL, "\354\342' \341\362\345\356\370"},
+      {"Lag B'Omer", NULL, "\354\"\342 \341\362\345\356\370"},
       0},
    {
       {IYYAR, 28},
