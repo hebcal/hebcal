@@ -660,7 +660,15 @@ void init_yahrtzeits( int hyear )
             hDeath.dd = 30;
             hDeath.mm = SHVAT;
         }
-        /* In all other cases, use the normal anniversary of the date of death. */
+        /* If death was in a non-leap year (regular Adar), use the same day 
+	   in last month of this year (Adar or Adar II). */
+        else if (hDeath.mm == ADAR_I && !LEAP_YR_HEB (hDeath.yy))
+        {
+            hDeath.mm = MONTHS_IN_HEB (hyear);
+        }
+
+        /* In all other cases, use the normal (birthday) 
+	   anniversary of the date of death. */
 
         eventStr = s + index + 1; /* get the name of the event */
         /*    if (eventStr[strlen(eventStr)-1] == '\n') */

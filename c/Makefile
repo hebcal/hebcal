@@ -23,7 +23,7 @@ VERSION = 3.3beta9
 #there is no need to change anything below this line
 #-----------------------------------------------------------------
 
-CFLAGS =  -Wall
+CFLAGS =  -Wall -g
 LDFLAGS = -lm
 
 OBJ = start.o hebcal.o greg.o error.o danlib.o mygetopt.o rise.o \
