@@ -1,4 +1,4 @@
-@set UPDATED 07:37 February ./hebcal.texi
+@set UPDATED 23:51 February ./hebcal.texi
 @set UPDATED-MONTH February ./hebcal.texi
 @set EDITION 3.4
 @set VERSION 3.4

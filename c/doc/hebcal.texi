@@ -116,7 +116,7 @@ Usage: hebcal [OPTION]
   -t, --traditional   use traditional greeting format
   -m, --mail          print your mail
 
-Report bugs to hebcal-bugs@sadinoff.com
+Report bugs to @email{hebcal-bugs@@sadinoff.com}
 @end example
 
 This is the output of the command @samp{hebcal --traditional}:
