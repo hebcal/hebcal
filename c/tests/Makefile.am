@@ -24,7 +24,9 @@ sanity_check_SOURCES = $(top_srcdir)/common.c $(top_srcdir)/danlib.c $(top_srcdi
 
 TESTS = hebcal-1 hebcal-2
 
-EXTRA_DIST = $(TESTS)
+TESTS_okayfiles = hebcal-test1.ok hebcal-test2.ok
+
+EXTRA_DIST = $(TESTS) $(TESTS_okayfiles)
 
 TESTS_ENVIRONMENT = top_srcdir=$(top_srcdir) PATH=.:..:$$PATH \
 		    HEBCAL=`echo hebcal|sed '$(transform)'` \
