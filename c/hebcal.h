@@ -82,6 +82,7 @@ typedef struct hebrew_year {
 #define DST_NONE 1
 #define DST_ISRAEL 2
 #define DST_EU 3
+#define DST_AUNZ 4
 
 /* holiday typemask entries */
 #define USER_EVENT 1

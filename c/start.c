@@ -163,6 +163,7 @@ dst_t savings_bank[] =
     {"none", DST_NONE},
     {"israel", DST_ISRAEL},
     {"eu", DST_EU},
+    {"aunz", DST_AUNZ},
     {"", 0}
 };
 

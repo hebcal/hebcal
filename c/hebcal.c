@@ -184,6 +184,14 @@ void set_DST_bounds (long *beginDST, long *endDST, int gregYr)
         *endDST = day_on_or_before (SUN, greg2abs (tempDt) - 1L);
         DST_value = 60;
         break;
+    case DST_AUNZ:
+        /* Australasia is the inverse of European Union */
+        *endDST = day_on_or_before (SUN, greg2abs (tempDt) - 1L);
+        tempDt.dd = 1;
+        tempDt.mm = 11;
+        *beginDST = day_on_or_before (SUN, greg2abs (tempDt) - 1L);
+        DST_value = 60;
+        break;
     case DST_ISRAEL:
         /* daylight savings time begins in Israel on the */
       /* first Sunday after Passover ends on Nisan 21: */
@@ -215,10 +223,25 @@ void set_DST_bounds (long *beginDST, long *endDST, int gregYr)
 void 
 set_DST( long beginDST, long endDST, long todayAbs, int *DST )
 {
-    if (beginDST <= todayAbs && todayAbs < endDST)
-        *DST = DST_value;
+    if (beginDST > endDST)
+    {
+	/* Australia */
+	if (todayAbs >= beginDST || todayAbs < endDST)
+	{
+	    *DST = DST_value;
+	}
+	else
+	{
+	    *DST = 0;
+	}
+    }
     else
-        *DST = 0;
+    {
+	if (beginDST <= todayAbs && todayAbs < endDST)
+	    *DST = DST_value;
+	else
+	    *DST = 0;
+    }
 }
 
 /*-------------------------------------------------------------------------*/

@@ -1,4 +1,9 @@
+2004-08-03  Michael J. Radwin <michael@radwin.org>
+
+	* Add support for Australia & New Zeland DST scheme
+	* Add Australia cities: Melbourne and Sydney
+	* Add Ottawa, Canada
+
 2004-01-20  Danny Sadinoff  <djs@sadind-G4.local>
 
 	* tweak copyright date, payment address, contact address
-
