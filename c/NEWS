@@ -1,4 +1,8 @@
-Changes since 3.3b10
+Changes in 3.4-beta2
+- fixed massive distribution error
+- factored out cities into cities.h
+
+Changes in 3.4-beta1
 - Fixed bug #s 797972,645240 "Chanukah 7 candles repeated twice",
     per suggestion & Ambrose C. Li's and Norman Abramovitz's 
     suggestions
