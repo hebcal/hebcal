@@ -240,8 +240,10 @@ print_candlelighting_times (mask, weekday, todayGreg, DST)
 	 printf ("No sunset today.\n");
       else
       {
-	 printf ("%s\n",
-		 timeadj ("Candle lighting: ",
+	 printf ("%s: %s\n",
+		 iso8859_8_sw ? "\344\343\354\367\372 \360\370\345\372" :
+		 "Candle lighting",
+		 timeadj ("",
 			  xsunset,
 			  light_offset + DST,
 			  &day_adj));
@@ -269,8 +271,10 @@ print_candlelighting_times (mask, weekday, todayGreg, DST)
 	 printf ("No sunset today.\n");
       else
       {
-	 printf ("Havdalah (%d min):%s\n",
+	 printf ("%s (%d %s):%s\n",
+		 iso8859_8_sw ? "\344\341\343\354\344" : "Havdalah",
 		 havdalah_minutes,
+		 iso8859_8_sw ? "\343\367\345\372" : "min",
 		 timeadj ("",xsunset,
 			  havdalah_minutes + DST,
 			  &day_adj));
