@@ -1,0 +1,198 @@
+\input texinfo @c -*-texinfo-*-
+@c %**start of header
+@setfilename hebcal.info
+@settitle Jewish Calendar
+@finalout
+@setchapternewpage odd
+@c %**end of header
+
+@include version.texi
+
+@copying
+This file documents the @code{hebcal} command for printing a
+greeting message.
+
+Copyright (C) 1994-2004 Danny Sadinoff
+
+Permission is granted to make and distribute verbatim copies of
+this manual provided the copyright notice and this permission notice
+are preserved on all copies.
+
+@ignore
+Permission is granted to process this file through TeX and print the
+results, provided the printed document carries copying permission
+notice identical to this one except for the removal of this paragraph
+(this paragraph not being relevant to the printed manual).
+@end ignore
+
+Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided that the entire
+resulting derived work is distributed under the terms of a permission
+notice identical to this one.
+
+Permission is granted to copy and distribute translations of this manual
+into another language, under the above conditions for modified versions,
+except that this permission notice may be stated in a translation approved
+by the Foundation.
+@end copying
+
+@ifinfo
+
+@dircategory Greeting Printing Program
+@dircategory Mail Reader
+@dircategory Programming
+
+@direntry
+* Hebcal: (hebcal).       A perpetual Jewish calendar
+@end direntry
+
+@c old settings:
+@c INFO-DIR-CATEGORY Invoking Hebcal
+@c INFO-DIR-CATEGORY Using Hebcal
+@c 
+@c START-INFO-DIR-ENTRY
+@c * Hebcal: (hebcal).       A perpetual Jewish calendar
+@c END-INFO-DIR-ENTRY
+@end ifinfo
+
+
+@titlepage
+@title Hebcal
+@subtitle A jewish perpetual calendar.
+@subtitle Edition @value{EDITION}, for Hebcal Version @value{VERSION}
+@subtitle @value{UPDATED}
+@author by Danny Sadinoff
+
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+
+@end titlepage
+
+@node Top, , , (dir)
+
+@ifinfo
+This file documents the the @code{hebcal} command to print a
+Jewish calendar.
+@end ifinfo
+
+@menu
+* Copying::		How you can copy and share @code{hebcal}.
+* Overview::		Preliminary information.
+* Sample::		Sample output from @code{hebcal}.
+* Invoking hebcal::	How to run @code{hebcal}.
+* Problems::		Reporting bugs.
+* Concept Index::	Index of concepts.
+@end menu
+
+@node Copying, Overview, , Top
+@include gpl.texi
+
+@node Overview, Sample, Copying, Top
+@chapter Overview
+@cindex greetings
+@cindex overview
+
+The @code{hebcal} program produces a Jewish calendar in various
+formats, but by default in a format suitable for input to @code{calendar}.
+
+@code{hebcal} was written by Danny Sadinoff, with major contributions by 
+Michael Radwin.  Hebcal is, at root, a port of the GNU Emacs Calendar lisp
+code by Edward M. Reingold and Nachum Dershowitz.
+
+@node Sample, Invoking hebcal, Overview, Top
+@chapter Sample Output
+@cindex sample
+
+Here are some realistic examples of running  @code{hebcal}.
+
+ FIXME 
+
+@example
+This is Hebcal, 
+Usage: hebcal [OPTION]
+  -h, --help          display this help and exit
+  -v, --version       display version information and exit
+  -t, --traditional   use traditional greeting format
+  -m, --mail          print your mail
+
+Report bugs to hebcal-bugs@sadinoff.com
+@end example
+
+This is the output of the command @samp{hebcal --traditional}:
+
+@example
+FIX
+@end example
+
+@node Invoking hebcal, Problems, Sample, Top
+@chapter Invoking @code{hebcal}
+@cindex invoking
+@cindex version
+@cindex options
+@cindex usage
+@cindex help
+@cindex getting help
+
+The format for running the @code{hebcal} program is:
+
+@example
+hebcal @var{option} @dots{}
+@end example
+
+@code{hebcal} supports the following options:
+
+@table @samp
+@item --help
+@itemx -h
+Print an informative help message describing the options and then exit.
+
+@item --version
+@itemx -v
+Print the version number of @code{hebcal} on the standard error output
+and then exit.
+
+@item --traditional
+@itemx -t
+@cindex traditional
+@cindex modern
+Use the traditional greeting message @samp{hebcal, world} rather 
+than the more modern @samp{Hebcal, world!}.
+
+@item --mail
+@itemx -m
+@cindex mail
+@cindex creeping feature
+@cindex feature, creeping
+@cindex feeping creature
+@cindex creature, feeping
+Print your mail on the standard output.
+@end table
+
+@node Problems, Concept Index, Invoking hebcal, Top
+@chapter Reporting Bugs
+@cindex bugs
+@cindex problems
+
+If you find a bug in GNU @code{hebcal}, please send electronic mail
+to @email{hebcal-bugs@@sadinoff.com}.  Include the version
+number, which you can find by running @w{@samp{hebcal version}}.  Also
+include in your message the output that the program produced and the
+output you expected.  Alternatively you can submit the bug via sourceforge at
+@code{http://sourceforge.net/projects/hebcal/} @refill
+
+If you have other questions, comments or suggestions about 
+@code{hebcal}, contact Danny Sadinoff via electronic mail to
+@email{danny@@sadinoff.com}.  
+
+@node Concept Index, , Problems, Top
+@unnumbered Concept Index
+
+@cindex tail recursion
+@printindex cp
+
+@shortcontents
+@contents
+@bye
+
+@c hebcal.texi ends here
