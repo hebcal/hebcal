@@ -3,7 +3,7 @@ and released on comp.lang.sources.misc.  There was a great deal of
 feedback from the online community which helped it become a portable
 program. 
 
-Hebcal is not much more than a port of the GNU Emacs Calendar lisp
+Hebcal is, at root, a port of the GNU Emacs Calendar lisp
 code by Edward M. Reingold and Nachum Dershowitz.
 http://emr.cs.iit.edu/~reingold/ 
 http://www.math.tau.ac.il/~nachumd/
