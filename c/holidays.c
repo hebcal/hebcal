@@ -22,11 +22,8 @@
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
    Danny Sadinoff can be reached at 
-   1 Cove La.
-   Great Neck, NY
-   11024
+   danny@sadinoff.com
 
-   sadinoff@panix.com
  */
 
 

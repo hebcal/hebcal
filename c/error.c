@@ -1,7 +1,7 @@
 /*
    $Id$
    Hebcal - A Jewish Calendar Generator
-   Copyright (C) 1994  Danny Sadinoff
+   Copyright (C) 1994-2004  Danny Sadinoff
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -18,11 +18,7 @@
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
    Danny Sadinoff can be reached at 
-   1 Cove La.
-   Great Neck, NY
-   11024
-
-   sadinoff@pobox.com
+   danny@sadinoff.com
  */
 #include "myerror.h"
 #include <errno.h>
