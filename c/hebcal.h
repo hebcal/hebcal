@@ -89,6 +89,7 @@ typedef struct hebrew_year {
 #define YOM_TOV_ENDS 4
 #define CHUL_ONLY 8		/* chutz l'aretz (Diaspora) */
 #define IL_ONLY 16		/* b'aretz (Israel) */
+#define LIGHT_CANDLES_TZEIS 32
 
 typedef struct hinode{   /* holiday input structure */
     date_t date;
