@@ -30,11 +30,10 @@ AM_CPPFLAGS += -DVERSION='"$(VERSION)"'
 
 SUBDIRS = tests doc
 
-bin_PROGRAMS = hebcal sanity-check
+bin_PROGRAMS = hebcal
 
-sanity_check_SOURCES = common.c danlib.c error.c greg.c sanity-check.c
+#sanity_check_SOURCES = common.c danlib.c error.c greg.c sanity-check.c
 
 hebcal_SOURCES = common.c danlib.c error.c mygetopt.c greg.c hebcal.c\
          holidays.c rise.c sedra.c start.c gnu.c format.c
 
-# TESTS = sanity-check

@@ -100,10 +100,10 @@ AM_CPPFLAGS = -DCITY='"$(CITY)"'  -DVERSION='"$(VERSION)"'
 # AM_CFLAGS = -Wall
 SUBDIRS = tests doc
 
-bin_PROGRAMS = hebcal sanity-check
+bin_PROGRAMS = hebcal
 
-sanity_check_SOURCES = common.c danlib.c error.c greg.c sanity-check.c
 
+#sanity_check_SOURCES = common.c danlib.c error.c greg.c sanity-check.c
 hebcal_SOURCES = common.c danlib.c error.c mygetopt.c greg.c hebcal.c\
          holidays.c rise.c sedra.c start.c gnu.c format.c
 
@@ -112,7 +112,7 @@ ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_HEADER = config.h
 CONFIG_CLEAN_FILES =
-bin_PROGRAMS = hebcal$(EXEEXT) sanity-check$(EXEEXT)
+bin_PROGRAMS = hebcal$(EXEEXT)
 PROGRAMS = $(bin_PROGRAMS)
 
 am_hebcal_OBJECTS = common.$(OBJEXT) danlib.$(OBJEXT) error.$(OBJEXT) \
@@ -123,12 +123,6 @@ hebcal_OBJECTS = $(am_hebcal_OBJECTS)
 hebcal_LDADD = $(LDADD)
 hebcal_DEPENDENCIES =
 hebcal_LDFLAGS =
-am_sanity_check_OBJECTS = common.$(OBJEXT) danlib.$(OBJEXT) \
-	error.$(OBJEXT) greg.$(OBJEXT) sanity-check.$(OBJEXT)
-sanity_check_OBJECTS = $(am_sanity_check_OBJECTS)
-sanity_check_LDADD = $(LDADD)
-sanity_check_DEPENDENCIES =
-sanity_check_LDFLAGS =
 
 DEFS = @DEFS@
 DEFAULT_INCLUDES =  -I. -I$(srcdir) -I.
@@ -142,14 +136,13 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@	./$(DEPDIR)/gnu.Po ./$(DEPDIR)/greg.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/hebcal.Po ./$(DEPDIR)/holidays.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/mygetopt.Po ./$(DEPDIR)/rise.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/sanity-check.Po ./$(DEPDIR)/sedra.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/start.Po
+@AMDEP_TRUE@	./$(DEPDIR)/sedra.Po ./$(DEPDIR)/start.Po
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 CFLAGS = @CFLAGS@
-DIST_SOURCES = $(hebcal_SOURCES) $(sanity_check_SOURCES)
+DIST_SOURCES = $(hebcal_SOURCES)
 
 RECURSIVE_TARGETS = info-recursive dvi-recursive install-info-recursive \
 	uninstall-info-recursive all-recursive install-data-recursive \
@@ -159,7 +152,7 @@ DIST_COMMON = README AUTHORS COPYING ChangeLog INSTALL Makefile.am \
 	Makefile.in NEWS TODO aclocal.m4 config.h.in configure \
 	configure.ac depcomp install-sh missing mkinstalldirs
 DIST_SUBDIRS = $(SUBDIRS)
-SOURCES = $(hebcal_SOURCES) $(sanity_check_SOURCES)
+SOURCES = $(hebcal_SOURCES)
 
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
@@ -226,9 +219,6 @@ clean-binPROGRAMS:
 hebcal$(EXEEXT): $(hebcal_OBJECTS) $(hebcal_DEPENDENCIES) 
 	@rm -f hebcal$(EXEEXT)
 	$(LINK) $(hebcal_LDFLAGS) $(hebcal_OBJECTS) $(hebcal_LDADD) $(LIBS)
-sanity-check$(EXEEXT): $(sanity_check_OBJECTS) $(sanity_check_DEPENDENCIES) 
-	@rm -f sanity-check$(EXEEXT)
-	$(LINK) $(sanity_check_LDFLAGS) $(sanity_check_OBJECTS) $(sanity_check_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT) core *.core
@@ -246,7 +236,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/holidays.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mygetopt.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rise.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sanity-check.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sedra.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/start.Po@am__quote@
 
@@ -552,8 +541,6 @@ uninstall-info: uninstall-info-recursive
 	uninstall-binPROGRAMS uninstall-info-am \
 	uninstall-info-recursive uninstall-recursive
 
-
-# TESTS = sanity-check
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
