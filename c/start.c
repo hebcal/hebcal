@@ -293,7 +293,7 @@ void print_city_data( void )
 
 void print_DST_data(void)
 {
-    int cnum;
+    size_t cnum;
 
     for (cnum = 0;
          (cnum < sizeof(savings_bank) / sizeof(dst_t));
@@ -560,12 +560,11 @@ void handleArgs(int argc, char *argv[])
        }
        else if (0 == istrncasecmp(5, argv[Optind], "help"))
        {
-	   int lineNumber;
-
+	   size_t lineNumber;
+           
 	   for (lineNumber = 0;
 		(lineNumber < sizeof(helpArray) / sizeof(char *));
-
-		lineNumber++)
+                lineNumber++)
 	   {
 	      puts(helpArray[lineNumber]);
 	   }
@@ -685,7 +684,7 @@ void handleArgs(int argc, char *argv[])
 
 int tokenize(char *str, int *pargc, char* argv[])
 {
-   char *strtok(), *strdup();
+/*   char *strtok(), *strdup(); */
    char *s;
 
    argv[0] = progname;
@@ -790,6 +789,9 @@ int main(int argc, char* argv[])
 
     default:
         die("Oh, NO! internal error #17q!", "");
+        /* this is dead code, but it silences some uninitialized variable 
+           warnings in gcc   */
+        startAbs = endAbs =0;
     }
 
     tempDate = abs2hebrew(startAbs);
