@@ -17,7 +17,11 @@ be individualy turned on or off:
 CHANGES since version 3.2
    - New option: -8 for hebrew output in iso-8859-8-logical charset
    - Canada and Mexico observe USA Daylight Saving Time rule.
-   - Support the 1996 European Union DST rule for Berlin and London.
+   - Support the 1996 European Union DST scheme for EU cities.
+   - Added cities: Ashdod, Be'er Sheva, Eilat, Haifa, Petach Tikvah,
+     Tel Aviv, Tiberias
+   - Added cities: Kiev, La Paz, Montreal, Moscow, Paris, Saint Petersburg
+   - "hebcal cities" prints out lat/long and time zone offset from GMT.
 
 CHANGES since version 3.0b
    - Shabbat starts 40 minutes before sundown in Jerusalem.
