@@ -1,3 +1,8 @@
+Changes in 3.4
+* Support for Australia DST scheme
+* Add 3 cities: Melbourne, Sydney, Ottawa
+* Added manpage to the build
+
 Changes in 3.4-beta3
 - removed reference to NAN in the code.  It's a silly idea.
 - taught autoconf how to find libm.
