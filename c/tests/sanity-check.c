@@ -4,10 +4,11 @@
 */
 
 #include <stdio.h>
-#include  <stdlib.h>
+#include <stdlib.h>
+#include "greg.h"
 #include "common.h"
 
-char * progname = "test-bug.cc";
+char * progname = "sanity-check.c";
 
 /* returns 1 */
 int reportIt(long d , date_t hebrew)
@@ -53,11 +54,14 @@ int main(int argc, char*argv[])
 	    printf("   %ld\n",d);
 	    intervalCount = interval-1;
 	}
-	date_t hebrew = abs2hebrew(d);
-	if( hebrew.dd < 0 
-	    || hebrew.mm < 0 
-	    || hebrew.yy < 0  )
-	  retVal += reportIt(d,hebrew);
+
+        {                       /* reduce scope for hebrew */
+            date_t hebrew = abs2hebrew(d);
+            if( hebrew.dd < 0 
+                || hebrew.mm < 0 
+                || hebrew.yy < 0  )
+                retVal += reportIt(d,hebrew);
+        }
     }
     printf("found %d failure cases\n",retVal);
     exit( retVal );
