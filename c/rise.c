@@ -57,10 +57,13 @@
 #include "mystring.h"
 #include "mymath.h"
 #include "rise.h"
+#include "danlib.h"
+#include "myerror.h"
+
 #define TRUE  1
 #define FALSE 0
 
-int latdeg, latmin, longdeg, longdeg, longmin, TZ;
+int latdeg, latmin, longdeg, longmin, TZ;
 
 int myclock = TWELVE;           /* Chooses a 12 hour clock */
 
@@ -131,6 +134,10 @@ int suntime (double *sunrise, double *sunset,
     case ASTRONOMICAL_TWILIGHT:
         cos_z = cos (DEGRAD * TODEC (106, 0));
         break;
+    default:
+        die("bad set_opt argument to suntime: %d", hc_itoa(set_opt));
+        /* dead code to silence uninit warning in gcc */
+        cos_z = NAN;
     }
     
 
@@ -158,6 +165,8 @@ int suntime (double *sunrise, double *sunset,
     case TAL_TEF_2:
         cos_z = cos (DEGRAD * TODEC (100, 12));
         break;
+    default:
+        die("bad rise_opt to suntime: %d",hc_itoa(rise_opt));
     }
     
     if (!one_time (day, sunrise, lo_hr, TRUE, cos_z, cos_phi, sin_phi))
