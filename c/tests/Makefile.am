@@ -17,6 +17,10 @@
 
 ## Process this file with automake to produce Makefile.in.
 
+#I sure wish I knew how to create a test program that doesn't get installed... -djs
+bin_PROGRAMS = sanity-check
+
+sanity_check_SOURCES = $(top_srcdir)/common.c $(top_srcdir)/danlib.c $(top_srcdir)/error.c $(top_srcdir)/greg.c sanity-check.c
 
 TESTS = hebcal-1 hebcal-2
 
