@@ -179,6 +179,19 @@ set_DST_bounds (beginDST, endDST, gregYr)
       *endDST = day_on_or_before (SUN, greg2abs (tempDt) - 1L);
       DST_value = 60;
       break;
+    case DST_EU:
+      /* The EU version of Daylight Saving Time runs from the last
+       * Sunday in March through the last Sunday in October.
+       * it starts at 1am instead of 2am, but that's not relevant here.
+       * http://webexhibits.org/daylightsaving/g.html
+       */
+      *beginDST = day_on_or_before (SUN, greg2abs (tempDt) - 1L);
+      tempDt.dd = 1;
+      tempDt.mm = 11;
+      /*  the sunday before the first of november */
+      *endDST = day_on_or_before (SUN, greg2abs (tempDt) - 1L);
+      DST_value = 60;
+      break;
     case DST_ISRAEL:
       /* daylight savings time begins in Israel on the */
       /* first Sunday after Passover ends on Nisan 21: */

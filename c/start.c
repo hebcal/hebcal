@@ -109,7 +109,7 @@ static char
    "   -z : Use specified timezone, disabling daylight savings time,",
    "        overriding the -C (localize to city) switch.",
    "   -Z scheme : change to daylight savings scheme.  The possible values",
-   "        of scheme are currently usa, israel, and none.",
+   "        of scheme are currently usa, israel, eu, and none.",
    "",
    "hebcal help    -- Print this message.",
    "hebcal info    -- Print version and localization data.",
@@ -161,6 +161,7 @@ dst_t savings_bank[] =
    {"usa", DST_USOFA},
    {"none", DST_NONE},
    {"israel", DST_ISRAEL},
+   {"eu", DST_EU},
    {"", 0}
 };
 
@@ -175,7 +176,7 @@ city_t cities[] =
 {
    {"Atlanta", 33, 45, 84, 23, -5, DST_USOFA},
    {"Austin", 30, 16, 97, 45, -6, DST_USOFA},
-   {"Berlin", 52, 31, -13, -24, 1, DST_NONE},
+   {"Berlin", 52, 31, -13, -24, 1, DST_EU},
    {"Baltimore", 39, 17, 76, 36, -5, DST_USOFA},
    {"Bogota", 4, 36, 74, 5, -5, DST_NONE},
    {"Boston", 42, 20, 71, 4, -5, DST_USOFA},
@@ -192,10 +193,10 @@ city_t cities[] =
    {"Houston", 29, 46, 95, 22, -6, DST_USOFA},
    {"Jerusalem", 31, 47, -35, -14, 2, DST_ISRAEL},
    {"Johannesburg", -28, -3, -26, -12, 1, DST_NONE},
-   {"London", 51, 30, 0, 10, 0, DST_NONE},
+   {"London", 51, 30, 0, 10, 0, DST_EU},
    {"Los Angeles", 34, 4, 118, 15, -8, DST_USOFA},
    {"Miami", 25, 46, 80, 12, -5, DST_USOFA},
-   {"Mexico City", 19, 24, 99, 9, -6, DST_NONE},
+   {"Mexico City", 19, 24, 99, 9, -6, DST_USOFA},
    {"New York", 40, 43, 74, 1, -5, DST_USOFA},
    {"Omaha", 41, 16, 95, 56, -7, DST_USOFA},
    {"Philadelphia", 39, 57, 75, 10, -5, DST_USOFA},
@@ -204,8 +205,8 @@ city_t cities[] =
    {"Saint Louis", 38, 38, 90, 12, -6, DST_USOFA},
    {"San Francisco", 37, 47, 122, 25, -8, DST_USOFA},
    {"Seattle", 47, 36, 122, 20, -8, DST_USOFA},
-   {"Toronto", 43, 38, 79, 24, -5, DST_NONE},
-   {"Vancouver", 49, 16, 123, 7, -8, DST_NONE},
+   {"Toronto", 43, 38, 79, 24, -5, DST_USOFA},
+   {"Vancouver", 49, 16, 123, 7, -8, DST_USOFA},
    {"Washington DC", 38, 55, 77, 0, -5, DST_USOFA},
    {0, 0, 0, 0, 0, 0, 0}
 };
