@@ -14,7 +14,7 @@
 CITY = New_York
 
 
-VERSION = 3.4-beta2
+VERSION = 3.4-beta3
 
 #there is no need to change anything below this line
 #-----------------------------------------------------------------

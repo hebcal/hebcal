@@ -137,7 +137,8 @@ int suntime (double *sunrise, double *sunset,
     default:
         die("bad set_opt argument to suntime: %d", hc_itoa(set_opt));
         /* dead code to silence uninit warning in gcc */
-        cos_z = 0.0/0.0;        /* this used to be NAN, but I got a report of Slackware 10 not defining it. */
+        cos_z = 0.0/0.0;        /* this used to be NAN, but It turns out that this is only cleanly
+                                 * defined on OS X*/
     }
     
 

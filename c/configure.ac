@@ -11,6 +11,12 @@ AM_CONFIG_HEADER([config.h])
 AC_PROG_CC
 
 # Checks for libraries.
+dnl AC_CHECK_LIB(m, sin)
+dnl AC_CHECK_LIB(m, cos)
+dnl AC_CHECK_LIB(m, atan)
+AC_CHECK_LIB(m, sqrt)
+dnl AC_CHECK_LIB(m, acos)
+dnl AC_CHECK_LIB(m, fabs)
 
 # Checks for header files.
 AC_HEADER_STDC
