@@ -1,6 +1,7 @@
 /*
    Hebcal - A Jewish Calendar Generator
    Copyright (C) 1994  Danny Sadinoff
+   $Id$
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -245,25 +246,25 @@ int hYear;
    if (short_kislev (hYear))
    {
       tmpholp = getHolstorep ();
-      tmpholp->name = "Channukah: 7 Candles";
+      tmpholp->name = "Chanukah: 7 Candles";
       PushHoliday (tmpholp, &var_holidays[TEVET][1]);
       tmpholp = getHolstorep ();
-      tmpholp->name = "Channukah: 8 Candles";
+      tmpholp->name = "Chanukah: 8 Candles";
       PushHoliday (tmpholp, &var_holidays[TEVET][2]);
       tmpholp = getHolstorep ();
-      tmpholp->name = "Channukah: 8th Day";
+      tmpholp->name = "Chanukah: 8th Day";
       PushHoliday (tmpholp, &var_holidays[TEVET][3]);
    }
    else
    {
       tmpholp = getHolstorep ();
-      tmpholp->name = "Channukah: 7 Candles";
+      tmpholp->name = "Chanukah: 7 Candles";
       PushHoliday (tmpholp, &var_holidays[KISLEV][30]);
       tmpholp = getHolstorep ();
-      tmpholp->name = "Channukah: 8 Candles";
+      tmpholp->name = "Chanukah: 8 Candles";
       PushHoliday (tmpholp, &var_holidays[TEVET][1]);
       tmpholp = getHolstorep ();
-      tmpholp->name = "Channukah: 8th Day";
+      tmpholp->name = "Chanukah: 8th Day";
       PushHoliday (tmpholp, &var_holidays[TEVET][2]);
    }
 
