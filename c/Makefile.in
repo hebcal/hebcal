@@ -107,6 +107,8 @@ bin_PROGRAMS = hebcal
 hebcal_SOURCES = common.c danlib.c error.c mygetopt.c greg.c hebcal.c\
          holidays.c rise.c sedra.c start.c gnu.c format.c
 
+
+BUILT_SOURCES = $(srcdir)/package.m4
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
@@ -154,7 +156,7 @@ DIST_COMMON = README AUTHORS COPYING ChangeLog INSTALL Makefile.am \
 DIST_SUBDIRS = $(SUBDIRS)
 SOURCES = $(hebcal_SOURCES)
 
-all: config.h
+all: $(BUILT_SOURCES) config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
 .SUFFIXES:
@@ -483,6 +485,7 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
+	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
 clean: clean-recursive
 
 clean-am: clean-binPROGRAMS clean-generic mostlyclean-am
@@ -541,6 +544,16 @@ uninstall-info: uninstall-info-recursive
 	uninstall-binPROGRAMS uninstall-info-am \
 	uninstall-info-recursive uninstall-recursive
 
+
+$(srcdir)/package.m4: $(top_srcdir)/configure.ac
+	{                                      \
+	echo '# Signature of the current package.'; \
+	echo 'm4_define([AT_PACKAGE_NAME],      [@PACKAGE_NAME@])'; \
+	echo 'm4_define([AT_PACKAGE_TARNAME],   [@PACKAGE_TARNAME@])'; \
+	echo 'm4_define([AT_PACKAGE_VERSION],   [@PACKAGE_VERSION@])'; \
+	echo 'm4_define([AT_PACKAGE_STRING],    [@PACKAGE_STRING@])'; \
+	echo 'm4_define([AT_PACKAGE_BUGREPORT], [@PACKAGE_BUGREPORT@])'; \
+	} >$(srcdir)/package.m4
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
