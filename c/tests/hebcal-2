@@ -14,7 +14,7 @@ ${SANITY_CHECK} > hebcal-test2.out
 
 
 : ${DIFF=diff}
-${DIFF} hebcal-test2.ok hebcal-test2.out
+${DIFF} ${srcdir}/hebcal-test2.ok hebcal-test2.out
 result=$?
 
 rm -f $tmpfiles

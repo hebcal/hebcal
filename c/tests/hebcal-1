@@ -16,7 +16,7 @@ ${HEBCAL} -d 2004 > hebcal-test1.out
 
 
 : ${DIFF=diff}
-${DIFF} hebcal-test1.ok hebcal-test1.out
+${DIFF} ${srcdir}/hebcal-test1.ok hebcal-test1.out
 result=$?
 
 rm -f $tmpfiles

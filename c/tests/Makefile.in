@@ -86,6 +86,7 @@ check_PROGRAMS = sanity-check
 sanity_check_SOURCES = sanity-check.c
 
 sanity_check_LDADD = ../common.o ../danlib.o ../error.o ../greg.o 
+AM_CPPFLAGS = -I $(top_srcdir)
 
 TESTS = hebcal-1 hebcal-2
 
@@ -95,7 +96,7 @@ MOSTLYCLEANFILES = $(TESTS_outputfiles)
 
 EXTRA_DIST = $(TESTS) $(TESTS_okayfiles)
 
-TESTS_ENVIRONMENT = top_srcdir=$(top_srcdir) PATH=.:..:$$PATH \
+TESTS_ENVIRONMENT = top_srcdir=$(top_srcdir) srcdir=$(srcdir) PATH=.:..:$$PATH \
 		    HEBCAL=`echo hebcal|sed '$(transform)'` \
 		    SANITY_CHECK=`echo sanity-check|sed '$(transform)'` \
 		    $(SHELL)
