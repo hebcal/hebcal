@@ -11,6 +11,7 @@ city_t cities[] =
     {"Ashdod", 31, 48, -34, -38, 2, DST_ISRAEL},
     {"Atlanta", 33, 45, 84, 23, -5, DST_USOFA},
     {"Austin", 30, 16, 97, 45, -6, DST_USOFA},
+    {"Baghdad", 33, 14, -44, -22, 3, DST_EU},
     {"Beer Sheva", 31, 15, -34, -47, 2, DST_ISRAEL},
     {"Berlin", 52, 31, -13, -24, 1, DST_EU},
     {"Baltimore", 39, 17, 76, 36, -5, DST_USOFA},
