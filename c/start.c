@@ -182,6 +182,7 @@ city_t;
 
 city_t cities[] =
 {
+   /* name, latdeg, latmin, longdeg, longmin, TZ, DST_scheme */
    {"Atlanta", 33, 45, 84, 23, -5, DST_USOFA},
    {"Austin", 30, 16, 97, 45, -6, DST_USOFA},
    {"Berlin", 52, 31, -13, -24, 1, DST_EU},
@@ -205,6 +206,7 @@ city_t cities[] =
    {"Los Angeles", 34, 4, 118, 15, -8, DST_USOFA},
    {"Miami", 25, 46, 80, 12, -5, DST_USOFA},
    {"Mexico City", 19, 24, 99, 9, -6, DST_USOFA},
+   {"Montreal", 45, 30, 73, 36, -5, DST_USOFA},
    {"New York", 40, 43, 74, 1, -5, DST_USOFA},
    {"Omaha", 41, 16, 95, 56, -7, DST_USOFA},
    {"Philadelphia", 39, 57, 75, 10, -5, DST_USOFA},
@@ -229,7 +231,9 @@ void
    printf("          %dd%d' %c latitude\n", abs(latdeg), abs(latmin),
 	  latdeg < 0 ? 'S' : 'N');
    printf("          %dd%d' %c longitude\n", abs(longdeg), abs(longmin),
-	  longdeg < 0 ? 'W' : 'E');
+	  longdeg > 0 ? 'W' : 'E');
+   printf("          GMT %s%d:00\n",
+	  TZ < 0 ? "" : "+", TZ);
    printf("\nEnvironment variable for default city: %s\n", ENV_CITY);
    printf("\nEnvironment variable for default options: %s\n", ENV_OPTS);
 }
@@ -298,7 +302,14 @@ void
 	cities[cnum].name;
 	cnum++)
    {
-      puts(cities[cnum].name);
+       printf("%s (%dd%d' %c lat, %dd%d' %c long, GMT %s%d:00)\n",
+	      cities[cnum].name,
+	      abs(cities[cnum].latdeg), abs(cities[cnum].latmin),
+	      cities[cnum].latdeg < 0 ? 'S' : 'N',
+	      abs(cities[cnum].longdeg), abs(cities[cnum].longmin),
+	      cities[cnum].longdeg > 0 ? 'W' : 'E',
+	      cities[cnum].TZ < 0 ? "" : "+", cities[cnum].TZ
+	   );
       if (0 == (cnum + 2) % SCREEN_HEIGHT)
       {
 	 printf(" ---MORE---    Hit Enter To Continue....");
