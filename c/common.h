@@ -1,4 +1,8 @@
 /* Copyright(c) 1994  Danny Sadinoff
+   Portions Copyright (c) 2002 Michael J. Radwin. All Rights Reserved.
+
+   http://sourceforge.net/projects/hebcal
+
   See section COPYING for conditions for redistribution
 */
 #ifndef __COMMON__

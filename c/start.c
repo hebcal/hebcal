@@ -1,6 +1,9 @@
 /*
    Hebcal - A Jewish Calendar Generator
    Copyright (C) 1994  Danny Sadinoff
+   Portions Copyright (c) 2002 Michael J. Radwin. All Rights Reserved.
+
+   http://sourceforge.net/projects/hebcal
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -130,6 +133,7 @@ static char
    "hebcal 93, but rather hebcal 1993.",
    "", "",
    "Hebcal is copyright (c) 1994 By Danny Sadinoff",
+   "Portions Copyright (c) 2002 Michael J. Radwin. All rights reserved.",
    "This program is free software; you can redistribute it and/or",
    "modify it under the terms of the GNU General Public License",
    "as published by the Free Software Foundation; either version 2",
@@ -146,7 +150,10 @@ static char
    "Send money to Danny Sadinoff",
    "            1 Cove La.    ",
    "            Great Neck, NY",
-   "                    11024"
+   "                    11024",
+   "",
+   "WWW:",
+   "            http://sourceforge.net/projects/hebcal"
 };
 
 typedef struct

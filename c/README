@@ -1,5 +1,6 @@
-Hebcal 3.1  - a program for printing Jewish calendars
+Hebcal 3.3  - a program for printing Jewish calendars
   by Danny Sadinoff
+  portions by Michael J. Radwin
 
 DESCRIPTION
 Hebcal is a program which prints out the days in the Jewish calendar
@@ -12,6 +13,11 @@ be individualy turned on or off:
   The weekly Sedrah
   The day of the week
   The days of the Omer
+
+CHANGES since version 3.2
+   - New option: -8 for hebrew output in iso-8859-8-logical charset
+   - Canada and Mexico observe USA Daylight Saving Time rule.
+   - Support the 1996 European Union DST rule for Berlin and London.
 
 CHANGES since version 3.0b
    - Shabbat starts 40 minutes before sundown in Jerusalem.
@@ -137,4 +143,4 @@ DISTRIBUTION
    for a disk).
 
    The latest version of the code will be available from 
-   http://pobox.com/~sadinoff/hebcal
+   http://sourceforge.net/projects/hebcal

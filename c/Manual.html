@@ -1,0 +1,895 @@
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta name="Content-Style" content="text/css">
+<title>HEBCAL</title>
+</head>
+<body>
+
+<h1 align=center>HEBCAL</h1>
+<a href="#NAME">NAME</a><br>
+<a href="#SYNOPSIS">SYNOPSIS</a><br>
+<a href="#DESCRIPTION">DESCRIPTION</a><br>
+<a href="#OPTIONS">OPTIONS</a><br>
+<a href="#CANDLE-LIGHTING TIMES">CANDLE-LIGHTING TIMES</a><br>
+<a href="#EXAMPLES">EXAMPLES</a><br>
+<a href="#ENVIRONMENT">ENVIRONMENT</a><br>
+<a href="#AUTHOR">AUTHOR</a><br>
+<a href="#SEE ALSO">SEE ALSO</a><br>
+<a href="#DIAGNOSTICS">DIAGNOSTICS</a><br>
+<a href="#DISCLAIMER">DISCLAIMER</a><br>
+<a href="#BUGS">BUGS</a><br>
+<a href="#BUG REPORTS TO">BUG REPORTS TO</a><br>
+<a href="#COPYING">COPYING</a><br>
+
+<hr>
+<!-- Creator     : groff version 1.17.2 -->
+<!-- CreationDate: Wed Apr 17 02:31:22 2002 -->
+<a name="NAME"></a>
+<h2>NAME</h2>
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+hebcal - a Jewish calendar generator</td></table>
+<a name="SYNOPSIS"></a>
+<h2>SYNOPSIS</h2>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>hebcal</b> [ <b>-8acdDehHiorsStTwy</b> ]<br>
+[ <b>-I input_file</b> ]<br>
+[ <b>-Y yahrtzeit_file</b> ]<br>
+[ <b>-C city</b> ]<br>
+[ <b>-l latitude -L longitude]</b><br>
+[ <b>-z timezone</b> ]<br>
+[ <b>-Z daylight_savings_scheme</b> ]<br>
+[[ <b>month</b> [ <b>day</b> ]] <b>year</b> ]<b><br>
+hebcal help<br>
+hebcal info<br>
+hebcal DST<br>
+hebcal cities<br>
+hebcal copying<br>
+hebcal warranty</b></td></table>
+<a name="DESCRIPTION"></a>
+<h2>DESCRIPTION</h2>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+With no arguments, <b>hebcal</b> will print to stdout the
+dates of the Jewish holidays in the current secular year.
+Each line is prefixed with a gregorian date of the form
+mm/dd/yyyy.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+By specifying <b>month, day,</b> or <b>year,</b> output can
+be limited to a particular month or date in a particular
+year. Note that <b>year</b> is usually a four-digit integer,
+So 92 is during the Roman period, not the late twentieth
+century. In if the hebrew dates option is turned on, this
+number represents th Jewish calendar year. <b>month</b> is a
+number from 1..12, or the name of a Jewish calendar
+month.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>day</b> is a number from 1..31.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+For example, the command</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<pre>     hebcal 10 1992
+</pre>will print out the holidays occurring in October of 1992 C.E., while the command</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<pre>
+     hebcal Tish 5752
+
+</pre>will print dates of interest in the month of Tishrei in Jewish calendar year 5752.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+NOTE: hebcal 92 is <i>not</i> the same as hebcal 1992. The
+year is assumed to be complete, so the former calendar
+preceeds the latter by nineteen centuries.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+A few other bells and whistles include the weekly
+<i>sedra</i> as well as the day of the week, the count of
+the <i>omer,</i> and the Hebrew date.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+Output from hebcal can be used to drive calendar(1).
+Day-to-day use for hebcal is provided for in the <b>-T</b>
+and <b>-t</b> switches, which print out Jewish calendar
+entries for the current date.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+To get a quick-reference on-line help, type</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<pre>     hebcal help
+</pre>at the command prompt.</td></table>
+<a name="OPTIONS"></a>
+<h2>OPTIONS</h2>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>-8</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+Use 8-bit Hebrew (ISO-8859-8-Logical).</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>-a</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+Use Ashkenazis hebrew.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>-c</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+Add <i>approximate</i> candle-lighting times. See
+below.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>-d</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+Print the Hebrew date for the entire date
+range.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>-D</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+Print the hebrew date for dates with some
+event.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>-e</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+Change the output format to European-style dates:
+dd.mm.yyyy</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>-h</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+Suppress holidays in output. User defined calendar events
+are unaffected by this switch.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>-H</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+When the -H switch is used, all dates specified on the
+command line are assumed to be hebrew dates. So for
+instance,</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+<b>example% hebcal -H 5754</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+<b>will print data for 5754, Starting in Tishrei, and ending
+in Elul. Hebcal is smart enough to detect a Hebrew month and
+infer that you want a Hebrew date range, so you could
+type</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+<b>example% hebcal tish 5754</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+<b>The -H switch would be superfluous in this case. Invoking
+hebcal with just the -H switch by itself will print data for
+the current Hebrew year, starting in
+Tishrei.</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>-i</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+Use the Israeli sedra scheme when used in conjunction with
+<b>-S</b> or <b>-s.</b> This has no effect if the <b>-S</b>
+or <b>-s</b> switches are unused.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>-I</b> <i>file</i></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+Read extra events from <i>file.</i> These events are printed
+regardless of the <b>-h</b> suppress holidays switch.<br>
+There is one holiday per line in <b>file,</b> each with the
+format<i><br>
+month day description</i><br>
+where <i>month</i> is a string identifying the Jewish month
+in question <i>day</i> is a number from 1 to 30, and
+<i>description</i> is a newline-terminated string describing
+the holiday. An example might be<br>
+Adar 1 Start cleaning kitchen for Passover.<br>
+Adar 1 Start cleaning kitchen for Passover.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>-l</b> <i>deg,min</i></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+Set the latitude for solar calculations to <i>deg</i>
+degrees and <i>min</i></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>-L</b> <i>deg,min</i></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+Set the longitude for solar calculations to <i>deg</i>
+degrees and <i>min</i> minutes. <b>NOTE: Negative values are
+EAST longitude.</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>-o</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+Add the count of the <i>omer</i> to the output.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>-r</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+Use a tab-delineated format, and somewhat terser strings.
+Instead of saying ' 13th day of the omer ' hebcal will say '
+Omer: 13 '</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>-s</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+Add the weekly <i>sedra</i> to the output on Saturdays. See
+<b>-i.</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>-S</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+Add the weekly <i>sedra</i> to the output every day. When
+this option is invoked, every time a day is printed, the
+torah reading for the Saturday on or immediately following
+that date is printed. If there is no reading for the next
+Saturday, then nothing is printed. See
+<b>-i.</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>-t</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+Print calendar information for today's date only. <b>-d</b>
+and <b>-o</b> are asserted with this option.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>-T</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+Same as -t, only without the gregorian date. This option is
+useful in login scripts, just to see what's happening today
+in the Jewish calendar.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>-w</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+Add the day of the week to the output.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>-y</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+Print only the last two digits of the year.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>-Y</b> <i>file</i></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+Read a table of yahrtzeit dates from <i>file.</i> These
+events are printed regardless of the <b>-h</b> suppress
+holidays switch.<br>
+There is one death-date per line in <i>file,</i> each with
+the format<i><br>
+month day year description</i><br>
+where <i>month, day</i> and <i>year</i> form the
+<b>gregorian</b> date of death. <i>description</i> is a
+newline-terminated string to be printed on the
+<i>yahrtzeit.</i> An example might be</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+12 29 1957 Menachem Mendel's yahrtzeit.<br>
+5 15 1930 Benjamin's yahrtzeit.</td></table>
+<a name="CANDLE-LIGHTING TIMES"></a>
+<h2>CANDLE-LIGHTING TIMES</h2>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+Hebcal's candlelighting times are only approximations. If
+you ever have any doubts about it's times, consult your
+local halachic authority. If you enter geographic
+coordinates above the artic circle or antarctic circle, the
+times are guaranteed to be wrong.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+Hebcal contains a small database of cities with their
+associated geographic information and time-zone information.
+The geographic and time information necessary to calculate
+sundown times can come to hebcal any of three
+ways:</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+1) The default: the system manager sets a default city when
+the program is compiled.<br>
+2) Hebcal looks in the environment variable
+<b>HEBCAL_CITY</b> for the name of a city in hebcal's
+database, and if it finds one, hebcal will make that the new
+default city.<br>
+3) 1 and 2 may be overridden by command line arguments,
+including those specified in the <b>HEBCAL_OPTS</b>
+environment variable. The most natural way to do this is to
+use the <b>-c</b> <i>city</i> command. This will localize
+hebcal to <i>city.</i> A list of the cities hebcal knows
+about can be obtained by typing</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<pre>     hebcal cities
+</pre>at the command prompt. If the city you want isn't on that list, you can directly control hebcal's geographic information with the <b>-l, -L -z</b> and <b>-Z</b> <i>DST</i> switches. Note that changing the geographic coordinates causes the timezone to default to Zulu and the daylight savings time processor to default to 'none.' To get a list of possible values for <i>DST,</i> type</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<pre>     hebcal DST
+</pre>at the command prompt.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+For a status report on customizations, type
+type</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<pre>     hebcal info
+</pre>at the command prompt.</td></table>
+<a name="EXAMPLES"></a>
+<h2>EXAMPLES</h2>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+To find the days of the <i>omer</i> in 1997, printing the
+days of the week:</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+<pre>
+<b>example% hebcal -how 1997
+
+4/23/97 Wed, 1st day of the Omer
+
+4/24/97 Thu, 2nd day of the Omer
+
+4/25/97 Fri, 3rd day of the Omer
+
+ .
+
+ .
+
+ .
+
+6/9/97 Mon, 48th day of the Omer
+
+6/10/97 Tue, 49th day of the Omer
+
+
+</b>To print only the weekly <i>sedrot
+</i>                         of Nisan 5770
+
+
+<b>example% hebcal -hs Nisan 5770
+
+3/20/2010 Parashat Vayikra
+
+3/27/2010 Parashat Tzav
+
+4/10/2010 Parashat Shmini
+
+
+
+</b>To find out what's happening in the Jewish calendar today , use
+
+
+<b>example% hebcal -TS
+
+19 of Nisan, 5752
+
+Parshat Achrei Mot
+
+Pesach V (CH&quot;M)
+
+4th day of the Omer
+
+
+</b></pre></td></table>
+<a name="ENVIRONMENT"></a>
+<h2>ENVIRONMENT</h2>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>Hebcal</b> uses two environment variables:</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>HEBCAL_CITY</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+<b>Hebcal</b> uses this value as the default city for sunset
+calculations. A list of available cities is available with
+from hebcal with the command:<br>
+hebcal cities</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>HEBCAL_OPTS</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+The value of this variable is automatically processed as if
+it were typed at the command line <i>before</i> any other
+actual command-line-arguments.</td></table>
+<a name="AUTHOR"></a>
+<h2>AUTHOR</h2>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+Danny Sadinoff</td></table>
+<a name="SEE ALSO"></a>
+<h2>SEE ALSO</h2>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+calendar(1), emacs(1), hcal(1), hdate(1), omer(1),
+remind(1), rise(1)</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+The original motivation for the algorithms in this program
+was the <i>Tur Shulchan Aruch.</i></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+For version 3, much of the program was rewritten using Emacs
+19's calendar routines by Edward M. Reingold and Nachum
+Dershowitz. Their program is extremely clear and provides
+many instructive examples of fine calendar code in
+emacs-LISP.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+A well written treatment of the Jewish calendar for the
+layman can be found in <i>Understanding the Jewish
+Calendar</i> by Rabbi Nathan Bushwick. A more complete
+bibliography on the topic can be found there, as well as in
+the <i>Encyclopedia Judaica</i> entry on the
+calendar.</td></table>
+<a name="DIAGNOSTICS"></a>
+<h2>DIAGNOSTICS</h2>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>hebcal help</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+Prints a shorter version of this manpage, with comments on
+each option.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>hebcal info</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+Prints the version number and default values of the
+program.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>hebcal DST</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+Prints a list of available daylight savings time schemes,
+suitable as arguments to the <b>-Z</b> <i>DST</i>
+option.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>hebcal cities</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+Prints a list of cities which hebcal knows about, suitable
+as arguments to the <b>-C</b> <i>city</i> option. If your
+city does not appear on this list, put the necessary
+defaults in the <b>DST_OPTS</b> environment
+variable.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>hebcal copying</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+Prints the GNU license, with information about copying the
+program. See below.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>hebcal warranty</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+Tells you how there's NO WARRANTY for hebcal.</td></table>
+<a name="DISCLAIMER"></a>
+<h2>DISCLAIMER</h2>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+This is just a program I wrote during summer school and
+while avoiding my senior project. It should not be invested
+with any sort of halachic authority.</td></table>
+<a name="BUGS"></a>
+<h2>BUGS</h2>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+Hebrew dates are only valid before sundown on that secular
+date. An option to control this will be added in a later
+release.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+Negative longitudes are EAST of Greenwich.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+Some combinations of options produce weird results, e.g.<br>
+hebcal -dH nisan 5744<br>
+hebcal -dH 5744<br>
+This comes into play when you use the <b>ENV_OPT</b>
+environment variable.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+The sunup/sundown routines aren't accurate enough. If you
+enter geographic coordinates above the artic circle or
+antarctic circle, the times are guaranteed to be
+wrong.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+Hebcal performs no checking for changes between the julian
+and gregorian calendar, so secular dates before 1752 are
+untrustworthy.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+Hebcal cannot handle date computations before 2 C.E.
+sorry.</td></table>
+<a name="BUG REPORTS TO"></a>
+<h2>BUG REPORTS TO</h2>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+Danny Sadinoff<br>
+sadinoff@pobox.com</td></table>
+<a name="COPYING"></a>
+<h2>COPYING</h2>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+Copyright (c) 1994 Danny Sadinoff<br>
+Portions Copyright (c) 2002 Michael J. Radwin. All Rights
+Reserved.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+Permission is granted to make and distribute verbatim copies
+of this manual provided the copyright notice and this
+permission notice are preserved on all copies.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+Permission is granted to copy and distribute modified
+versions of this manual under the conditions for verbatim
+copying, provided that the entire resulting derived work is
+distributed under the terms of a permission notice identical
+to this one.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+Permission is granted to copy and distribute translations of
+this manual into another language, under the above
+conditions for modified versions, except that this
+permission notice may be included in translations approved
+by the Free Software Foundation instead of in the original
+English.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+For a full text of the copyright and lack of warranty
+information, type<br>
+hebcal copying<br>
+or<br>
+hebcal warranty<br>
+at the command line.</td></table>
+<hr>
+</body>
+</html>

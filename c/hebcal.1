@@ -1,7 +1,8 @@
 .\" $Id$  -*- nroff -*-
 .\" Copyright(c) 1994  Danny Sadinoff
+.\" Portions Copyright (c) 2002 Michael J. Radwin. All Rights Reserved.
 .\" See section COPYING for conditions for redistribution
-.TH HEBCAL 1 "Hebcal Version 3.1" "Danny Sadinoff"
+.TH HEBCAL 1 "Hebcal Version 3.3" "Danny Sadinoff"
 .\" "
 .de BP
 .sp
@@ -13,7 +14,7 @@ hebcal - a Jewish calendar generator
 .SH SYNOPSIS
 .B hebcal
 [ 
-.B \-acdDehHiorsStTwy
+.B \-8acdDehHiorsStTwy
 ]
 .if n .ti +5
 .br
@@ -138,6 +139,9 @@ To get a quick\-reference on\-line help, type
 .fi
 at the command prompt.
 .SH OPTIONS
+.TP
+.B "\-8"
+Use 8-bit Hebrew (ISO-8859-8-Logical).
 .TP
 .BI "\-a"
 Use Ashkenazis hebrew.
@@ -520,9 +524,11 @@ Hebcal cannot handle date computations before 2 C.E.  sorry.
 .SH BUG REPORTS TO
 Danny Sadinoff
 .br
-sadinoff@panix.com 
+sadinoff@pobox.com 
 .SH COPYING
 Copyright (c) 1994 Danny Sadinoff
+.br
+Portions Copyright (c) 2002 Michael J. Radwin. All Rights Reserved.
 .PP
 Permission is granted to make and distribute verbatim copies of
 this manual provided the copyright notice and this permission notice

@@ -1,6 +1,10 @@
 /*
    Hebcal - A Jewish Calendar Generator
    Copyright (C) 1994  Danny Sadinoff
+   Portions Copyright (c) 2002 Michael J. Radwin. All Rights Reserved.
+
+   http://sourceforge.net/projects/hebcal
+
    $Id$
 
    This program is free software; you can redistribute it and/or
