@@ -229,6 +229,7 @@ city_t cities[] =
     {"Tiberias", 32, 58, -35, -32, 2, DST_ISRAEL},
     {"Toronto", 43, 38, 79, 24, -5, DST_USOFA},
     {"Vancouver", 49, 16, 123, 7, -8, DST_USOFA},
+    {"White Plains",  41, 2, 73, 45, -5, DST_USOFA },
     {"Washington DC", 38, 55, 77, 0, -5, DST_USOFA},
     {0, 0, 0, 0, 0, 0, 0}
 };
