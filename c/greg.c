@@ -158,9 +158,11 @@ void setDate ( date_t *d )
    pointer to the string.
  */
 
-    time_t time ();
+/*    
+FIX: removing these decls, but need to start doing compilation platofrm checks to ensure that these aren't necessary.
+time_t time ();
     char *ctime( const time_t * );
-    
+*/  
     time_t secs = time (NULL);
     char *timestr = ctime (&secs);
 
