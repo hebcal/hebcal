@@ -5,20 +5,16 @@
 # Portions Copyright (c) 2002 Michael J. Radwin. All Rights Reserved.
 # See section COPYING for conditions for redistribution
 
-#The CITY macro should be set to one of the following:
-#ATLANTA AUSTIN BERLIN BOGOTA BOSTON BUENOS_AIRES BUFFALO CHICAGO
-#CINCINNATI CLEVELAND DALLAS DENVER DETROIT HAWAII HOUSTON JERUSALEM
-#JOHANNESBURG LONDON LOS_ANGELES MIAMI MEXICO_CITY NEW_YORK OMAHA
-#PHILADELPHIA PHOENIX PITTSBURGH SAINT_LOUIS SAN_FRANCISCO SEATTLE
-#TORONTO VANCOUVER WASHINGTON_DC
+#The CITY macro should be set to one of the cities mentioned in cities.h,
+#with spaces->underscore for ease of quoting.
 
 ##  this sets the default latitude, longitude and timezone.
 ##  the code affected is in rise.c, so modify as necessary.  
 ##  See the README file for more information
-CITY = NEW_YORK
+CITY = New_York
 
 
-VERSION = 3.4-beta1
+VERSION = 3.4-beta2
 
 #there is no need to change anything below this line
 #-----------------------------------------------------------------
@@ -34,8 +30,13 @@ bin_PROGRAMS = hebcal
 
 #sanity_check_SOURCES = common.c danlib.c error.c greg.c sanity-check.c
 
-hebcal_SOURCES = common.c danlib.c error.c mygetopt.c greg.c hebcal.c\
+hebcal_c_files = common.c danlib.c error.c mygetopt.c greg.c hebcal.c\
          holidays.c rise.c sedra.c start.c gnu.c format.c
+
+hebcal_h_files = common.h  danlib.h format.h greg.h hebcal.h \
+          myerror.h mygetopt.h mymath.h mystdio.h mystring.h mytime.h rise.h sedra.h
+
+hebcal_SOURCES = $(hebcal_c_files) $(hebcal_h_files)
 
 BUILT_SOURCES =$(srcdir)/package.m4
 
