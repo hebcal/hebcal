@@ -69,11 +69,19 @@ holinput_t inp_holidays[] =
    {
       {TISHREI, 15},
       {"Sukkot I", "Sukkos I", "\361\345\353\345\372 \351\345\355 \340'"},
-      0},
+      CHUL_ONLY},
+   {
+      {TISHREI, 15},
+      {"Sukkot I", "Sukkos I", "\361\345\353\345\372 \351\345\355 \340'"},
+      YOM_TOV_ENDS|IL_ONLY},
    {
       {TISHREI, 16},
       {"Sukkot II", "Sukkos II", "\361\345\353\345\372 \351\345\355 \341'"},
-      YOM_TOV_ENDS},
+      YOM_TOV_ENDS|CHUL_ONLY},
+   {
+      {TISHREI, 16},
+      {"Sukkot II (CH''M)", "Sukkos II (CH''M)", "\361\345\353\345\372 \351\345\355 \341' (\347\354 \344\356\345\362\343)"},
+      IL_ONLY},
    {
       {TISHREI, 17},
       {"Sukkot III (CH''M)", "Sukkos III (CH''M)", "\361\345\353\345\372 \351\345\355 \342' (\347\354 \344\356\345\362\343)"},
@@ -97,11 +105,15 @@ holinput_t inp_holidays[] =
    {
       {TISHREI, 22},
       {"Shmini Atzeret", "Shmini Atzeres", "\371\356\351\360\351 \362\366\370\372"},
-      0},
+      CHUL_ONLY},
+   {
+      {TISHREI, 22},
+      {"Shmini Atzeret", "Shmini Atzeres", "\371\356\351\360\351 \362\366\370\372"},
+      IL_ONLY|YOM_TOV_ENDS},
    {
       {TISHREI, 23},
       {"Simchat Torah", "Simchas Torah", "\371\356\347\372 \372\345\370\344"},
-      YOM_TOV_ENDS},
+      CHUL_ONLY|YOM_TOV_ENDS},
 
    {
       {KISLEV, 24},
@@ -138,11 +150,19 @@ holinput_t inp_holidays[] =
    {
       {NISAN, 15},
       {"Pesach I", NULL, "\364\361\347 \351\345\355 \340'"},
-      0},
+      CHUL_ONLY},
+   {
+      {NISAN, 15},
+      {"Pesach I", NULL, "\364\361\347 \351\345\355 \340'"},
+      IL_ONLY|YOM_TOV_ENDS},
    {
       {NISAN, 16},
       {"Pesach II", NULL, "\364\361\347 \351\345\355 \341'"},
-      YOM_TOV_ENDS},
+      CHUL_ONLY|YOM_TOV_ENDS},
+   {
+      {NISAN, 16},
+      {"Pesach II (CH''M)", NULL, "\364\361\347 \351\345\355 \341' (\347\354 \344\356\345\362\343)"},
+      IL_ONLY},
    {
       {NISAN, 17},
       {"Pesach III (CH''M)", NULL, "\364\361\347 \351\345\355 \342' (\347\354 \344\356\345\362\343)"},
@@ -163,11 +183,15 @@ holinput_t inp_holidays[] =
    {
       {NISAN, 21},
       {"Pesach VII", NULL, "\364\361\347 \351\345\355 \346'"},
-      0},
+      CHUL_ONLY},
+   {
+      {NISAN, 21},
+      {"Pesach VII", NULL, "\364\361\347 \351\345\355 \346'"},
+      IL_ONLY|YOM_TOV_ENDS},
    {
       {NISAN, 22},
       {"Pesach VIII", NULL, "\364\361\347 \351\345\355 \347'"},
-      YOM_TOV_ENDS},
+      CHUL_ONLY|YOM_TOV_ENDS},
 
    {
       {IYYAR, 18},
@@ -185,11 +209,15 @@ holinput_t inp_holidays[] =
    {
       {SIVAN, 6},
       {"Shavuot I", "Shavuos I", "\371\341\345\362\345\372 \351\345\355 \340'"},
-      0},
+      CHUL_ONLY},
+   {
+      {SIVAN, 6},
+      {"Shavuot I", "Shavuos I", "\371\341\345\362\345\372 \351\345\355 \340'"},
+      IL_ONLY|YOM_TOV_ENDS},
    {
       {SIVAN, 7},
       {"Shavuot II", "Shavuos II", "\371\341\345\362\345\372 \351\345\355 \341'"},
-      YOM_TOV_ENDS},
+      CHUL_ONLY|YOM_TOV_ENDS},
 
    {
       {ELUL, 29},
@@ -668,10 +696,14 @@ void init_holidays( int hYear )
              m < LAST_INDEX (inp_holidays);
              m++, todayinp++)
         {
-            tmpholp = getHolstorep ();     /* allocate hsnode */
-            tmpholp->typeMask = todayinp->typeMask;        /*load the new holiday */
-            tmpholp->name = LANGUAGE2 (todayinp->name);
-            PushHoliday (tmpholp, &holidays[todayinp->date.mm][todayinp->date.dd]);
+	    if (!(todayinp->typeMask & (IL_ONLY|CHUL_ONLY))
+                || ((todayinp->typeMask & IL_ONLY) && israel_sw)
+                || ((todayinp->typeMask & CHUL_ONLY) && !israel_sw)) {
+		tmpholp = getHolstorep ();	/* allocate hsnode */
+		tmpholp->typeMask = todayinp->typeMask;	/*load the new holiday */
+		tmpholp->name = LANGUAGE2(todayinp->name);
+		PushHoliday (tmpholp, &holidays[todayinp->date.mm][todayinp->date.dd]);
+	    }
         }
         first = 0;
     }
