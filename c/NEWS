@@ -2,6 +2,8 @@ Changes in 3.4-beta3
 - removed reference to NAN in the code.  It's a silly idea.
 - taught autoconf how to find libm.
 - various other autoconf/automake tricks, like "make check" from another directory
+- figured out how to distribute gpl.texi
+- Broke "no release after 1am rule"
 
 Changes in 3.4-beta2
 - fixed massive distribution error, which left the source missing three .h files.

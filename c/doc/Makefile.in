@@ -76,6 +76,7 @@ am__quote = @am__quote@
 install_sh = @install_sh@
 
 info_TEXINFOS = hebcal.texi
+EXTRA_DIST = gpl.texi
 
 MAINTAINERCLEANFILES = hebcal.info
 subdir = doc
