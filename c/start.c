@@ -55,9 +55,9 @@ int ok_to_run = 1;
 
 char *progname;
 static int theYear, theMonth, theDay, yearDirty, rangeType, zonep, schemep,
-  latp, longp;			/* has the user inputted lat and long? */
+    latp, longp;			/* has the user inputted lat and long? */
 static char
- *cityName, *helpArray[] =
+    *cityName, *helpArray[] =
 {
    "Hebcal Version " VERSION " By Danny Sadinoff",
    "usage: hebcal [-8acdDeHhiorsStTwy]",
@@ -159,98 +159,96 @@ static char
 
 typedef struct dst 
 {
-   char *name;
-   int DST_scheme;
+    char *name;
+    int DST_scheme;
 }
 dst_t;
 
 dst_t savings_bank[] =
 {
-   {"usa", DST_USOFA},
-   {"none", DST_NONE},
-   {"israel", DST_ISRAEL},
-   {"eu", DST_EU},
-   {"", 0}
+    {"usa", DST_USOFA},
+    {"none", DST_NONE},
+    {"israel", DST_ISRAEL},
+    {"eu", DST_EU},
+    {"", 0}
 };
 
 typedef struct city
 {
-   char *name;
-   int latdeg, latmin, longdeg, longmin, TZ, DST_scheme;
+    char *name;
+    int latdeg, latmin, longdeg, longmin, TZ, DST_scheme;
 }
 city_t;
 
 city_t cities[] =
 {
-   /* name, latdeg, latmin, longdeg, longmin, TZ, DST_scheme */
-   {"Ashdod", 31, 48, -34, -38, 2, DST_ISRAEL},
-   {"Atlanta", 33, 45, 84, 23, -5, DST_USOFA},
-   {"Austin", 30, 16, 97, 45, -6, DST_USOFA},
-   {"Beer Sheva", 31, 15, -34, -47, 2, DST_ISRAEL},
-   {"Berlin", 52, 31, -13, -24, 1, DST_EU},
-   {"Baltimore", 39, 17, 76, 36, -5, DST_USOFA},
-   {"Bogota", 4, 36, 74, 5, -5, DST_NONE},
-   {"Boston", 42, 20, 71, 4, -5, DST_USOFA},
-   {"Buenos Aires", -34, -37, 58, 24, -3, DST_NONE},
-   {"Buffalo", 42, 53, 78, 52, -5, DST_USOFA},
-   {"Chicago", 41, 50, 87, 45, -6, DST_USOFA},
-   {"Cincinnati", 39, 6, 84, 31, -5, DST_USOFA},
-   {"Cleveland", 41, 30, 81, 41, -5, DST_USOFA},
-   {"Dallas", 32, 47, 96, 48, -6, DST_USOFA},
-   {"Denver", 39, 44, 104, 59, -7, DST_USOFA},
-   {"Detroit", 42, 20, 83, 2, -5, DST_USOFA},
-   {"Eilat", 29, 33, -34, -57, 2, DST_ISRAEL},
-   {"Gibraltar", 36, 0, 5, 0, -10, DST_USOFA},
-   {"Haifa", 32, 49, -34, -59, 2, DST_ISRAEL},
-   {"Hawaii", 19, 30, 155, 30, -10, DST_USOFA},
-   {"Houston", 29, 46, 95, 22, -6, DST_USOFA},
-   {"Jerusalem", 31, 47, -35, -14, 2, DST_ISRAEL},
-   {"Johannesburg", -26, -10, -28, -2, 2, DST_NONE},
-   {"Kiev", 50, 28, -30, -29, 2, DST_EU},
-   {"La Paz", -16, -30, 68, 9, -4, DST_NONE},
-   {"London", 51, 30, 0, 10, 0, DST_EU},
-   {"Los Angeles", 34, 4, 118, 15, -8, DST_USOFA},
-   {"Miami", 25, 46, 80, 12, -5, DST_USOFA},
-   {"Mexico City", 19, 24, 99, 9, -6, DST_USOFA},
-   {"Montreal", 45, 30, 73, 36, -5, DST_USOFA},
-   {"Moscow", 55, 45, -37, -42, 3, DST_EU},
-   {"New York", 40, 43, 74, 1, -5, DST_USOFA},
-   {"Omaha", 41, 16, 95, 56, -7, DST_USOFA},
-   {"Paris", 48, 52, -2, -20, 1, DST_EU},
-   {"Petach Tikvah", 32, 5, -34, -53, 2, DST_ISRAEL},
-   {"Philadelphia", 39, 57, 75, 10, -5, DST_USOFA},
-   {"Phoenix", 33, 27, 112, 4, -7, DST_USOFA},
-   {"Pittsburgh", 40, 26, 80, 0, -5, DST_USOFA},
-   {"Saint Louis", 38, 38, 90, 12, -6, DST_USOFA},
-   {"Saint Petersburg", 59, 53, -30, -15, 3, DST_EU},
-   {"San Francisco", 37, 47, 122, 25, -8, DST_USOFA},
-   {"Seattle", 47, 36, 122, 20, -8, DST_USOFA},
-   {"Tel Aviv", 32, 5, -34, -46, 2, DST_ISRAEL},
-   {"Tiberias", 32, 58, -35, -32, 2, DST_ISRAEL},
-   {"Toronto", 43, 38, 79, 24, -5, DST_USOFA},
-   {"Vancouver", 49, 16, 123, 7, -8, DST_USOFA},
-   {"Washington DC", 38, 55, 77, 0, -5, DST_USOFA},
-   {0, 0, 0, 0, 0, 0, 0}
+    /* name, latdeg, latmin, longdeg, longmin, TZ, DST_scheme */
+    {"Ashdod", 31, 48, -34, -38, 2, DST_ISRAEL},
+    {"Atlanta", 33, 45, 84, 23, -5, DST_USOFA},
+    {"Austin", 30, 16, 97, 45, -6, DST_USOFA},
+    {"Beer Sheva", 31, 15, -34, -47, 2, DST_ISRAEL},
+    {"Berlin", 52, 31, -13, -24, 1, DST_EU},
+    {"Baltimore", 39, 17, 76, 36, -5, DST_USOFA},
+    {"Bogota", 4, 36, 74, 5, -5, DST_NONE},
+    {"Boston", 42, 20, 71, 4, -5, DST_USOFA},
+    {"Buenos Aires", -34, -37, 58, 24, -3, DST_NONE},
+    {"Buffalo", 42, 53, 78, 52, -5, DST_USOFA},
+    {"Chicago", 41, 50, 87, 45, -6, DST_USOFA},
+    {"Cincinnati", 39, 6, 84, 31, -5, DST_USOFA},
+    {"Cleveland", 41, 30, 81, 41, -5, DST_USOFA},
+    {"Dallas", 32, 47, 96, 48, -6, DST_USOFA},
+    {"Denver", 39, 44, 104, 59, -7, DST_USOFA},
+    {"Detroit", 42, 20, 83, 2, -5, DST_USOFA},
+    {"Eilat", 29, 33, -34, -57, 2, DST_ISRAEL},
+    {"Gibraltar", 36, 0, 5, 0, -10, DST_USOFA},
+    {"Haifa", 32, 49, -34, -59, 2, DST_ISRAEL},
+    {"Hawaii", 19, 30, 155, 30, -10, DST_USOFA},
+    {"Houston", 29, 46, 95, 22, -6, DST_USOFA},
+    {"Jerusalem", 31, 47, -35, -14, 2, DST_ISRAEL},
+    {"Johannesburg", -26, -10, -28, -2, 2, DST_NONE},
+    {"Kiev", 50, 28, -30, -29, 2, DST_EU},
+    {"La Paz", -16, -30, 68, 9, -4, DST_NONE},
+    {"London", 51, 30, 0, 10, 0, DST_EU},
+    {"Los Angeles", 34, 4, 118, 15, -8, DST_USOFA},
+    {"Miami", 25, 46, 80, 12, -5, DST_USOFA},
+    {"Mexico City", 19, 24, 99, 9, -6, DST_USOFA},
+    {"Montreal", 45, 30, 73, 36, -5, DST_USOFA},
+    {"Moscow", 55, 45, -37, -42, 3, DST_EU},
+    {"New York", 40, 43, 74, 1, -5, DST_USOFA},
+    {"Omaha", 41, 16, 95, 56, -7, DST_USOFA},
+    {"Paris", 48, 52, -2, -20, 1, DST_EU},
+    {"Petach Tikvah", 32, 5, -34, -53, 2, DST_ISRAEL},
+    {"Philadelphia", 39, 57, 75, 10, -5, DST_USOFA},
+    {"Phoenix", 33, 27, 112, 4, -7, DST_USOFA},
+    {"Pittsburgh", 40, 26, 80, 0, -5, DST_USOFA},
+    {"Saint Louis", 38, 38, 90, 12, -6, DST_USOFA},
+    {"Saint Petersburg", 59, 53, -30, -15, 3, DST_EU},
+    {"San Francisco", 37, 47, 122, 25, -8, DST_USOFA},
+    {"Seattle", 47, 36, 122, 20, -8, DST_USOFA},
+    {"Tel Aviv", 32, 5, -34, -46, 2, DST_ISRAEL},
+    {"Tiberias", 32, 58, -35, -32, 2, DST_ISRAEL},
+    {"Toronto", 43, 38, 79, 24, -5, DST_USOFA},
+    {"Vancouver", 49, 16, 123, 7, -8, DST_USOFA},
+    {"Washington DC", 38, 55, 77, 0, -5, DST_USOFA},
+    {0, 0, 0, 0, 0, 0, 0}
 };
 
 
 void print_version_data(void)
 {
-   printf("hebcal version " VERSION "\n");
-   printf("=====Defaults=====\n");
-   printf("City: %s\n", cityName);
-   printf("          %dd%d' %c latitude\n", abs(latdeg), abs(latmin),
-	  latdeg < 0 ? 'S' : 'N');
-   printf("          %dd%d' %c longitude\n", abs(longdeg), abs(longmin),
-	  longdeg > 0 ? 'W' : 'E');
-   printf("          GMT %s%d:00\n",
-	  TZ < 0 ? "" : "+", TZ);
-   printf("\nEnvironment variable for default city: %s\n", ENV_CITY);
-   printf("\nEnvironment variable for default options: %s\n", ENV_OPTS);
+    printf("hebcal version " VERSION "\n");
+    printf("=====Defaults=====\n");
+    printf("City: %s\n", cityName);
+    printf("          %dd%d' %c latitude\n", abs(latdeg), abs(latmin),
+           latdeg < 0 ? 'S' : 'N');
+    printf("          %dd%d' %c longitude\n", abs(longdeg), abs(longmin),
+           longdeg > 0 ? 'W' : 'E');
+    printf("          GMT %s%d:00\n",
+           TZ < 0 ? "" : "+", TZ);
+    printf("\nEnvironment variable for default city: %s\n", ENV_CITY);
+    printf("\nEnvironment variable for default options: %s\n", ENV_OPTS);
 }
 
-#define LIC_LEN 269
-#define WAR_LEN 26
 void print_warranty( void )
 {
 
@@ -258,7 +256,7 @@ void print_warranty( void )
     char dummy[10];
     
     for (cnum = 0;
-         cnum < WAR_LEN;
+         warranty[cnum];
          cnum++)
     {
         puts(warranty[cnum]);
@@ -272,12 +270,12 @@ void print_warranty( void )
 
 void print_copying( void )
 {
-
+    
     int cnum;
     char dummy[10];
     
     for (cnum = 0;
-         cnum < LIC_LEN;
+         license[cnum];
          cnum++)
     {
         puts(license[cnum]);
@@ -289,7 +287,7 @@ void print_copying( void )
     }
 
     for (cnum = 0;
-         cnum < WAR_LEN;
+         warranty[cnum];
          cnum++)
    {
        puts(warranty[cnum]);
@@ -303,7 +301,6 @@ void print_copying( void )
 
 void print_city_data( void )
 {
-    
     int cnum;
     char dummy[10];
     
@@ -406,8 +403,7 @@ void set_DST_scheme(const char* schemeArg)
 }
 
 
-void
-  set_default_city( void )
+void set_default_city( void )
 {
     const char *cityName;
 
@@ -424,9 +420,8 @@ void
 }
 
 
-
-void
-  handleArgs(int argc, char *argv[])
+/* FIX: this wants to become gnu-ish */
+void handleArgs(int argc, char *argv[])
 {
    char dummy[10];
    date_t greg_today;
@@ -754,103 +749,103 @@ int tokenize(char *str, int *pargc, char* argv[])
 
 int main(int argc, char* argv[])
 {
-   date_t tempDate;
-   long startAbs, endAbs;
-   char *envStr;
-   int envArgc;
-   char *envArgv[40];		/* this should be big enough */
+    date_t tempDate;
+    long startAbs, endAbs;
+    char *envStr;
+    int envArgc;
+    char *envArgv[40];		/* this should be big enough */
+    
+    progname = argv[0];
+    
+    set_default_city();
+    if ((envStr = getenv(ENV_OPTS)) && strcmp(envStr, ""))
+    {
+        int i;
+        
+        tokenize(envStr, &envArgc, envArgv);
+        for (i = 1; i < argc; i++)	/* append argv onto envArgv  */
+            envArgv[envArgc++] = argv[i];
+        handleArgs(envArgc, envArgv);
+    }
+    else
+        handleArgs(argc, argv);
+    
+    tempDate.yy = theYear;
+    if (theYear < (hebrewDates_sw ? 3761 : 1))
+        die("Sorry, hebcal can only handle dates in the common era.", "");
+    
+    switch (rangeType)
+    {
+    case TODAY:
+        printHebDates_sw = 1;
+        tempDate.dd = theDay;
+        tempDate.mm = theMonth;
+        tempDate.yy = theYear;
+        startAbs = endAbs = greg2abs(tempDate);
+        break;
+    case DAY:
+        printHebDates_sw = 1;
+        tempDate.dd = theDay;
+        tempDate.mm = theMonth;
+        tempDate.yy = theYear;
+        if (hebrewDates_sw)
+            startAbs = endAbs = hebrew2abs(tempDate);
+        else
+            startAbs = endAbs = greg2abs(tempDate);
+        break;
+    case MONTH:
+        tempDate.dd = 1;
+        tempDate.mm = theMonth;
+        tempDate.yy = theYear;
+        if (hebrewDates_sw)
+        {
+            startAbs = hebrew2abs(tempDate);
+            tempDate.dd = max_days_in_heb_month(tempDate.mm, tempDate.yy);
+            endAbs = hebrew2abs(tempDate);
+        }
+        else
+        {
+            startAbs = greg2abs(tempDate);
+            tempDate.dd = MonthLengths[LEAP(theYear)][theMonth];
+            endAbs = greg2abs(tempDate);
+        }
+        break;
+        
+    case YEAR:
+        if (hebrewDates_sw)
+        {
+            tempDate.dd = 1;
+            tempDate.mm = TISHREI;
+            tempDate.yy = theYear;
+            startAbs = hebrew2abs(tempDate);
+            
+            tempDate.yy++;
+            endAbs = hebrew2abs(tempDate) - 1;
+        }
+        else
+        {
+            tempDate.dd = 1;
+            tempDate.mm = JAN;
+            tempDate.yy = theYear;
+            startAbs = greg2abs(tempDate);
+            
+            tempDate.yy++;
+            endAbs = greg2abs(tempDate) - 1;
+        }
+        break;
 
-   progname = argv[0];
+    default:
+        die("Oh, NO! internal error #17q!", "");
+    }
+    
+    tempDate = abs2hebrew(startAbs);
+    if (ok_to_run)
+    {
+        init_holidays(tempDate.yy);	/* load the holiday array */
+        main_calendar(startAbs, endAbs);
 
-   set_default_city();
-   if ((envStr = getenv(ENV_OPTS)) && strcmp(envStr, ""))
-   {
-      int i;
-      
-      tokenize(envStr, &envArgc, envArgv);
-      for (i = 1; i < argc; i++)	/* append argv onto envArgv  */
-	 envArgv[envArgc++] = argv[i];
-      handleArgs(envArgc, envArgv);
-   }
-   else
-      handleArgs(argc, argv);
-
-   tempDate.yy = theYear;
-   if (theYear < (hebrewDates_sw ? 3761 : 1))
-      die("Sorry, hebcal can only handle dates in the common era.", "");
-
-   switch (rangeType)
-   {
-     case TODAY:
-	printHebDates_sw = 1;
-	tempDate.dd = theDay;
-	tempDate.mm = theMonth;
-	tempDate.yy = theYear;
-	startAbs = endAbs = greg2abs(tempDate);
-	break;
-     case DAY:
-	printHebDates_sw = 1;
-	tempDate.dd = theDay;
-	tempDate.mm = theMonth;
-	tempDate.yy = theYear;
-	if (hebrewDates_sw)
-	   startAbs = endAbs = hebrew2abs(tempDate);
-	else
-	   startAbs = endAbs = greg2abs(tempDate);
-	break;
-     case MONTH:
-	tempDate.dd = 1;
-	tempDate.mm = theMonth;
-	tempDate.yy = theYear;
-	if (hebrewDates_sw)
-	{
-	   startAbs = hebrew2abs(tempDate);
-	   tempDate.dd = max_days_in_heb_month(tempDate.mm, tempDate.yy);
-	   endAbs = hebrew2abs(tempDate);
-	}
-	else
-	{
-	   startAbs = greg2abs(tempDate);
-	   tempDate.dd = MonthLengths[LEAP(theYear)][theMonth];
-	   endAbs = greg2abs(tempDate);
-	}
-	break;
-
-     case YEAR:
-	if (hebrewDates_sw)
-	{
-	   tempDate.dd = 1;
-	   tempDate.mm = TISHREI;
-	   tempDate.yy = theYear;
-	   startAbs = hebrew2abs(tempDate);
-
-	   tempDate.yy++;
-	   endAbs = hebrew2abs(tempDate) - 1;
-	}
-	else
-	{
-	   tempDate.dd = 1;
-	   tempDate.mm = JAN;
-	   tempDate.yy = theYear;
-	   startAbs = greg2abs(tempDate);
-
-	   tempDate.yy++;
-	   endAbs = greg2abs(tempDate) - 1;
-	}
-	break;
-
-     default:
-	die("Oh, NO! internal error #17q!", "");
-   }
-
-   tempDate = abs2hebrew(startAbs);
-   if (ok_to_run)
-   {
-      init_holidays(tempDate.yy);	/* load the holiday array */
-      main_calendar(startAbs, endAbs);
-
-      return 0;			/* success!  Kol hakavod to thorough programmers */
-   }
-   else
-      return 1;
+        return 0;			/* success!  Kol hakavod to thorough programmers */
+    }
+    else
+        return 1;
 }

@@ -1,3 +1,4 @@
+#include <stdio.h>
 char *license[] =
 {
   "GNU GENERAL PUBLIC LICENSE",
@@ -268,7 +269,7 @@ char *license[] =
   "     will be guided by the two goals of preserving the free status of",
   "     all derivatives of our free software and of promoting the sharing",
   "     and reuse of software generally.",
-  "",};
+  NULL,};
 
 char *warranty[] =
 {
@@ -297,5 +298,5 @@ char *warranty[] =
   "     ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.",
   "",
   "                      END OF TERMS AND CONDITIONS",
-  "",
-  "",};
+  NULL
+};
