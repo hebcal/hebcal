@@ -19,7 +19,7 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-   Danny Sadinoff can be reached at 
+   Danny Sadinoff can be reached at
    1 Cove La.
    Great Neck, NY
    11024
@@ -50,8 +50,6 @@ int ok_to_run = 1;
 #define MONTH 1
 #define DAY 2
 #define TODAY 3
-
-#define SCREEN_HEIGHT 22
 
 char *progname;
 static int theYear, theMonth, theDay, yearDirty, rangeType, zonep, schemep,
@@ -157,7 +155,7 @@ static char
    "            http://sourceforge.net/projects/hebcal"
 };
 
-typedef struct dst 
+typedef struct dst
 {
     char *name;
     int DST_scheme;
@@ -252,39 +250,26 @@ void print_version_data(void)
 
 void print_warranty( void )
 {
-
     int cnum;
-    char dummy[10];
-    
+
     for (cnum = 0;
          warranty[cnum];
          cnum++)
     {
         puts(warranty[cnum]);
-        if (0 == (cnum + 2) % SCREEN_HEIGHT)
-        {
-            printf(" ---MORE---    Hit Enter To Continue....");
-            fgets(&dummy[0], 10, stdin);
-        }
     }
 }
 
 void print_copying( void )
 {
-    
+
     int cnum;
-    char dummy[10];
-    
+
     for (cnum = 0;
          license[cnum];
          cnum++)
     {
         puts(license[cnum]);
-        if (0 == (cnum + 2) % SCREEN_HEIGHT)
-        {
-            printf(" ---MORE---    Hit Enter To Continue....");
-            fgets(&dummy[0], 10, stdin);
-        }
     }
 
     for (cnum = 0;
@@ -292,19 +277,13 @@ void print_copying( void )
          cnum++)
    {
        puts(warranty[cnum]);
-       if (0 == (cnum + 2) % SCREEN_HEIGHT)
-       {
-           printf(" ---MORE---    Hit Enter To Continue....");
-           fgets(&dummy[0], 10, stdin);
-       }
    }
 }
 
 void print_city_data( void )
 {
     int cnum;
-    char dummy[10];
-    
+
     for (cnum = 0;
          cities[cnum].name;
          cnum++)
@@ -317,30 +296,18 @@ void print_city_data( void )
                cities[cnum].longdeg > 0 ? 'W' : 'E',
                cities[cnum].TZ < 0 ? "" : "+", cities[cnum].TZ
             );
-        if (0 == (cnum + 2) % SCREEN_HEIGHT)
-        {
-            printf(" ---MORE---    Hit Enter To Continue....");
-            fgets(&dummy[0], 10, stdin);
-        }
     }
 }
 
 void print_DST_data(void)
 {
-    
     int cnum;
-    char dummy[10];
-    
+
     for (cnum = 0;
          (cnum < sizeof(savings_bank) / sizeof(dst_t));
          cnum++)
     {
         puts(savings_bank[cnum].name);
-        if (0 == (cnum + 1) % SCREEN_HEIGHT)
-        {
-            printf(" ---MORE---    Hit Enter To Continue....");
-            fgets(&dummy[0], 10, stdin);
-        }
     }
 }
 
@@ -350,18 +317,18 @@ void localize_to_city(const char *cityNameArg)
     size_t len = strlen(cityNameArg);
     char *pc, *cityStr;
     city_t *pcity;
-    
+
     initStr(&cityStr, strlen(cityNameArg));
     strcpy(cityStr, cityNameArg);
-    
+
     if (cityName != NULL)
         free(cityName);
-    
+
     /* convert non-alpha to spaces */
     for ( pc = cityStr; *pc != '\0'; pc++ )
         if ( ! isalpha( (int)*pc ) )
             *pc = ' ';
-    
+
     for (pcity = &cities[0]; pcity->name != NULL; pcity++)
         if (0 == istrncasecmp(len, cityStr, pcity->name))
         {
@@ -382,7 +349,7 @@ void localize_to_city(const char *cityNameArg)
             strcpy(cityName, pcity->name);
             return;
       }
-    
+
     warn("unknown city: %s. Use a nearby city or geographic coordinates.", cityNameArg);
     warn("run 'hebcal cities' for a list of cities.", "");
     ok_to_run = 0;
@@ -392,14 +359,14 @@ void set_DST_scheme(const char* schemeArg)
 {
     size_t len = strlen(schemeArg);
     dst_t *pdst;
-    
+
     for (pdst = savings_bank; pdst->name != NULL; pdst++)
         if (0 == istrncasecmp(len, schemeArg, pdst->name))
       {
           DST_scheme = pdst->DST_scheme;
           return;
       }
-    
+
     die("unknown daylight savings scheme: %s.  \"hebcal DST\" for options.", schemeArg);
 }
 
@@ -561,7 +528,7 @@ void handleArgs(int argc, char *argv[])
 	   sscanf(Optarg, "%s", dummy);
 	   set_DST_scheme(dummy);
 	   break;
-	   
+
 
 	case 'z':		/* time zone */
 	   if (!(sscanf(Optarg, "%d", &TZ) == 1))
@@ -570,12 +537,12 @@ void handleArgs(int argc, char *argv[])
 	      DST_scheme = DST_NONE;
 	   zonep = 1;
 	   break;
-	   
+
 	default:
 	   die(usage, "");
       }
    }
-   
+
    if (latp)
       cityName = "User Defined City";
    if (latp ^ longp)
@@ -592,7 +559,7 @@ void handleArgs(int argc, char *argv[])
 	else
 	   theYear = greg_today.yy;
 	break;
-	
+
      case 1:
 	if (isAllNums(argv[Optind]))
 	{
@@ -609,12 +576,6 @@ void handleArgs(int argc, char *argv[])
 		lineNumber++)
 	   {
 	      puts(helpArray[lineNumber]);
-	      
-	      if (0 == lineNumber % SCREEN_HEIGHT)
-	      {
-		 printf(" ---MORE---    Hit Enter To Continue....");
-		 fgets(&dummy[0], 10, stdin);
-	      }
 	   }
 	   exit(0);
 	}
@@ -734,7 +695,7 @@ int tokenize(char *str, int *pargc, char* argv[])
 {
    char *strtok(), *strdup();
    char *s;
-   
+
    argv[0] = progname;
    s = strtok(str, "\t ");
    *pargc = 1;
@@ -755,14 +716,14 @@ int main(int argc, char* argv[])
     char *envStr;
     int envArgc;
     char *envArgv[40];		/* this should be big enough */
-    
+
     progname = argv[0];
-    
+
     set_default_city();
     if ((envStr = getenv(ENV_OPTS)) && strcmp(envStr, ""))
     {
         int i;
-        
+
         tokenize(envStr, &envArgc, envArgv);
         for (i = 1; i < argc; i++)	/* append argv onto envArgv  */
             envArgv[envArgc++] = argv[i];
@@ -770,11 +731,11 @@ int main(int argc, char* argv[])
     }
     else
         handleArgs(argc, argv);
-    
+
     tempDate.yy = theYear;
     if (theYear < (hebrewDates_sw ? 3761 : 1))
         die("Sorry, hebcal can only handle dates in the common era.", "");
-    
+
     switch (rangeType)
     {
     case TODAY:
@@ -811,7 +772,7 @@ int main(int argc, char* argv[])
             endAbs = greg2abs(tempDate);
         }
         break;
-        
+
     case YEAR:
         if (hebrewDates_sw)
         {
@@ -819,7 +780,7 @@ int main(int argc, char* argv[])
             tempDate.mm = TISHREI;
             tempDate.yy = theYear;
             startAbs = hebrew2abs(tempDate);
-            
+
             tempDate.yy++;
             endAbs = hebrew2abs(tempDate) - 1;
         }
@@ -829,7 +790,7 @@ int main(int argc, char* argv[])
             tempDate.mm = JAN;
             tempDate.yy = theYear;
             startAbs = greg2abs(tempDate);
-            
+
             tempDate.yy++;
             endAbs = greg2abs(tempDate) - 1;
         }
@@ -838,7 +799,7 @@ int main(int argc, char* argv[])
     default:
         die("Oh, NO! internal error #17q!", "");
     }
-    
+
     tempDate = abs2hebrew(startAbs);
     if (ok_to_run)
     {
