@@ -43,7 +43,7 @@ hmonths_t hMonths =
     {"Cheshvan",NULL,"\347\371\345\357"},
     {"Kislev",NULL,"\353\361\354\345"},
     {"Tevet",NULL,"\350\341\372"},
-    {"Sh'vat",NULL,"\371\341\372"},
+    {"Sh'vat",NULL,"\371\341\350"},
     {"Adar",NULL,"\340\343\370"},
     {"Nisan",NULL,"\360\351\361\357"}
   },
@@ -59,7 +59,7 @@ hmonths_t hMonths =
     {"Cheshvan",NULL,"\347\371\345\357"},
     {"Kislev",NULL,"\353\361\354\345"},
     {"Tevet",NULL,"\350\341\372"},
-    {"Sh'vat",NULL,"\371\341\372"},
+    {"Sh'vat",NULL,"\371\341\350"},
     {"Adar I",NULL,"\340\343\370 \340'"},
     {"Adar II",NULL,"\340\343\370 \341'"},
     {"Nisan",NULL,"\360\351\361\357"}
