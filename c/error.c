@@ -30,10 +30,10 @@
 #include <errno.h>
 #include <stdlib.h>
 
-extern int errno;
 extern char *progname;
 
-void die( const char *s1, const char *s2)			/* print error message and die */
+/* print error message and die */
+void die( const char *s1, const char *s2)			
 {
     if (errno)
         perror (progname);
@@ -44,7 +44,8 @@ void die( const char *s1, const char *s2)			/* print error message and die */
     exit (1);
 }
 
-void warn( const char *s1, const char *s2)			/* print error message but don't die */
+/* print error message but don't die */
+void warn( const char *s1, const char *s2)			
 {
     if (errno)
         perror (progname);
