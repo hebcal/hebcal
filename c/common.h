@@ -21,7 +21,11 @@
 #define ADAR_I 12
 #define ADAR_II 13
 
-typedef char * hmonths_t [][15];
+typedef struct {
+   char *(name[3]);
+} hmonth_t;
+
+typedef hmonth_t hmonths_t [][15];
 
 extern hmonths_t hMonths;
 

@@ -691,7 +691,7 @@ void
 	{
 	   if (theDay > max_days_in_heb_month(theMonth, theYear))
 	      die("Sorry, there aren't that many days in %s (then)",
-		  hMonths[LEAP_YR_HEB(theYear)][theMonth]);
+		  LANGUAGE2(hMonths[LEAP_YR_HEB(theYear)][theMonth].name));
 	}
 	else
 	{

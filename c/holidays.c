@@ -773,7 +773,9 @@ holstorep_t *holiList;
 		    "Rosh Chodesh ");
 	    if (!tabs_sw)
 	    {
-	       strncat (tmpholip->name, hMonths[LEAP_YR_HEB (dth.yy)][dth.mm], NM_LEN);
+	       strncat (tmpholip->name,
+			LANGUAGE2(hMonths[LEAP_YR_HEB (dth.yy)][dth.mm].name),
+			NM_LEN);
 	    }
 	    else
 	    {
@@ -794,7 +796,8 @@ holstorep_t *holiList;
       if (!tabs_sw)
       {
 	 strncat (tmpholip->name,
-		  hMonths[LEAP_YR_HEB (dth.yy)][dth.mm + 1], NM_LEN);
+		  LANGUAGE2(hMonths[LEAP_YR_HEB (dth.yy)][dth.mm + 1].name),
+		  NM_LEN);
       }
       else
       {

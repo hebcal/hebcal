@@ -32,13 +32,37 @@
 hmonths_t hMonths =
 {
   {
-    "VOID", "Nisan", "Iyyar", "Sivan", "Tamuz", "Av", "Elul", "Tishrei",
-    "Cheshvan", "Kislev", "Tevet", "Sh'vat", "Adar", "Nisan"
+    {"VOID",NULL,"VOID"},
+    {"Nisan",NULL,"\360\351\361\357"},
+    {"Iyyar",NULL,"\340\351\351\370"},
+    {"Sivan",NULL,"\361\351\345\357"},
+    {"Tamuz",NULL,"\372\356\345\346"},
+    {"Av",NULL,"\340\341"},
+    {"Elul",NULL,"\340\354\345\354"},
+    {"Tishrei",NULL,"\372\371\370\351"},
+    {"Cheshvan",NULL,"\347\371\345\357"},
+    {"Kislev",NULL,"\353\361\354\345"},
+    {"Tevet",NULL,"\350\341\372"},
+    {"Sh'vat",NULL,"\371\341\372"},
+    {"Adar",NULL,"\340\343\370"},
+    {"Nisan",NULL,"\360\351\361\357"}
   },
   {
-    "VOID", "Nisan", "Iyyar", "Sivan", "Tamuz", "Av", "Elul", "Tishrei",
-    "Cheshvan", "Kislev", "Tevet", "Sh'vat", "Adar I", "Adar II",
-    "Nisan"
+    {"VOID",NULL,"VOID"},
+    {"Nisan",NULL,"\360\351\361\357"},
+    {"Iyyar",NULL,"\340\351\351\370"},
+    {"Sivan",NULL,"\361\351\345\357"},
+    {"Tamuz",NULL,"\372\356\345\346"},
+    {"Av",NULL,"\340\341"},
+    {"Elul",NULL,"\340\354\345\354"},
+    {"Tishrei",NULL,"\372\371\370\351"},
+    {"Cheshvan",NULL,"\347\371\345\357"},
+    {"Kislev",NULL,"\353\361\354\345"},
+    {"Tevet",NULL,"\350\341\372"},
+    {"Sh'vat",NULL,"\371\341\372"},
+    {"Adar I",NULL,"\340\343\370 \340'"},
+    {"Adar II",NULL,"\340\343\370 \341'"},
+    {"Nisan",NULL,"\360\351\361\357"}
   }
 };
 

@@ -344,9 +344,10 @@ main_calendar (todayAbs, endAbs)
 	   (holidays_today || sedra_today || omer_today || candle_today)))
 	{
 	  PrintGregDate (todayGreg);
-	  printf ("%d%s of %s, %d\n", todayHeb.dd,	/* print the hebrew date */
-		  numSuffix (todayHeb.dd),
-		  hMonths[LEAP_YR_HEB (todayHeb.yy)][todayHeb.mm],
+	  printf ("%d%s%s %s, %d\n", todayHeb.dd,	/* print the hebrew date */
+		  iso8859_8_sw ? "" : numSuffix (todayHeb.dd),
+		  iso8859_8_sw ? "" : " of",
+		  LANGUAGE2(hMonths[LEAP_YR_HEB (todayHeb.yy)][todayHeb.mm].name),
 		  todayHeb.yy);
 	}
 
