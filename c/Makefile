@@ -1,4 +1,5 @@
 # Copyright(c) 1994  Danny Sadinoff
+# Portions Copyright (c) 2002 Michael J. Radwin. All Rights Reserved.
 # See section COPYING for conditions for redistribution
 
 #The CITY macro should be set to one of the following:
@@ -17,7 +18,7 @@ CITY = NEW_YORK
 #if you run into compilation problems, try changing the cc to gcc
 CC = cc
 
-VERSION = 3.3beta4
+VERSION = 3.3beta5
 
 #there is no need to change anything below this line
 #-----------------------------------------------------------------
@@ -35,7 +36,8 @@ HFILES = common.h danlib.h myerror.h mygetopt.h\
         greg.h hebcal.h mymath.h mystring.h mytime.h mystdio.h\
 	rise.h sedra.h proto.h
 
-FILES = $(CFILES) $(HFILES) Makefile hebcal.1  Manual README hebcal.dsw hebcal.dsp
+FILES = $(CFILES) $(HFILES) Makefile hebcal.1  Manual Manual.html \
+	README hebcal.dsw hebcal.dsp
 
 
 hebcal:  $(OBJ)

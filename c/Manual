@@ -1,462 +1,368 @@
-
-
-
-HEBCAL(1)     User Commands     HEBCAL(1)
+HEBCAL(1)                                               HEBCAL(1)
 
 
 
 NAME
-  hebcal - a Jewish calendar generator
+       hebcal - a Jewish calendar generator
 
 SYNOPSIS
-  hebcal [ -acdDehHiorsStTwy ]
-    [ -I inputfile ]
-    [ -Y yahrtzeitfile ]
-    [ -C city ]
-    [ -l latitude -L longitude]
-    [ -z timezone ]
-    [ -Z daylightsavingsscheme ]
-    [[ month [ day ]] year ]
-  hebcal help
-  hebcal info
-  hebcal DST
-  hebcal cities
-  hebcal copying
-  hebcal warranty
+       hebcal [ -8acdDehHiorsStTwy ]
+            [ -I input_file ]
+            [ -Y yahrtzeit_file ]
+            [ -C city ]
+            [ -l latitude -L longitude]
+            [ -z timezone ]
+            [ -Z daylight_savings_scheme ]
+            [[ month [ day ]] year ]
+       hebcal help
+       hebcal info
+       hebcal DST
+       hebcal cities
+       hebcal copying
+       hebcal warranty
+
 
 DESCRIPTION
-  With no arguments, hebcal will print to stdout the dates  of
-  the  Jewish holidays in the current secular year.  Each line
-  is prefixed with a gregorian date of the form mm/dd/y.
+       With  no  arguments, hebcal will print to stdout the dates
+       of the Jewish holidays in the current secular year.   Each
+       line  is  prefixed  with  a  gregorian  date  of  the form
+       mm/dd/yyyy.
 
-  By specifying month, day, or year, output can be limited  to
-  a  particular month or date in a particular year.  Note that
-  year is usually a four-digit integer,  So 92 is  during  the
-  Roman  period,  not  the  late twentieth century.  In if the
-  hebrew dates option is turned on, this number represents  th
-  Jewish  calendar year.  month is a number from 1..12, or the
-  name of a Jewish calendar month.
+       By specifying month, day, or year, output can  be  limited
+       to  a particular month or date in a particular year.  Note
+       that year is usually a four-digit integer,  So 92 is  dur-
+       ing  the Roman period, not the late twentieth century.  In
+       if the hebrew dates option is turned on, this number  rep-
+       resents  th  Jewish calendar year.  month is a number from
+       1..12, or the name of a Jewish calendar month.
 
-  day is a number from 1..31.
+       day is a number from 1..31.
 
-  For example, the command
-    hebcal 10 1992
-  will print out the holidays occurring  in  October  of  1992
-  C.E., while the command
+       For example, the command
+            hebcal 10 1992
+       will print out the holidays occurring in October  of  1992
+       C.E., while the command
 
-    hebcal Tish 5752
+            hebcal Tish 5752
 
-  will print dates of interest in the month of Tishrei in Jew-
-  ish calendar year 5752.
+       will  print  dates  of interest in the month of Tishrei in
+       Jewish calendar year 5752.
 
-  NOTE:  hebcal 92 is not the same as hebcal 1992.   The  year
-  is  assumed  to be complete, so the former calendar preceeds
-  the latter by nineteen centuries.
+       NOTE:  hebcal 92 is not the same as hebcal 1992.  The year
+       is assumed to be complete, so the former calendar preceeds
+       the latter by nineteen centuries.
 
-  A few other bells and whistles include the weekly  sedra  as
-  well  as the day of the week, the count of the omer, and the
-  Hebrew date.
+       A few other bells and whistles include the weekly sedra as
+       well  as  the  day of the week, the count of the omer, and
+       the Hebrew date.
 
+       Output from hebcal  can  be  used  to  drive  calendar(1).
+       Day-to-day use for hebcal is provided for in the -T and -t
+       switches, which print out Jewish calendar entries for  the
+       current date.
 
-
-
-Danny Sadinoff   Last change: Hebcal Version 3.1    1
-
-
-
-
-
-
-HEBCAL(1)     User Commands     HEBCAL(1)
-
-
-
-  Output from hebcal can be used to drive calendar(1). Day-to-
-  day  use  for  hebcal  is  provided  for  in  the  -T and -t
-  switches, which print out Jewish calendar  entries  for  the
-  current date.
-
-  To get a quick-reference on-line help, type
-    hebcal help
-  at the command prompt.
+       To get a quick-reference on-line help, type
+            hebcal help
+       at the command prompt.
 
 OPTIONS
-  -a Use Ashkenazis hebrew.
+       -8     Use 8-bit Hebrew (ISO-8859-8-Logical).
 
-  -c Add approximate candle-lighting times.  See below.
+       -a     Use Ashkenazis hebrew.
 
-  -d Print the Hebrew date for the entire date range.
+       -c     Add  approximate candle-lighting times.  See below.
 
-  -D Print the hebrew date for dates with some event.
+       -d     Print the Hebrew date for the entire date range.
 
-  -e Change the output format  to  European - style  dates:
-    dd.mm.y
+       -D     Print the hebrew date for dates with some event.
 
-  -h Suppress holidays in output.   User  defined  calendar
-    events are unaffected by this switch.
+       -e     Change the output format to  European-style  dates:
+              dd.mm.yyyy
 
-  -H When the -H switch is used, all dates specified on the
-    command  line  are  assumed to be hebrew dates.  So for
-    instance,
+       -h     Suppress holidays in output.  User defined calendar
+              events are unaffected by this switch.
 
-    example% hebcal -H 5754
+       -H     When the -H switch is used, all dates specified  on
+              the  command  line  are assumed to be hebrew dates.
+              So for instance,
 
-    will print data for 5754, Starting in Tishrei, and end-
-    ing in Elul.  Hebcal is smart enough to detect a Hebrew
-    month and infer that you want a Hebrew date  range,  so
-    you could type
+                   example% hebcal -H 5754
 
-    example% hebcal tish 5754
+              will print data for 5754, Starting in Tishrei,  and
+              ending in Elul.  Hebcal is smart enough to detect a
+              Hebrew month and infer that you want a Hebrew  date
+              range, so you could type
 
-    The -H  switch  would  be  superfluous  in  this  case.
-    Invoking  hebcal with just the -H switch by itself will
-    print data for the current  Hebrew  year,  starting  in
-    Tishrei.
+                   example% hebcal tish 5754
 
-  -i Use the Israeli sedra scheme when used in  conjunction
-    with   - S  or   -s. This has no effect if the -S or -s
-    switches are unused.
+              The  -H  switch  would be superfluous in this case.
+              Invoking hebcal with just the -H switch  by  itself
+              will print data for the current Hebrew year, start-
+              ing in Tishrei.
 
-  -I file
-    Read extra events from file. These events  are  printed
-    regardless of the -h suppress holidays switch.
-    There is one holiday per line in file,  each  with  the
-    format
-    month day description
+       -i     Use the Israeli sedra scheme when used in  conjunc-
+              tion  with  -S or -s.  This has no effect if the -S
+              or -s switches are unused.
 
+       -I file
+              Read extra events  from  file.   These  events  are
+              printed  regardless  of  the  -h  suppress holidays
+              switch.
+              There is one holiday per line in  file,  each  with
+              the format
+              month day description
+              where  month  is  a  string  identifying the Jewish
+              month in question day is a number from 1 to 30, and
+              description is a newline-terminated string describ-
+              ing the holiday.  An example might be
+                   Adar 1 Start cleaning kitchen for Passover.
+                   Adar 1 Start cleaning kitchen for Passover.
 
+       -l deg,min
+              Set the latitude  for  solar  calculations  to  deg
+              degrees and min
 
-Danny Sadinoff   Last change: Hebcal Version 3.1    2
+       -L deg,min
+              Set  the  longitude  for  solar calculations to deg
+              degrees and min minutes.  NOTE: Negative values are
+              EAST longitude.
 
+       -o     Add the count of the omer to the output.
 
+       -r     Use  a  tab-delineated  format, and somewhat terser
+              strings.  Instead of saying ' 13th day of the  omer
+              ' hebcal will say ' Omer: 13 '
 
+       -s     Add  the  weekly  sedra to the output on Saturdays.
+              See -i.
 
+       -S     Add the weekly sedra to the output every day.  When
+              this  option  is  invoked,  every  time  a  day  is
+              printed, the torah reading for the Saturday  on  or
+              immediately  following  that  date  is printed.  If
+              there is no reading for  the  next  Saturday,  then
+              nothing is printed.  See -i.
 
+       -t     Print  calendar  information for today's date only.
+              -d and -o are asserted with this option.
 
-HEBCAL(1)     User Commands     HEBCAL(1)
+       -T     Same as -t, only without the gregorian date.   This
+              option  is  useful  in  login  scripts, just to see
+              what's happening today in the Jewish calendar.
 
+       -w     Add the day of the week to the output.
 
+       -y     Print only the last two digits of the year.
 
-    where month is a string identifying the Jewish month in
-    question  day is a number from 1 to 30, and description
-    is a newline-terminated string describing the  holiday.
-    An example might be
-    Adar 1 Start cleaning kitchen for Passover.
-    Adar 1 Start cleaning kitchen for Passover.
+       -Y file
+              Read a table of yahrtzeit dates from  file.   These
+              events  are  printed  regardless of the -h suppress
+              holidays switch.
+              There is one death-date per line in file, each with
+              the format
+              month day year description
+              where  month, day and year form the  gregorian date
+              of  death.   description  is  a  newline-terminated
+              string  to be printed on the yahrtzeit.  An example
+              might be
 
-  -l deg,min
-    Set the latitude for solar calculations to deg  degrees
-    and min
-
-  -L deg,min
-    Set the longitude for solar calculations to deg degrees
-    and  min minutes. NOTE: Negative values are EAST longi-
-    tude.
-
-  -o Add the count of the omer to the output.
-
-  -r Use  a  tab-delineated  format,  and  somewhat  terser
-    strings.   Instead  of  saying ' 13th day of the omer '
-    hebcal will say ' Omer: 13 '
-
-  -s Add the weekly sedra to the output on Saturdays.  See
-    -i.
-
-  -S Add the weekly sedra to the output  every  day.   When
-    this  option  is  invoked, every time a day is printed,
-    the torah reading for the Saturday  on  or  immediately
-    following that date is printed.  If there is no reading
-    for the next Saturday, then nothing is printed.  See  -
-    i.
-
-  -t Print calendar information for today's date only.  - d
-    and -o are asserted with this option.
-
-  -T Same as -t, only without  the  gregorian  date.   This
-    option  is  useful in login scripts, just to see what's
-    happening today in the Jewish calendar.
-
-  -w Add the day of the week to the output.
-
-  -y Print only the last two digits of the year.
-
-  -Y file
-    Read a table of yahrtzeit dates from file. These events
-    are  printed  regardless  of  the  -h suppress holidays
-    switch.
-    There is one death-date per line in file, each with the
-    format
-    month day year description
-    where month, day and year form the  gregorian  date  of
-    death.   description  is a newline-terminated string to
-
-
-
-Danny Sadinoff   Last change: Hebcal Version 3.1    3
-
-
-
-
-
-
-HEBCAL(1)     User Commands     HEBCAL(1)
-
-
-
-    be printed on the yahrtzeit. An example might be
-
-    12 29 1957 Menachem Mendel's yahrtzeit.
-    5 15 1930 Benjamin's yahrtzeit.
+                   12 29 1957 Menachem Mendel's yahrtzeit.
+                   5 15 1930 Benjamin's yahrtzeit.
 
 CANDLE-LIGHTING TIMES
-  Hebcal's candlelighting times are only  approximations.   If
-  you  ever  have  any  doubts  about it's times, consult your
-  local halachic authority.  If you enter  geographic  coordi-
-  nates  above the artic circle or antarctic circle, the times
-  are guaranteed to be wrong.
+       Hebcal's candlelighting times are only approximations.  If
+       you  ever  have  any doubts about it's times, consult your
+       local halachic authority.  If you enter geographic coordi-
+       nates  above  the  artic  circle  or antarctic circle, the
+       times are guaranteed to be wrong.
 
-  Hebcal contains a small database of cities with their  asso-
-  ciated  geographic  information  and  time-zone information.
-  The geographic and time information necessary  to  calculate
-  sundown times can come to hebcal any of three ways:
+       Hebcal contains a small  database  of  cities  with  their
+       associated  geographic  information and time-zone informa-
+       tion.  The geographic and time  information  necessary  to
+       calculate  sundown  times  can come to hebcal any of three
+       ways:
 
-  1) The default: the system manager sets a default city  when
-  the program is compiled.
-  2) Hebcal looks in the environment variable HEBCALCITY  for
-  the  name  of  a  city in hebcal's database, and if it finds
-  one, hebcal will make that the new default city.
-  3) 1 and 2 may be  overridden  by  command  line  arguments,
-  including  those  specified  in  the HEBCALOPTS environment
-  variable.  The most natural way to do this is to use the - c
-  city  command.  This will localize hebcal to city. A list of
-  the cities hebcal knows about can be obtained by typing
-    hebcal cities
-  at the command prompt.  If the city you want isn't  on  that
-  list,  you can directly control hebcal's geographic informa-
-  tion with the -l, -L -z and - Z  DST  switches.   Note  that
-  changing  the  geographic coordinates causes the timezone to
-  default to Zulu and the daylight savings time  processor  to
-  default to 'none.' To get a list of possible values for DST,
-  type
-    hebcal DST
-  at the command prompt.
+       1) The default: the system manager  sets  a  default  city
+       when the program is compiled.
+       2)  Hebcal  looks  in the environment variable HEBCAL_CITY
+       for the name of a city in hebcal's  database,  and  if  it
+       finds one, hebcal will make that the new default city.
+       3)  1  and  2 may be overridden by command line arguments,
+       including those specified in the  HEBCAL_OPTS  environment
+       variable.   The  most natural way to do this is to use the
+       -c city command.  This will localize hebcal  to  city.   A
+       list  of  the cities hebcal knows about can be obtained by
+       typing
+            hebcal cities
+       at the command prompt.  If the city you want isn't on that
+       list,   you   can  directly  control  hebcal's  geographic
+       information with the -l, -L -z and -Z DST switches.   Note
+       that  changing the geographic coordinates causes the time-
+       zone to default to Zulu and the daylight savings time pro-
+       cessor  to  default  to  'none.' To get a list of possible
+       values for DST, type
+            hebcal DST
+       at the command prompt.
 
-  For a status report on customizations, type type
-    hebcal info
-  at the command prompt.
+       For a status report on customizations, type type
+            hebcal info
+       at the command prompt.
 
 EXAMPLES
-  To find the days of the omer in 1997, printing the  days  of
-  the week:
-    example% hebcal -how 1997
-    4/23/97 Wed, 1st day of the Omer
-    4/24/97 Thu, 2nd day of the Omer
-    4/25/97 Fri, 3rd day of the Omer
-     .
-     .
-     .
+       To find the days of the omer in 1997, printing the days of
+       the week:
+              example% hebcal -how 1997
+              4/23/97 Wed, 1st day of the Omer
+              4/24/97 Thu, 2nd day of the Omer
+              4/25/97 Fri, 3rd day of the Omer
+               .
+               .
+               .
+              6/9/97 Mon, 48th day of the Omer
+              6/10/97 Tue, 49th day of the Omer
 
+       To print only the weekly sedrot of Nisan 5770
+              example% hebcal -hs Nisan 5770
+              3/20/2010 Parashat Vayikra
+              3/27/2010 Parashat Tzav
+              4/10/2010 Parashat Shmini
 
-
-Danny Sadinoff   Last change: Hebcal Version 3.1    4
-
-
-
-
-
-
-HEBCAL(1)     User Commands     HEBCAL(1)
-
-
-
-    6/9/97 Mon, 48th day of the Omer
-    6/10/97 Tue, 49th day of the Omer
-
-  To print only the weekly sedrot of Nisan 5770
-    example% hebcal -hs Nisan 5770
-    3/20/2010 Parashat Vayikra
-    3/27/2010 Parashat Tzav
-    4/10/2010 Parashat Shmini
-
-  To find out what's happening in the Jewish calendar today , use
-    example% hebcal -TS
-    19 of Nisan, 5752
-    Parshat Achrei Mot
-    Pesach V (CH"M)
-    4th day of the Omer
+       To find out what's happening in the Jewish calendar today , use
+              example% hebcal -TS
+              19 of Nisan, 5752
+              Parshat Achrei Mot
+              Pesach V (CH"M)
+              4th day of the Omer
 
 ENVIRONMENT
-  Hebcal uses two environment variables:
+       Hebcal uses two environment variables:
 
-  HEBCALCITY
-    Hebcal uses this value as the default city  for  sunset
-    calculations.   A list of available cities is available
-    with from hebcal with the command:
-    hebcal cities
+       HEBCAL_CITY
+              Hebcal uses this value as the default city for sun-
+              set calculations.  A list of  available  cities  is
+              available with from hebcal with the command:
+              hebcal cities
 
-  HEBCALOPTS
-    The value of this variable is  automatically  processed
-    as  if  it  were  typed  at the command line before any
-    other actual command-line-arguments.
+       HEBCAL_OPTS
+              The  value  of  this variable is automatically pro-
+              cessed as if it were  typed  at  the  command  line
+              before any other actual command-line-arguments.
 
 AUTHOR
-  Danny Sadinoff
+       Danny Sadinoff
 
 SEE ALSO
-  calendar(1),  emacs(1),  hcal(1),  hdate(1),  omer(1),  rem-
-  ind(1), rise(1)
+       calendar(1),   emacs(1),   hcal(1),   hdate(1),   omer(1),
+       remind(1), rise(1)
 
-  The original motivation for the algorithms in  this  program
-  was the Tur Shulchan Aruch.
+       The latest version of the  code  will  be  available  from
+       http://sourceforge.net/projects/hebcal
 
-  For version 3, much of the program was rewritten using Emacs
-  19's  calendar  routines  by  Edward  M. Reingold and Nachum
-  Dershowitz.  Their program is extremely clear  and  provides
-  many  instructive  examples  of fine calendar code in emacs-
-  LISP.
+       The original motivation for the algorithms in this program
+       was the Tur Shulchan Aruch.
 
-  A well written treatment of the Jewish calendar for the lay-
-  man  can  be  found  in Understanding the Jewish Calendar by
-  Rabbi Nathan Bushwick.  A more complete bibliography on  the
-  topic  can  be  found  there, as well as in the Encyclopedia
-  Judaica entry on the calendar.
+       For version 3, much of the  program  was  rewritten  using
+       Emacs  19's  calendar  routines  by Edward M. Reingold and
+       Nachum Dershowitz.  Their program is extremely  clear  and
+       provides  many  instructive examples of fine calendar code
+       in emacs-LISP.
 
-
-
-
-Danny Sadinoff   Last change: Hebcal Version 3.1    5
-
-
-
-
-
-
-HEBCAL(1)     User Commands     HEBCAL(1)
-
-
+       A well written treatment of the Jewish  calendar  for  the
+       layman  can  be found in Understanding the Jewish Calendar
+       by Rabbi Nathan Bushwick.  A more complete bibliography on
+       the topic can be found there, as well as in the Encyclope-
+       dia Judaica entry on the calendar.
 
 DIAGNOSTICS
-  hebcal help
-    Prints a shorter version of this manpage, with comments
-    on each option.
+       hebcal help
+              Prints a shorter version of this manpage, with com-
+              ments on each option.
 
-  hebcal info
-    Prints the version number and  default  values  of  the
-    program.
+       hebcal info
+              Prints the version number and default values of the
+              program.
 
-  hebcal DST
-    Prints  a  list  of  available  daylight  savings  time
-    schemes, suitable as arguments to the -Z DST option.
+       hebcal DST
+              Prints a list of available  daylight  savings  time
+              schemes,  suitable  as  arguments  to  the  -Z  DST
+              option.
 
-  hebcal cities
-    Prints a list of cities which hebcal knows about, suit-
-    able  as arguments to the -C city option.  If your city
-    does  not  appear  on  this  list,  put  the  necessary
-    defaults in the DSTOPTS  environment variable.
+       hebcal cities
+              Prints a list of cities which hebcal  knows  about,
+              suitable  as  arguments  to the -C city option.  If
+              your city does not appear on  this  list,  put  the
+              necessary  defaults  in  the  DST_OPTS  environment
+              variable.
 
-  hebcal copying
-    Prints the GNU license, with information about  copying
-    the program.  See below.
+       hebcal copying
+              Prints the  GNU  license,  with  information  about
+              copying the program.  See below.
 
-  hebcal warranty
-    Tells you how there's NO WARRANTY for hebcal.
+       hebcal warranty
+              Tells you how there's NO WARRANTY for hebcal.
 
 DISCLAIMER
-  This is just a program I  wrote  during  summer  school  and
-  while avoiding my senior project.  It should not be invested
-  with any sort of halachic authority.
+       This  is  just  a program I wrote during summer school and
+       while avoiding  my  senior  project.   It  should  not  be
+       invested with any sort of halachic authority.
 
 BUGS
-  Hebrew dates are only valid before sundown on  that  secular
-  date.   An  option  to control this will be added in a later
-  release.
+       Hebrew dates are only valid before sundown on that secular
+       date.  An option to control this will be added in a  later
+       release.
 
-  Negative longitudes are EAST of Greenwich.
+       Negative longitudes are EAST of Greenwich.
 
-  Some combinations of options produce weird results, e.g.
-  hebcal -dH nisan 5744
-  hebcal -dH 5744
-  This comes into play when you use  the  ENVOPT  environment
-  variable.
+       Some combinations of options produce weird results, e.g.
+       hebcal -dH nisan 5744
+       hebcal -dH 5744
+       This  comes into play when you use the ENV_OPT environment
+       variable.
 
-  The sunup/sundown routines aren't accurate enough.   If  you
-  enter  geographic  coordinates  above  the  artic  circle or
-  antarctic circle, the times are guaranteed to be wrong.
+       The sunup/sundown routines aren't accurate enough.  If you
+       enter  geographic  coordinates  above  the artic circle or
+       antarctic circle, the times are guaranteed to be wrong.
 
-  Hebcal performs no checking for changes between  the  julian
-  and  gregorian  calendar,  so  secular dates before 1752 are
-  untrustworthy.
+       Hebcal performs no checking for changes between the julian
+       and  gregorian  calendar, so secular dates before 1752 are
+       untrustworthy.
 
-
-
-
-Danny Sadinoff   Last change: Hebcal Version 3.1    6
-
-
-
-
-
-
-HEBCAL(1)     User Commands     HEBCAL(1)
-
-
-
-  Hebcal cannot handle date computations before 2 C.E.  sorry.
+       Hebcal cannot  handle  date  computations  before  2  C.E.
+       sorry.
 
 BUG REPORTS TO
-  Danny Sadinoff
-  sadinoff@panix.com
+       Danny Sadinoff
+       sadinoff@pobox.com
 
 COPYING
-  Copyright (c) 1994 Danny Sadinoff
+       Copyright (c) 1994 Danny Sadinoff
+       Portions  Copyright (c) 2002 Michael J. Radwin. All Rights
+       Reserved.
 
-  Permission is granted to make and distribute verbatim copies
-  of  this  manual provided the copyright notice and this per-
-  mission notice are preserved on all copies.
+       Permission is granted  to  make  and  distribute  verbatim
+       copies  of  this  manual provided the copyright notice and
+       this permission notice are preserved on all copies.
 
-  Permission is granted to copy and distribute  modified  ver-
-  sions of this manual under the conditions for verbatim copy-
-  ing, provided that the entire resulting derived work is dis-
-  tributed under the terms of a permission notice identical to
-  this one.
+       Permission is granted to copy and distribute modified ver-
+       sions  of  this  manual  under the conditions for verbatim
+       copying, provided that the entire resulting  derived  work
+       is  distributed  under  the  terms  of a permission notice
+       identical to this one.
 
-  Permission is granted to copy and distribute translations of
-  this  manual  into  another language, under the above condi-
-  tions for modified versions,  except  that  this  permission
-  notice  may be included in translations approved by the Free
-  Software Foundation instead of in the original English.
+       Permission is granted to copy and distribute  translations
+       of this manual into another language, under the above con-
+       ditions for modified versions, except that this permission
+       notice  may  be  included  in translations approved by the
+       Free  Software  Foundation  instead  of  in  the  original
+       English.
 
-  For a full text of the copyright and lack of warranty infor-
-  mation, type
-  hebcal copying
-  or
-  hebcal warranty
-  at the command line.
-
-
-
-
-
+       For  a  full  text  of  the copyright and lack of warranty
+       information, type
+       hebcal copying
+       or
+       hebcal warranty
+       at the command line.
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Danny Sadinoff   Last change: Hebcal Version 3.1    7
-
-
-
+Danny Sadinoff          Hebcal Version 3.3              HEBCAL(1)

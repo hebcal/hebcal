@@ -118,6 +118,9 @@ manpage in the file MANUAL.
 
 
 DISTRIBUTION
+   Copyright (C) 1994  Danny Sadinoff
+   Portions Copyright (c) 2002 Michael J. Radwin. All Rights Reserved.
+
    Hebcal is distributed under the GNU Public License.  The program
    and its source code may be freely distributed.  For details, see
    the file COPYING in the distribution.
