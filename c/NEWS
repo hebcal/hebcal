@@ -1,6 +1,7 @@
 Changes in 3.4-beta3
 - removed reference to NAN in the code.  Anybody know why slackware might not have it?
 - taught autoconf how to find libm.
+- various other autoconf/automake tricks, like "make check" from another directory
 
 Changes in 3.4-beta2
 - fixed massive distribution error, which left the source missing three .h files.
