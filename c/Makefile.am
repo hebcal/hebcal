@@ -17,6 +17,8 @@ CITY = New_York
 VERSION = 3.4
 
 #there is no need to change anything below this line
+# do something with 
+# groff -T html -man man/man1/hebcal.1 >hebcal-manpage.html
 #-----------------------------------------------------------------
 
 AM_CPPFLAGS = -DCITY='"$(CITY)"' 

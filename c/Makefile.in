@@ -80,7 +80,7 @@ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 PACKAGE = @PACKAGE@
 STRIP = @STRIP@
 
-VERSION = 3.4-beta3
+VERSION = 3.4
 am__include = @am__include@
 am__quote = @am__quote@
 install_sh = @install_sh@
@@ -89,6 +89,8 @@ CITY = New_York
 
 
 #there is no need to change anything below this line
+# do something with 
+# groff -T html -man man/man1/hebcal.1 >hebcal-manpage.html
 #-----------------------------------------------------------------
 AM_CPPFLAGS = -DCITY='"$(CITY)"'  -DVERSION='"$(VERSION)"'
 
@@ -110,6 +112,8 @@ hebcal_h_files = common.h  danlib.h format.h greg.h hebcal.h \
 
 
 hebcal_SOURCES = $(hebcal_c_files) $(hebcal_h_files)
+
+man_MANS = hebcal.1
 
 BUILT_SOURCES = $(srcdir)/package.m4
 subdir = .
@@ -150,6 +154,9 @@ CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 CFLAGS = @CFLAGS@
 DIST_SOURCES = $(hebcal_SOURCES)
+
+NROFF = nroff
+MANS = $(man_MANS)
 
 RECURSIVE_TARGETS = info-recursive dvi-recursive install-info-recursive \
 	uninstall-info-recursive all-recursive install-data-recursive \
@@ -262,6 +269,49 @@ distclean-depend:
 	$(COMPILE) -c `cygpath -w $<`
 CCDEPMODE = @CCDEPMODE@
 uninstall-info-am:
+
+man1dir = $(mandir)/man1
+install-man1: $(man1_MANS) $(man_MANS)
+	@$(NORMAL_INSTALL)
+	$(mkinstalldirs) $(DESTDIR)$(man1dir)
+	@list='$(man1_MANS) $(dist_man1_MANS) $(nodist_man1_MANS)'; \
+	l2='$(man_MANS) $(dist_man_MANS) $(nodist_man_MANS)'; \
+	for i in $$l2; do \
+	  case "$$i" in \
+	    *.1*) list="$$list $$i" ;; \
+	  esac; \
+	done; \
+	for i in $$list; do \
+	  if test -f $(srcdir)/$$i; then file=$(srcdir)/$$i; \
+	  else file=$$i; fi; \
+	  ext=`echo $$i | sed -e 's/^.*\\.//'`; \
+	  case "$$ext" in \
+	    1*) ;; \
+	    *) ext='1' ;; \
+	  esac; \
+	  inst=`echo $$i | sed -e 's/\\.[0-9a-z]*$$//'`; \
+	  inst=`echo $$inst | sed -e 's/^.*\///'`; \
+	  inst=`echo $$inst | sed '$(transform)'`.$$ext; \
+	  echo " $(INSTALL_DATA) $$file $(DESTDIR)$(man1dir)/$$inst"; \
+	  $(INSTALL_DATA) $$file $(DESTDIR)$(man1dir)/$$inst; \
+	done
+uninstall-man1:
+	@$(NORMAL_UNINSTALL)
+	@list='$(man1_MANS) $(dist_man1_MANS) $(nodist_man1_MANS)'; \
+	l2='$(man_MANS) $(dist_man_MANS) $(nodist_man_MANS)'; \
+	for i in $$l2; do \
+	  case "$$i" in \
+	    *.1*) list="$$list $$i" ;; \
+	  esac; \
+	done; \
+	for i in $$list; do \
+	  ext=`echo $$i | sed -e 's/^.*\\.//'`; \
+	  inst=`echo $$i | sed -e 's/\\.[0-9a-z]*$$//'`; \
+	  inst=`echo $$inst | sed -e 's/^.*\///'`; \
+	  inst=`echo $$inst | sed '$(transform)'`.$$ext; \
+	  echo " rm -f $(DESTDIR)$(man1dir)/$$inst"; \
+	  rm -f $(DESTDIR)$(man1dir)/$$inst; \
+	done
 
 # This directory's subdirectories are mostly independent; you can cd
 # into them and run `make' without going through this Makefile.
@@ -461,10 +511,10 @@ distcleancheck: distclean
 	       exit 1; } >&2
 check-am: all-am
 check: check-recursive
-all-am: Makefile $(PROGRAMS) config.h
+all-am: Makefile $(PROGRAMS) $(MANS) config.h
 installdirs: installdirs-recursive
 installdirs-am:
-	$(mkinstalldirs) $(DESTDIR)$(bindir)
+	$(mkinstalldirs) $(DESTDIR)$(bindir) $(DESTDIR)$(man1dir)
 
 install: install-recursive
 install-exec: install-exec-recursive
@@ -508,13 +558,13 @@ info: info-recursive
 
 info-am:
 
-install-data-am:
+install-data-am: install-man
 
 install-exec-am: install-binPROGRAMS
 
 install-info: install-info-recursive
 
-install-man:
+install-man: install-man1
 
 installcheck-am:
 
@@ -527,9 +577,11 @@ mostlyclean: mostlyclean-recursive
 
 mostlyclean-am: mostlyclean-compile mostlyclean-generic
 
-uninstall-am: uninstall-binPROGRAMS uninstall-info-am
+uninstall-am: uninstall-binPROGRAMS uninstall-info-am uninstall-man
 
 uninstall-info: uninstall-info-recursive
+
+uninstall-man: uninstall-man1
 
 .PHONY: $(RECURSIVE_TARGETS) GTAGS all all-am check check-am clean \
 	clean-binPROGRAMS clean-generic clean-recursive dist dist-all \
@@ -540,14 +592,15 @@ uninstall-info: uninstall-info-recursive
 	install-am install-binPROGRAMS install-data install-data-am \
 	install-data-recursive install-exec install-exec-am \
 	install-exec-recursive install-info install-info-am \
-	install-info-recursive install-man install-recursive \
-	install-strip installcheck installcheck-am installdirs \
-	installdirs-am installdirs-recursive maintainer-clean \
-	maintainer-clean-generic maintainer-clean-recursive mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-recursive \
-	tags tags-recursive uninstall uninstall-am \
-	uninstall-binPROGRAMS uninstall-info-am \
-	uninstall-info-recursive uninstall-recursive
+	install-info-recursive install-man install-man1 \
+	install-recursive install-strip installcheck installcheck-am \
+	installdirs installdirs-am installdirs-recursive \
+	maintainer-clean maintainer-clean-generic \
+	maintainer-clean-recursive mostlyclean mostlyclean-compile \
+	mostlyclean-generic mostlyclean-recursive tags tags-recursive \
+	uninstall uninstall-am uninstall-binPROGRAMS uninstall-info-am \
+	uninstall-info-recursive uninstall-man uninstall-man1 \
+	uninstall-recursive
 
 
 $(srcdir)/package.m4: $(top_srcdir)/configure.ac
