@@ -333,7 +333,7 @@ struct variable_holiday_names {
   {{"Chanukah: 8 Candles", NULL, "\347\360\345\353\344: \347' \360\370\345\372"}},
   {{"Chanukah: 8th Day", NULL, "\347\360\345\353\344: \351\345\355 \347'"}},
   {{"Purim", NULL, "\364\345\370\351\355"}},
-  {{"Purim Katan", "Purim Koson", "\364\345\370\351\355 \367\350\357"}},
+  {{"Purim Katan", "Purim Koton", "\364\345\370\351\355 \367\350\357"}},
   {{"Shabbat HaChodesh", "Shabbas HaChodesh", "\371\341\372 \344\347\343\371"}},
   {{"Shabbat HaGadol", "Shabbas HaGadol", "\371\341\372 \344\342\343\345\354"}},
   {{"Shabbat Hazon", "Shabbas Hazon", "\371\341\372 \344\346\345\357"}},
