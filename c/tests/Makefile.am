@@ -20,7 +20,12 @@
 #I sure wish I knew how to create a test program that doesn't get installed... -djs
 check_PROGRAMS = sanity-check
 
-sanity_check_SOURCES = $(top_srcdir)/common.c $(top_srcdir)/danlib.c $(top_srcdir)/error.c $(top_srcdir)/greg.c sanity-check.c
+# sanity_check_SOURCES = $(top_srcdir)/common.c $(top_srcdir)/danlib.c \
+#               $(top_srcdir)/error.c $(top_srcdir)/greg.c sanity-check.c
+
+sanity_check_SOURCES = sanity-check.c
+
+sanity_check_LDADD  = ../common.o ../danlib.o ../error.o ../greg.o 
 
 TESTS = hebcal-1 hebcal-2
 

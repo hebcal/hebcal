@@ -80,7 +80,12 @@ install_sh = @install_sh@
 #I sure wish I knew how to create a test program that doesn't get installed... -djs
 check_PROGRAMS = sanity-check
 
-sanity_check_SOURCES = $(top_srcdir)/common.c $(top_srcdir)/danlib.c $(top_srcdir)/error.c $(top_srcdir)/greg.c sanity-check.c
+
+# sanity_check_SOURCES = $(top_srcdir)/common.c $(top_srcdir)/danlib.c \
+#               $(top_srcdir)/error.c $(top_srcdir)/greg.c sanity-check.c
+sanity_check_SOURCES = sanity-check.c
+
+sanity_check_LDADD = ../common.o ../danlib.o ../error.o ../greg.o 
 
 TESTS = hebcal-1 hebcal-2
 
@@ -100,11 +105,9 @@ mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 check_PROGRAMS = sanity-check$(EXEEXT)
-am_sanity_check_OBJECTS = common.$(OBJEXT) danlib.$(OBJEXT) \
-	error.$(OBJEXT) greg.$(OBJEXT) sanity-check.$(OBJEXT)
+am_sanity_check_OBJECTS = sanity-check.$(OBJEXT)
 sanity_check_OBJECTS = $(am_sanity_check_OBJECTS)
-sanity_check_LDADD = $(LDADD)
-sanity_check_DEPENDENCIES =
+sanity_check_DEPENDENCIES = ../common.o ../danlib.o ../error.o ../greg.o
 sanity_check_LDFLAGS =
 
 DEFS = @DEFS@
@@ -114,9 +117,7 @@ LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
-@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/common.Po ./$(DEPDIR)/danlib.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/error.Po ./$(DEPDIR)/greg.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/sanity-check.Po
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/sanity-check.Po
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
@@ -138,10 +139,6 @@ Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
 
 clean-checkPROGRAMS:
 	-test -z "$(check_PROGRAMS)" || rm -f $(check_PROGRAMS)
-common.$(OBJEXT): $(top_srcdir)/common.c
-danlib.$(OBJEXT): $(top_srcdir)/danlib.c
-error.$(OBJEXT): $(top_srcdir)/error.c
-greg.$(OBJEXT): $(top_srcdir)/greg.c
 sanity-check$(EXEEXT): $(sanity_check_OBJECTS) $(sanity_check_DEPENDENCIES) 
 	@rm -f sanity-check$(EXEEXT)
 	$(LINK) $(sanity_check_LDFLAGS) $(sanity_check_OBJECTS) $(sanity_check_LDADD) $(LIBS)
@@ -152,10 +149,6 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/common.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/danlib.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/error.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/greg.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sanity-check.Po@am__quote@
 
 distclean-depend:
@@ -172,54 +165,6 @@ distclean-depend:
 @AMDEP_TRUE@	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 	$(COMPILE) -c `cygpath -w $<`
-
-common.o: $(top_srcdir)/common.c
-@AMDEP_TRUE@	source='$(top_srcdir)/common.c' object='common.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@	depfile='$(DEPDIR)/common.Po' tmpdepfile='$(DEPDIR)/common.TPo' @AMDEPBACKSLASH@
-@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o common.o `test -f '$(top_srcdir)/common.c' || echo '$(srcdir)/'`$(top_srcdir)/common.c
-
-common.obj: $(top_srcdir)/common.c
-@AMDEP_TRUE@	source='$(top_srcdir)/common.c' object='common.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@	depfile='$(DEPDIR)/common.Po' tmpdepfile='$(DEPDIR)/common.TPo' @AMDEPBACKSLASH@
-@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o common.obj `cygpath -w $(top_srcdir)/common.c`
-
-danlib.o: $(top_srcdir)/danlib.c
-@AMDEP_TRUE@	source='$(top_srcdir)/danlib.c' object='danlib.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@	depfile='$(DEPDIR)/danlib.Po' tmpdepfile='$(DEPDIR)/danlib.TPo' @AMDEPBACKSLASH@
-@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o danlib.o `test -f '$(top_srcdir)/danlib.c' || echo '$(srcdir)/'`$(top_srcdir)/danlib.c
-
-danlib.obj: $(top_srcdir)/danlib.c
-@AMDEP_TRUE@	source='$(top_srcdir)/danlib.c' object='danlib.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@	depfile='$(DEPDIR)/danlib.Po' tmpdepfile='$(DEPDIR)/danlib.TPo' @AMDEPBACKSLASH@
-@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o danlib.obj `cygpath -w $(top_srcdir)/danlib.c`
-
-error.o: $(top_srcdir)/error.c
-@AMDEP_TRUE@	source='$(top_srcdir)/error.c' object='error.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@	depfile='$(DEPDIR)/error.Po' tmpdepfile='$(DEPDIR)/error.TPo' @AMDEPBACKSLASH@
-@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o error.o `test -f '$(top_srcdir)/error.c' || echo '$(srcdir)/'`$(top_srcdir)/error.c
-
-error.obj: $(top_srcdir)/error.c
-@AMDEP_TRUE@	source='$(top_srcdir)/error.c' object='error.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@	depfile='$(DEPDIR)/error.Po' tmpdepfile='$(DEPDIR)/error.TPo' @AMDEPBACKSLASH@
-@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o error.obj `cygpath -w $(top_srcdir)/error.c`
-
-greg.o: $(top_srcdir)/greg.c
-@AMDEP_TRUE@	source='$(top_srcdir)/greg.c' object='greg.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@	depfile='$(DEPDIR)/greg.Po' tmpdepfile='$(DEPDIR)/greg.TPo' @AMDEPBACKSLASH@
-@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o greg.o `test -f '$(top_srcdir)/greg.c' || echo '$(srcdir)/'`$(top_srcdir)/greg.c
-
-greg.obj: $(top_srcdir)/greg.c
-@AMDEP_TRUE@	source='$(top_srcdir)/greg.c' object='greg.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@	depfile='$(DEPDIR)/greg.Po' tmpdepfile='$(DEPDIR)/greg.TPo' @AMDEPBACKSLASH@
-@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o greg.obj `cygpath -w $(top_srcdir)/greg.c`
 CCDEPMODE = @CCDEPMODE@
 uninstall-info-am:
 
