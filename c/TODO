@@ -1,0 +1,2 @@
+remove the horrible thread-unsafety rife in this library:
+globals all over the place, and a particularly nasty implementation of itoa
