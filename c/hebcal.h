@@ -77,7 +77,7 @@ extern int havdalah_minutes,
 
 
 
-typedef struct {
+typedef struct hebrew_year {
    int first_day_of_week;
    int leap_p;
 } year_t;

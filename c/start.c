@@ -157,7 +157,7 @@ static char
    "            http://sourceforge.net/projects/hebcal"
 };
 
-typedef struct
+typedef struct dst 
 {
    char *name;
    int DST_scheme;
@@ -173,7 +173,7 @@ dst_t savings_bank[] =
    {"", 0}
 };
 
-typedef struct
+typedef struct city
 {
    char *name;
    int latdeg, latmin, longdeg, longmin, TZ, DST_scheme;
@@ -235,7 +235,7 @@ city_t cities[] =
 
 
 void
-  print_version_data()
+  print_version_data(void)
 {
    printf("hebcal version " VERSION "\n");
    printf("=====Defaults=====\n");
@@ -253,7 +253,7 @@ void
 #define LIC_LEN 269
 #define WAR_LEN 26
 void
-  print_warranty()
+  print_warranty( void )
 {
 
    int cnum;
@@ -273,7 +273,7 @@ void
 }
 
 void
-  print_copying()
+  print_copying( void )
 {
 
    int cnum;
@@ -303,121 +303,115 @@ void
    }
 }
 
-void
-  print_city_data()
+void print_city_data( void )
 {
 
-   int cnum;
-   char dummy[10];
-
-   for (cnum = 0;
-	cities[cnum].name;
-	cnum++)
+    int cnum;
+    char dummy[10];
+    
+    for (cnum = 0;
+         cities[cnum].name;
+         cnum++)
    {
        printf("%s (%dd%d' %c lat, %dd%d' %c long, GMT %s%d:00)\n",
-	      cities[cnum].name,
-	      abs(cities[cnum].latdeg), abs(cities[cnum].latmin),
-	      cities[cnum].latdeg < 0 ? 'S' : 'N',
-	      abs(cities[cnum].longdeg), abs(cities[cnum].longmin),
-	      cities[cnum].longdeg > 0 ? 'W' : 'E',
-	      cities[cnum].TZ < 0 ? "" : "+", cities[cnum].TZ
-	   );
-      if (0 == (cnum + 2) % SCREEN_HEIGHT)
-      {
-	 printf(" ---MORE---    Hit Enter To Continue....");
-	 fgets(&dummy[0], 10, stdin);
-      }
+              cities[cnum].name,
+              abs(cities[cnum].latdeg), abs(cities[cnum].latmin),
+              cities[cnum].latdeg < 0 ? 'S' : 'N',
+              abs(cities[cnum].longdeg), abs(cities[cnum].longmin),
+              cities[cnum].longdeg > 0 ? 'W' : 'E',
+              cities[cnum].TZ < 0 ? "" : "+", cities[cnum].TZ
+           );
+       if (0 == (cnum + 2) % SCREEN_HEIGHT)
+       {
+           printf(" ---MORE---    Hit Enter To Continue....");
+           fgets(&dummy[0], 10, stdin);
+       }
    }
 }
 
-void
-  print_DST_data()
+void print_DST_data()
 {
+    
+    int cnum;
+    char dummy[10];
+    
+    for (cnum = 0;
+         (cnum < sizeof(savings_bank) / sizeof(dst_t));
+         cnum++)
+    {
+        puts(savings_bank[cnum].name);
+        if (0 == (cnum + 1) % SCREEN_HEIGHT)
+        {
+            printf(" ---MORE---    Hit Enter To Continue....");
+            fgets(&dummy[0], 10, stdin);
+        }
+    }
+}
 
-   int cnum;
-   char dummy[10];
 
-   for (cnum = 0;
-	(cnum < sizeof(savings_bank) / sizeof(dst_t));
-	cnum++)
-   {
-      puts(savings_bank[cnum].name);
-      if (0 == (cnum + 1) % SCREEN_HEIGHT)
-      {
-	 printf(" ---MORE---    Hit Enter To Continue....");
-	 fgets(&dummy[0], 10, stdin);
+void localize_to_city(const char *cityNameArg)
+{
+    size_t len = strlen(cityNameArg);
+    char *pc, *cityStr;
+    city_t *pcity;
+    
+    initStr(&cityStr, strlen(cityNameArg));
+    strcpy(cityStr, cityNameArg);
+    
+    if (cityName != NULL)
+        free(cityName);
+    
+    /* convert non-alpha to spaces */
+    for ( pc = cityStr; *pc != '\0'; pc++ )
+        if ( ! isalpha( (int)*pc ) )
+            *pc = ' ';
+    
+    for (pcity = &cities[0]; pcity->name != NULL; pcity++)
+        if (0 == istrncasecmp(len, cityStr, pcity->name))
+        {
+            if (!(longp || latp))	/* -l and -L override -C  */
+            {
+                latdeg = pcity->latdeg;
+                latmin = pcity->latmin;
+                longdeg = pcity->longdeg;
+                longmin = pcity->longmin;
+            }
+            if (!zonep)
+            {
+                TZ = pcity->TZ;
+                DST_scheme = pcity->DST_scheme;
+            }
+            free(cityStr);
+            initStr(&cityName, strlen(pcity->name));
+            strcpy(cityName, pcity->name);
+            return;
       }
-   }
+    
+    warn("unknown city: %s. Use a nearby city or geographic coordinates.", cityNameArg);
+    warn("run 'hebcal cities' for a list of cities.", "");
+    ok_to_run = 0;
+}
+
+void set_DST_scheme(const char* schemeArg)
+{
+    size_t len = strlen(schemeArg);
+    dst_t *pdst;
+    
+    for (pdst = savings_bank; pdst->name != NULL; pdst++)
+        if (0 == istrncasecmp(len, schemeArg, pdst->name))
+      {
+          DST_scheme = pdst->DST_scheme;
+          return;
+      }
+    
+    die("unknown daylight savings scheme: %s.  \"hebcal DST\" for options.", schemeArg);
 }
 
 
 void
-  localize_to_city(s)
-     char *s;
+  set_default_city( void )
 {
-   int len = strlen(s);
-   char *pc, *cityStr;
-   city_t *pcity;
-
-   initStr(&cityStr, strlen(s));
-   strcpy(cityStr, s);
-
-   if (cityName != NULL)
-      free(cityName);
-
-   /* convert non-alpha to spaces */
-   for (pc = cityStr; *pc != '\0'; pc++)
-      if (!isalpha(*pc))
-	 *pc = ' ';
-
-   for (pcity = &cities[0]; pcity->name != NULL; pcity++)
-      if (0 == istrncasecmp(len, cityStr, pcity->name))
-      {
-	 if (!(longp || latp))	/* -l and -L override -C  */
-	 {
-	    latdeg = pcity->latdeg;
-	    latmin = pcity->latmin;
-	    longdeg = pcity->longdeg;
-	    longmin = pcity->longmin;
-	 }
-	 if (!zonep)
-	 {
-	    TZ = pcity->TZ;
-	    DST_scheme = pcity->DST_scheme;
-	 }
-	 free(cityStr);
-	 initStr(&cityName, strlen(pcity->name));
-	 strcpy(cityName, pcity->name);
-	 return;
-      }
-
-   warn("unknown city: %s. Use a nearby city or geographic coordinates.", s);
-   warn("run 'hebcal cities' for a list of cities.", "");
-   ok_to_run = 0;
-}
-
-void
-  set_DST_scheme(s)
-     char *s;
-{
-   int len = strlen(s);
-   dst_t *pdst;
-
-   for (pdst = savings_bank; pdst->name != NULL; pdst++)
-      if (0 == istrncasecmp(len, s, pdst->name))
-      {
-	 DST_scheme = pdst->DST_scheme;
-	 return;
-      }
-
-   die("unknown daylight savings scheme: %s.  \"hebcal DST\" for options.", s);
-}
-
-
-void
-  set_default_city()
-{
-   char *s;
+    const char *cityName;
 
 #ifdef CITY
    localize_to_city(CITY);
@@ -427,17 +421,14 @@ void
 
 /* having set the default city, now check if there is an overriding */
 /* default from the environment. */
-   if (NULL != (s = getenv(ENV_CITY)))
-      localize_to_city(s);
-
+   if (NULL != (cityName = getenv(ENV_CITY)))
+      localize_to_city(cityName);
 }
 
 
 
 void
-  handleArgs(argc, argv)
-     int argc;
-     char *argv[];
+  handleArgs(int argc, char *argv[])
 {
    char dummy[10];
    date_t greg_today;
@@ -745,9 +736,7 @@ void
 }
 
 
-int tokenize(str, pargc, argv)
-        int *pargc;
-        char *argv[], *str;
+int tokenize(char *str, int *pargc, char* argv[])
 {
    char *strtok(), *strdup();
    char *s;
@@ -765,9 +754,7 @@ int tokenize(str, pargc, argv)
    return *pargc > 1;
 }
 
-int main(argc, argv)
-    int argc;
-    char *argv[];
+int main(int argc, char* argv[])
 {
    date_t tempDate;
    long startAbs, endAbs;

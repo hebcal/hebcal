@@ -51,6 +51,7 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "mytime.h"
 #include "mystring.h"
 #include "mymath.h"
@@ -219,7 +220,7 @@ timeadj (prefixStr, tval, minadj, dayadj)
 {
   static char *str;
   int hour, min;
-  int num = strlen (prefixStr) + 9;
+  size_t num = strlen (prefixStr) + 9;
 
   *dayadj = 0;
   tval += (double) minadj / 60.0;

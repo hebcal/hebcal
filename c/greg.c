@@ -30,6 +30,7 @@
 
 
 #include "mystdio.h"
+#include "danlib.h"
 #include <time.h>
 #include <string.h>
 #include "myerror.h"
@@ -41,7 +42,7 @@
 
  */
 
-char *eMonths[] =
+const char *eMonths[] =
 {
   "UNUSED",
   "January", "February", "March", "April", "May", "June", "July",
@@ -54,7 +55,7 @@ int MonthLengths[][13] =
   {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
 };
 
-char *ShortDayNames[] =
+const char *ShortDayNames[] =
 {
   "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"
 };
@@ -162,9 +163,7 @@ dayOfWeek (d1)			/* sunday = 0 */
   return (int) (greg2abs (d1) % 7L);
 }
 
-void 
-setDate (d)
-     date_t *d;
+void setDate ( date_t *d )
 {
 /*
    asctime() converts a time value contained in a tm  structure
@@ -174,18 +173,18 @@ setDate (d)
    pointer to the string.
  */
 
-  time_t time ();
-  char *ctime PROTO ((const time_t *));
-
-  time_t secs = time (NULL);
-  char *timestr = ctime (&secs);
+    time_t time ();
+    char *ctime PROTO ((const time_t *));
+    
+    time_t secs = time (NULL);
+    char *timestr = ctime (&secs);
 
 /* portability has driven me to truly shameful code.  
    please forgive this.
  */
-  sscanf (timestr + 20, "%d", &d->yy);
-  d->mm = lookup_string (timestr + 4, eMonths, 13, 3);
-  sscanf (timestr + 8, "%d", &d->dd);
+    sscanf (timestr + 20, "%d", &d->yy);
+    d->mm = lookup_string( timestr + 4, eMonths, 13, 3 );
+    sscanf (timestr + 8, "%d", &d->dd);
 }
 
 

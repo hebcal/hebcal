@@ -11,11 +11,11 @@
 #define LAST_INDEX(x) (sizeof x / sizeof x[0])
 #define strEQ(X,Y) (0 == strcmp((X),(Y)))
 
-void initStr PROTO((char **, int));
-int isAllNums PROTO((char *));
-char *numSuffix PROTO((int));
+void initStr PROTO((char **, size_t));
+int isAllNums PROTO((const char *));
+const char *numSuffix PROTO((int));
 char *hc_itoa PROTO((int));
-int istrncasecmp PROTO((int,char *,char *));
-int lookup_string PROTO((char *str, char *arr[], int size, int len));
+int istrncasecmp PROTO((size_t,const char *,const char *));
+int lookup_string PROTO((const char *str, const char *arr[], int size, int len));
 
 #endif

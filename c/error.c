@@ -26,32 +26,29 @@
  */
 #include "myerror.h"
 #include <errno.h>
+#include <stdlib.h>
 
 extern int errno;
 extern char *progname;
 
-void 
-die (s1, s2)			/* print error message and die */
-     char *s1, *s2;
+void die( const char *s1, const char *s2)			/* print error message and die */
 {
-  if (errno)
-    perror (progname);
-  else
-    fprintf (stderr, "%s: ", progname);
-  fprintf (stderr, s1, s2);
-  fprintf (stderr, "\n");
-  exit (1);
+    if (errno)
+        perror (progname);
+    else
+        fprintf (stderr, "%s: ", progname);
+    fprintf (stderr, s1, s2);
+    fprintf (stderr, "\n");
+    exit (1);
 }
 
-void 
-warn (s1, s2)			/* print error message but don't die */
-     char *s1, *s2;
+void warn( const char *s1, const char *s2)			/* print error message but don't die */
 {
-  if (errno)
-    perror (progname);
-  else
-    fprintf (stderr, "%s: ", progname);
-  fprintf (stderr, s1, s2);
-  fprintf (stderr, "\n");
-  errno = 0;
+    if (errno)
+        perror (progname);
+    else
+        fprintf (stderr, "%s: ", progname);
+    fprintf (stderr, s1, s2);
+    fprintf (stderr, "\n");
+    errno = 0;
 }

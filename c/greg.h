@@ -30,23 +30,23 @@
 #define FRI 5
 #define SAT 6
 
-extern char * eMonths[];
+extern const char * eMonths[];
 extern int MonthLengths[][13] ;
-extern char * DayNames[] ;
-extern char * ShortDayNames[];
+extern const char * DayNames[] ;
+extern const char * ShortDayNames[];
 
 typedef struct dateStruct {
-  int mm;	/* months: jan=1, DEC = 12 */
-  int dd;	/* day of month 1,31 */
-  int yy;	/* years since year 1 BCE i.e. -1 = 2 BCE */
-  } date_t;
+    int mm;	/* months: jan=1, DEC = 12 */
+    int dd;	/* day of month 1,31 */
+    int yy;	/* years since year 1 BCE i.e. -1 = 2 BCE */
+} date_t;
 
-int dayOfYear PROTO((date_t));
-long greg2abs PROTO((date_t));
-date_t abs2greg PROTO((long));
-void decDate PROTO((date_t *, long));
-void incDate PROTO((date_t *, long));
-int dayOfWeek PROTO((date_t));
-void setDate PROTO((date_t *));
-long day_on_or_before PROTO((int,long));
+int dayOfYear( date_t );
+long greg2abs( date_t );
+date_t abs2greg(long);
+void decDate(date_t *, long);
+void incDate(date_t *, long);
+int dayOfWeek(date_t);
+void setDate(date_t *);
+long day_on_or_before(int,long);
 #endif

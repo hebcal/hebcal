@@ -55,77 +55,72 @@ FILE *inFile, *yFile;
 extern holstorep_t holidays[14][MAXDAYS], union_Adar[MAXDAYS];
 
 #define SIMCHAT_DAY 23
-int havdalah_minutes = 72;	/* default */
-int light_offset = -18;		/* outside jerusalem */
+int havdalah_minutes = 72;      /* default */
+int light_offset = -18;         /* outside jerusalem */
 
 /*-------------------------------------------------------------------------*/
 
 year_t 
-yearData (hebyr)
-     int hebyr;
+yearData( int hebyr )
 {
-  date_t tempDate;
-  year_t retYear;
-
-  tempDate.yy = hebyr;
-  tempDate.mm = TISHREI;
-  tempDate.dd = 1;
-
-  retYear.first_day_of_week = (int) (hebrew2abs (tempDate) % 7L);
-  retYear.leap_p = LEAP_YR_HEB (hebyr);
-  return retYear;
+    date_t tempDate;
+    year_t retYear;
+    
+    tempDate.yy = hebyr;
+    tempDate.mm = TISHREI;
+    tempDate.dd = 1;
+    
+    retYear.first_day_of_week = (int) (hebrew2abs (tempDate) % 7L);
+    retYear.leap_p = LEAP_YR_HEB (hebyr);
+    return retYear;
 }
 
 /*-------------------------------------------------------------------------*/
 
 date_t 
-nextHebDate (dth)
-     date_t dth;
+nextHebDate( date_t dth )
 {
-  dth.dd++;
-  if (dth.dd > max_days_in_heb_month (dth.mm, dth.yy))
+    dth.dd++;
+    if (dth.dd > max_days_in_heb_month (dth.mm, dth.yy))
     {
-      if (dth.mm == MONTHS_IN_HEB (dth.yy))
-	{
-	  dth.mm = NISAN;
-	  dth.dd = 1;
-	}
-      else
-	{
-	  dth.mm++;
-	  dth.dd = 1;
-	  if (dth.mm == TISHREI)
-	    {
-	      dth.yy++;
-	    }
-	}
+        if (dth.mm == MONTHS_IN_HEB (dth.yy))
+        {
+            dth.mm = NISAN;
+            dth.dd = 1;
+        }
+        else
+        {
+            dth.mm++;
+            dth.dd = 1;
+            if (dth.mm == TISHREI)
+            {
+                dth.yy++;
+            }
+        }
     }
-  return dth;
+    return dth;
 }
 
 /*-------------------------------------------------------------------------*/
 
 /* end-of-loop increment routine */
 void 
-incHebGregDate (dtHeb, dtGreg, dtAbs, wkday, theYear)
-     date_t *dtHeb, *dtGreg;
-     long *dtAbs;
-     int *wkday;
-     year_t *theYear;
+incHebGregDate( date_t *dtHeb, date_t *dtGreg, 
+                long *dtAbs, int *wkday, year_t *theYear)
 {
   incDate (dtGreg, 1L);
   *dtHeb = nextHebDate (*dtHeb);
   (*dtAbs)++;
   *wkday = (*wkday + 1) % 7;
 
-  if (TISHREI == dtHeb->mm &&	/* if Rosh Hashana then reset YearData */
+  if (TISHREI == dtHeb->mm &&   /* if Rosh Hashana then reset YearData */
       1 == dtHeb->dd)
     {
       *theYear = yearData (dtHeb->yy);
       if (sedraAllWeek_sw || sedrot_sw)
-	reset_sedra (dtHeb->yy);
+        reset_sedra (dtHeb->yy);
       if (printOmer_sw)
-	reset_Omer (dtHeb->yy);
+        reset_Omer (dtHeb->yy);
       init_holidays(dtHeb->yy);
     }
 }
@@ -133,37 +128,34 @@ incHebGregDate (dtHeb, dtGreg, dtAbs, wkday, theYear)
 /*-------------------------------------------------------------------------*/
 
 void 
-PrintGregDate (dt)
-     date_t dt;
+PrintGregDate( date_t dt )
 {
-  if (!noGreg_sw)
+    if (!noGreg_sw)
     {
-      if (euroDates_sw)
-	printf ("%d.%d.", dt.dd, dt.mm);	/* dd/mm/yyyy */
-      else
-	printf ("%d/%d/", dt.mm, dt.dd);	/* mm/dd/yyyy */
-
-      if (yearDigits_sw)
-	printf ("%d", dt.yy % 100);
-      else
-	printf ("%d", dt.yy);
-
-      if (tabs_sw)
-	putchar ('\t');
-      else
-	putchar (' ');
+        if (euroDates_sw)
+            printf ("%d.%d.", dt.dd, dt.mm);        /* dd/mm/yyyy */
+        else
+            printf ("%d/%d/", dt.mm, dt.dd);        /* mm/dd/yyyy */
+        
+        if (yearDigits_sw)
+            printf ("%d", dt.yy % 100);
+        else
+            printf ("%d", dt.yy);
+        
+        if (tabs_sw)
+            putchar ('\t');
+        else
+            putchar (' ');
     }
-
-  if (weekday_sw)
-    printf ("%s, ", ShortDayNames[dayOfWeek (dt)]);
+    
+    if (weekday_sw)
+        printf ("%s, ", ShortDayNames[dayOfWeek (dt)]);
 }
 
 /*-------------------------------------------------------------------------*/
 
 void 
-set_DST_bounds (beginDST, endDST, gregYr)
-     long *beginDST, *endDST;
-     int gregYr;
+set_DST_bounds (long *beginDST, long *endDST, int gregYr)
 {
   date_t tempDt;
 
@@ -207,7 +199,7 @@ set_DST_bounds (beginDST, endDST, gregYr)
       /* begins: */
       tempDt.mm = TISHREI;
       tempDt.dd = 1;
-      tempDt.yy = gregYr + 3761;	/* next year */
+      tempDt.yy = gregYr + 3761;        /* next year */
       *endDST = day_on_or_before (SUN, hebrew2abs (tempDt) - 3L);
       DST_value = 60;
       break;
@@ -224,9 +216,7 @@ set_DST_bounds (beginDST, endDST, gregYr)
 /*-------------------------------------------------------------------------*/
 
 void 
-set_DST (beginDST, endDST, todayAbs, DST)
-     long beginDST, endDST, todayAbs;
-     int *DST;
+set_DST( long beginDST, long endDST, long todayAbs, int *DST )
 {
   if (beginDST <= todayAbs && todayAbs < endDST)
     *DST = DST_value;
@@ -237,9 +227,7 @@ set_DST (beginDST, endDST, todayAbs, DST)
 /*-------------------------------------------------------------------------*/
 
 void 
-print_candlelighting_times (mask, weekday, todayGreg, DST)
-     int mask, weekday, DST;
-     date_t todayGreg;
+print_candlelighting_times( int mask, int weekday, date_t todayGreg, int DST)
 {
 /* offset of sunset to candlelighting in minutes */
 
@@ -251,29 +239,29 @@ print_candlelighting_times (mask, weekday, todayGreg, DST)
       PrintGregDate (todayGreg);
 
       status = suntime (&xsunrise, &xsunset, dayOfYear (todayGreg),
-			SUNRISE, SUNSET);
+                        SUNRISE, SUNSET);
       if (status & NO_SUNSET)
-	 printf ("No sunset today.\n");
+         printf ("No sunset today.\n");
       else
       {
-	 printf ("%s: %s\n",
-		 iso8859_8_sw ? "\344\343\354\367\372 \360\370\345\372" :
-		 "Candle lighting",
-		 timeadj ("",
-			  xsunset,
-			  light_offset + DST,
-			  &day_adj));
-	 /*              printf("%s %s %.1lf\n",timeadj ("",xsunrise,0,&day_adj),
-			 timeadj ("",xsunset,0,&day_adj),
-			 (xsunset-xsunrise) * 5.0 + 120.0);
-			 */
+         printf ("%s: %s\n",
+                 iso8859_8_sw ? "\344\343\354\367\372 \360\370\345\372" :
+                 "Candle lighting",
+                 timeadj ("",
+                          xsunset,
+                          light_offset + DST,
+                          &day_adj));
+         /*              printf("%s %s %.1lf\n",timeadj ("",xsunrise,0,&day_adj),
+                         timeadj ("",xsunset,0,&day_adj),
+                         (xsunset-xsunrise) * 5.0 + 120.0);
+                         */
       }
    }
    
    /* offset of sunset to havdallah in minutes */
    if (weekday == SAT ||
        ((mask & YOM_TOV_ENDS) &&
-	weekday != FRI))
+        weekday != FRI))
    {
       double xsunrise, xsunset;
       int day_adj, status;
@@ -282,18 +270,18 @@ print_candlelighting_times (mask, weekday, todayGreg, DST)
       PrintGregDate (todayGreg);
       
       status = suntime (&xsunrise, &xsunset, dayOfYear (todayGreg),
-			SUNRISE, SUNSET);
+                        SUNRISE, SUNSET);
       if (status & NO_SUNSET)
-	 printf ("No sunset today.\n");
+         printf ("No sunset today.\n");
       else
       {
-	 printf ("%s (%d %s):%s\n",
-		 iso8859_8_sw ? "\344\341\343\354\344" : "Havdalah",
-		 havdalah_minutes,
-		 iso8859_8_sw ? "\343\367\345\372" : "min",
-		 timeadj ("",xsunset,
-			  havdalah_minutes + DST,
-			  &day_adj));
+         printf ("%s (%d %s):%s\n",
+                 iso8859_8_sw ? "\344\341\343\354\344" : "Havdalah",
+                 havdalah_minutes,
+                 iso8859_8_sw ? "\343\367\345\372" : "min",
+                 timeadj ("",xsunset,
+                          havdalah_minutes + DST,
+                          &day_adj));
       }
    }
 }
@@ -301,8 +289,7 @@ print_candlelighting_times (mask, weekday, todayGreg, DST)
 /*-------------------------------------------------------------------------*/
 
 void 
-reset_Omer (hYear)
-     int hYear;
+reset_Omer( int hYear )
 {
   date_t d;
   d.dd = 16;
@@ -318,12 +305,11 @@ reset_Omer (hYear)
 /*-------------------------------------------------------------------------*/
 
 void 
-main_calendar (todayAbs, endAbs)
-     long todayAbs, endAbs;	/* the range of the desired printout */
+main_calendar( long todayAbs, long endAbs) /* the range of the desired printout */
 {
   date_t todayGreg, todayHeb;
   long beginDST, endDST;
-  holstorep_t holi_start,holip;		/* a list of holidays for today */
+  holstorep_t holi_start,holip;         /* a list of holidays for today */
   year_t theYear;
   char *omerStr ;
   int omer, day_of_week, returnedMask, DST;
@@ -336,7 +322,7 @@ main_calendar (todayAbs, endAbs)
   set_DST_bounds (&beginDST, &endDST, todayGreg.yy);
   set_DST (beginDST, endDST, todayAbs, &DST);
 
-	   /*============== Main Year Loop ==============*/
+           /*============== Main Year Loop ==============*/
 
 
   reset_Omer (todayHeb.yy);
@@ -350,88 +336,88 @@ main_calendar (todayAbs, endAbs)
 
       sedra_today = sedraAllWeek_sw || (sedrot_sw && (day_of_week == SAT));
       omer_today = printOmer_sw &&
-	(todayAbs >= beginOmer) &&
-	(todayAbs <= endOmer);
+        (todayAbs >= beginOmer) &&
+        (todayAbs <= endOmer);
       candle_today = candleLighting_sw &&
-	(day_of_week >= FRI ||
-	 (returnedMask & LIGHT_CANDLES) ||
-	 (returnedMask & YOM_TOV_ENDS));
+        (day_of_week >= FRI ||
+         (returnedMask & LIGHT_CANDLES) ||
+         (returnedMask & YOM_TOV_ENDS));
       holidays_today = holip &&
-	(!noHolidays_sw || (returnedMask & USER_EVENT));
+        (!noHolidays_sw || (returnedMask & USER_EVENT));
 
       if (printHebDates_sw ||
-	  (printSomeHebDates_sw && 
-	   (holidays_today || sedra_today || omer_today || candle_today)))
-	{
-	  PrintGregDate (todayGreg);
-	  printf ("%d%s%s %s, %d\n", todayHeb.dd,	/* print the hebrew date */
-		  iso8859_8_sw ? "" : numSuffix (todayHeb.dd),
-		  iso8859_8_sw ? "" : " of",
-		  LANGUAGE2(hMonths[LEAP_YR_HEB (todayHeb.yy)][todayHeb.mm].name),
-		  todayHeb.yy);
-	}
+          (printSomeHebDates_sw && 
+           (holidays_today || sedra_today || omer_today || candle_today)))
+        {
+          PrintGregDate (todayGreg);
+          printf ("%d%s%s %s, %d\n", todayHeb.dd,       /* print the hebrew date */
+                  iso8859_8_sw ? "" : numSuffix (todayHeb.dd),
+                  iso8859_8_sw ? "" : " of",
+                  LANGUAGE2(hMonths[LEAP_YR_HEB (todayHeb.yy)][todayHeb.mm].name),
+                  todayHeb.yy);
+        }
 
 
       /* print the sedra, if desired */
       if (sedra_today)
-	{
-	  char *s = sedra (todayAbs);
-	  if (NULL != s)
-	    {
-	      PrintGregDate (todayGreg);
-	      printf ("%s %s\n",
-		      iso8859_8_sw ? "\364\370\371\372" :
-		      ashkenazis_sw ? "Parshas" : "Parashat",
-		      s);
-	    }
-	}
+        {
+          char *s = sedra (todayAbs);
+          if (NULL != s)
+            {
+              PrintGregDate (todayGreg);
+              printf ("%s %s\n",
+                      iso8859_8_sw ? "\364\370\371\372" :
+                      ashkenazis_sw ? "Parshas" : "Parashat",
+                      s);
+            }
+        }
 
       /* print today's holidays */
-      holi_start=holip;		/* store the head of the list for freeing */
+      holi_start=holip;         /* store the head of the list for freeing */
       for (; holip; holip = holip->next)
-	if (!noHolidays_sw || (holip->typeMask & USER_EVENT))
-	  {
-	    PrintGregDate (todayGreg);
-	    puts (holip->name);
-	  }
+        if (!noHolidays_sw || (holip->typeMask & USER_EVENT))
+          {
+            PrintGregDate (todayGreg);
+            puts (holip->name);
+          }
 
       /* Print the Omer */
       if (omer_today)
-	{
-	  initStr (&omerStr, NM_LEN);
-	  omer = (int) (todayAbs - beginOmer + 1L);
-	  if (!tabs_sw)
-	    {
-	      strncat (omerStr, hc_itoa (omer), NM_LEN);
-	      strncat (omerStr, numSuffix (omer), NM_LEN);
-	      strncat (omerStr, " day of the Omer", NM_LEN);
-	    }
-	  else
-	    {
-	      strncat (omerStr, "Omer: ", NM_LEN);
-	      strncat (omerStr, hc_itoa (omer), NM_LEN);
-	    }
-	  PrintGregDate (todayGreg);
-	  printf ("%s\n", omerStr);
-	  free( omerStr );
-	}
+        {
+          initStr (&omerStr, NM_LEN);
+          omer = (int) (todayAbs - beginOmer + 1L);
+          if (!tabs_sw)
+            {
+              strncat (omerStr, hc_itoa (omer), NM_LEN);
+              strncat (omerStr, numSuffix (omer), NM_LEN);
+              strncat (omerStr, " day of the Omer", NM_LEN);
+            }
+          else
+            {
+              strncat (omerStr, "Omer: ", NM_LEN);
+              strncat (omerStr, hc_itoa (omer), NM_LEN);
+            }
+          PrintGregDate (todayGreg);
+          printf ("%s\n", omerStr);
+          free( omerStr );
+        }
 
       /* Print CandleLighting times  */
       if (candle_today)
-	{
-	  set_DST (beginDST, endDST, todayAbs, &DST);
-	  print_candlelighting_times (returnedMask,
-				      day_of_week, todayGreg, DST);
-	}
+        {
+          set_DST (beginDST, endDST, todayAbs, &DST);
+          print_candlelighting_times (returnedMask,
+                                      day_of_week, todayGreg, DST);
+        }
       
       
       incHebGregDate (&todayHeb, &todayGreg, &todayAbs, &day_of_week, &theYear);
 
-      if (1 == todayGreg.dd &&	/* happy new year! */
-	  JAN == todayGreg.mm)
-	{
-	  set_DST_bounds (&beginDST, &endDST, todayGreg.yy);
-	}
+      if (1 == todayGreg.dd &&  /* happy new year! */
+          JAN == todayGreg.mm)
+        {
+          set_DST_bounds (&beginDST, &endDST, todayGreg.yy);
+        }
 
 #     ifdef PLUG_LEAKS
       free_holidays(*holip);

@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include "proto.h"
 
-void die PROTO((char *, char *));
-void warn PROTO((char *, char *));
+void die PROTO((const char *, const char *));
+void warn PROTO((const char *, const char *));
 
 #endif
