@@ -25,6 +25,8 @@ sanity_check_SOURCES = $(top_srcdir)/common.c $(top_srcdir)/danlib.c $(top_srcdi
 TESTS = hebcal-1 hebcal-2
 
 TESTS_okayfiles = hebcal-test1.ok hebcal-test2.ok
+TESTS_outputfiles = hebcal-test1.out hebcal-test2.out
+MOSTLYCLEANFILES = $(TESTS_outputfiles)
 
 EXTRA_DIST = $(TESTS) $(TESTS_okayfiles)
 
