@@ -57,7 +57,7 @@ static char
  *cityName, *helpArray[] =
 {
    "Hebcal Version " VERSION " By Danny Sadinoff",
-   "usage: hebcal [-acdDeHhiorsStTwy]",
+   "usage: hebcal [-8acdDeHhiorsStTwy]",
    "            [-I file]",
    "            [-Y yahrtzeit_file]",
    "            [-C city]",
@@ -73,6 +73,7 @@ static char
    "       hebcal warranty",
    "       hebcal copying",
    "OPTIONS:",
+   "   -8 : Use 8-bit Hebrew (ISO-8859-8-Logical).",
    "   -a : Use ashkenazis hebrew.",
    "   -c : Print candlelighting times.",
    "   -C city : Set latitude, longitude, timezone and daylight",
