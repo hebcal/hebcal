@@ -45,31 +45,32 @@
 extern FILE *inFile, *yFile;
 
 extern int DST_scheme,
-   ashkenazis_sw, 
-   iso8859_8_sw,
-   candleLighting_sw, 
-   euroDates_sw,
-   hebrewDates_sw,
-   inputFile_sw,
-   israel_sw,
-   latdeg, latmin, latsec, longdeg, longmin, longsec, TZ, 
-   latlong_sw,
-   printOmer_sw,
-   printHebDates_sw,
-   printSomeHebDates_sw,
-   sedraAllWeek_sw, 
-   sedrot_sw, 
-   noGreg_sw, 
-   noHolidays_sw,
-   suppress_rosh_chodesh_sw,
-   tabs_sw,
-   weekday_sw, 
-   yearDigits_sw,
-   yahrtzeitFile_sw;
+    ashkenazis_sw, 
+    iso8859_8_sw,
+    candleLighting_sw, 
+    euroDates_sw,
+    hebrewDates_sw,
+    inputFile_sw,
+    israel_sw,
+    latdeg, latmin, latsec, longdeg, longmin, longsec, TZ, 
+    latlong_sw,
+    printOmer_sw,
+    printHebDates_sw,
+    printSomeHebDates_sw,
+    sedraAllWeek_sw, 
+    sedrot_sw, 
+    noGreg_sw, 
+    noHolidays_sw,
+    suppress_rosh_chodesh_sw,
+    tabs_sw,
+    weekday_sw, 
+    yearDigits_sw,
+    yahrtzeitFile_sw;
 
 extern int havdalah_minutes,
    light_offset;
 
+extern char* formatString;
 
 
 typedef struct hebrew_year {
@@ -90,16 +91,16 @@ typedef struct hebrew_year {
 #define IL_ONLY 16		/* b'aretz (Israel) */
 
 typedef struct hinode{   /* holiday input structure */
-   date_t date;
-   char *(name[3]);
-   int typeMask;
-   struct hinode *next;
+    date_t date;
+    char *(name[3]);
+    unsigned int typeMask;
+    struct hinode *next;
 } holinput_t, *holinputp_t;
 
 typedef struct hsnode{  /* holiday storage structure */
-   char *name;
-   int typeMask;
-   struct hsnode *next;
+    char *name;
+    unsigned int typeMask;
+    struct hsnode *next;
 } holstore_t, *holstorep_t;
 
 year_t yearData( int );
