@@ -194,20 +194,34 @@ molad_t molad( int year, int m)
 date_t abs2hebrew( long d )
 {
     static int mmap[] =
-        {9, 10, 11, 12, 1, 2, 3, 4, 7, 7, 7, 8};
+        {
+            KISLEV, TEVET, SHVAT, ADAR_I, NISAN, 
+            IYYAR, SIVAN, TAMUZ, 
+            TISHREI, TISHREI, TISHREI, CHESHVAN
+        };
     date_t hebdate, gregdate;
     int day, month, year;
     
     gregdate = abs2greg (d);
     hebdate.dd = 1;
     hebdate.mm = 7;
-    month = mmap[gregdate.mm - 1];
     year = 3760 + gregdate.yy;
     
     while (hebdate.yy = year + 1,
            d >= hebrew2abs (hebdate))
         year++;
-    
+
+    if( year >= 4635 && year < 10666  )
+    {
+        /* optimize search */
+        month = mmap[gregdate.mm - 1];
+    }
+    else
+    {
+        /* we're outside the usual range, so assume nothing about hebrew/gregorian calendar drift... */
+        month = TISHREI;
+    }
+
     while (hebdate.mm = month,
            hebdate.dd = max_days_in_heb_month (month, year),
            hebdate.yy = year,
