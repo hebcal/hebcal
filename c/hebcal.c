@@ -34,6 +34,7 @@
 #include "myerror.h"
 #include "rise.h"
 #include "sedra.h"
+#include "format.h"
 
 #define LANGUAGE(str) (ashkenazis_sw && (str)[1] ? ((str)[1]) : ((str)[0]))
 
@@ -46,8 +47,8 @@ int
   yearDigits_sw, yahrtzeitFile_sw, DST_scheme, DST_value;
 int iso8859_8_sw;
 long beginOmer, endOmer;
-extern hmonths_t hMonths;
 FILE *inFile, *yFile;
+char *formatString;
 extern holstorep_t holidays[14][MAXDAYS], union_Adar[MAXDAYS];
 
 #define SIMCHAT_DAY 23
@@ -372,11 +373,16 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
       /* print today's holidays */
       holi_start=holip;         /* store the head of the list for freeing */
       for (; holip; holip = holip->next)
+      {
           if (!noHolidays_sw || (holip->typeMask & USER_EVENT))
           {
-              PrintGregDate( todayGreg );
-              puts( holip->name );
+/*              char buf[200];
+              puts(formatLine( todayGreg, todayHeb, holip->name, buf, 200));
+*/
+              PrintGregDate( todayGreg ); 
+              puts( holip->name ); 
           }
+      }
       
       /* Print the Omer */
       if (omer_today)
@@ -407,7 +413,7 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
                                       day_of_week, todayGreg, DST);
       }
       
-      
+
       incHebGregDate (&todayHeb, &todayGreg, &todayAbs, &day_of_week, &theYear);
       
       if (1 == todayGreg.dd &&  /* happy new year! */
