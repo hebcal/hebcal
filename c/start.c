@@ -62,6 +62,7 @@ static char
    "            [-m havdalah_minutes_past_sundown ]",
    "            [-z timezone]",
    "            [-Z daylight_savings_option]",
+   "            [-f format_option]",
    "            [[ month [ day ]] year ]",
    "       hebcal help",
    "       hebcal info",
