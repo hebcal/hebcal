@@ -80,7 +80,7 @@ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 PACKAGE = @PACKAGE@
 STRIP = @STRIP@
 
-VERSION = 3.4-beta1
+VERSION = 3.4-beta2
 am__include = @am__include@
 am__quote = @am__quote@
 install_sh = @install_sh@
@@ -105,7 +105,8 @@ hebcal_c_files = common.c danlib.c error.c mygetopt.c greg.c hebcal.c\
 
 
 hebcal_h_files = common.h  danlib.h format.h greg.h hebcal.h \
-          myerror.h mygetopt.h mymath.h mystdio.h mystring.h mytime.h rise.h sedra.h
+          myerror.h mygetopt.h mymath.h mystdio.h mystring.h \
+          mytime.h rise.h sedra.h cities.h
 
 
 hebcal_SOURCES = $(hebcal_c_files) $(hebcal_h_files)
