@@ -1,0 +1,26 @@
+#! /bin/sh
+# This script takes no arguments.
+
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+LANGUAGE=
+LC_ALL=
+LC_MESSAGES=
+LANG=
+export LANGUAGE LC_ALL LC_MESSAGES LANG
+
+
+tmpfiles="$tmpfiles hello-test1.out"
+: ${HEBCAL=hebcal}
+${HEBCAL} -d 2004 > hebcal-test1.out
+
+
+: ${DIFF=diff}
+${DIFF} hebcal-test1.ok hebcal-test1.out
+result=$?
+
+rm -f $tmpfiles
+
+exit $result
+
+# hebcal ends here

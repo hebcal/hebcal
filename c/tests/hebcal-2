@@ -1,0 +1,24 @@
+#! /bin/sh
+# This script takes no arguments
+
+LANGUAGE=
+LC_ALL=
+LC_MESSAGES=
+LANG=
+export LANGUAGE LC_ALL LC_MESSAGES LANG
+
+
+tmpfiles="$tmpfiles hello-test2.out"
+: ${SANITY_CHECK='sanity-check'}
+${SANITY_CHECK} > hebcal-test2.out
+
+
+: ${DIFF=diff}
+${DIFF} hebcal-test2.ok hebcal-test2.out
+result=$?
+
+rm -f $tmpfiles
+
+exit $result
+
+# hebcal ends here
