@@ -18,7 +18,7 @@ CITY = NEW_YORK
 #if you run into compilation problems, try changing the cc to gcc
 CC = gcc
 
-VERSION = 3.3beta10
+VERSION = 3.3beta11
 
 #there is no need to change anything below this line
 #-----------------------------------------------------------------

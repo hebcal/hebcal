@@ -23,6 +23,7 @@ CHANGES since version 3.2
    - Added cities: Kiev, La Paz, Montreal, Moscow, Paris, Saint Petersburg
    - "hebcal cities" prints out lat/long and time zone offset from GMT.
    - Corrected time zone for Johannesburg
+   - Corrected DST rule for Phoenix and Hawaii
    - Corrected problem with Yahrzeit/Birthdays observed in Adar II
 
 CHANGES since version 3.0b
