@@ -18,7 +18,7 @@
 CITY = NEW_YORK
 
 
-VERSION = 3.3beta15
+VERSION = 3.4beta1
 
 #there is no need to change anything below this line
 #-----------------------------------------------------------------
@@ -26,7 +26,9 @@ VERSION = 3.3beta15
 AM_CPPFLAGS = -DCITY='"$(CITY)"' 
 AM_CPPFLAGS += -DVERSION='"$(VERSION)"'
 
-AM_CFLAGS = -Wall
+# AM_CFLAGS = -Wall
+
+SUBDIRS = tests doc
 
 bin_PROGRAMS = hebcal sanity-check
 
@@ -35,4 +37,4 @@ sanity_check_SOURCES = common.c danlib.c error.c greg.c sanity-check.c
 hebcal_SOURCES = common.c danlib.c error.c mygetopt.c greg.c hebcal.c\
          holidays.c rise.c sedra.c start.c gnu.c format.c
 
-TESTS = sanity-check
+# TESTS = sanity-check
