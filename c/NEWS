@@ -1,6 +1,8 @@
 Changes in 3.4-beta2
 - fixed massive distribution error, which left the source missing three .h files.
+- Resolved never to roll a release after 1am.
 - factored out cities into cities.h
+- implemented ouline of a test suite
 
 Changes in 3.4-beta1
 - Fixed bug #s 797972,645240 "Chanukah 7 candles repeated twice",
