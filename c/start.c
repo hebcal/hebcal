@@ -373,8 +373,8 @@ void set_default_city( void )
    localize_to_city("NEW YORK");	/* helluva town. */
 #endif
 
-/* having set the default city, now check if there is an overriding */
-/* default from the environment. */
+   /* having set the default city, now check if there is an overriding */
+   /* default from the environment. */
    if (NULL != (cityName = getenv(ENV_CITY)))
       localize_to_city(cityName);
 }
