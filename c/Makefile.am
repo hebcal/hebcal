@@ -26,11 +26,13 @@ VERSION = 3.3beta15
 AM_CPPFLAGS = -DCITY='"$(CITY)"' 
 AM_CPPFLAGS += -DVERSION='"$(VERSION)"'
 
+AM_CFLAGS = -Wall
+
 bin_PROGRAMS = hebcal sanity-check
 
 sanity_check_SOURCES = common.c danlib.c error.c greg.c sanity-check.c
 
 hebcal_SOURCES = common.c danlib.c error.c mygetopt.c greg.c hebcal.c\
-         holidays.c rise.c sedra.c start.c gnu.c
+         holidays.c rise.c sedra.c start.c gnu.c format.c
 
 TESTS = sanity-check

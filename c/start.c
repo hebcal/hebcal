@@ -82,6 +82,7 @@ static char
    "   -h : Suppress default holidays.",
    "   -H : Use Hebrew date ranges - only needed when e.g. hebcal -H 5373",
    "   -i : Use Israeli sedra scheme.",
+   "   -f FORMAT : change output to FORMAT. see below for format strings",
    "   -I file : Get non-yahrtzeit Hebrew user events from specified file.",
  "        The format is : mmm dd string, Where mmm is a Hebrew month name.",
    "   -l xx,yy : Set the latitude for solar calculations to",
@@ -409,7 +410,7 @@ void handleArgs(int argc, char *argv[])
 
    Getopt(argc, argv, "", 1);
    while (EOF !=
-	(option = Getopt(argc, argv, "acC:dDehHI:il:L:m:orsStTwxyY:z:Z:8", 0)))
+          (option = Getopt(argc, argv, "acC:dDef:hHI:il:L:m:orsStTwxyY:z:Z:8", 0)))
    {
        switch ((char) option)
        {
@@ -441,7 +442,10 @@ void handleArgs(int argc, char *argv[])
        case 'e':		/* european date format */
 	   euroDates_sw = 1;
 	   break;
-	case 'h':		/* suppress internal holidays */
+       case 'f':		/* output format */
+           formatString = strdup(Optarg);
+	   break;
+       case 'h':		/* suppress internal holidays */
 	   noHolidays_sw = 1;
 	   break;
        case 'H':		/* suppress use hebrew range dates */
@@ -684,20 +688,19 @@ void handleArgs(int argc, char *argv[])
 
 int tokenize(char *str, int *pargc, char* argv[])
 {
-/*   char *strtok(), *strdup(); */
-   char *s;
-
-   argv[0] = progname;
-   s = strtok(str, "\t ");
-   *pargc = 1;
-   do
-   {
-      argv[(*pargc)++] = strdup(s);
-   }
-   while ((s = strtok(NULL, "\t ")));
-
-
-   return *pargc > 1;
+/*     char *strtok(), *strdup(); */
+    char *s;
+    
+    argv[0] = progname;
+    s = strtok(str, "\t ");
+    *pargc = 1;
+    do
+    {
+        argv[(*pargc)++] = strdup(s);
+    } while ((s = strtok(NULL, "\t ")));
+    
+    
+    return *pargc > 1;
 }
 
 int main(int argc, char* argv[])
