@@ -1,0 +1,4 @@
+Changes since 3.3b10
+- Fixed bug 797972 "Chanukah 7 candles repeated twice"
+    ,per Norman Abramovitz's suggestion
+
