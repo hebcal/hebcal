@@ -730,6 +730,7 @@ void init_holidays( int hYear )
     else
     {
         for (m = 0; m <= 13; m++) /* clear variable holidays buckets */
+	{
             for (d = 0; d < 30; d++)
             {
                 tmpholp = var_holidays[m][d];
@@ -741,6 +742,7 @@ void init_holidays( int hYear )
                 }
                 var_holidays[m][d] = NULL;
             }
+	}
     }
 
     load_variable_holidays (hYear);

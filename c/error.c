@@ -19,7 +19,13 @@
 
    Danny Sadinoff can be reached at 
    danny@sadinoff.com
+
  */
+
+/*
+  a la perl
+*/
+
 #include "myerror.h"
 #include <errno.h>
 #include <stdlib.h>

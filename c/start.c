@@ -126,7 +126,7 @@ static char
    "Note: Use COMPLETE Years.  You probably aren't interested in ",
    "hebcal 93, but rather hebcal 1993.",
    "", "",
-   "Hebcal is copyright (c) 1994 By Danny Sadinoff",
+   "Hebcal is copyright (c) 1994-2004 By Danny Sadinoff",
    "Portions Copyright (c) 2002 Michael J. Radwin. All rights reserved.",
    "",
    "This program is free software; you can redistribute it and/or",
@@ -140,12 +140,8 @@ static char
    "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  ",
    "Type \"hebcal warranty\" for more details.",
    "  ",
-   "\"Free\" above means freely distributed.  Checks are always welcome:",
-   "  If you like hebcal,",
-   "Send money to Danny Sadinoff",
-   "            1 Cove La.    ",
-   "            Great Neck, NY",
-   "                    11024",
+   "\"Free\" above means freely distributed.  To donate money to support hebcal,", 
+   " see the paypal link at http://www.sadinoff.com/hebcal/ "
    "",
    "WWW:",
    "            http://sourceforge.net/projects/hebcal"
