@@ -42,18 +42,20 @@ Getopt (argc, argv, mopts, reset)
     }
 
   if (sp == 1)
-    /* check for more flag-like tokens */
-    if (Optind >= argc ||
-	argv[Optind][0] != '-' || argv[Optind][1] == '\0')
-      return (EOF);
-    else if (strcmp (argv[Optind], "--") == 0)
+  {
+      /* check for more flag-like tokens */
+      if (Optind >= argc ||
+          argv[Optind][0] != '-' || argv[Optind][1] == '\0')
+          return (EOF);
+      else if (strcmp (argv[Optind], "--") == 0)
       {
-	Optind++;
-	return (EOF);
+          Optind++;
+          return (EOF);
       }
+  }
   Optopt = argv[Optind][sp];
   if (Optopt == ':' || (cp = strchr (mopts, Optopt)) == 0)
-    {
+  {
       ERR (": illegal option -- ", Optopt);
       /* if no chars left in this token, move to next token */
       if (argv[Optind][++sp] == '\0')
