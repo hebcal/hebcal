@@ -14,7 +14,7 @@
 CITY = New_York
 
 
-VERSION = 3.4-beta3
+VERSION = 3.4
 
 #there is no need to change anything below this line
 #-----------------------------------------------------------------
@@ -38,6 +38,8 @@ hebcal_h_files = common.h  danlib.h format.h greg.h hebcal.h \
           mytime.h rise.h sedra.h cities.h
 
 hebcal_SOURCES = $(hebcal_c_files) $(hebcal_h_files)
+
+man_MANS = hebcal.1
 
 BUILT_SOURCES =$(srcdir)/package.m4
 
