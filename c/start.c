@@ -411,89 +411,89 @@ void handleArgs(int argc, char *argv[])
    while (EOF !=
 	(option = Getopt(argc, argv, "acC:dDehHI:il:L:m:orsStTwxyY:z:Z:8", 0)))
    {
-      switch ((char) option)
-      {
-	case 'a':		/* ashkenazis hebrew */
+       switch ((char) option)
+       {
+       case 'a':		/* ashkenazis hebrew */
 	   ashkenazis_sw = 1;
 	   break;
-	case '8':		/* ashkenazis hebrew */
+       case '8':		/* ashkenazis hebrew */
 	   iso8859_8_sw = 1;
 	   break;
-	case 'c':		/* calculate candlelighting times on fridays */
+       case 'c':		/* calculate candlelighting times on fridays */
 	   candleLighting_sw = 1;
 	   break;
-	case 'C':
+       case 'C':
 	   localize_to_city(Optarg);
 	   candleLighting_sw = 1;
 	   break;
-	case 'd':		/* print hebrew date */
+       case 'd':		/* print hebrew date */
 	   printHebDates_sw = 1;
 	   break;
-	case 'D':		/* print hebrew date when there's */
+       case 'D':		/* print hebrew date when there's */
 	   /* something else to print */
 	   printSomeHebDates_sw = 1;
 	   break;
-	case 'I':		/* input file */
+       case 'I':		/* input file */
 	   inputFile_sw = 1;
 	   if (!(inFile = fopen(Optarg, "r")))
-	      die("could not open input file %s.", Optarg);
+               die("could not open input file %s.", Optarg);
 	   break;
-	case 'e':		/* european date format */
+       case 'e':		/* european date format */
 	   euroDates_sw = 1;
 	   break;
 	case 'h':		/* suppress internal holidays */
 	   noHolidays_sw = 1;
 	   break;
-	case 'H':		/* suppress use hebrew range dates */
+       case 'H':		/* suppress use hebrew range dates */
 	   hebrewDates_sw = 1;
 	   break;
-	case 'i':		/* use Israeli sedra scheme */
+       case 'i':		/* use Israeli sedra scheme */
 	   israel_sw = 1;
 	   break;
-	case 'l':		/* latitude */
+       case 'l':		/* latitude */
 	   latdeg = latmin = 0;
 	   latp = 1;
 	   if (sscanf(Optarg, "%d,%d", &latdeg, &latmin) < 2)
-	      die("unable to read latitude argument: %s", Optarg);
+               die("unable to read latitude argument: %s", Optarg);
 	   if ((abs(latdeg) > 90) ||
 	       latmin > 60 || latmin < 0)
 	      die("latitude argument out of range", "");
 	   latmin = abs(latmin);
 	   if (latdeg < 0)
-	      latmin = -latmin;
+               latmin = -latmin;
 	   break;
-	case 'L':		/* longitude */
+       case 'L':		/* longitude */
 	   longdeg = longmin = 0;
 	   longp = 1;
 	   if (sscanf(Optarg, "%d,%d", &longdeg, &longmin) < 2)
-	      die("unable to read longitude argument: %s", Optarg);
+               die("unable to read longitude argument: %s", Optarg);
 	   if ((abs(longdeg) > 180) ||
 	       longmin > 60 || longmin < 0)
 	      die("longitude argument out of range", "");
 	   longmin = abs(longmin);
 	   if (longdeg < 0)
-	      longmin = -longmin;
+               longmin = -longmin;
 	   break;
-	case 'm':		/* havdalah_minutes */
+       case 'm':		/* havdalah_minutes */
 	   if (!(sscanf(Optarg, "%d", &havdalah_minutes) == 1))
-	      die("unable to read havdalah_minutes argument: %s", Optarg);
+               die("unable to read havdalah_minutes argument: %s", Optarg);
 	   break;
-	case 'o':		/* print the omer */
+       case 'o':		/* print the omer */
 	   printOmer_sw = 1;
 	   break;
-	case 'r':		/* Tab-delineated Format */
+       case 'r':		/* Tab-delineated Format */
 	   tabs_sw = 1;
 	   break;
-	case 's':		/* print sedrot */
+       case 's':		/* print sedrot */
 	   sedrot_sw = 1;
 	   break;
-	case 'S':		/* print sedra every day. */
+       case 'S':		/* print sedra every day. */
 	   sedraAllWeek_sw = 1;
 	   break;
-	case 'T':		/* do hebcal for today, omit gregorian date. */
+       case 'T':		/* do hebcal for today, omit gregorian date. */
 	   noGreg_sw = 1;
 /*** note this falls through to 't' case ***/
-	case 't':		/* do hebcal for today. */
+       case 't':		/* do hebcal for today. */
 	   printHebDates_sw = 1;
 	   rangeType = TODAY;
 	   theMonth = greg_today.mm;	/* year and month specified */
@@ -501,65 +501,65 @@ void handleArgs(int argc, char *argv[])
 	   yearDirty = 1;
 	   printOmer_sw = 1;
 	   break;
-	case 'w':		/* print days of the week */
+       case 'w':		/* print days of the week */
 	   weekday_sw = 1;
 	   break;
-	case 'y':		/* Print only last 2 digits of year */
+       case 'y':		/* Print only last 2 digits of year */
 	   yearDigits_sw = 1;
 	   break;
-	case 'Y':		/* input file */
+       case 'Y':		/* input file */
 	   yahrtzeitFile_sw = 1;
 	   if (!(yFile = fopen(Optarg, "r")))
-	      die("could not open yahrtzeit input file %s.", Optarg);
+               die("could not open yahrtzeit input file %s.", Optarg);
 	   break;
-	case 'x':		/* input file */
+       case 'x':		/* input file */
 	   suppress_rosh_chodesh_sw = 1;
 	   break;
 	case 'Z':
-	   schemep = 1;
-	   sscanf(Optarg, "%s", dummy);
-	   set_DST_scheme(dummy);
-	   break;
-
-
-	case 'z':		/* time zone */
+            schemep = 1;
+            sscanf(Optarg, "%s", dummy);
+            set_DST_scheme(dummy);
+            break;
+            
+            
+       case 'z':		/* time zone */
 	   if (!(sscanf(Optarg, "%d", &TZ) == 1))
-	      die("unable to read time zone argument: %s", Optarg);
+               die("unable to read time zone argument: %s", Optarg);
 	   if (!schemep)
-	      DST_scheme = DST_NONE;
+               DST_scheme = DST_NONE;
 	   zonep = 1;
 	   break;
-
-	default:
+           
+       default:
 	   die(usage, "");
-      }
+       }
    }
-
+   
    if (latp)
-      cityName = "User Defined City";
+       cityName = "User Defined City";
    if (latp ^ longp)
-      die("You must enter BOTH the latitude and the longitude", "");
-
+       die("You must enter BOTH the latitude and the longitude", "");
+   
    if( !strcmp(cityName, "Jerusalem" ))
-      light_offset = -40;	/* does everyone hold by this? */
+       light_offset = -40;	/* does everyone hold by this? */
 
    switch (argc - Optind)	/* suck up the date */
    {
-     case 0:			/* process this year */
-	if (hebrewDates_sw)
+   case 0:			/* process this year */
+       if (hebrewDates_sw)
 	   theYear = abs2hebrew(greg2abs(greg_today)).yy;
-	else
+       else
 	   theYear = greg_today.yy;
-	break;
-
-     case 1:
-	if (isAllNums(argv[Optind]))
-	{
+       break;
+       
+   case 1:
+       if (isAllNums(argv[Optind]))
+       {
 	   theYear = atoi(argv[Optind]);	/* just year specified */
 	   yearDirty = 1;		/* print whole year */
-	}
-	else if (0 == istrncasecmp(5, argv[Optind], "help"))
-	{
+       }
+       else if (0 == istrncasecmp(5, argv[Optind], "help"))
+       {
 	   int lineNumber;
 
 	   for (lineNumber = 0;
@@ -570,115 +570,115 @@ void handleArgs(int argc, char *argv[])
 	      puts(helpArray[lineNumber]);
 	   }
 	   exit(0);
-	}
-	else if (0 == istrncasecmp(3, argv[Optind], "info"))
-	{
+       }
+       else if (0 == istrncasecmp(3, argv[Optind], "info"))
+       {
 	   print_version_data();
 	   exit(0);
-	}
-	else if (0 == istrncasecmp(3, argv[Optind], "cities"))
-	{
+       }
+       else if (0 == istrncasecmp(3, argv[Optind], "cities"))
+       {
 	   print_city_data();
 	   exit(0);
-	}
-	else if (0 == istrncasecmp(3, argv[Optind], "DST"))
-	{
+       }
+       else if (0 == istrncasecmp(3, argv[Optind], "DST"))
+       {
 	   print_DST_data();
 	   exit(0);
-	}
-	else if (0 == istrncasecmp(3, argv[Optind], "copying"))
-	{
+       }
+       else if (0 == istrncasecmp(3, argv[Optind], "copying"))
+       {
 	   print_copying();
 	   exit(0);
-	}
-	else if (0 == istrncasecmp(3, argv[Optind], "warranty"))
-	{
+       }
+       else if (0 == istrncasecmp(3, argv[Optind], "warranty"))
+       {
 	   print_warranty();
 	   exit(0);
-	}
-	else
+       }
+       else
 	   die(usage, "");
-	break;
-
-     case 2:
-	if (!isAllNums(argv[Optind + 1]))
+       break;
+       
+   case 2:
+       if (!isAllNums(argv[Optind + 1]))
 	   die(usage, "");
-	theYear = atoi(argv[Optind + 1]);		/* print theMonth of theYear */
-
-	theMonth = lookup_hebrew_month(argv[Optind]);
-
-	if (theMonth)
-	{
+       theYear = atoi(argv[Optind + 1]);		/* print theMonth of theYear */
+       
+       theMonth = lookup_hebrew_month(argv[Optind]);
+       
+       if (theMonth)
+       {
 	   hebrewDates_sw = 1;	/* automagically turn it on */
 	   if (theMonth == ADAR_II && !LEAP_YR_HEB(theYear))
-	      theMonth = ADAR_I;	/* silently fix this mistake */
-	}
-	else if (isAllNums(argv[Optind]))
+               theMonth = ADAR_I;	/* silently fix this mistake */
+       }
+       else if (isAllNums(argv[Optind]))
 	   if (hebrewDates_sw)
-	      die("Don't use numbers to specify hebrew months.", "");
+               die("Don't use numbers to specify hebrew months.", "");
 	   else
 	      theMonth = atoi(argv[Optind]);	/* gregorian month */
-	else if (hebrewDates_sw)
+       else if (hebrewDates_sw)
 	   die("Unknown hebrew month: %s", argv[Optind]);
-	else
+       else
 	   die(usage, "");	/* bad gregorian month. */
-
-	Optind++;
-	yearDirty = 1;
-	rangeType = MONTH;
+       
+       Optind++;
+       yearDirty = 1;
+       rangeType = MONTH;
 	break;
-
-     case 3:
-	if (!(isAllNums(argv[Optind + 1])
-	      && isAllNums(argv[Optind + 2])))
+        
+   case 3:
+       if (!(isAllNums(argv[Optind + 1])
+             && isAllNums(argv[Optind + 2])))
 	   die(usage, "");
-	theDay = atoi(argv[Optind + 1]);	/* print theDay of theMonth */
-	theYear = atoi(argv[Optind + 2]);		/* print theMonth of theYear */
-
-	theMonth = lookup_hebrew_month(argv[Optind]);
-
-	if (theMonth)
-	{
+       theDay = atoi(argv[Optind + 1]);	/* print theDay of theMonth */
+       theYear = atoi(argv[Optind + 2]);		/* print theMonth of theYear */
+       
+       theMonth = lookup_hebrew_month(argv[Optind]);
+       
+       if (theMonth)
+       {
 	   hebrewDates_sw = 1;	/* automagically turn it on */
 	   if (theMonth == ADAR_II && !LEAP_YR_HEB(theYear))
-	      theMonth = ADAR_I;	/* silently fix this mistake */
-	}
-	else if (isAllNums(argv[Optind]))
+               theMonth = ADAR_I;	/* silently fix this mistake */
+       }
+       else if (isAllNums(argv[Optind]))
 	   if (hebrewDates_sw)
-	      die("Don't use numbers to specify hebrew months.", "");
+               die("Don't use numbers to specify hebrew months.", "");
 	   else
-	      theMonth = atoi(argv[Optind]);	/* gregorian month */
+               theMonth = atoi(argv[Optind]);	/* gregorian month */
 	else if (hebrewDates_sw)
-	   die("Unknown hebrew month: %s", argv[Optind]);
+            die("Unknown hebrew month: %s", argv[Optind]);
 	else
-	   die("bad month.%s", usage);	/* bad gregorian month. */
+            die("bad month.%s", usage);	/* bad gregorian month. */
 
-	if (theDay < 1)
+       if (theDay < 1)
 	   die("The day of the month must be greater than 0", "");
-	if (theMonth < 1)
+       if (theMonth < 1)
 	   die("The month must be greater than 0", "");
-
-	if (hebrewDates_sw)
-	{
+       
+       if (hebrewDates_sw)
+       {
 	   if (theDay > max_days_in_heb_month(theMonth, theYear))
-	      die("Sorry, there aren't that many days in %s (then)",
-		  LANGUAGE2(hMonths[LEAP_YR_HEB(theYear)][theMonth].name));
-	}
-	else
-	{
+               die("Sorry, there aren't that many days in %s (then)",
+                   LANGUAGE2(hMonths[LEAP_YR_HEB(theYear)][theMonth].name));
+       }
+       else
+       {
 	   if (theMonth > 12)
-	      die("The month must be less than 13", "");
+               die("The month must be less than 13", "");
 	   if (theDay > MonthLengths[LEAP(theYear)][theMonth])
-	      die("Sorry, there aren't that many days in %s (then)",
-		  eMonths[theMonth]);
+               die("Sorry, there aren't that many days in %s (then)",
+                   eMonths[theMonth]);
 	}
-
-
-	rangeType = DAY;
-	yearDirty = 1;
-	break;
-     default:
-	die(usage, "");
+       
+       
+       rangeType = DAY;
+       yearDirty = 1;
+       break;
+   default:
+       die(usage, "");
    }
 }
 
