@@ -1,3 +1,6 @@
+changes in 3.4.1
+*  Fixed  the lack of manpage in the dist.
+
 Changes in 3.4
 * Support for Australia DST scheme
 * Add 4 cities: Melbourne, Sydney, Ottawa, Baghdad
