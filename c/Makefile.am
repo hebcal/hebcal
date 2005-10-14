@@ -41,7 +41,8 @@ hebcal_h_files = common.h  danlib.h format.h greg.h hebcal.h \
 
 hebcal_SOURCES = $(hebcal_c_files) $(hebcal_h_files)
 
-man_MANS = hebcal.1
+man1_MANS = hebcal.1
+EXTRA_DIST= #(man1_MANS)
 
 BUILT_SOURCES =$(srcdir)/package.m4
 
