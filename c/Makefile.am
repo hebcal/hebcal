@@ -5,15 +5,10 @@
 # Portions Copyright (c) 2002 Michael J. Radwin. All Rights Reserved.
 # See section COPYING for conditions for redistribution
 
-
-##  this sets the default latitude, longitude and timezone.
-##  the code affected is in rise.c, so modify as necessary.  
-##  See the README file for more information
-
 VERSION = 3.5
 
-#there is no need to change anything below this line
-# do something with 
+
+# FIX do something with 
 # groff -T html -man man/man1/hebcal.1 >hebcal-manpage.html
 #-----------------------------------------------------------------
 
