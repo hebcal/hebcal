@@ -15,16 +15,19 @@ changes in 3.5
     Mark Gurevitz
     http://opencrs.cdt.org/rpts/RS22284_20050927.pdf
 
-
-  
 * Clarify in which year the Gregorian calendar starts.
   http://sourceforge.net/tracker/index.php?func=detail&aid=1361957&group_id=340&atid=100340
 
 * Fixed some ashkenazi-spelling errors.
   http://sourceforge.net/tracker/index.php?func=detail&aid=1151200&group_id=340&atid=100340
 
-KNOWN ISSUES in 3.5:
+* Simplified city customization.
+  http://sourceforge.net/tracker/index.php?func=detail&aid=991704&group_id=340&atid=100340
+  You can now pass a 
+      --with-default-city=Chicago 
+  argument to configure, and it will do the right thing.
 
+KNOWN ISSUES in 3.5:
 * Triple-Purim not properly represented
   http://sourceforge.net/tracker/index.php?func=detail&aid=1165732&group_id=340&atid=100340
   In years where 15 Adar falls on Saturday, the observances of Shushan purim are 

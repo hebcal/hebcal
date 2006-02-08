@@ -5,14 +5,10 @@
 # Portions Copyright (c) 2002 Michael J. Radwin. All Rights Reserved.
 # See section COPYING for conditions for redistribution
 
-#The CITY macro should be set to one of the cities mentioned in cities.h,
-#with spaces->underscore for ease of quoting.
 
 ##  this sets the default latitude, longitude and timezone.
 ##  the code affected is in rise.c, so modify as necessary.  
 ##  See the README file for more information
-CITY = New_York
-
 
 VERSION = 3.5
 
@@ -21,8 +17,8 @@ VERSION = 3.5
 # groff -T html -man man/man1/hebcal.1 >hebcal-manpage.html
 #-----------------------------------------------------------------
 
-AM_CPPFLAGS = -DCITY='"$(CITY)"' 
-AM_CPPFLAGS += -DVERSION='"$(VERSION)"'
+#AM_CPPFLAGS += -DHEBCAL_OPTS='"$(HEBCAL_OPTS)"' 
+AM_CPPFLAGS = -DVERSION='"$(VERSION)"'
 
 # AM_CFLAGS = -Wall
 

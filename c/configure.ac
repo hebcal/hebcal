@@ -4,7 +4,7 @@
 AC_PREREQ(2.57)
 AC_INIT(hebcal,3.5,hebcal-bugs@sadinoff.com)
 AC_CONFIG_SRCDIR([common.c])
-#AM_INIT_AUTOMAKE([no-dependencies check-news])
+dnl #AM_INIT_AUTOMAKE([no-dependencies check-news])
 AM_INIT_AUTOMAKE([check-news])
 AM_CONFIG_HEADER([config.h])
 
@@ -30,6 +30,12 @@ AC_TYPE_SIZE_T
 # Checks for library functions.
 AC_FUNC_MALLOC
 AC_CHECK_FUNCS([sqrt strchr strdup])
+AC_ARG_WITH(default-city,
+[[  --with-default-city=CITYNAME    make the default city CITYNAME.
+                                  If unspecified, the default city will be "New York"]],
+             AC_DEFINE_UNQUOTED(CITY,"$withval",["The Default City"]),
+             AC_DEFINE(CITY,"New_York",["The default city"]))
+dnl x#AC_ARG_VAR(default_city,[The default city value])
 
 AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([tests/Makefile])

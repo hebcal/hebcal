@@ -21,13 +21,13 @@ TODO:
 INSTALLATION 
 Since you're reading this, you have already successfully unpacked the
 source files.  The next step is to customize the program for your
-city.  If you live in the New York area, you can go ahead and run
-"make".
+city.  
 
-Otherwise, take a look at the Makefile.  There is a list of names of
-the cities that hebcal is coded to understand.   IF your city is on
-the list, simply change the NEW_YORK in CITY = NEW_YORK to your city
-name.  
+Examine cities.h.  If your city is in there, run configure using the
+--with-city=CITYNAME option as follows:
+   ./configure --with-city=Chicago
+you may have to quote spaces:
+   ./configure --with-city="Los Angeles"
 
 If your city is NOT on the list, then in order to customize hebcal to
 your city, you will need to pass it the lattitude, longitude, timezone
@@ -60,13 +60,6 @@ REMEMBER: negative longitudes are EAST of Greenwich.
 For information on setting environment variables, consult your local
 guru.
 
-The names "HEBCAL_OPTS" and "CITY" can be changed in the makefile,
-where they are the values of the variables ENV_OPTS and ENV_CITY,
-respectively. 
-
-To sum up, on the first installation, adjust the CITY makefile
-variable according to where you are.  
-
 Once an install is complete, there are three ways to change cities, or
 pick a city not on the list:
   1) change the CITY environment variable
@@ -91,7 +84,7 @@ manpage in the file MANUAL.
 
 
 DISTRIBUTION
-   Copyright (C) 1994  Danny Sadinoff
+   Copyright (C) 1994-2006  Danny Sadinoff
    Portions Copyright (c) 2002 Michael J. Radwin. All Rights Reserved.
 
    Hebcal is distributed under the GNU Public License.  The program
