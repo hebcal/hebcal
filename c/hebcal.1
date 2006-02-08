@@ -1,8 +1,8 @@
 .\" $Id$  -*- nroff -*-
-.\" Copyright(c) 1994-2005  Danny Sadinoff
+.\" Copyright(c) 1994-2006  Danny Sadinoff
 .\" Portions Copyright (c) 2002 Michael J. Radwin. All Rights Reserved.
 .\" See section COPYING for conditions for redistribution
-.TH HEBCAL 1 "Hebcal Version 3.4.1" "Danny Sadinoff"
+.TH HEBCAL 1 "Hebcal Version 3.5" "Danny Sadinoff"
 .\" "
 .de BP
 .sp
@@ -520,10 +520,21 @@ The sunup/sundown routines aren't accurate enough.  If you enter
 geographic coordinates above the artic circle or antarctic circle, the
 times are guaranteed to be wrong.
 .PP
-Hebcal performs no checking for changes between the julian and
-gregorian calendar, so secular dates before 1752 are untrustworthy.
+Hebcal only translates between the Gregorian calendar
+and the Jewish calendar. This means that the results
+will be at least partly useless where and when the
+gregorian calendar was not used, i.e. before the
+1752 in Britain and before circa 1918 in Russia.  
+See the wikipedia entry for a splendid chart of the changeover from 
+the Julian to the Gregorian calendars in various places. 
 .PP
 Hebcal cannot handle date computations before 2 C.E.  sorry.
+.PP
+Daylight-Savings time rules are as up-to-date as a nonpaying job
+allows.  US DST rules are correct only back to 1966.  
+.PP
+Hebcal assumes that the Energy Policy Act of 2005, which changes the DST 
+rules in the US will go into effect, even though congress may still revert it.
 .SH BUG REPORTS TO
 Danny Sadinoff
 .br

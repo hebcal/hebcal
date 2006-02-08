@@ -1,30 +1,36 @@
-changes in 3.4.1
-*  Fixed  the lack of manpage in the dist.
+changes in 3.5
+*  Added 2007 DST rule, assuming that PL 109-58 will go into effect:
 
-Changes in 3.4
-* Support for Australia DST scheme
-* Add 4 cities: Melbourne, Sydney, Ottawa, Baghdad
-* Added manpage to the build
+ In 2005 the 109th Congress enacted P.L. 109-58, the Energy Policy Act
+ of 2005.  Section 110 of this Act amends the Uniform Time Act,
+ changing the beginning of DST to the second Sunday in March and the
+ ending of DST to the first Sunday in November.  This change will take
+ effect in March of 2007. The Act requires the Secretary of Commerce to
+ report to Congress within nine months of this date on the impact of
+ this section on energy consumption in the United States. Congress
+ retains the right to revert the Daylight Saving Time back to the 2005
+ time schedules once the Department study is complete.
+  - CRS Report for Congress 
+    Mark Gurevitz
+    http://opencrs.cdt.org/rpts/RS22284_20050927.pdf
 
-Changes in 3.4-beta3
-- removed reference to NAN in the code.  It's a silly idea.
-- taught autoconf how to find libm.
-- various other autoconf/automake tricks, like "make check" from another directory
-- figured out how to distribute gpl.texi
-- Broke "no release after 1am rule"
+  http://sourceforge.net/tracker/index.php?func=detail&aid=1427033&group_id=340&atid=100340
 
-Changes in 3.4-beta2
-- fixed massive distribution error, which left the source missing three .h files.
-- Resolved never to roll a release after 1am.
-- factored out cities into cities.h
-- implemented ouline of a test suite
+  
+* Clarify in which year the Gregorian calendar starts.
+  http://sourceforge.net/tracker/index.php?func=detail&aid=1361957&group_id=340&atid=100340
 
-Changes in 3.4-beta1
-- Fixed bug #s 797972,645240 "Chanukah 7 candles repeated twice",
-    per suggestion & Ambrose C. Li's and Norman Abramovitz's 
-    suggestions
+* Fixed some ashkenazi-spelling errors.
+  http://sourceforge.net/tracker/index.php?func=detail&aid=1151200&group_id=340&atid=100340
 
-- Fixed bug 895450: certain out of range years were causing segfaults.
+KNOWN ISSUES in 3.5:
 
-- Preliminary implementation of the -f FORMAT option
+* Triple-Purim not properly represented
+  http://sourceforge.net/tracker/index.php?func=detail&aid=1165732&group_id=340&atid=100340
+  In years where 15 Adar falls on Saturday, the observances of Shushan purim are 
+  distributed over Friday, Saturday and Sunday.  This is not represented, and Shushan
+  Purim is indicated as falling on Sunday.  The megilah is read on Friday 
+  in Jerusalem.
 
+* Incorrect weekly sedra displayed near Rosh Hashana
+  http://sourceforge.net/tracker/index.php?func=detail&aid=1323641&group_id=340&atid=100340
