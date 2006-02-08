@@ -1,0 +1,31 @@
+
+Changes in 3.4.1
+*  Fixed  the lack of manpage in the dist.
+
+Changes in 3.4
+* Support for Australia DST scheme
+* Add 4 cities: Melbourne, Sydney, Ottawa, Baghdad
+* Added manpage to the build
+
+Changes in 3.4-beta3
+- removed reference to NAN in the code.  It's a silly idea.
+- taught autoconf how to find libm.
+- various other autoconf/automake tricks, like "make check" from another directory
+- figured out how to distribute gpl.texi
+- Broke "no release after 1am rule"
+
+Changes in 3.4-beta2
+- fixed massive distribution error, which left the source missing three .h files.
+- Resolved never to roll a release after 1am.
+- factored out cities into cities.h
+- implemented ouline of a test suite
+
+Changes in 3.4-beta1
+- Fixed bug #s 797972,645240 "Chanukah 7 candles repeated twice",
+    per suggestion & Ambrose C. Li's and Norman Abramovitz's 
+    suggestions
+
+- Fixed bug 895450: certain out of range years were causing segfaults.
+
+- Preliminary implementation of the -f FORMAT option
+
