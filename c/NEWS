@@ -1,5 +1,6 @@
 changes in 3.5
 *  Added 2007 DST rule, assuming that PL 109-58 will go into effect:
+   http://sourceforge.net/tracker/index.php?func=detail&aid=1427033&group_id=340&atid=100340
 
  In 2005 the 109th Congress enacted P.L. 109-58, the Energy Policy Act
  of 2005.  Section 110 of this Act amends the Uniform Time Act,
@@ -14,7 +15,6 @@ changes in 3.5
     Mark Gurevitz
     http://opencrs.cdt.org/rpts/RS22284_20050927.pdf
 
-  http://sourceforge.net/tracker/index.php?func=detail&aid=1427033&group_id=340&atid=100340
 
   
 * Clarify in which year the Gregorian calendar starts.
