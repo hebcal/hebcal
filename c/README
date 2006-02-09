@@ -24,10 +24,10 @@ source files.  The next step is to customize the program for your
 city.  
 
 Examine cities.h.  If your city is in there, run configure using the
---with-city=CITYNAME option as follows:
-   ./configure --with-city=Chicago
+--with-default-city=CITYNAME option as follows:
+   ./configure --with-default-city=Chicago
 you may have to quote spaces:
-   ./configure --with-city="Los Angeles"
+   ./configure --with-default-city="Los Angeles"
 
 If your city is NOT on the list, then in order to customize hebcal to
 your city, you will need to pass it the lattitude, longitude, timezone
