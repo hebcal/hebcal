@@ -34,6 +34,7 @@ city_t cities[] =
     {"Johannesburg", -26, -10, -28, -2, 2, DST_NONE},
     {"Kiev", 50, 28, -30, -29, 2, DST_EU},
     {"La Paz", -16, -30, 68, 9, -4, DST_NONE},
+    {"Livingston", 40, 17, 74, 18, -5, DST_USOFA},
     {"London", 51, 30, 0, 10, 0, DST_EU},
     {"Los Angeles", 34, 4, 118, 15, -8, DST_USOFA},
     {"Miami", 25, 46, 80, 12, -5, DST_USOFA},
