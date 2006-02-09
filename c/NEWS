@@ -27,6 +27,9 @@ changes in 3.5
       --with-default-city=Chicago 
   argument to configure, and it will do the right thing.
 
+* Fixed some spelling issues
+http://sourceforge.net/tracker/index.php?func=detail&aid=1151200&group_id=340&atid=100340
+
 KNOWN ISSUES in 3.5:
 * Triple-Purim not properly represented
   http://sourceforge.net/tracker/index.php?func=detail&aid=1165732&group_id=340&atid=100340
