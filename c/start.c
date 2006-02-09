@@ -27,6 +27,7 @@
 
 #include <stdio.h>
 #include <ctype.h>
+#include "config.h"
 #include "mystring.h"
 #include "mymath.h"
 #include "hebcal.h"
