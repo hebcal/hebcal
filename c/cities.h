@@ -45,6 +45,7 @@ city_t cities[] =
     {"New York", 40, 43, 74, 1, -5, DST_USOFA},
     {"Omaha", 41, 16, 95, 56, -7, DST_USOFA},
     {"Ottawa", 45, 42, 75, 71, -5, DST_USOFA},
+    {"Panama City", 8, 58, 79, 32, -5, DST_NONE},
     {"Paris", 48, 52, -2, -20, 1, DST_EU},
     {"Petach Tikvah", 32, 5, -34, -53, 2, DST_ISRAEL},
     {"Philadelphia", 39, 57, 75, 10, -5, DST_USOFA},
