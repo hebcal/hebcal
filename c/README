@@ -1,4 +1,4 @@
-Hebcal 3.5  - a program for printing Jewish calendars
+Hebcal 3.6  - a program for printing Jewish calendars
   by Danny Sadinoff
   portions by Michael J. Radwin
 
@@ -104,10 +104,6 @@ DISTRIBUTION
 
       send email to:
       danny@sadinoff.com
-
-   Email respondents will receive notifications of new versions as
-   they come out, as will US Mail responents (if they send me postage
-   for a disk).
 
    The latest version of the code will be available from 
    http://sourceforge.net/projects/hebcal
