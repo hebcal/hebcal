@@ -1,6 +1,8 @@
 Changes in 3.6
-* Added Panama City.
+* Added Panama City, per Elan Z.
+  https://sourceforge.net/tracker/?func=detail&atid=350340&aid=1440788&group_id=340
 
+* Added support for building OSX-binaries disk images
 
 changes in 3.5
 *  Added 2007 DST rule, assuming that PL 109-58 will go into effect:

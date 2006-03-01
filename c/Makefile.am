@@ -37,6 +37,23 @@ EXTRA_DIST = $(man1_MANS) OLD_NEWS
 
 BUILT_SOURCES =$(srcdir)/package.m4
 
+
+VOLUME_NAME = @PACKAGE_NAME@-@PACKAGE_VERSION@
+BINARY_DIR = $(VOLUME_NAME).bin
+DISK_IMAGE_NAME = @PACKAGE_NAME@-osx-ppc-@PACKAGE_VERSION@.dmg
+HDIUTIL = /usr/bin/hdiutil
+binary-osx: hebcal hebcal.1 README NEWS
+	rm -fr $(BINARY_DIR)
+	mkdir -p $(BINARY_DIR)/bin $(BINARY_DIR)/man/man1
+	cp hebcal  $(BINARY_DIR)/bin
+	cp hebcal.1 $(BINARY_DIR)/man/man1
+	cp NEWS $(BINARY_DIR)/NEWS.txt
+	cp README $(BINARY_DIR)/README.txt
+	echo "The source for hebcal is available for free at http://hebcal.sf.net/" > $(BINARY_DIR)/SOURCE
+	$(HDIUTIL) create -ov -volname $(VOLUME_NAME) -fs HFS+ -srcfolder $(BINARY_DIR) $(DISK_IMAGE_NAME)
+
+
+
 $(srcdir)/package.m4: $(top_srcdir)/configure.ac
 	{                                      \
 	echo '# Signature of the current package.'; \
