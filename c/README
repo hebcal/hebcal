@@ -72,6 +72,12 @@ at the command line.
 
 -----------
 
+To build hebcal from the source checked out of the source repository, see 
+the HACKING file.
+
+
+-----------
+
 The file hebcal.1 is the manual page, and is created when you compile
 the program.  
 

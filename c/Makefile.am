@@ -33,7 +33,7 @@ hebcal_h_files = common.h  danlib.h format.h greg.h hebcal.h \
 hebcal_SOURCES = $(hebcal_c_files) $(hebcal_h_files)
 
 man1_MANS = hebcal.1
-EXTRA_DIST = $(man1_MANS) OLD_NEWS
+EXTRA_DIST = $(man1_MANS) OLD_NEWS HACKING
 
 BUILT_SOURCES =$(srcdir)/package.m4
 

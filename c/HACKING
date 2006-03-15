@@ -1,0 +1,14 @@
+To build hebcal from the source repository, you'll need a few more
+tools than are needed in order to build from distributions.   In
+particular, you'll need 
+
+GNU autoconf version 2.59
+GNU automake version 1.9.5  or later
+GNU m4 version 1.4.3 or later
+GNU make v3.79 or later
+Perl v5.0 or later
+
+If you have any questions, concerns or feedback, please feel free to
+post them in the hebcal project trackers at http://hebcal.sf.net/ or 
+contact Danny Sadinoff directly at hebcal@sadinoff.com
+
