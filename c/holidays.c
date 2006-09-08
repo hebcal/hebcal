@@ -531,7 +531,11 @@ static void load_variable_holidays( int hYear )
             tempDt.dd = 3;
         else if (passover % 7L == SAT)
             tempDt.dd = 4;
-        else
+        else if( hYear < 5764 )
+            tempDt.dd = 5;
+        else if( passover % 7L == TUE ) /* no Yom Hazikaron on motzei shabbat allowed after 5764*/
+            tempDt.dd = 6;
+        else 
             tempDt.dd = 5;
         PushHoliday (tmpholp, &var_holidays[IYYAR][tempDt.dd - 1]);
     }
@@ -544,8 +548,13 @@ static void load_variable_holidays( int hYear )
             tempDt.dd = 3;
         else if (passover % 7L == SAT)
             tempDt.dd = 4;
-        else
+        else if( hYear < 5764 )
             tempDt.dd = 5;
+        else if( passover % 7L == TUE ) /* no Yom Hazikaron on motzei shabbat allowed after 5764*/
+            tempDt.dd = 6;
+        else 
+            tempDt.dd = 5;
+
         PushHoliday (tmpholp, &var_holidays[IYYAR][tempDt.dd]);
     }
 
