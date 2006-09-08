@@ -5,7 +5,7 @@
 # Portions Copyright (c) 2002 Michael J. Radwin. All Rights Reserved.
 # See section COPYING for conditions for redistribution
 
-VERSION = 3.6
+VERSION = 3.7
 
 
 # FIX do something with 
