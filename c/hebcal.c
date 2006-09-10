@@ -230,12 +230,19 @@ void set_DST_bounds (long *beginDST, long *endDST, int gregYr)
         DST_value = 60;
         break;
     case DST_ISRAEL:
-        /* daylight savings time begins in Israel on the */
-      /* first Sunday after Passover ends on Nisan 21: */
-        tempDt.mm = NISAN;
-        tempDt.dd = 28;
-        tempDt.yy = gregYr + 3760;
-        *beginDST = day_on_or_before (SUN, hebrew2abs (tempDt));
+	if (gregYr >= 2005) {
+	    /* Starting in 2005, DST begins in Israel on April 1 */
+	    tempDt.dd = 1;
+	    tempDt.mm = 4;
+	    *beginDST = greg2abs (tempDt);
+	} else {
+	    /* daylight savings time begins in Israel on the */
+	    /* first Sunday after Passover ends on Nisan 21: */
+	    tempDt.mm = NISAN;
+	    tempDt.dd = 28;
+	    tempDt.yy = gregYr + 3760;
+	    *beginDST = day_on_or_before (SUN, hebrew2abs (tempDt));
+	}
         
         /* daylight savings time ends in Israel on the Sunday Selichot */
         /* begins: */
