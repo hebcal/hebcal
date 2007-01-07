@@ -1,0 +1,2 @@
+The files in this directory are utf8-encoded hebrew. use xcode.bat (which uses native2ascii) to transform
+them to ascii.
