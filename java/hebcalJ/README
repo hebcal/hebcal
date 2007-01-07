@@ -10,3 +10,7 @@ to build a distribution, try
    mvn dist
 
 http://maven.apache.org/
+or, because the website is impenetrable:
+http://maven.apache.org/guides/getting-started/maven-in-five-minutes.html
+
+
