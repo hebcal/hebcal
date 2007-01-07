@@ -1,2 +1,12 @@
-this Java version of a calendaring system combines Avrom Finkelstein's work adapting Rheingold's C++ algorithm with 
-some of hebcal's logic.
+This Java version of a calendaring system combines Avrom Finkelstein's
+work adapting Rheingold's C++ algorithm with some of hebcal's logic.
+
+BUILD: use maven-2 to build, like so:
+
+   mvn compile
+
+to build a distribution, try
+  
+   mvn dist
+
+http://maven.apache.org/
