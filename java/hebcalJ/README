@@ -7,7 +7,7 @@ BUILD: use maven-2 to build, like so:
 
 to build a distribution, try
   
-   mvn dist
+   mvn assembly:assembly
 
 http://maven.apache.org/
 or, because the website is impenetrable:
