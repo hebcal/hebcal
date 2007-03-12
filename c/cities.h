@@ -26,7 +26,7 @@ city_t cities[] =
     {"Denver", 39, 44, 104, 59, -7, DST_USOFA},
     {"Detroit", 42, 20, 83, 2, -5, DST_USOFA},
     {"Eilat", 29, 33, -34, -57, 2, DST_ISRAEL},
-    {"Gibraltar", 36, 0, 5, 0, -10, DST_USOFA},
+    {"Gibraltar", 36, 0, 5, 0, -10, DST_EU},
     {"Haifa", 32, 49, -34, -59, 2, DST_ISRAEL},
     {"Hawaii", 19, 30, 155, 30, -10, DST_NONE},
     {"Houston", 29, 46, 95, 22, -6, DST_USOFA},
