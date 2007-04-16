@@ -308,7 +308,7 @@ holinput_t inp_holidays[] =
 #define HOLIDAY_PURIM_KATAN     LANGUAGE2(var_hol_names[5].name)
 #define HOLIDAY_SHABBAT_HACHODESH       LANGUAGE2(var_hol_names[6].name)
 #define HOLIDAY_SHABBAT_HAGADOL LANGUAGE2(var_hol_names[7].name)
-#define HOLIDAY_SHABBAT_HAZON   LANGUAGE2(var_hol_names[8].name)
+#define HOLIDAY_SHABBAT_CHAZON   LANGUAGE2(var_hol_names[8].name)
 #define HOLIDAY_SHABBAT_NACHAMU LANGUAGE2(var_hol_names[9].name)
 #define HOLIDAY_SHABBAT_PARAH   LANGUAGE2(var_hol_names[10].name)
 #define HOLIDAY_SHABBAT_SHEKALIM        LANGUAGE2(var_hol_names[11].name)
@@ -336,7 +336,7 @@ struct variable_holiday_names {
   {{"Purim Katan", "Purim Koton", "\364\345\370\351\355 \367\350\357"}},
   {{"Shabbat HaChodesh", "Shabbos HaChodesh", "\371\341\372 \344\347\343\371"}},
   {{"Shabbat HaGadol", "Shabbos HaGadol", "\371\341\372 \344\342\343\345\354"}},
-  {{"Shabbat Hazon", "Shabbos Hazon", "\371\341\372 \344\346\345\357"}},
+  {{"Shabbat Chazon", "Shabbos Chazon", "\371\341\372 \347\346\345\357"}},
   {{"Shabbat Nachamu", "Shabbos Nachamu", "\371\341\372 \360\347\356\345"}},
   {{"Shabbat Parah", "Shabbos Parah", "\371\341\372 \364\370\344"}},
   {{"Shabbat Shekalim", "Shabbos Shekalim", "\371\341\372 \371\367\354\351\355"}},
@@ -574,7 +574,7 @@ static void load_variable_holidays( int hYear )
     PushHoliday (tmpholp, &var_holidays[tempDt.mm][tempDt.dd]);
     
     tmpholp = getHolstorep ();
-    tmpholp->name = HOLIDAY_SHABBAT_HAZON;
+    tmpholp->name = HOLIDAY_SHABBAT_CHAZON;
     tempDt = abs2hebrew (day_on_or_before (SAT, tishaBav));
     PushHoliday (tmpholp, &var_holidays[tempDt.mm][tempDt.dd]);
     
