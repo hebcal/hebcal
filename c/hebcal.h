@@ -78,11 +78,14 @@ typedef struct hebrew_year {
    int leap_p;
 } year_t;
 
-#define DST_USOFA 0
-#define DST_NONE 1
-#define DST_ISRAEL 2
-#define DST_EU 3
-#define DST_AUNZ 4
+enum dst_type {
+    DST_USOFA = 0,
+    DST_NONE = 1,
+    DST_ISRAEL = 2,
+    DST_EU = 3,
+    DST_AUNZ = 4,
+    DST_MX = 5
+};
 
 /* holiday typemask entries */
 #define USER_EVENT 1

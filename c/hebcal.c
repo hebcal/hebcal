@@ -208,6 +208,17 @@ void set_DST_bounds (long *beginDST, long *endDST, int gregYr)
         DST_value = 60;
         break;
 	}
+    case DST_MX:
+	/* the first sunday in April */
+	*beginDST = day_on_or_before (SUN, greg2abs (tempDt) + 6L);
+
+	/*  the sunday before the first of november */
+	tempDt.dd = 1;
+	tempDt.mm = 11;
+	*endDST = day_on_or_before (SUN, greg2abs (tempDt) - 1L);
+
+	DST_value = 60;
+	break;
     case DST_EU:
         /* The EU version of Daylight Saving Time runs from the last
          * Sunday in March through the last Sunday in October.

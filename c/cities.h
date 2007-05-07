@@ -39,7 +39,7 @@ city_t cities[] =
     {"Los Angeles", 34, 4, 118, 15, -8, DST_USOFA},
     {"Miami", 25, 46, 80, 12, -5, DST_USOFA},
     {"Melbourne", -37, -52, -145, -8, 10, DST_AUNZ},
-    {"Mexico City", 19, 24, 99, 9, -6, DST_USOFA},
+    {"Mexico City", 19, 24, 99, 9, -6, DST_MX},
     {"Montreal", 45, 30, 73, 36, -5, DST_USOFA},
     {"Moscow", 55, 45, -37, -42, 3, DST_EU},
     {"New York", 40, 43, 74, 1, -5, DST_USOFA},

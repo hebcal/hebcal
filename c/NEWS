@@ -1,7 +1,7 @@
 Changes in 3.8
 * fixed spelling of shabbat Chazon
 * fixed yom Haatzmaut 2007
-
+* added support for Mexico DST scheme (no longer the same as US & Canada)
 
 Changes in 3.7
 * addressed 2004 adjustment to Yom HaZikaron Rules.
