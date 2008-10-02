@@ -732,6 +732,10 @@ int main(int argc, char* argv[])
             tempDate.mm = TISHREI;
             tempDate.yy = theYear;
             startAbs = hebrew2abs(tempDate);
+	    /* start yearly calendar with the day before RH (i.e. Erev
+	     * Rosh Hashanah)
+	     */
+	    startAbs--;
 
             tempDate.yy++;
             endAbs = hebrew2abs(tempDate) - 1;
