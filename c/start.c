@@ -226,13 +226,26 @@ void print_city_data( void )
          cities[cnum].name;
          cnum++)
     {
-        printf("%s (%dd%d' %c lat, %dd%d' %c long, GMT %s%d:00)\n",
+	dst_t *pdst;
+	const char *dst_name = NULL;
+
+	for (pdst = savings_bank; pdst->name != NULL; pdst++)
+	{
+	    if (cities[cnum].DST_scheme == pdst->DST_scheme)
+	    {
+		dst_name = pdst->name;
+		break;
+	    }
+	}
+
+        printf("%s (%dd%d' %c lat, %dd%d' %c long, GMT %s%d:00, %s)\n",
               cities[cnum].name,
                abs(cities[cnum].latdeg), abs(cities[cnum].latmin),
                cities[cnum].latdeg < 0 ? 'S' : 'N',
                abs(cities[cnum].longdeg), abs(cities[cnum].longmin),
                cities[cnum].longdeg > 0 ? 'W' : 'E',
-               cities[cnum].TZ < 0 ? "" : "+", cities[cnum].TZ
+               cities[cnum].TZ < 0 ? "" : "+", cities[cnum].TZ,
+               dst_name ? dst_name : "unknown"
             );
     }
 }
