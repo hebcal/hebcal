@@ -590,11 +590,8 @@ static void load_variable_holidays( int hYear )
     
     tmpholp = getHolstorep ();
     tmpholp->name = HOLIDAY_ASARA_B_TEVET;
-    if (tevet10 % 7L >= 5)
-    {                            /* saturday or sunday */
-        tempDt = abs2hebrew (day_on_or_before (THU, tevet10));
-        PushHoliday (tmpholp, &var_holidays[tempDt.mm][tempDt.dd]);
-    }
+    if (tevet10 % 7L == SAT)
+        PushHoliday (tmpholp, &var_holidays[TEVET][11]);
     else
         PushHoliday (tmpholp, &var_holidays[TEVET][10]);
     
