@@ -5,7 +5,7 @@
 
    http://sourceforge.net/projects/hebcal
 
-   $Id$
+   $Id: holidays.c 169 2010-09-14 17:57:49Z mradwin $
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -519,12 +519,15 @@ static void load_variable_holidays( int hYear )
     tempDt = abs2hebrew (day_on_or_before (SAT, passover - 1L));
     PushHoliday (tmpholp, &var_holidays[tempDt.mm][tempDt.dd]);
     
-    if (hYear > 5698)
-    {                            /* these only really make sense after 1938 */
+    if (hYear >= 5711)
+    {                            /* Yom HaShoah first observed in 1951 */
         tmpholp = getHolstorep ();
         tmpholp->name = HOLIDAY_YOM_HASHOAH;
         PushHoliday (tmpholp, &var_holidays[NISAN][27]);
-        
+    }
+
+    if (hYear > 5708)
+    {                            /* only really makes sense after 1948 */
         tmpholp = getHolstorep ();
         tmpholp->name = HOLIDAY_YOM_HAZIKARON;
         if (passover % 7L == SUN)
@@ -538,23 +541,9 @@ static void load_variable_holidays( int hYear )
         else 
             tempDt.dd = 5;
         PushHoliday (tmpholp, &var_holidays[IYYAR][tempDt.dd - 1]);
-    }
 
-    if (hYear > 5708)
-    {                            /* only really makes sense after 1948 */
         tmpholp = getHolstorep ();
         tmpholp->name = HOLIDAY_YOM_HAATZMA_UT;
-        if (passover % 7L == SUN)
-            tempDt.dd = 3;
-        else if (passover % 7L == SAT)
-            tempDt.dd = 4;
-        else if( hYear < 5764 )
-            tempDt.dd = 5;
-        else if( passover % 7L == TUE ) /* no Yom Hazikaron on motzei shabbat allowed after 5764*/
-            tempDt.dd = 6;
-        else 
-            tempDt.dd = 5;
-
         PushHoliday (tmpholp, &var_holidays[IYYAR][tempDt.dd]);
     }
 
