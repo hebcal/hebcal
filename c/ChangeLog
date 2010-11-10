@@ -1,3 +1,31 @@
+2010-09-14  Michael Radwin  <michael@radwin.org>
+
+	* CVSROOT/checkoutlist, CVSROOT/commitinfo, CVSROOT/config,
+	CVSROOT/cvswrappers, CVSROOT/editinfo, CVSROOT/loginfo,
+	CVSROOT/modules, CVSROOT/notify, CVSROOT/rcsinfo, CVSROOT/taginfo,
+	CVSROOT/verifymsg:
+	remove CVSROOT directory that got copied over by cvs2hg
+	[8cbd9b2d4c6e]
+
+	* c/holidays.c:
+	Yom Hazikaron first observed in 1949. Yom HaShoah first observed in
+	1951.
+	[6d288d444a21]
+
+2010-04-29  mradwin  <mradwin>
+
+	* c/holidays.c:
+	Allow Asara B'Tevet to fall on a Friday. According to
+	http://www.ou.org/chagim/roshchodesh/tevet/fast.htm
+
+	 "If a public fast [e.g. Asara B'Tevet] occurs on Erev Shabbat, we
+	fast the entire day till the conclusion of the fast, even though
+	it means entering Shabbat while fasting."
+
+	If it falls on Shabbat, it still gets moved to Sunday.
+	[f258d011776e]
+
+
 2004-08-03  Michael J. Radwin <michael@radwin.org>
 
 	* Add support for Australia & New Zeland DST scheme
