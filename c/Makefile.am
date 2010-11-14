@@ -5,15 +5,12 @@
 # Portions Copyright (c) 2002 Michael J. Radwin. All Rights Reserved.
 # See section COPYING for conditions for redistribution
 
-VERSION = 3.9
-
-
 # FIX do something with 
 # groff -T html -man man/man1/hebcal.1 >hebcal-manpage.html
 #-----------------------------------------------------------------
 
 #AM_CPPFLAGS += -DHEBCAL_OPTS='"$(HEBCAL_OPTS)"' 
-AM_CPPFLAGS = -DVERSION='"$(VERSION)"'
+AM_CPPFLAGS = -DVERSION='"$(PACKAGE_VERSION)"'
 
 # AM_CFLAGS = -Wall
 
