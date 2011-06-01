@@ -261,6 +261,13 @@ holinput_t inp_holidays[] =
    },
 
    {
+      {IYYAR, 14, IGNORE_YEAR},
+      {"Pesach Sheni", NULL, "\364\361\347\351\345\355 \371\360\351"},
+      0,
+      NULL
+   },
+
+   {
       {IYYAR, 18, IGNORE_YEAR},
       {"Lag B'Omer", NULL, "\354\"\342 \341\362\345\356\370"},
       0,
