@@ -1,4 +1,4 @@
-Hebcal 3.9.1 - a program for printing Jewish calendars
+Hebcal 3.10 - a program for printing Jewish calendars
   by Danny Sadinoff
   portions by Michael J. Radwin
 
@@ -90,8 +90,8 @@ manpage in the file MANUAL.
 
 
 DISTRIBUTION
-   Copyright (C) 1994-2006  Danny Sadinoff
-   Portions Copyright (c) 2002 Michael J. Radwin. All Rights Reserved.
+   Copyright (C) 1994-2011  Danny Sadinoff
+   Portions Copyright (c) 2011 Michael J. Radwin. All Rights Reserved.
 
    Hebcal is distributed under the GNU Public License.  The program
    and its source code may be freely distributed.  For details, see

@@ -324,6 +324,8 @@ holinput_t inp_holidays[] =
 #define HOLIDAY_YOM_HASHOAH     LANGUAGE2(var_hol_names[21].name)
 #define HOLIDAY_YOM_HAZIKARON   LANGUAGE2(var_hol_names[22].name)
 #define HOLIDAY_YOM_YERUSHALAYIM   LANGUAGE2(var_hol_names[23].name)
+#define HOLIDAY_EREV_PURIM   LANGUAGE2(var_hol_names[24].name)
+#define HOLIDAY_EREV_TISH_A_B_AV   LANGUAGE2(var_hol_names[25].name)
 
 struct variable_holiday_names {
    char *(name[3]);
@@ -352,6 +354,8 @@ struct variable_holiday_names {
   {{"Yom HaShoah", NULL, "\351\345\355 \344\371\345\340\344"}},
   {{"Yom HaZikaron", NULL, "\351\345\355 \344\346\353\370\345\357"}},
   {{"Yom Yerushalayim", NULL, "\351\345\355 \351\370\345\371\354\351\355"}},
+  {{"Erev Purim", NULL, "\362\370\341 \364\345\370\351\355"}},
+  {{"Erev Tish'a B'Av", NULL, "\362\370\341 \372\371\362\344 \341\340\341"}},
 };
 
 /*-------------------------------------------------------------------------*/
@@ -478,11 +482,19 @@ static void load_variable_holidays( int hYear )
         PushHoliday (tmpholp, &var_holidays[ADAR_I][14]);
         
         tmpholp = getHolstorep ();
+        tmpholp->name = HOLIDAY_EREV_PURIM;
+        PushHoliday (tmpholp, &var_holidays[ADAR_II][13]);
+
+        tmpholp = getHolstorep ();
         tmpholp->name = HOLIDAY_PURIM;
         PushHoliday (tmpholp, &var_holidays[ADAR_II][14]);
     }
     else
     {
+        tmpholp = getHolstorep ();
+        tmpholp->name = HOLIDAY_EREV_PURIM;
+        PushHoliday (tmpholp, &var_holidays[ADAR_I][13]);
+
         tmpholp = getHolstorep ();
         tmpholp->name = HOLIDAY_PURIM;
         PushHoliday (tmpholp, &var_holidays[ADAR_I][14]);
@@ -566,6 +578,11 @@ static void load_variable_holidays( int hYear )
     tmpholp->name = HOLIDAY_SHABBAT_CHAZON;
     tempDt = abs2hebrew (day_on_or_before (SAT, tishaBav));
     PushHoliday (tmpholp, &var_holidays[tempDt.mm][tempDt.dd]);
+    
+    tmpholp = getHolstorep ();
+    tmpholp->name = HOLIDAY_EREV_TISH_A_B_AV;
+    PushHoliday (tmpholp, &var_holidays[AV]
+                 [tishaBav % 7L == SAT ? 9 : 8]);
     
     tmpholp = getHolstorep ();
     tmpholp->name = HOLIDAY_TISH_A_B_AV;

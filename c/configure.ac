@@ -2,10 +2,10 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.57)
-AC_INIT(hebcal,3.9.1,hebcal-bugs@sadinoff.com)
+AC_INIT(hebcal,3.10,hebcal-bugs@sadinoff.com)
 AC_CONFIG_SRCDIR([common.c])
 dnl #AM_INIT_AUTOMAKE([no-dependencies check-news])
-AM_INIT_AUTOMAKE([check-news])
+AM_INIT_AUTOMAKE
 AM_CONFIG_HEADER([config.h])
 
 # Checks for programs.
