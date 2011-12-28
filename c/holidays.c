@@ -775,6 +775,17 @@ void init_yahrtzeits( int hyear )
         }
         /* In all other cases, use the normal anniversary of the date of death. */
 
+        /* advance day to rosh chodesh if needed */
+        if (hDeath.mm == CHESHVAN && hDeath.dd == 30
+            && !long_cheshvan(hyear)) {
+            hDeath.mm = KISLEV;
+            hDeath.dd = 1;
+        } else if (hDeath.mm == KISLEV && hDeath.dd == 30
+                   && short_kislev(hyear)) {
+            hDeath.mm = TEVET;
+            hDeath.dd = 1;
+        }
+
         eventStr = s + index + 1; /* get the name of the event */
         /*    if (eventStr[strlen(eventStr)-1] == '\n') */
         eventStr[strlen (eventStr) - 1] = '\0';   /* chop off the \n */
