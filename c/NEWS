@@ -1,3 +1,19 @@
+Changes in 3.11
+* If a yahrzeit would fall on 30 Cheshvan in a short year, advance
+  observance to 1 Kislev. If a yahrzeit would fall on Kislev 30 in a
+  short year, advance observance to 1 Tevet.
+* Allow Ta'anit Bechorot (Fast of the Firstborn) to fall on a
+  Friday. When a fast day falls on Friday, we do in fact observe the
+  fast on Friday, even though Shabbat follows immediately. Also, in some
+  years, Asarah Betevet (Tenth of Tevet) falls on Friday and is observed
+  on that day.
+  It is only in years when the date of the fast falls on Shabbat that
+  the fast is moved: Ta'anit Ester (Fast of Esther) and Ta'anit Bekhorim
+  are moved back to Thursday. Tsom Gedalyah (Fast of Gedaliah) and
+  Shiv'ah Asar Betammuz (Seventeeth of Tammuz) are moved ahead to
+  Sunday. Tish'ah Be'av (Ninth of Av), a full-day fast, is moved ahead
+  to Saturday night. Asarah Betevet does not fall on Shabbat.
+
 Changes in 3.10
 * Add Erev Purim and Erev Tish'a B'Av
 * Add Pesach Sheni (14 Iyyar)

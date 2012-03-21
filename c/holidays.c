@@ -524,8 +524,8 @@ static void load_variable_holidays( int hYear )
     
     tmpholp = getHolstorep ();
     tmpholp->name = HOLIDAY_TA_ANIT_BECHOROT;
-    if ((passover - 1L) % 7L >= 5)
-    {                            /* saturday or sunday */
+    if ((passover - 1L) % 7L == SAT)
+    {   /* if the fast falls on Shabbat, move to Thursday */
         tempDt = abs2hebrew (day_on_or_before (THU, passover));
         PushHoliday (tmpholp, &var_holidays[tempDt.mm][tempDt.dd]);
     }
