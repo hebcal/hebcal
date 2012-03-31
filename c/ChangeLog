@@ -1,3 +1,16 @@
+191   598dd98577e3   2012-03-21 09:58 -0700   mradwin
+  Allow Ta'anit Bechorot (Fast of the Firstborn) to fall on a Friday.
+
+190   455ec73454e9   2011-12-27 16:57 -0800   mradwin
+  advance yahrzeit day to rosh chodesh if needed
+
+189   f76302946d16   2011-06-01 16:04 -0700   mradwin
+  Pesach Sheni (14 Iyyar)
+
+188   4d5514c10212   2011-06-01 12:26 -0700   mradwin
+  Added Erev Purim and Erev Tish'a B'Av
+
+
 2010-09-14  Michael Radwin  <michael@radwin.org>
 
 	* CVSROOT/checkoutlist, CVSROOT/commitinfo, CVSROOT/config,
