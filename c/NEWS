@@ -1,3 +1,8 @@
+Changes in 3.12
+* When the actual date of Yom Hashoah falls on a Friday, the state of
+  Israel observes Yom Hashoah on the preceding Thursday. When it falls
+  on a Sunday, Yom Hashoah is observed on the following Monday.
+
 Changes in 3.11
 * If a yahrzeit would fall on 30 Cheshvan in a short year, advance
   observance to 1 Kislev. If a yahrzeit would fall on Kislev 30 in a

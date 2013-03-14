@@ -1,3 +1,9 @@
+changeset:   198:31d88bde7f7a
+tag:         tip
+user:        mradwin@hartke.dreamhost.com
+date:        Thu Mar 14 11:42:00 2013 -0700
+summary:     When the actual date of Yom Hashoah falls on a Friday, the state of
+
 191   598dd98577e3   2012-03-21 09:58 -0700   mradwin
   Allow Ta'anit Bechorot (Fast of the Firstborn) to fall on a Friday.
 
