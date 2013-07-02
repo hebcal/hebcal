@@ -3,98 +3,23 @@ hebcal
 
 A perpetual Jewish Calendar
 
-by Danny Sadinoff
+by Danny Sadinoff  
 portions by Michael J. Radwin
 
-## DESCRIPTION
+### DESCRIPTION
 Hebcal is a program which prints out the days in the Jewish calendar
 for a given gregorian year.  Hebcal is fairly flexible in terms of which
 events in the Jewish calendar it displays.  Each of the following can
 be individualy turned on or off:
 
-  The Hebrew date
-  Jewish Holdiays (including Yom Ha'atzmaut and Yom HaShoah etc.)
-  The weekly Sedrah
-  The day of the week
-  The days of the Omer
-
-## TODO:
-   I'm porting hebcal to perl5, which will solve, once and for all,
-   everyone's porting headaches.
-
-## INSTALLATION 
-Since you're reading this, you have already successfully unpacked the
-source files.  The next step is to customize the program for your
-city.  
-
-Examine cities.h.  If your city is in there, run configure using the
---with-default-city=CITYNAME option as follows:
-   ./configure --with-default-city=Chicago
-you may have to quote spaces:
-   ./configure --with-default-city="Los Angeles"
-
-If your city is NOT on the list, then in order to customize hebcal to
-your city, you will need to pass it the lattitude, longitude, timezone
-and daylight savings code (see the manual).  
-
-Suppose you live in Oshkosh, Wisconsin.
-Your lattitude is 44d1'29", and your longitude is 88d32'33".
-You are in timezone Z-6, with the daylight savings scheme normal to
-the US.  We'll round the geographic coordinates to the nearest minute.
-
-In order to get candlelighting times for the current year, you would
-type
-	hebcal -ch -l44,1 -L 88,33 -z-6 -Zusa
-
-Now this can get rough on the fingers if you do it a lot, so the
-HEBCAL_OPTS environment variable is available for you to use.  Every
-time hebcal is run, it checks this variable.  If it is non-empty, the
-arguments in that variable are read as though they were typed at the
-command line before the ones you actually type.  
-
-So you might set HEBCAL_OPTS to be 
-   -l44,1 -L 88,33 -z-6 -Zusa
-and if you type 
-    hebcal -ch
-hebcal will think you typed 
-    hebcal -l44,1 -L 88,33 -z-6 -Zusa  -ch
-
-REMEMBER: negative longitudes are EAST of Greenwich.
-
-For information on setting environment variables, consult your local
-guru.
-
-Once an install is complete, there are three ways to change cities, or
-pick a city not on the list:
-  1) change the CITY environment variable
-  2) change the HEBCAL_OPTS variable to reflect the new city's coordinates.
-  3) pass a -C city argument to hebcal.
-
-You can check where hebcal thinks it is by typing 
-    hebcal info
-at the command line.
-
------------
-
-To build hebcal from the source checked out of the source repository, see 
-the HACKING file.
-
-
------------
-
-The file hebcal.1 is the manual page, and is created when you compile
-the program.  
-
-For information on using man in conjunction with local
-manpages, see the manpage for man.  If you want to see what the
-manpage would look like, type
-    make MANUAL
-at the command line, and the shell will deposit a text version of the
-manpage in the file MANUAL.
-
+* The Hebrew date
+* Jewish Holdiays (including Yom Ha'atzmaut and Yom HaShoah etc.)
+* The weekly Sedrah
+* The day of the week
+* The days of the Omer
 
 ## DISTRIBUTION
-   Copyright (C) 1994-2011  Danny Sadinoff
+   Copyright (C) 1994-2011  Danny Sadinoff  
    Portions Copyright (c) 2011 Michael J. Radwin. All Rights Reserved.
 
    Hebcal is distributed under the GNU Public License.  The program
