@@ -6,7 +6,7 @@ A perpetual Jewish Calendar
 by Danny Sadinoff  
 portions by Michael J. Radwin
 
-### DESCRIPTION
+## DESCRIPTION
 Hebcal is a program which prints out the days in the Jewish calendar
 for a given gregorian year.  Hebcal is fairly flexible in terms of which
 events in the Jewish calendar it displays.  Each of the following can
