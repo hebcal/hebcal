@@ -40,5 +40,3 @@ be individualy turned on or off:
       send email to:
       danny@sadinoff.com
 
-   The latest version of the code will be available from 
-   http://sourceforge.net/projects/hebcal
