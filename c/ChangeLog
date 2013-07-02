@@ -1,3 +1,10 @@
+2013-07-02   Michael Radwin  <michael@radwin.org>
+	* added a -M option which will print out the molad time on Shabbat
+	Mevorchim, courtesy of bensandler (2004-12-21)
+
+	* Also added -O option to show daily sunrise and sunset, courtesy
+	of bensandler (2007-04-01)
+
 changeset:   198:31d88bde7f7a
 tag:         tip
 user:        mradwin@hartke.dreamhost.com

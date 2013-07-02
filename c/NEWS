@@ -1,3 +1,10 @@
+Changes in 3.13
+* Moved from Sourceforge to Github
+* Added a -M option which will print out the molad time on Shabbat
+  Mevorchim, courtesy of bensandler (2004-12-21)
+* Added -O option to show daily sunrise and sunset, courtesy of
+  bensandler (2007-04-01)
+
 Changes in 3.12
 * When the actual date of Yom Hashoah falls on a Friday, the state of
   Israel observes Yom Hashoah on the preceding Thursday. When it falls

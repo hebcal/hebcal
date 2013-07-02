@@ -43,7 +43,7 @@
 
 int
   ashkenazis_sw, candleLighting_sw, euroDates_sw, hebrewDates_sw, inputFile_sw,
-  israel_sw, latlong_sw, printOmer_sw, printMolad_sw, sedraAllWeek_sw, sedrot_sw, noGreg_sw,
+  israel_sw, latlong_sw, printOmer_sw, printMolad_sw, printSunriseSunset_sw, sedraAllWeek_sw, sedrot_sw, noGreg_sw,
   printHebDates_sw, printSomeHebDates_sw, noHolidays_sw, tabs_sw, weekday_sw,  suppress_rosh_chodesh_sw,
   yearDigits_sw, yahrtzeitFile_sw, DST_scheme, DST_value;
 int iso8859_8_sw;
@@ -304,6 +304,36 @@ set_DST( long beginDST, long endDST, long todayAbs, int *DST )
 
 /*-------------------------------------------------------------------------*/
 
+void print_sunrise_sunset(date_t todayGreg, int DST)
+{
+    double xsunrise, xsunset;
+    int day_adj, status;
+    
+    PrintGregDate (todayGreg);
+    
+    status = suntime (&xsunrise, &xsunset, dayOfYear (todayGreg),
+                    SUNRISE, SUNSET);
+    if (status & NO_SUNSET)
+        printf ("No sunset today.\n");
+    else
+    {
+        char * time_rise =timeadj ("", xsunrise, DST, &day_adj);
+        char * time_set =timeadj ("", xsunset, DST, &day_adj);
+        printf ("%s:%s; %s:%s\n",
+                "Sunrise",
+                time_rise,
+                "Sunset",
+                time_set
+            );
+        free( time_rise );
+        free( time_set );
+        /*              printf("%s %s %.1lf\n",timeadj ("",xsunrise,0,&day_adj),
+                        timeadj ("",xsunset,0,&day_adj),
+                        (xsunset-xsunrise) * 5.0 + 120.0);
+        */
+    }
+}
+
 void print_candlelighting_times( int mask, int weekday, date_t todayGreg, int DST)
 {
     /* offset of sunset to candlelighting in minutes */
@@ -442,6 +472,10 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
                   todayHeb.yy);
       }
       
+      if (printSunriseSunset_sw)
+      {
+          print_sunrise_sunset(todayGreg, DST);
+      }
       
       /* print the sedra, if desired */
       if (sedra_today)

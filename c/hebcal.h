@@ -58,6 +58,7 @@ extern int DST_scheme,
     printHebDates_sw,
     printSomeHebDates_sw,
     printMolad_sw,
+    printSunriseSunset_sw,
     sedraAllWeek_sw, 
     sedrot_sw, 
     noGreg_sw, 
@@ -120,6 +121,7 @@ void incHebGregDate( date_t *, date_t *,long *,int *,year_t * );
 void PrintGregDate( date_t );
 void main_calendar( long,long );
 void print_candlelighting_times( int, int, date_t, int );
+void print_sunrise_sunset(date_t, int);
 void reset_Omer( int hYear );
 
 extern const char * license[];

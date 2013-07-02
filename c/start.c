@@ -95,7 +95,9 @@ static char
    "        The -l and -L switches must both be used, or not at all.",
    "        These switches override the -C (localize to city) switch.",
    "   -m mins : Set havdalah to occur this many minutes after sundown ",
+   "   -M : Print the molad on shabbat mevorchim.",
    "   -o : Add days of the omer.",
+   "   -O : Output sunrise and sunset times every day.",
    "   -r : Tab delineated format.",
    "   -s : Add weekly sedrot on saturday.",
    "   -S : Print sedrah of the week on all calendar days.",
@@ -348,7 +350,7 @@ void handleArgs(int argc, char *argv[])
 
    char *usage =		/* not quite sure how compatible this is */
    "usage: \n\
-   hebcal [-acdDehHiorsStTwxy]\n\
+   hebcal [-acdDehHiMoOrsStTwxy]\n\
           [-I input_file]\n\
           [-Y yahrtzeit_file]\n\
           [-C city]\n\
@@ -368,7 +370,7 @@ void handleArgs(int argc, char *argv[])
 
    Getopt(argc, argv, "", 1);
    while (EOF !=
-          (option = Getopt(argc, argv, "acC:dDef:hHI:il:L:m:MorsStTwxyY:z:Z:8", 0)))
+          (option = Getopt(argc, argv, "acC:dDef:hHI:il:L:m:MoOrsStTwxyY:z:Z:8", 0)))
    {
        switch ((char) option)
        {
@@ -445,6 +447,9 @@ void handleArgs(int argc, char *argv[])
            break;
        case 'o':		/* print the omer */
 	   printOmer_sw = 1;
+	   break;
+       case 'O':		/* print sunrise and sunset */
+	   printSunriseSunset_sw = 1;
 	   break;
        case 'r':		/* Tab-delineated Format */
 	   tabs_sw = 1;
