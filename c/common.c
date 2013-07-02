@@ -156,19 +156,21 @@ int lookup_hebrew_month( const char *s )
 
 
 
-#if 0
-
 /* 
    returns day of week, hours and chalakim of specified molad.
  */
-molad_t molad( int year, int m)
+molad_t get_molad( int year, int month)
 {
     molad_t retMolad;
     
-    long yearl, m_elapsed, p_elapsed, h_elapsed, parts;
+    long yearl, m_elapsed, p_elapsed, h_elapsed, parts, m_adj;
+
+    m_adj = (long) month;
+    m_adj -= 7;
+    if (m_adj < 0) m_adj += MONTHS_IN_HEB(year);
     
     yearl = (long) year;
-    m_elapsed = (long) m +
+    m_elapsed = m_adj +
         235L * ((yearl - 1L) / 19L) +
     12L * ((yearl - 1L) % 19) +
         ((((yearl - 1L) % 19L) * 7) + 1L) / 19L;
@@ -177,7 +179,8 @@ molad_t molad( int year, int m)
 
     h_elapsed = 5L + (12L * m_elapsed) +
         793L * (m_elapsed / 1080L) +
-        p_elapsed / 1080L;
+        p_elapsed / 1080L -
+        6L;
     
     parts = (p_elapsed % 1080) + 1080 * (h_elapsed % 24);
 
@@ -188,7 +191,6 @@ molad_t molad( int year, int m)
     return retMolad;
 
 }
-#endif
 
 
 date_t abs2hebrew( long d )

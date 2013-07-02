@@ -35,6 +35,7 @@
 #include "rise.h"
 #include "sedra.h"
 #include "format.h"
+#include "greg.h"
 
 #define LANGUAGE(str) (ashkenazis_sw && (str)[1] ? ((str)[1]) : ((str)[0]))
 
@@ -42,7 +43,7 @@
 
 int
   ashkenazis_sw, candleLighting_sw, euroDates_sw, hebrewDates_sw, inputFile_sw,
-  israel_sw, latlong_sw, printOmer_sw, sedraAllWeek_sw, sedrot_sw, noGreg_sw,
+  israel_sw, latlong_sw, printOmer_sw, printMolad_sw, sedraAllWeek_sw, sedrot_sw, noGreg_sw,
   printHebDates_sw, printSomeHebDates_sw, noHolidays_sw, tabs_sw, weekday_sw,  suppress_rosh_chodesh_sw,
   yearDigits_sw, yahrtzeitFile_sw, DST_scheme, DST_value;
 int iso8859_8_sw;
@@ -391,7 +392,9 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
     year_t theYear;
     char *omerStr ;
     int omer, day_of_week, returnedMask, DST;
-    int omer_today, sedra_today, candle_today, holidays_today;
+    int omer_today, sedra_today, candle_today, holidays_today, molad_today;
+    molad_t moladNext;
+    int monthNext;
     
     todayHeb = abs2hebrew (todayAbs);
     todayGreg = abs2greg (todayAbs);
@@ -422,6 +425,10 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
            (returnedMask & YOM_TOV_ENDS));
       holidays_today = holip &&
         (!noHolidays_sw || (returnedMask & USER_EVENT));
+      molad_today = printMolad_sw &&
+          (day_of_week == SAT) &&
+          (todayHeb.dd >= 23 && todayHeb.dd <= 29) &&
+          (todayHeb.mm != ELUL); /* no birkat hachodesh before rosh hashana */
       
       if (printHebDates_sw ||
           (printSomeHebDates_sw && 
@@ -493,6 +500,21 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
                                       day_of_week, todayGreg, DST);
       }
       
+      /* Print Molad */
+      if (molad_today)
+      {
+          PrintGregDate (todayGreg);
+          monthNext = (todayHeb.mm == MONTHS_IN_HEB(todayHeb.yy) ? 1 : todayHeb.mm + 1);
+          moladNext = get_molad(todayHeb.yy, monthNext);
+          printf ("Molad %s: %s, %d minutes and %d chalakim after %d %s\n",
+              hMonths[LEAP_YR_HEB(todayHeb.yy)][monthNext].name[0],
+              ShortDayNames[dayOfWeek(abs2greg(moladNext.day))],
+              (int) moladNext.chalakim / 18,
+              moladNext.chalakim % 18,
+              (moladNext.hour > 12 ? moladNext.hour - 12 : moladNext.hour),
+              (moladNext.hour > 12 ? "PM" : "AM")
+          );
+      }
 
       incHebGregDate (&todayHeb, &todayGreg, &todayAbs, &day_of_week, &theYear);
       

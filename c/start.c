@@ -368,7 +368,7 @@ void handleArgs(int argc, char *argv[])
 
    Getopt(argc, argv, "", 1);
    while (EOF !=
-          (option = Getopt(argc, argv, "acC:dDef:hHI:il:L:m:orsStTwxyY:z:Z:8", 0)))
+          (option = Getopt(argc, argv, "acC:dDef:hHI:il:L:m:MorsStTwxyY:z:Z:8", 0)))
    {
        switch ((char) option)
        {
@@ -440,6 +440,9 @@ void handleArgs(int argc, char *argv[])
 	   if (!(sscanf(Optarg, "%d", &havdalah_minutes) == 1))
                die("unable to read havdalah_minutes argument: %s", Optarg);
 	   break;
+       case 'M':		/* print the molad */
+           printMolad_sw = 1;
+           break;
        case 'o':		/* print the omer */
 	   printOmer_sw = 1;
 	   break;

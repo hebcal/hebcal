@@ -38,7 +38,7 @@ typedef struct molad {
     int hour, chalakim;
 } molad_t;
 
-molad_t molad(int, int);
+molad_t get_molad(int, int);
 date_t abs2hebrew(long);
 long hebrew2abs(date_t);
 int days_in_heb_year(int);
