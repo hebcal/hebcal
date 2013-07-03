@@ -3,7 +3,7 @@
    Copyright (C) 1994  Danny Sadinoff
    Portions Copyright (c) 2002 Michael J. Radwin. All Rights Reserved.
 
-   http://sourceforge.net/projects/hebcal
+   https://github.com/mjradwin/hebcal
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License

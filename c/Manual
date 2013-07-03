@@ -256,7 +256,7 @@ SEE ALSO
        remind(1), rise(1)
 
        The latest version of the  code  will  be  available  from
-       http://sourceforge.net/projects/hebcal
+       https://github.com/mjradwin/hebcal
 
        The original motivation for the algorithms in this program
        was the Tur Shulchan Aruch.

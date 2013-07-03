@@ -1,4 +1,4 @@
-.\" $Id$  -*- nroff -*-
+.\" hebcal.1  -*- nroff -*-
 .\" Copyright(c) 1994-2006  Danny Sadinoff
 .\" Portions Copyright (c) 2002 Michael J. Radwin. All Rights Reserved.
 .\" See section COPYING for conditions for redistribution
@@ -447,7 +447,7 @@ Danny Sadinoff
 calendar(1), emacs(1), hcal(1), hdate(1), omer(1), remind(1), rise(1)
 .PP
 The latest version of the code will be available from 
-http://sourceforge.net/projects/hebcal
+https://github.com/mjradwin/hebcal
 .PP
 The original motivation for the algorithms in this
 program was the \c

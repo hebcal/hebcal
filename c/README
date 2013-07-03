@@ -1,4 +1,4 @@
-Hebcal 3.12 - a program for printing Jewish calendars
+Hebcal 3.13 - a program for printing Jewish calendars
   by Danny Sadinoff
   portions by Michael J. Radwin
 
@@ -112,4 +112,4 @@ DISTRIBUTION
       danny@sadinoff.com
 
    The latest version of the code will be available from 
-   http://sourceforge.net/projects/hebcal
+   https://github.com/mjradwin/hebcal

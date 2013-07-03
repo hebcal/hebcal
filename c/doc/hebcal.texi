@@ -178,8 +178,8 @@ If you find a bug in GNU @code{hebcal}, please send electronic mail
 to @email{hebcal-bugs@@sadinoff.com}.  Include the version
 number, which you can find by running @w{@samp{hebcal version}}.  Also
 include in your message the output that the program produced and the
-output you expected.  Alternatively you can submit the bug via sourceforge at
-@code{http://sourceforge.net/projects/hebcal/} @refill
+output you expected.  Alternatively you can submit the bug via GitHub at
+@code{https://github.com/mjradwin/hebcal} @refill
 
 If you have other questions, comments or suggestions about 
 @code{hebcal}, contact Danny Sadinoff via electronic mail to

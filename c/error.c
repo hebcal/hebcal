@@ -1,5 +1,4 @@
 /*
-   $Id$
    Hebcal - A Jewish Calendar Generator
    Copyright (C) 1994-2004  Danny Sadinoff
 
