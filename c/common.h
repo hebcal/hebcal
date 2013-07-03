@@ -1,7 +1,7 @@
 /* Copyright(c) 1994  Danny Sadinoff
    Portions Copyright (c) 2002 Michael J. Radwin. All Rights Reserved.
 
-   https://github.com/mjradwin/hebcal
+   https://github.com/hebcal/hebcal
 
   See section COPYING for conditions for redistribution
 */

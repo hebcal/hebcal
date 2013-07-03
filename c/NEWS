@@ -2,10 +2,10 @@ Changes in 3.13
 * Moved from SourceForge to GitHub
 * Added a -M option which will print out the molad time on Shabbat
   Mevorchim, courtesy of bensandler (2004-12-21)
-  https://github.com/mjradwin/hebcal/issues/73
+  https://github.com/hebcal/hebcal/issues/73
 * Added -O option to show daily sunrise and sunset, courtesy of
   bensandler (2007-04-01)
-  https://github.com/mjradwin/hebcal/issues/76
+  https://github.com/hebcal/hebcal/issues/76
 
 Changes in 3.12
 * When the actual date of Yom Hashoah falls on a Friday, the state of

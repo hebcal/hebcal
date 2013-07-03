@@ -179,7 +179,7 @@ to @email{hebcal-bugs@@sadinoff.com}.  Include the version
 number, which you can find by running @w{@samp{hebcal version}}.  Also
 include in your message the output that the program produced and the
 output you expected.  Alternatively you can submit the bug via GitHub at
-@code{https://github.com/mjradwin/hebcal} @refill
+@code{https://github.com/hebcal/hebcal} @refill
 
 If you have other questions, comments or suggestions about 
 @code{hebcal}, contact Danny Sadinoff via electronic mail to
