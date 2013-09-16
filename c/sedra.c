@@ -315,10 +315,16 @@ char * sedra( long absDate )
     
     weekNum = (absDate - first_saturday) / 7;
     if (weekNum >= sedraNumWeeks) {
-	/* no parashat haShavuah this week */
-        return NULL;
+	int indexLast = theSedraArray[sedraNumWeeks - 1];
+	if (indexLast < 0) {
+	    /* advance 2 parashiyot ahead after a doubled week */
+	    index = U(indexLast) + 2;
+	} else {
+	    index = indexLast + 1;
+	}
+    } else {
+	index = theSedraArray[weekNum];
     }
-    index = theSedraArray[weekNum];
     
     *buf = '\0';                        /* reset the return buffer */
     
