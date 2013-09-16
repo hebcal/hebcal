@@ -37,6 +37,7 @@
 
 #include <string.h>
 
+#include "greg.h"
 #include "hebcal.h"
 #include "sedra.h"
 #include "common.h"
@@ -109,290 +110,85 @@ const char *sedrot[][3] =
 /* parsha undoubler */
 #define U(p) (-(p))
 
-typedef int sedraIndex_t[55];
+/*
+ * These indices were originally included in the emacs 19 distribution.
+ * These arrays determine the correct indices into the parsha names
+ * -1 means no parsha that week.
+ */
+static int Sat_short[] = {
+    -1, 52, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+    17, 18, 19, 20, D(21), 23, 24, -1, 25, D(26), D(28), 30, D(31), 33, 34, 35, 36, 37, 38, 39, 40, D(41), 43, 44, 45, 46, 47,
+    48, 49, 50 };
 
-/* The ordinary year types (keviot) */
+static int Sat_long[] = {
+    -1, 52, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+    17, 18, 19, 20, D(21), 23, 24, -1, 25, D(26), D(28), 30, D(31), 33, 34, 35, 36, 37, 38, 39, 40, D(41), 43, 44, 45, 46, 47,
+    48, 49, D(50) };
 
-sedraIndex_t nonleap_monday_incomplete =
-{51, 52, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
- 17, 18, 19, 20, D (21), 23, 24, -1, 25, D (26), D (28), 30, D (31), 33, 34,
- 35, 36, 37, 38, 39, 40, D (41), 43, 44, 45, 46, 47, 48, 49, D (50)};
-/* Hebrew year that starts on Monday, is `incomplete' (Heshvan and
-   Kislev each have 29 days), and has Passover start on Tuesday. */
+static int Mon_short[] = { 
+    51, 52, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+    18, 19, 20, D(21), 23, 24, -1, 25, D(26), D(28), 30, D(31), 33, 34, 35, 36, 37, 38, 39, 40, D(41), 43, 44, 45, 46, 47, 48,
+    49, D(50) };
 
-sedraIndex_t nonleap_monday_complete_diaspora =
-{51, 52, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
- 17, 18, 19, 20, D (21), 23, 24, -1, 25, D (26), D (28), 30, D (31), 33,
- -1, 34, 35, 36, 37, D (38), 40, D (41), 43, 44, 45, 46, 47, 48, 49,
- D (50)};
-/* Hebrew year that starts on Monday, is `complete' (Heshvan and
-   Kislev each have 30 days), and has Passover start on Thursday. */
+static int Mon_long[] = {
+    51, 52, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, D(21), 23, 24, -1, 25, D(26), D(28),
+    30, D(31), 33, -1, 34, 35, 36, 37, D(38), 40, D(41), 43, 44, 45, 46, 47, 48, 49, D(50) };
 
-#define nonleap_monday_complete_israel nonleap_monday_incomplete
-/* Hebrew year that starts on Monday, is `complete' (Heshvan and
-   Kislev each have 30 days), and has Passover start on Thursday. */
+static int Thu_normal[] = {
+    52, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+    18, 19, 20, D(21), 23, 24, -1, -1, 25, D(26), D(28), 30, D(31), 33, 34, 35, 36, 37, 38, 39, 40, D(41), 43, 44, 45, 46, 47,
+    48, 49, 50 };
+static int Thu_normal_Israel[] = {
+    52, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+    16, 17, 18, 19, 20, D(21), 23, 24, -1, 25, D(26), D(28), 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, D(41), 43, 44, 45,
+    46, 47, 48, 49, 50 };
 
-#define nonleap_tuesday_regular_diaspora nonleap_monday_complete_diaspora
-/* Hebrew year that starts on Tuesday, is `regular' (Heshvan has 29
-   days and Kislev has 30 days), and has Passover start on Thursday. */
+static int Thu_long[] = {
+    52, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+    18, 19, 20, 21, 22, 23, 24, -1, 25, D(26), D(28), 30, D(31), 33, 34, 35, 36, 37, 38, 39, 40, D(41), 43, 44, 45, 46, 47,
+    48, 49, 50 };
 
-#define nonleap_tuesday_regular_israel nonleap_monday_incomplete
-/* Hebrew year that starts on Tuesday, is `regular' (Heshvan has 29
-   days and Kislev has 30 days), and has Passover start on Thursday. */
+static int Sat_short_leap[] = {
+    -1, 52, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+    16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, -1, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, D(41),
+    43, 44, 45, 46, 47, 48, 49, D(50) };
 
-sedraIndex_t nonleap_thursday_regular_diaspora =
-{52, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
- 17, 18, 19, 20, D (21), 23, 24, -1, -1, 25, D (26), D (28), 30, D (31),
- 33, 34, 35, 36, 37, 38, 39, 40, D (41), 43, 44, 45, 46, 47, 48, 49, 50};
-/* Hebrew year that starts on Thursday, is `regular' (Heshvan has 29
-   days and Kislev has 30 days), and has Passover start on Saturday. */
+static int Sat_long_leap[] = {
+    -1, 52, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+    16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, -1, 28, 29, 30, 31, 32, 33, -1, 34, 35, 36, 37, D(38), 40, D(41),
+    43, 44, 45, 46, 47, 48, 49, D(50) };
 
-sedraIndex_t nonleap_thursday_regular_israel =
-{52, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
- 17, 18, 19, 20, D (21), 23, 24, -1, 25, D (26), D (28), 30, 31, 32, 33,
- 34, 35, 36, 37, 38, 39, 40, D (41), 43, 44, 45, 46, 47, 48, 49, 50};
-/* Hebrew year that starts on Thursday, is `regular' (Heshvan has 29
-   days and Kislev has 30 days), and has Passover start on Saturday. */
+static int Mon_short_leap[] = {
+    51, 52, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+    17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, -1, 28, 29, 30, 31, 32, 33, -1, 34, 35, 36, 37, D(38), 40, D(41), 43,
+    44, 45, 46, 47, 48, 49, D(50) };
 
-sedraIndex_t nonleap_thursday_complete =
-{52, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
- 17, 18, 19, 20, 21, 22, 23, 24, -1, 25, D (26), D (28), 30, D (31), 33,
- 34, 35, 36, 37, 38, 39, 40, D (41), 43, 44, 45, 46, 47, 48, 49, 50};
-/* Hebrew year that starts on Thursday, is `complete' (Heshvan and
-   Kislev each have 30 days), and has Passover start on Sunday. */
-sedraIndex_t nonleap_saturday_incomplete =
-{-1, 52, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
- 15, 16, 17, 18, 19, 20, D (21), 23, 24, -1, 25, D (26), D (28), 30, D (31),
- 33, 34, 35, 36, 37, 38, 39, 40, D (41), 43, 44, 45, 46, 47, 48, 49,
- 50};
+static int Mon_short_leap_Israel[] = {
+    51, 52, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+    15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, -1, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+    D(41), 43, 44, 45, 46, 47, 48, 49, D(50) };
 
-/* Hebrew year that starts on Saturday, is `incomplete' (Heshvan and Kislev
-   each have 29 days), and has Passover start on Sunday. */
+static int Mon_long_leap[] = {
+    51, 52, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+    17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, -1, -1, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, D(41),
+    43, 44, 45, 46, 47, 48, 49, 50 };
+static int Mon_long_leap_Israel[] = {
+    51, 52, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+    15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, -1, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+    41, 42, 43, 44, 45, 46, 47, 48, 49, 50 };
 
-sedraIndex_t nonleap_saturday_complete =
-{-1, 52, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
- 16, 17, 18, 19, 20, D (21), 23, 24, -1, 25, D (26), D (28), 30,
- D (31), 33, 34, 35, 36, 37, 38, 39, 40, D (41), 43, 44, 45, 46, 47,
- 48, 49, D (50)};
-/* Hebrew year that starts on Saturday, is `complete' (Heshvan and
-   Kislev each have 30 days), and has Passover start on Tuesday. */
+static int Thu_short_leap[] = {
+    52, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+    17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, -1, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42,
+    43, 44, 45, 46, 47, 48, 49, 50 };
 
-/* --  The leap year types (keviot) -- */
-
-sedraIndex_t leap_monday_incomplete_diaspora =
-{51, 52, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
- 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, -1, 28, 29, 30, 31, 32, 33,
- -1, 34, 35, 36, 37, D (38), 40, D (41), 43, 44, 45, 46, 47, 48, 49,
- D (50)};
-/* Hebrew year that starts on Monday, is `incomplete' (Heshvan and
-   Kislev each have 29 days), and has Passover start on Thursday. */
-
-sedraIndex_t leap_monday_incomplete_israel =
-{51, 52, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
- 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, -1, 28, 29, 30, 31, 32, 33,
- 34, 35, 36, 37, 38, 39, 40, D (41), 43, 44, 45, 46, 47, 48, 49, D (50)};
-/* Hebrew year that starts on Monday, is `incomplete' (Heshvan and
-   Kislev each have 29 days), and has Passover start on Thursday. */
-
-
-sedraIndex_t leap_monday_complete_diaspora =
-{51, 52, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
- 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, -1, -1, 28, 29, 30, 31, 32,
- 33, 34, 35, 36, 37, 38, 39, 40, D (41), 43, 44, 45, 46, 47, 48, 49, 50};
-/* Hebrew year that starts on Monday, is `complete' (Heshvan and
-   Kislev each have 30 days), and has Passover start on Saturday. */
-
-sedraIndex_t leap_monday_complete_israel =
-{51, 52, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
- 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, -1, 28, 29, 30, 31, 32, 33,
- 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50};
-/* Hebrew year that starts on Monday, is `complete' (Heshvan and
-   Kislev each have 30 days), and has Passover start on Saturday. */
-
-#define leap_tuesday_regular_diaspora leap_monday_complete_diaspora
-/* Hebrew year that starts on Tuesday, is `regular' (Heshvan has 29
-   days and Kislev has 30 days), and has Passover start on Saturday. */
-
-#define leap_tuesday_regular_israel leap_monday_complete_israel
-/* Hebrew year that starts on Tuesday, is `regular' (Heshvan has 29
-   days and Kislev has 30 days), and has Passover start on Saturday. */
-
-sedraIndex_t leap_thursday_incomplete =
-{52, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
- 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, -1, 29, 30, 31, 32, 33,
- 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50};
-/* Hebrew year that starts on Thursday, is `incomplete' (Heshvan and
-   Kislev both have 29 days), and has Passover start on Sunday. */
-
-sedraIndex_t leap_thursday_complete =
-{52, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
- 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, -1, 29, 30, 31, 32, 33,
- 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, D (50)};
-/* Hebrew year that starts on Thursday, is `complete' (Heshvan and
-   Kislev both have 30 days), and has Passover start on Tuesday. */
-
-sedraIndex_t leap_saturday_incomplete =
-{-1, 52, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
- 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, -1, 28, 29, 30, 31, 32,
- 33, 34, 35, 36, 37, 38, 39, 40, D (41), 43, 44, 45, 46, 47, 48, 49,
- D (50)};
-/* Hebrew year that starts on Saturday, is `incomplete' (Heshvan and
-   Kislev each have 29 days), and has Passover start on Tuesday. */
-
-sedraIndex_t leap_saturday_complete_diaspora =
-{-1, 52, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
- 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, -1, 28, 29, 30, 31, 32,
- 33, -1, 34, 35, 36, 37, D (38), 40, D (41), 43, 44, 45, 46, 47, 48, 49,
- D (50)};
-/* Hebrew year that starts on Saturday, is `complete' (Heshvan and
-   Kislev each have 30 days), and has Passover start on Thursday. */
-
-#define leap_saturday_complete_israel leap_saturday_incomplete
-/* Hebrew year that starts on Saturday, is `complete' (Heshvan and
-   Kislev each have 30 days), and has Passover start on Thursday. */
-
-
-
-#define ROSH_DAY_INDEX(x) ( ((x)==1) ? 0 : ((x)/2) )
-
-/* sedra_years_array[leap][rosh_day][type][israel/diaspora] */
-int *sedra_years_array[2][4][3][2] =
-{
-    {                             /* nonleap years */
-        
-        {                           /* monday */
-            {                         /* incomplete */
-                nonleap_monday_incomplete,
-                nonleap_monday_incomplete
-            },
-            
-            {                         /* regular */
-                NULL, NULL
-            },
-            
-            {                         /* complete */
-                nonleap_monday_complete_diaspora,
-                nonleap_monday_complete_israel
-            },
-            
-        },
-        
-        {                           /* tuesday */
-            {                         /* incomplete */
-                NULL, NULL
-            },
-            
-            {                         /* regular */
-                nonleap_tuesday_regular_diaspora,
-                nonleap_tuesday_regular_israel
-                
-            },
-            
-            {                         /* complete */
-                NULL, NULL
-            },
-        },
-        
-        {                           /* thursday */
-            {                         /* incomplete */
-                NULL, NULL
-            },
-            
-            {                         /* regular */
-                nonleap_thursday_regular_diaspora,
-                nonleap_thursday_regular_israel
-            },
-            
-            {                         /* complete */
-                nonleap_thursday_complete,
-                nonleap_thursday_complete
-            },
-        },
-        
-        {                           /* saturday */
-            {                         /* incomplete */
-                nonleap_saturday_incomplete,
-                nonleap_saturday_incomplete
-            },
-            
-            {                         /* regular */
-                NULL, NULL
-            },
-            
-            {                         /* complete */
-                nonleap_saturday_complete, nonleap_saturday_complete
-            },
-        },
-    },
-    
-    
-    {                             /* leap years */
-        {                           /* monday */
-            {                         /* incomplete */
-                leap_monday_incomplete_diaspora,
-                leap_monday_incomplete_israel
-            },
-            
-            {                         /* regular */
-                NULL, NULL
-            },
-            
-            {                         /* complete */
-                leap_monday_complete_diaspora,
-                leap_monday_complete_israel
-            },
-        },
-        
-        {                           /* tuesday */
-            {                         /* incomplete */
-        NULL, NULL
-            },
-            
-            {                         /* regular */
-                leap_tuesday_regular_diaspora,
-                leap_tuesday_regular_israel,
-            },
-            
-            {                         /* complete */
-                NULL, NULL
-            },
-        },
-        
-    {                           /* thursday */
-        {                         /* incomplete */
-            leap_thursday_incomplete,
-            leap_thursday_incomplete
-        },
-        
-        {                         /* regular */
-            NULL, NULL
-        },
-        
-        {                         /* complete */
-            leap_thursday_complete,
-            leap_thursday_complete
-        },
-    },
-        
-        {                           /* saturday */
-            {                         /* incomplete */
-                leap_saturday_incomplete,
-                leap_saturday_incomplete
-            },
-            
-            {                         /* regular */
-                NULL, NULL
-            },
-            
-            {                         /* complete */
-                leap_saturday_complete_diaspora,
-                leap_saturday_complete_israel
-            },
-        },
-    }
-};
+static int Thu_long_leap[] = {
+    52, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+    17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, -1, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42,
+    43, 44, 45, 46, 47, 48, 49, D(50) };
 
 static int *theSedraArray;
+static size_t sedraNumWeeks;
 static long int first_saturday;
 
 /* sets static globals based on this year. */
@@ -401,6 +197,7 @@ void reset_sedra( int hebYr ) /* the hebrew year */
     date_t tempDt;
     int long_c, short_k, rosh_hashana_day, type;
     long int rosh_hashana;
+    size_t theSedraArraySize;
     
     long_c = long_cheshvan (hebYr);
     short_k = short_kislev (hebYr);
@@ -420,14 +217,87 @@ void reset_sedra( int hebYr ) /* the hebrew year */
 
     /* find the first saturday on or after Rosh Hashana */
     first_saturday = day_on_or_before (6, rosh_hashana + 6L);
+
+    if (!LEAP_YR_HEB(hebYr)) {
+	switch (rosh_hashana_day) {
+	case SAT:
+	    if (type == INCOMPLETE) {
+		theSedraArray = Sat_short;
+		theSedraArraySize = sizeof(Sat_short);
+	    } else if (type == COMPLETE) {
+		theSedraArray = Sat_long;
+		theSedraArraySize = sizeof(Sat_long);
+	    }
+	    break;
+	case MON:
+	    if (type == INCOMPLETE) {
+		theSedraArray = Mon_short;
+		theSedraArraySize = sizeof(Mon_short);
+	    } else if (type == COMPLETE) {
+		theSedraArray = israel_sw ? Mon_short : Mon_long;
+		theSedraArraySize = israel_sw ? sizeof(Mon_short) : sizeof(Mon_long);
+	    }
+	    break;
+	case TUE:
+	    if (type == REGULAR) {
+		theSedraArray = israel_sw ? Mon_short : Mon_long;
+		theSedraArraySize = israel_sw ? sizeof(Mon_short) : sizeof(Mon_long);
+	    }
+	    break;
+	case THU:
+	    if (type == REGULAR) {
+		theSedraArray = israel_sw ? Thu_normal_Israel : Thu_normal;
+		theSedraArraySize = israel_sw ? sizeof(Thu_normal_Israel) : sizeof(Thu_normal);
+	    } else if (type == COMPLETE) {
+		theSedraArray = Thu_long;
+		theSedraArraySize = sizeof(Thu_long);
+	    }
+	    break;
+	default:
+	    die ("improper sedra year type calculated.", "");
+	}
+    } else {
+	/* leap year */
+	switch (rosh_hashana_day) {
+	case SAT:
+	    if (type == INCOMPLETE) {
+		theSedraArray = Sat_short_leap;
+		theSedraArraySize = sizeof(Sat_short_leap);
+	    } else if (type == COMPLETE) {
+		theSedraArray = israel_sw ? Sat_short_leap : Sat_long_leap;
+		theSedraArraySize = israel_sw ? sizeof(Sat_short_leap) : sizeof(Sat_long_leap);
+	    }
+	    break;
+	case MON:
+	    if (type == INCOMPLETE) {
+		theSedraArray = israel_sw ? Mon_short_leap_Israel : Mon_short_leap;
+		theSedraArraySize = israel_sw ? sizeof(Mon_short_leap_Israel) : sizeof(Mon_short_leap);
+	    } else if (type == COMPLETE) {
+		theSedraArray = israel_sw ? Mon_long_leap_Israel : Mon_long_leap;
+		theSedraArraySize = israel_sw ? sizeof(Mon_long_leap_Israel) : sizeof(Mon_long_leap);
+	    }
+	    break;
+	case TUE:
+	    if (type == REGULAR) {
+		theSedraArray = israel_sw ? Mon_long_leap_Israel : Mon_long_leap;
+		theSedraArraySize = israel_sw ? sizeof(Mon_long_leap_Israel) : sizeof(Mon_long_leap);
+	    }
+	    break;
+	case THU:
+	    if (type == INCOMPLETE) {
+		theSedraArray = Thu_short_leap;
+		theSedraArraySize = sizeof(Thu_short_leap);
+	    } else if (type == COMPLETE) {
+		theSedraArray = Thu_long_leap;
+		theSedraArraySize = sizeof(Thu_long_leap);
+	    }
+	    break;
+	default:
+	    die ("improper sedra year type calculated.", "");
+	}
+    }
     
-    if (NULL == (theSedraArray = sedra_years_array
-                 [LEAP_YR_HEB (hebYr)]
-                 [ROSH_DAY_INDEX (rosh_hashana_day)]
-                 [type]
-                 [israel_sw]))
-        die ("improper sedra year type calculated.", "");
-    
+    sedraNumWeeks = theSedraArraySize / sizeof(int);
 }
 
 
@@ -437,12 +307,18 @@ char * sedra( long absDate )
 {
     
     int index;
+    int weekNum;
     static char buf[40];        /* FIX: eeeevill */
     
     /* find the first saturday on or after today's date */
     absDate = day_on_or_before (6, absDate + 6L);
     
-    index = theSedraArray[(absDate - first_saturday) / 7];
+    weekNum = (absDate - first_saturday) / 7;
+    if (weekNum >= sedraNumWeeks) {
+	/* no parashat haShavuah this week */
+        return NULL;
+    }
+    index = theSedraArray[weekNum];
     
     *buf = '\0';                        /* reset the return buffer */
     
