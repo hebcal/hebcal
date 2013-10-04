@@ -1,3 +1,13 @@
+Changes in 3.14
+* Properly display Parashat Vayeilech or Ha'Azinu when using -S option
+  (Print sedrah of the week on all calendar days) in certain
+  cases. https://github.com/hebcal/hebcal/issues/79
+* Added "Leil Selichot" on Saturday night at least 4 days before Rosh
+  Hashana. https://github.com/hebcal/hebcal/issues/47
+* Make sunset candlelighting offset adjustable with new option
+  -b candle_lighting_minutes_before_sundown.
+  https://github.com/hebcal/hebcal/issues/52
+
 Changes in 3.13
 * Moved from SourceForge to GitHub
 * Added a -M option which will print out the molad time on Shabbat

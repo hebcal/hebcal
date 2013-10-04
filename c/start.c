@@ -57,6 +57,7 @@ static char
 {
    "Hebcal Version " VERSION " By Danny Sadinoff",
    "usage: hebcal [-8acdDeHhiorsStTwy]",
+   "            [-b candle_lighting_minutes_before_sundown ]",
    "            [-I file]",
    "            [-Y yahrtzeit_file]",
    "            [-C city]",
@@ -75,6 +76,7 @@ static char
    "OPTIONS:",
    "   -8 : Use 8-bit Hebrew (ISO-8859-8-Logical).",
    "   -a : Use ashkenazis hebrew.",
+   "   -b mins : Set candle-lighting to occur this many minutes before sundown ",
    "   -c : Print candlelighting times.",
    "   -C city : Set latitude, longitude, timezone and daylight",
    "             savings scheme according to specified city. ",
@@ -351,6 +353,7 @@ void handleArgs(int argc, char *argv[])
    char *usage =		/* not quite sure how compatible this is */
    "usage: \n\
    hebcal [-acdDehHiMoOrsStTwxy]\n\
+          [-b candle_lighting_minutes_before_sundown]\n\
           [-I input_file]\n\
           [-Y yahrtzeit_file]\n\
           [-C city]\n\
@@ -370,7 +373,7 @@ void handleArgs(int argc, char *argv[])
 
    Getopt(argc, argv, "", 1);
    while (EOF !=
-          (option = Getopt(argc, argv, "acC:dDef:hHI:il:L:m:MoOrsStTwxyY:z:Z:8", 0)))
+          (option = Getopt(argc, argv, "ab:cC:dDef:hHI:il:L:m:MoOrsStTwxyY:z:Z:8", 0)))
    {
        switch ((char) option)
        {
@@ -379,6 +382,11 @@ void handleArgs(int argc, char *argv[])
 	   break;
        case '8':		/* ashkenazis hebrew */
 	   iso8859_8_sw = 1;
+	   break;
+       case 'b':		/* candle_lighting_minutes_before_sundown */
+	   if (!(sscanf(Optarg, "%d", &light_offset) == 1))
+               die("unable to read candle_lighting_minutes_before_sundown argument: %s", Optarg);
+	   light_offset *= -1;
 	   break;
        case 'c':		/* calculate candlelighting times on fridays */
 	   candleLighting_sw = 1;
