@@ -257,12 +257,24 @@ void set_DST_bounds (long *beginDST, long *endDST, int gregYr)
 	    *beginDST = day_on_or_before (SUN, hebrew2abs (tempDt));
 	}
         
+  if (gregYr >= 2013) {
+    /*
+      IDT will end on the last Sunday of October
+      http://en.wikipedia.org/wiki/Israel_Summer_Time#2013.E2.80.93Present
+    */
+        tempDt.dd = 1;
+        tempDt.mm = 11;
+        /*  the sunday before the first of november */
+        *endDST = day_on_or_before (SUN, greg2abs (tempDt) - 1L);
+  }
+  else {      
         /* daylight savings time ends in Israel on the Sunday Selichot */
         /* begins: */
         tempDt.mm = TISHREI;
         tempDt.dd = 1;
         tempDt.yy = gregYr + 3761;        /* next year */
         *endDST = day_on_or_before (SUN, hebrew2abs (tempDt) - 3L);
+  } 
         DST_value = 60;
         break;
     case DST_NONE:
@@ -459,6 +471,11 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
           (todayHeb.dd >= 23 && todayHeb.dd <= 29) &&
           (todayHeb.mm != ELUL); /* no birkat hachodesh before rosh hashana */
       
+      // Set DST if we are using time based functions
+      if (print_sunrise_sunset || candle_today || molad_today)
+      {
+        set_DST (beginDST, endDST, todayAbs, &DST); 
+      }
       if (printHebDates_sw ||
           (printSomeHebDates_sw && 
            (holidays_today || sedra_today || omer_today || candle_today)))
@@ -528,7 +545,6 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
       /* Print CandleLighting times  */
       if (candle_today)
       {
-          set_DST (beginDST, endDST, todayAbs, &DST);
           print_candlelighting_times (returnedMask,
                                       day_of_week, todayGreg, DST);
       }
