@@ -48,6 +48,9 @@ extern int DST_scheme,
     ashkenazis_sw, 
     iso8859_8_sw,
     candleLighting_sw, 
+    sunriseAlways_sw,
+    sunsetAlways_sw,
+    dafYomi_sw,
     euroDates_sw,
     hebrewDates_sw,
     inputFile_sw,
@@ -62,12 +65,16 @@ extern int DST_scheme,
     sedraAllWeek_sw, 
     sedrot_sw, 
     noGreg_sw, 
+    shortGreg_sw,
     noHolidays_sw,
     suppress_rosh_chodesh_sw,
     tabs_sw,
     weekday_sw, 
+    abbrev_sw,
     yearDigits_sw,
-    yahrtzeitFile_sw;
+    yahrtzeitFile_sw,
+    printf_sw,
+   default_zemanim;
 
 extern int havdalah_minutes,
    light_offset;
@@ -110,6 +117,47 @@ typedef struct hsnode{  /* holiday storage structure */
     struct hsnode *next;
 } holstore_t, *holstorep_t;
 
+
+#define ZMAN_ALOT_HASHACHAR (1 <<  0)
+#define ZMAN_MISHEYAKIR     (1 <<  1)
+#define ZMAN_SUNRISE        (1 <<  2)
+#define ZMAN_SZKS           (1 <<  3)
+#define ZMAN_TEFILAH        (1 <<  4)
+#define ZMAN_CHATZOT        (1 <<  5)
+#define ZMAN_MINCHA_GEDOLA  (1 <<  6)
+#define ZMAN_MINCHA_KETANA  (1 <<  7)
+#define ZMAN_PLAG_HAMINCHA  (1 <<  8)
+#define ZMAN_SUNSET         (1 <<  9)
+#define ZMAN_CANDLES_BEFORE (1 << 10)
+#define ZMAN_CANDLES_AFTER  (1 << 11)
+#define ZMAN_TZAIT_42       (1 << 12)
+#define ZMAN_TZAIT_72       (1 << 13)
+#define ZMAN_HAVDALLAH      (1 << 14)
+
+
+#ifndef TRUE
+#define TRUE 1
+#endif
+
+#ifndef FALSE
+#define FALSE 0
+#endif
+
+typedef struct htime {
+   int hours;
+   int minutes;
+   int pm;
+} htime_t;
+
+typedef struct hc_event {
+  int mm;
+  int dd;
+  int yy;
+  int daf_flag;
+  htime_t time;
+  char *desc;
+} HebcalEvent;
+
 year_t yearData( int );
 date_t nextHebDate( date_t );
 date_t prevHebDate( date_t );
@@ -123,7 +171,7 @@ void main_calendar( long,long );
 void print_candlelighting_times( int, int, date_t, int );
 void print_sunrise_sunset(date_t, int);
 void reset_Omer( int hYear );
-
+void DeclareEvent(date_t *, htime_t *, char *, int);
 extern const char * license[];
 extern const char * warranty[];
 #endif

@@ -4,7 +4,7 @@
 /** NOTE: This is slated for destruction.  we're going to go to GNU-style args soon */
 
 
-#include <stdio.h>
+#include "mystdio.h"
 #include "mystring.h"
 
 #define ERR(S, C) if(Opterr){\

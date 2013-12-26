@@ -25,16 +25,16 @@
 
 /* the following need to be #defined: CITY ENV_CITY ENV_OPTS */
 
-#include <stdio.h>
+#include "mystdio.h"
 #include <ctype.h>
 #include "config.h"
-#include "mystring.h"
 #include "mymath.h"
 #include "hebcal.h"
 #include "common.h"
 #include "mygetopt.h"
 #include "danlib.h"
 #include "stdlib.h"
+#include "mystring.h"
 #include "cities.h"
 
 #define ENV_CITY "HEBCAL_CITY"
@@ -50,10 +50,14 @@ int ok_to_run = 1;
 #define TODAY 3
 
 char *progname;
-static int theYear, theMonth, theDay, yearDirty, rangeType, zonep, schemep,
-    latp, longp;			/* has the user inputted lat and long? */
+static int theYear, yearDirty, rangeType, zonep, latp, longp; 
+
+static int theMonth, theDay, schemep;
+
 static char
-    *cityName, *helpArray[] =
+    *cityName;
+
+static char *helpArray[] =
 {
    "Hebcal Version " VERSION " By Danny Sadinoff",
    "usage: hebcal [-8acdDeHhiorsStTwy]",
@@ -88,6 +92,7 @@ static char
    "   -H : Use Hebrew date ranges - only needed when e.g. hebcal -H 5373",
    "   -i : Use Israeli sedra scheme.",
    "   -f FORMAT : change output to FORMAT. see below for format strings",
+   "   -F : Output the Daf Yomi for the entire date range.",
    "   -I file : Get non-yahrtzeit Hebrew user events from specified file.",
  "        The format is : mmm dd string, Where mmm is a Hebrew month name.",
    "   -l xx,yy : Set the latitude for solar calculations to",
@@ -105,7 +110,10 @@ static char
    "   -S : Print sedrah of the week on all calendar days.",
    "   -t : Only output for today's date.",
    "   -T : Print today's pertinent information, no gregorian date.",
+   "   -u : Sunset times for each date in the range.",
+   "   -U : Sunrise times for each date in the range.",
    "   -w : Add day of the week.",
+   "   -W : Sunrise, daf, omer via other options show once a week. ",
    "   -x : Suppress Rosh Chodesh.",
    "   -y : Print only last two digits of year.",
    "   -Y file : Get yahrtzeit dates from specified file.",
@@ -173,7 +181,26 @@ dst_t savings_bank[] =
     {"", 0}
 };
 
+static char **city_names = NULL;
 
+int get_city_data(char **r_cur_city_name, char ***r_all_cities)
+{
+   int n_cities = sizeof(cities) / sizeof(city_t) - 1;
+   if (city_names == NULL)
+   {
+      int i_city;
+      city_names = (char**)malloc(n_cities * sizeof(char*));
+      for (i_city = 0; i_city < n_cities; i_city ++)
+      {
+         city_names[i_city] = cities[i_city].name;
+      }
+   }
+   if (r_cur_city_name != NULL)
+      *r_cur_city_name = cityName;
+   if (r_all_cities != NULL)
+      *r_all_cities = city_names;
+   return n_cities;
+}
 
 void print_version_data(void)
 {
@@ -266,7 +293,6 @@ void print_DST_data(void)
     }
 }
 
-
 void localize_to_city(const char *cityNameArg)
 {
     size_t len = strlen(cityNameArg);
@@ -298,6 +324,7 @@ void localize_to_city(const char *cityNameArg)
             {
                 TZ = pcity->TZ;
                 DST_scheme = pcity->DST_scheme;
+                israel_sw = (DST_scheme == DST_ISRAEL); /*aap*/
             }
             free(cityStr);
             initStr(&cityName, strlen(pcity->name));
@@ -307,6 +334,7 @@ void localize_to_city(const char *cityNameArg)
 
     warn("unknown city: %s. Use a nearby city or geographic coordinates.", cityNameArg);
     warn("run 'hebcal cities' for a list of cities.", "");
+    free(cityStr);
     ok_to_run = 0;
 }
 
@@ -352,7 +380,7 @@ void handleArgs(int argc, char *argv[])
 
    char *usage =		/* not quite sure how compatible this is */
    "usage: \n\
-   hebcal [-acdDehHiMoOrsStTwxy]\n\
+   hebcal [-acdDefFhHiMoOrsStTuUwWxy]\n\
           [-b candle_lighting_minutes_before_sundown]\n\
           [-I input_file]\n\
           [-Y yahrtzeit_file]\n\
@@ -373,7 +401,7 @@ void handleArgs(int argc, char *argv[])
 
    Getopt(argc, argv, "", 1);
    while (EOF !=
-          (option = Getopt(argc, argv, "ab:cC:dDef:hHI:il:L:m:MoOrsStTwxyY:z:Z:8", 0)))
+          (option = Getopt(argc, argv, "ab:cC:dDef:FghHI:il:L:m:MoOrsStTuUwWxyY:z:Z:8", 0)))
    {
        switch ((char) option)
        {
@@ -413,6 +441,15 @@ void handleArgs(int argc, char *argv[])
        case 'f':		/* output format */
            formatString = strdup(Optarg);
 	   break;
+       case 'F':		/* Daf Yomi */
+	   dafYomi_sw = 1;
+           break;
+       case 'g':
+	   default_zemanim = (ZMAN_SUNRISE | ZMAN_SZKS | ZMAN_TEFILAH | 
+			      ZMAN_CHATZOT |
+			      ZMAN_MINCHA_GEDOLA | ZMAN_MINCHA_KETANA |
+			      ZMAN_PLAG_HAMINCHA | ZMAN_SUNSET | ZMAN_TZAIT_42);
+	   
        case 'h':		/* suppress internal holidays */
 	   noHolidays_sw = 1;
 	   break;
@@ -479,8 +516,17 @@ void handleArgs(int argc, char *argv[])
 	   yearDirty = 1;
 	   printOmer_sw = 1;
 	   break;
+       case 'u':
+           sunsetAlways_sw = 1;
+           break;
+       case 'U':
+           sunriseAlways_sw = 1;
+           break;
        case 'w':		/* print days of the week */
 	   weekday_sw = 1;
+	   break;
+       case 'W':		/* abbreviated week view */
+           abbrev_sw = 1;
 	   break;
        case 'y':		/* Print only last 2 digits of year */
 	   yearDigits_sw = 1;
@@ -659,6 +705,16 @@ void handleArgs(int argc, char *argv[])
    }
 }
 
+void freeCityName()
+{
+   if (cityName)
+   {
+      free(cityName);
+      cityName = NULL;
+   }
+   if (city_names)
+      free(city_names);
+}
 
 int tokenize(char *str, int *pargc, char* argv[])
 {
@@ -786,3 +842,4 @@ int main(int argc, char* argv[])
     else
         return 1;
 }
+
