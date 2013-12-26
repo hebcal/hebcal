@@ -26,7 +26,7 @@
 
 #include "mystdio.h"
 #include "danlib.h"
-#include <time.h>
+#include "mytime.h"
 #include <string.h>
 #include "myerror.h"
 #include "greg.h"
@@ -42,6 +42,12 @@ const char *eMonths[] =
     "UNUSED",
     "January", "February", "March", "April", "May", "June", "July",
     "August", "September", "October", "November", "December"
+};
+const char *shortMonthNames[] =
+{
+    "UNUSED",
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul",
+    "Aug", "Sep", "Oct", "Nov", "Dec"
 };
 
 int MonthLengths[][13] =

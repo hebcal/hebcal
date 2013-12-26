@@ -21,8 +21,11 @@
 #define TWELVE 1
 #define TWENTYFOUR 0
 
+struct htime;
+typedef struct htime htime_t;
+
 int suntime(double *, double *, int, int, int);
 int one_time(int, double *, double, int, double, double, double);
-char *timeadj (char *, double, int, int *);
+void timeadj (double, int, int *, htime_t *);
 
 #endif

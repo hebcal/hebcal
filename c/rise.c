@@ -57,11 +57,13 @@
 #include "mystring.h"
 #include "mymath.h"
 #include "rise.h"
+#include "hebcal.h"
 #include "danlib.h"
 #include "myerror.h"
 
 #define TRUE  1
 #define FALSE 0
+#define NM_LEN 60
 
 int latdeg, latmin, longdeg, longmin, TZ;
 
@@ -228,12 +230,8 @@ int one_time( int day,
    The caller is responsible to free the string
 
 */
-char * timeadj( char *prefixStr, double tval, int minadj, int *dayadj)
+void timeadj( double tval, int minadj, int *dayadj, htime_t *out_time)
 {
-    char *str;
-    int hour, min;
-    size_t num = strlen (prefixStr) + 9;
-    
     *dayadj = 0;
     tval += (double) minadj / 60.0;
     if (tval < 0.0)
@@ -241,23 +239,27 @@ char * timeadj( char *prefixStr, double tval, int minadj, int *dayadj)
         tval += 24.0;
         *dayadj -= 1;
     }
-    hour = (int) tval;            /* Type conversion causes truncation */
-    min = (int) ((tval - (double) hour) * 60.0 + 0.5);
-    if (min >= 60)
+    out_time->hours = (int) tval; /* Type conversion causes truncation */
+    out_time->minutes = (int) ((tval -
+                                (double) out_time->hours) * 60.0 + 0.5);
+    if (out_time->minutes >= 60)
     {
-        hour += 1;
-        min -= 60;
+        out_time->hours += 1;
+        out_time->minutes -= 60;
     }
-    if (hour > 24)
+    if (out_time->hours > 24)
     {
-        hour -= 24;
+        out_time->hours -= 24;
         *dayadj += 1;
     }
-    if (myclock == TWELVE)        /* Check for 12 hour clock */
-        if (hour > 12)
-            hour -= 12;
-    
-    str = (char *) calloc ((unsigned) num, sizeof (char));
-    sprintf (str, "%s%2d:%02d", prefixStr, hour, min);
-    return str;
+    if (out_time->hours >= 12)
+    {
+       out_time->pm = TRUE;
+       if (myclock == TWELVE && out_time->hours != 12)        /* Check for 12 hour clock */
+          out_time->hours -= 12;
+    }
+    else
+    {
+       out_time->pm = FALSE;
+    }
 }

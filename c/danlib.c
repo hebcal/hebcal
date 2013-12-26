@@ -23,7 +23,7 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <ctype.h>
-#include <string.h>
+#include "mystring.h"
 #include <stdlib.h>
 #include "danlib.h"
 #include "myerror.h"
@@ -37,6 +37,12 @@ void initStr( char **s, size_t size )
     if ((*s = (char *) malloc ((size + 1) * sizeof (char))) == NULL)
         die ("\n Memory Error: Couldn't allocate string", "");
     **s = '\0';
+}
+
+void makeStr( char **s, char *src )
+{
+  initStr(s, strlen(src));
+  strcpy(*s, src);
 }
 
 /* istrncasecmp performs a signed, case-insensitive comparison

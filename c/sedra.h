@@ -4,7 +4,7 @@
 #ifndef __SEDRA__
 #define __SEDRA__
 
-char *sedra( long int absDate );
+int sedra( long int absDate, char *out_buf, int buf_len );
 void reset_sedra( int );
 
 #endif
