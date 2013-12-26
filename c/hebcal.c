@@ -495,7 +495,8 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
     int omer_today, sedra_today, candle_today, holidays_today, molad_today;
     molad_t moladNext;
     int monthNext;
-    int today_zemanim;
+    int today_zemanim, i_zman;
+    int num_zmanim = sizeof (zemanim) / sizeof (struct _zman); 
     char buffer[80];
     
 /* Used to decide whether a particular type of daily info should be
@@ -510,6 +511,14 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
     theYear = yearData (todayHeb.yy);
     set_DST_bounds (&beginDST, &endDST, todayGreg.yy);
     set_DST (beginDST, endDST, todayAbs, &DST);
+
+    /* plug in light_offset before starting the loop */
+    for (i_zman = 0; i_zman < num_zmanim; i_zman ++)
+      if (zemanim[i_zman].flags == ZMAN_CANDLES_BEFORE)
+        {
+          zemanim[i_zman].min_offset = light_offset;
+          break;
+        }
 
     /*============== Main Year Loop ==============*/
     
