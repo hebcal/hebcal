@@ -44,6 +44,7 @@ int
   ashkenazis_sw, candleLighting_sw, euroDates_sw, hebrewDates_sw, inputFile_sw,
   israel_sw, latlong_sw, printOmer_sw, printMolad_sw, printSunriseSunset_sw, sedraAllWeek_sw, sedrot_sw, noGreg_sw,
   printHebDates_sw, printSomeHebDates_sw, noHolidays_sw, tabs_sw, weekday_sw,  suppress_rosh_chodesh_sw,
+  dafYomi_sw,
   yearDigits_sw, yahrtzeitFile_sw, DST_scheme, DST_value;
 int iso8859_8_sw;
 long beginOmer, endOmer;
@@ -542,6 +543,11 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
           free( omerStr );
       }
       
+
+      if (dafYomi_sw) {
+	  hebcal_dafyomi(&todayGreg);
+      }
+
       /* Print CandleLighting times  */
       if (candle_today)
       {

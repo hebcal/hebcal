@@ -47,6 +47,7 @@ extern FILE *inFile, *yFile;
 extern int DST_scheme,
     ashkenazis_sw, 
     iso8859_8_sw,
+    dafYomi_sw,
     candleLighting_sw, 
     euroDates_sw,
     hebrewDates_sw,

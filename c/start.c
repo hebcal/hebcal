@@ -56,7 +56,7 @@ static char
     *cityName, *helpArray[] =
 {
    "Hebcal Version " VERSION " By Danny Sadinoff",
-   "usage: hebcal [-8acdDeHhiorsStTwy]",
+   "usage: hebcal [-8acdDeFHhiorsStTwy]",
    "            [-b candle_lighting_minutes_before_sundown ]",
    "            [-I file]",
    "            [-Y yahrtzeit_file]",
@@ -88,6 +88,7 @@ static char
    "   -H : Use Hebrew date ranges - only needed when e.g. hebcal -H 5373",
    "   -i : Use Israeli sedra scheme.",
    "   -f FORMAT : change output to FORMAT. see below for format strings",
+   "   -F : Output the Daf Yomi for the entire date range.",
    "   -I file : Get non-yahrtzeit Hebrew user events from specified file.",
  "        The format is : mmm dd string, Where mmm is a Hebrew month name.",
    "   -l xx,yy : Set the latitude for solar calculations to",
@@ -373,7 +374,7 @@ void handleArgs(int argc, char *argv[])
 
    Getopt(argc, argv, "", 1);
    while (EOF !=
-          (option = Getopt(argc, argv, "ab:cC:dDef:hHI:il:L:m:MoOrsStTwxyY:z:Z:8", 0)))
+          (option = Getopt(argc, argv, "ab:cC:dDeFf:hHI:il:L:m:MoOrsStTwxyY:z:Z:8", 0)))
    {
        switch ((char) option)
        {
@@ -412,6 +413,9 @@ void handleArgs(int argc, char *argv[])
 	   break;
        case 'f':		/* output format */
            formatString = strdup(Optarg);
+	   break;
+       case 'F':    /* Daf Yomi */
+	   dafYomi_sw = 1;
 	   break;
        case 'h':		/* suppress internal holidays */
 	   noHolidays_sw = 1;
