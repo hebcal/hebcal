@@ -35,6 +35,7 @@
 #include "sedra.h"
 #include "format.h"
 #include "greg.h"
+#include "dafyomi.h"
 
 #define LANGUAGE(str) (ashkenazis_sw && (str)[1] ? ((str)[1]) : ((str)[0]))
 
