@@ -125,9 +125,10 @@ void hebcal_dafyomi( date_t *greg_day  )
             blatt = blatt + 33;
             break;
          default:
-            j = 1 + dafcnt;
             break;
          }
+	 /* Bailout */
+	 j = 1 + dafcnt;
       }
       j ++;
    }         
