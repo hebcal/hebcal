@@ -1,0 +1,22 @@
+{
+	"name": "hebcal",
+	"version": "0.0.1",
+	"author": "Scimonster (https://github.com/Scimonster)",
+	"description": "A perpetual Jewish Calendar",
+	"keywords": [
+		"hebcal",
+		"hebrew",
+		"calendar",
+		"jewish",
+		"holidays",
+		"sedra"
+	],
+	"main": "hebcal.js",
+	"dependencies": {
+		"suncalc": ""
+	},
+	"repository" : {
+		"type": "git",
+		"url": "https://github.com/Scimonster/hebcal.git"
+	}
+}

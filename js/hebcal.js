@@ -72,6 +72,8 @@ Hebcal.Month.prototype.rosh_chodesh = function rosh_chodesh() {
 	return prev.length === 30 ? [prev.days[prev.days.length-1], this.days[0]] : [this.days[0]];
 };
 
+Hebcal.HDate = HDate;
+
 HDate.prototype.getMonthObject = function getMonthObject() {
 	return new Hebcal.Month(this.getMonth(), this.getFullYear());
 };
