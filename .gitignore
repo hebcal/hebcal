@@ -18,6 +18,9 @@ c/hebcal.1
 c/package.m4
 c/stamp-h1
 
+# Editor files
+*.sublime*
+
 
 # Object files
 *.o
