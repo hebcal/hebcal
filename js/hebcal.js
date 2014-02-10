@@ -30,6 +30,20 @@ Hebcal.prototype.isLeapYear = function isLeapYear() {
 	return c.LEAP_YR_HEB(this.year);
 };
 
+Hebcal.prototype.setCity = function setCity(city) {
+	this.months.forEach(function(m){
+		m.setCity(city);
+	});
+	return this;
+};
+
+Hebcal.prototype.setLocation = function setLocation(lat, long) {
+	this.months.forEach(function(m){
+		m.setLocation(lat, long);
+	});
+	return this;
+};
+
 Hebcal.Month = function Month(month, year) {
 	if (typeof month == 'string') {
 		month = c.lookup_hebrew_month(month);
@@ -70,6 +84,20 @@ Hebcal.Month.prototype.getName = function getName(o) {
 Hebcal.Month.prototype.rosh_chodesh = function rosh_chodesh() {
 	var prev = this.prev();
 	return prev.length === 30 ? [prev.days[prev.days.length-1], this.days[0]] : [this.days[0]];
+};
+
+Hebcal.Month.prototype.setCity = function setCity(city) {
+	this.days.forEach(function(d){
+		d.setCity(city);
+	});
+	return this;
+};
+
+Hebcal.Month.prototype.setLocation = function setLocation(lat, long) {
+	this.days.forEach(function(d){
+		d.setLocation(lat, long);
+	});
+	return this;
 };
 
 Hebcal.HDate = HDate;

@@ -41,7 +41,7 @@ module.exports = function(HDate) {
 		var rosh_hashana_day = rosh_hashana % 7;
 
 		/* find the first saturday on or after Rosh Hashana */
-		this.first_saturday = day_on_or_before(6, rosh_hashana + 6);
+		this.first_saturday = c.day_on_or_before(6, rosh_hashana + 6);
 		var leap = +c.LEAP_YR_HEB(hebYr);
 		this.type = type;
 		this.rosh_hashana_day = rosh_hashana_day;
@@ -438,16 +438,6 @@ module.exports = function(HDate) {
 		]
 	];
 
-	/* Note: Applying this function to d+6 gives us the DAYNAME on or after an
-	 * absolute day d.  Similarly, applying it to d+3 gives the DAYNAME nearest to
-	 * absolute date d, applying it to d-1 gives the DAYNAME previous to absolute
-	 * date d, and applying it to d+7 gives the DAYNAME following absolute date d.
-
-	**/
-	function day_on_or_before(day_of_week, absdate) {
-	  return absdate - ((absdate - day_of_week) % 7);
-	}
-
 	Sedra.prototype.getSedraFromHebcalDate = function(hDate) {
 		return this.getSedraFromAbsDate(HDate.hebrew2abs(hDate));
 	};
@@ -457,7 +447,7 @@ module.exports = function(HDate) {
 	Sedra.prototype.getSedraFromAbsDate = function(absBirthdayDate) {
 
 		/* find the first saturday on or after today's date */
-		var absDate = day_on_or_before (6, absBirthdayDate + 6);
+		var absDate = c.day_on_or_before (6, absBirthdayDate + 6);
 		
 		var weekNum = (absDate - this.first_saturday) / 7;
 		var index = this.theSedraArray[weekNum];

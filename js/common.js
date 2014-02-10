@@ -48,6 +48,15 @@ var monthNames = exports.monthNames = [
 	]
 ];
 
+var days = exports.days = {};
+days.SUN = 0;
+days.MON = 1;
+days.TUE = 2;
+days.WED = 3;
+days.THU = 4;
+days.FRI = 5;
+days.SAT = 6;
+
 function LANGUAGE(str, opts){
 	return (opts === 'h' && str[2] ? str[2] : (opts === 'a' && str[1] ? str[1] : str[0]));
 }
@@ -201,3 +210,14 @@ function lookup_hebrew_month(c) {
 	}
 }
 exports.lookup_hebrew_month = lookup_hebrew_month;
+
+/* Note: Applying this function to d+6 gives us the DAYNAME on or after an
+ * absolute day d.  Similarly, applying it to d+3 gives the DAYNAME nearest to
+ * absolute date d, applying it to d-1 gives the DAYNAME previous to absolute
+ * date d, and applying it to d+7 gives the DAYNAME following absolute date d.
+
+**/
+function day_on_or_before(day_of_week, absdate) {
+	return absdate - ((absdate - day_of_week) % 7);
+}
+exports.day_on_or_before = day_on_or_before;

@@ -72,7 +72,7 @@ exports.abs2greg = function abs2greg(theDate) {
 	var year = (400 * n400 + 100 * n100 + 4 * n4 + n1);
 
 	if (4 == n100 || 4 == n1) {
-		return new Date(year, 12, 31);
+		return new Date(year, 11, 31);
 	}
 
 	year++;
@@ -81,7 +81,7 @@ exports.abs2greg = function abs2greg(theDate) {
 		day -= mlen;
 		month++;
 	}
-	var d = new Date(year, month, day);
+	var d = new Date(year, month-1, day);
 	d.setFullYear(year);
 	return d;
 }
