@@ -42,8 +42,8 @@ var monthNames = exports.monthNames = [
 		["Kislev",null,"כסלו"],
 		["Tevet",null,"טבת"],
 		["Sh'vat",null,"שבט"],
-        ["Adar I",null,"אדר א׳"],
-        ["Adar II",null,"אדר ב׳"],
+        ["Adar I",null,"אדר א'"],
+        ["Adar II",null,"אדר ב'"],
 		["Nisan",null,"ניסן"]
 	]
 ];
@@ -159,9 +159,19 @@ function lookup_hebrew_month(c) {
 	 Si Sh     sivan, Shvat
 	 Ta Ti Te Tamuz, Tishrei, Tevet
 	 Av Ad    Av, Adar
+
+	 אב אד אי אל   אב אדר אייר אלול
+	 ח            חשון
+	 ט            טבת
+	 כ            כסלב
+	 נ            ניסן
+	 ס            סיון
+	 ש            שבט
+	 תמ תש        תמוז תשרי
    */
 	switch (c.toLowerCase()[0]) {
 		case 'n':
+		case 'נ':
 			return (c.toLowerCase()[1] == 'o') ?	/* this catches "november" */
 				0
 				: months.NISAN;
@@ -170,8 +180,10 @@ function lookup_hebrew_month(c) {
 		case 'e':
 			return months.ELUL;
 		case 'c':
+		case 'ח':
 			return months.CHESHVAN;
 		case 'k':
+		case 'כ':
 			return months.KISLEV;
 		case 's':
 			switch (c.toLowerCase()[1]) {
@@ -205,6 +217,35 @@ function lookup_hebrew_month(c) {
 				default:
 					return 0;
 			}
+		case 'ס':
+			return months.SIVAN;
+		case 'ש':
+			return months.SHVAT;
+		case 'א':
+			switch (c.toLowerCase()[1]) {
+				case 'ב':
+					return months.AV;
+				case 'ד':
+					if (c.indexOf('1') > -1 || c.indexOf('א', 1) > 1) {
+						return months.ADAR_I;
+					}
+					return months.ADAR_II;	/* else assume sheni */
+				case 'י':
+					return months.IYYAR;
+				case 'ל':
+					return months.ELUL;
+				default:
+					return 0;
+			}
+		case 'ת':
+			switch (c.toLowerCase()[1]) {
+				case 'מ':
+					return months.TAMUZ;
+				case 'ש':
+					return months.TISHREI;
+				default:
+					return 0;
+			}
 		default:
 			return 0;
 	}
@@ -221,3 +262,152 @@ function day_on_or_before(day_of_week, absdate) {
 	return absdate - ((absdate - day_of_week) % 7);
 }
 exports.day_on_or_before = day_on_or_before;
+
+function map(self, fun, thisp, sameprops) {
+	// originally written for http://github.com/Scimonster/localbrowse
+	if (self === null || typeof fun != 'function') {
+		throw new TypeError();
+	}
+	var t = Object(self);
+	var res = {};
+	for (var i in t) {
+		if (t.hasOwnProperty(i)) {
+			var val = fun.call(thisp, t[i], i, t);
+			if (sameprops) {
+				// the new property should have the same enumerate/write/etc as the original
+				var props = Object.getOwnPropertyDescriptor(t, i);
+				props.value = val;
+				Object.defineProperty(res, i, props);
+			} else {
+				res[i] = val;
+			}
+		}
+	}
+	if (Array.isArray(self) || typeof self == 'string') { // came as an array, return an array
+		var arr = [];
+		for (i in res) {
+			arr[Number(i)] = res[i];
+		}
+		res = arr.filter(function (v) {
+			return v;
+		}); // for...in isn't guaranteed to give any meaningful order
+		if (typeof self == 'string') {
+			res = res.join('');
+		}
+	}
+	return res;
+}
+exports.map = map;
+
+function gematriya(num, limit) {
+	if (typeof num !== 'number' && typeof num !== 'string') {
+		throw new TypeError('non-number or string given to gematriya()');
+	}
+	var str = typeof num === 'string';
+	if (str) {
+		num = num.replace(/('|")/g,'');
+	}
+	if (!str && limit && limit - num.toString().length < 0) {
+		num = num.toString().split('').reverse().slice(0, limit - num.toString().length).reverse().join('');
+	}
+	num = num.toString().split('').reverse();
+	var letters = {
+		0: '',
+		1: 'א',
+		2: 'ב',
+		3: 'ג',
+		4: 'ד',
+		5: 'ה',
+		6: 'ו',
+		7: 'ז',
+		8: 'ח',
+		9: 'ט',
+		10: 'י',
+		20: 'כ',
+		30: 'ל',
+		40: 'מ',
+		50: 'נ',
+		60: 'ס',
+		70: 'ע',
+		80: 'פ',
+		90: 'צ',
+		100: 'ק',
+		200: 'ר',
+		300: 'ש',
+		400: 'ת',
+		500: 'תק',
+		600: 'תר',
+		700: 'תש',
+		800: 'תת',
+		900: 'תתק',
+		1000: 'תתר'
+	}, numbers = {
+		'א': 1,
+		'ב': 2,
+		'ג': 3,
+		'ד': 4,
+		'ה': 5,
+		'ו': 6,
+		'ז': 7,
+		'ח': 8,
+		'ט': 9,
+		'י': 10,
+		'כ': 20,
+		'ל': 30,
+		'מ': 40,
+		'נ': 50,
+		'ס': 60,
+		'ע': 70,
+		'פ': 80,
+		'צ': 90,
+		'ק': 100,
+		'ר': 200,
+		'ש': 300,
+		'ת': 400,
+		'תק': 500,
+		'תר': 600,
+		'תש': 700,
+		'תת': 800,
+		'תתק': 900,
+		'תתר': 1000
+	};
+
+	num = num.map(function g(n,i){
+		if (str) {
+			return numbers[n] < numbers[num[i-1]] && numbers[n] < 100 ? numbers[n] * 1000 : numbers[n];
+		} else {
+			if (parseInt(n) * Math.pow(10,i) > 1000) {
+				return g(n,i-3);
+			}
+			return letters[parseInt(n) * Math.pow(10,i)];
+		}
+	});
+
+	if (str) {
+		return num.reduce(function(o,t){
+			return o + t;
+		}, 0);
+	} else {
+		num = num.reverse().join('').replace(/יה/g,'טו').replace(/יו/g,'טז').split('');
+
+		if (num.length === 1) {
+			num.push("'");
+		} else if (num.length > 1) {
+			num.splice(-1, 0, '"');
+		}
+
+		return num.join('');
+	}
+}
+exports.gematriya = gematriya;
+
+function range(start, end, step) {
+	step = step || 1;
+
+	var arr = [];
+	for (var i = start; i <= end; i += step) {
+		arr.push(i);
+	}
+	return arr;
+}
+exports.range = range;

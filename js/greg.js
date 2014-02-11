@@ -38,7 +38,7 @@ function dayOfYear (date) {
 exports.dayOfYear = dayOfYear;
 
 function LEAP (year) {
-	return (!((year) % 4) && ( ((year) % 100) || !((year) % 400)));
+	return !(year % 4) && ( !!(year % 100) || !(year % 400) );
 }
 
 exports.greg2abs = function greg2abs(date) { /* "absolute date" */

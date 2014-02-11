@@ -4,29 +4,69 @@ var c = require('./common'),
 	suncalc = require('suncalc'),
 	cities = require('./cities')(HDate);
 
+suncalc.addTime(-16.1, 'alot_hashacher', undefined);
+suncalc.addTime(-11.5, 'misheyakir', undefined);
+suncalc.addTime(-10.2, 'misheyakir_machmir', undefined);
+suncalc.addTime(-8.5, undefined, 'tzeit');
+
 function HDate(day, month, year) {
-	if (day instanceof Date) {
-		// we were passed a Gregorian date, so convert it
-		return abs2hebrew(greg.greg2abs(day));
-	} else if (day instanceof HDate) {
-		return day;
-	} else if (arguments.length === 3) {
-		this.day = day;
-		this.month = typeof month == 'number' ? month : c.lookup_hebrew_month(month);
-		this.year = year;
-		fixMonth(this);
-		fixDate(this);
-	} else if (arguments.length === 2) {
-		return new HDate(day, month, (new HDate()).getFullYear());
-	} else if (arguments.length === 0) {
-		return new HDate(new Date());
-	} else {
-		throw new TypeError('HDate called with bad number of arguments');
+	switch (arguments.length) {
+		case 0:
+			return new HDate(new Date());
+		case 1:
+			if (day instanceof Date) {
+				// we were passed a Gregorian date, so convert it
+				var d = abs2hebrew(greg.greg2abs(day));
+				if (d.sunset < day) {
+					d = d.next();
+				}
+				return d;
+			} else if (day instanceof HDate) {
+				return day;
+			} else if (typeof day === 'string' && /\s/.test(day)) {
+				var s = day.split(/\s+/);
+				if (s.length === 2) {
+					return new HDate(s[0], s[1]);
+				} else if (s.length === 3) {
+					return new HDate(s[0], s[1], s[2]);
+				}
+			}
+		case 2:
+			return new HDate(day, month, (new HDate()).getFullYear());
+		case 3:
+			this.day = typeof day === 'number' ? day :
+				day.charCodeAt(0) >= 1488 && day.charCodeAt(0) <= 1514 ? c.gematriya(day) : parseInt(day);
+			this.month = typeof month === 'number' ? month :
+				month.charCodeAt(0) >= 1488 && month.charCodeAt(0) <= 1514 && /('|")/.test(month) ? c.gematriya(month) :
+					month.charCodeAt(0) >= 48 && month.charCodeAt(0) <= 57 /* number */ ? parseInt(month) : c.lookup_hebrew_month(month);
+			this.year = typeof year === 'number' ? year :
+				year.toString().charCodeAt(0) >= 1488 && year.toString().charCodeAt(0) <= 1514 ? c.gematriya(year.toString()) : parseInt(year);
+			fixMonth(this);
+			fixDate(this);
+			break;
+		default:
+			throw new TypeError('HDate called with bad arguments');
 	}
 
 	this.il = false;
-	this.setLocation(0, 0);
+	this.setLocation.apply(this, HDate.defaultLocation);
+
+	return this;
 }
+
+HDate.defaultLocation = [0, 0];
+Object.defineProperty(HDate, 'defaultCity', {
+	enumerable: true,
+	configurable: true,
+
+	get: function defaultCityGet() {
+		return cities.nearest(HDate.defaultLocation[0], HDate.defaultLocation[1]);
+	},
+	set: function defaultCitySet(city) {
+		var loc = cities.getLocation(cities.getCity(city));
+		HDate.defaultLocation = [loc.lat, loc.long];
+	}
+});
 
 function fixDate(date) {
 	if (date.day > c.max_days_in_heb_month(date.month,date.year)) {
@@ -157,22 +197,32 @@ function abs2hebrew(d) {
 	
 	day = parseInt(d - hebrew2abs(hebdate) + 1);
 	if (day < 0) {
-		throw new Error("assertion failure d < hebrew2abs(m,d,y) => " + d + " < " + hebrew2abs(hebdate) + "!");
+		throw new RangeError("assertion failure d < hebrew2abs(m,d,y) => " + d + " < " + hebrew2abs(hebdate) + "!");
 	}
 
 	hebdate.setDate(day);
-	hebdate.setLocation(0, 0);
+	hebdate.setLocation.apply(hebdate, HDate.defaultLocation);
 	
 	return hebdate;
 }
 HDate.abs2hebrew = abs2hebrew;
 
-HDate.prototype.greg = function() {
+HDate.prototype.greg = function toGreg() {
 	return greg.abs2greg(hebrew2abs(this));
 };
 
+HDate.prototype.gregEve = function gregEve() {
+	return this.prev().sunset;
+};
+
+HDate.prototype.toString = function toString(o) {
+	return c.LANGUAGE([this.getDate(), null, c.gematriya(this.getDate())], o).toString() + ' ' +
+		this.getMonthName(o) + ' ' +
+		c.LANGUAGE([this.getFullYear(), null, c.gematriya(this.getFullYear())], o).toString();
+};
+
 HDate.prototype.getMonthName = function getMonthName(o) {
-	return c.LANGUAGE(c.monthNames[+this.isLeapYear()][this.getMonth()],o);
+	return c.LANGUAGE(c.monthNames[+this.isLeapYear()][this.getMonth()], o);
 };
 
 HDate.prototype.getSedra = function getSedra(o) {
@@ -225,11 +275,88 @@ function getSunTimes(hdate) {
 
 	hdate.sunrise = times.sunrise;
 	hdate.sunset = times.sunset;
-	hdate.dawn = times.dawn;
-	hdate.night = times.night;
 
-	// ms of daylight / (12 h per d * 1000 ms in s * 60 s in m) = mins in halachic hour
-	hdate.hour = (hdate.sunset - hdate.sunrise) / (12 * 1000 * 60);
+	hdate.hour = (hdate.sunset - hdate.sunrise) / 12; // ms in hour
 }
+
+HDate.prototype.hourMins = function hourMins() {
+	// hour in ms / (1000 ms in s * 60 s in m) = mins in halachic hour
+	return this.hour / (1000 * 60);
+};
+
+var zemanim = {
+	chatzot: function chatzot(hdate) {
+		return new Date(hdate.sunrise.getTime() + (hdate.hour * 6));
+	},
+	alot_hashacher: function alot_hashacher(hdate) {
+		var g = hdate.greg(), d = new Date();
+		g.setHours(d.getHours());
+		g.setMinutes(d.getMinutes());
+		return suncalc.getTimes(g, hdate.lat, hdate.long).alot_hashacher;
+	},
+	misheyakir: function misheyakir(hdate) {
+		var g = hdate.greg(), d = new Date();
+		g.setHours(d.getHours());
+		g.setMinutes(d.getMinutes());
+		return suncalc.getTimes(g, hdate.lat, hdate.long).misheyakir;
+	},
+	misheyakir_machmir: function misheyakir_machmir(hdate) {
+		var g = hdate.greg(), d = new Date();
+		g.setHours(d.getHours());
+		g.setMinutes(d.getMinutes());
+		return suncalc.getTimes(g, hdate.lat, hdate.long).misheyakir_machmir;
+	},
+	sof_zman_shma: function sof_zman_shma(hdate) { // Gra
+		return new Date(hdate.sunrise.getTime() + (hdate.hour * 3));
+	},
+	sof_zman_tfilla: function sof_zman_tfilla(hdate) { // Gra
+		return new Date(hdate.sunrise.getTime() + (hdate.hour * 4));
+	},
+	mincha_gedola: function mincha_gedola(hdate) { // Gra
+		return new Date(hdate.sunrise.getTime() + (hdate.hour * 6.5));
+	},
+	mincha_ketana: function mincha_ketana(hdate) { // Gra
+		return new Date(hdate.sunrise.getTime() + (hdate.hour * 9.5));
+	},
+	plag_hamincha: function plag_hamincha(hdate) { // Gra
+		return new Date(hdate.sunrise.getTime() + (hdate.hour * 10.75));
+	},
+	tzeit: function tzeit(hdate) {
+		var g = hdate.greg(), d = new Date();
+		g.setHours(d.getHours());
+		g.setMinutes(d.getMinutes());
+		return suncalc.getTimes(g, hdate.lat, hdate.long).tzeit;
+	}
+};
+
+HDate.prototype.getZemanim = function getZemanim() {
+	return c.map(zemanim, function(z){
+		return z(this);
+	}, this);
+};
+
+HDate.addZeman = function addZeman(zeman, func) {
+	zemanim[zeman] = func;
+};
+
+HDate.prototype.next = function next() {
+	return new HDate(this.getDate() + 1, this.getMonth(), this.getFullYear());
+};
+
+HDate.prototype.prev = function prev() {
+	if (this.getDate() === 1) {
+		if (this.getMonth() === c.months.TISHREI) {
+			return new HDate(c.max_days_in_heb_month(c.months.ELUL, this.getFullYear()), c.months.ELUL, this.getFullYear() - 1);
+		} else if (this.getMonth() === c.months.NISAN) {
+			return new HDate(c.max_days_in_heb_month(c.MONTHS_IN_HEB(this.getFullYear()), this.getFullYear()), c.MONTHS_IN_HEB(this.getFullYear()), this.getFullYear());
+		} else {
+			return new HDate(c.max_days_in_heb_month(this.getMonth() - 1, this.getFullYear()), this.getMonth() - 1, this.getFullYear());
+		}
+	} else {
+		return new HDate(this.getDate() - 1, this.getMonth(), this.getFullYear());
+	}
+};
+
+// HDate.cities = cities;
 
 module.exports = HDate;
