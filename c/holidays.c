@@ -540,23 +540,23 @@ static void load_variable_holidays( int hYear )
     
     if (hYear >= 5711)
     {                            /* Yom HaShoah first observed in 1951 */
-	long int nisan27;
-	int nisan_day = 27;
+			long int nisan27;
+			int nisan_day = 27;
 
-	tempDt.mm = NISAN;
-	tempDt.dd = 27;
-	nisan27 = hebrew2abs (tempDt);
+			tempDt.mm = NISAN;
+			tempDt.dd = 27;
+			nisan27 = hebrew2abs (tempDt);
 
-	/* When the actual date of Yom Hashoah falls on a Friday, the
-	 * state of Israel observes Yom Hashoah on the preceding
-	 * Thursday. When it falls on a Sunday, Yom Hashoah is observed
-	 * on the following Monday.
-	 * http://www.ushmm.org/remembrance/dor/calendar/
-	 */
+			/* When the actual date of Yom Hashoah falls on a Friday, the
+			 * state of Israel observes Yom Hashoah on the preceding
+			 * Thursday. When it falls on a Sunday, Yom Hashoah is observed
+			 * on the following Monday.
+			 * http://www.ushmm.org/remembrance/dor/calendar/
+			 */
         if (nisan27 % 7L == FRI)
-	    nisan_day = 26;
+	    		nisan_day = 26;
         else if (nisan27 % 7L == SUN)
-	    nisan_day = 28;
+	    		nisan_day = 28;
 
         tmpholp = getHolstorep ();
         tmpholp->name = HOLIDAY_YOM_HASHOAH;

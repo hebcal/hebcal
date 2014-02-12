@@ -1,4 +1,6 @@
-var c = require('./common'), HDate = require('./hdate');
+var c = require('./common'),
+	HDate = require('./hdate'),
+	holidays = require('./holidays');
 
 function Hebcal(year, month) {
 	if (!year) {
@@ -11,7 +13,9 @@ function Hebcal(year, month) {
 		}
 		if (typeof month == 'number') {
 			return new Hebcal(year, [month]);
-		} else if (Array.isArray(month)) {
+		}
+
+		if (Array.isArray(month)) {
 			this.months = month.map(function(i){
 				var m = new Hebcal.Month(i, year);
 				Object.defineProperty(m, '__year', {
@@ -21,6 +25,12 @@ function Hebcal(year, month) {
 				});
 				return m;
 			}, this);
+
+			this.holidays = holidays.getHolidaysForYear(year).filter(function(h){
+				return this.months.filter(function(m){ // don't keep ones that are out of bounds
+					return m.month===h.date.getMonth();
+				}).length;
+			}, this);
 		} else {
 			throw new TypeError('month to Hebcal is not a valid type');
 		}
@@ -29,6 +39,47 @@ function Hebcal(year, month) {
 	}
 
 	this.length = c.days_in_heb_year(year);
+
+	Object.defineProperty(this, 'il', {
+		enumerable: true,
+		configurable: true,
+
+		get: function() {
+			return this.getMonth(1).il;
+		},
+		set: function(il) {
+			this.months.forEach(function(m){
+				m.il = il;
+			});
+		}
+	});
+
+	Object.defineProperty(this, 'lat', {
+		enumerable: true,
+		configurable: true,
+
+		get: function() {
+			return this.getMonth(1).lat;
+		},
+		set: function(lat) {
+			this.months.forEach(function(m){
+				m.lat = lat;
+			});
+		}
+	});
+	Object.defineProperty(this, 'long', {
+		enumerable: true,
+		configurable: true,
+
+		get: function() {
+			return this.getMonth(1).long;
+		},
+		set: function(long) {
+			this.months.forEach(function(m){
+				m.long = long;
+			});
+		}
+	});
 }
 
 Hebcal.prototype.isLeapYear = function isLeapYear() {
@@ -68,6 +119,14 @@ Hebcal.prototype.map = function map() {
 	return [].map.apply(this.months, arguments);
 };
 
+Hebcal.prototype.addHoliday = function addHoliday(holiday) {
+	if (!(holiday instanceof holidays.Event)) {
+		throw new TypeError('non-Event passed to addHoliday()');
+	}
+	this.holidays.push(holiday);
+	return this;
+};
+
 Hebcal.prototype.find = function find(day, month) {
 	if (arguments.length === 1) {
 		if (typeof day === 'string') {
@@ -94,7 +153,7 @@ Hebcal.prototype.find = function find(day, month) {
 					month.charCodeAt(0) >= 48 && month.charCodeAt(0) <= 57 /* number */ ? parseInt(month) : c.lookup_hebrew_month(month)
 			);
 		} else if (typeof month === 'number') {
-			return this.find(day, this.months[month - 1]);
+			return this.find(day, this.getMonth(month));
 		}
 	}
 	return [];
@@ -112,21 +171,48 @@ Hebcal.prototype.find.strings = function strings(str) {
 Hebcal.prototype.find.strings.rosh_chodesh = function rosh_chodesh() {
 	return this.find('Rosh Chodesh', c.range(1, this.months.length));
 };
+Hebcal.prototype.find.strings.holidays = function holidays() {
+	return [].concat.apply([], this.holidays.map(function(h){
+		return this.find(h.date);
+	}, this));
+};
+Hebcal.prototype.find.strings.omer = function omer() {
+	return c.range(15+1, 15+49).map(function(d){
+		return this.find(new HDate(d, c.months.NISAN, this.year))[0];
+	}, this);
+};
 Hebcal.prototype.find.strings.today = function today() {
 	return this.find(new HDate());
 };
-
-/*
-Hebcal=require('./hebcal')
-yr = new Hebcal()
-
-*/
+Hebcal.prototype.find.strings.yesterday = function yesterday() {
+	return this.find('today')[0].prev();
+};
+Hebcal.prototype.find.strings.tomorrow = function tomorrow() {
+	return this.find('today')[0].next();
+};
+Hebcal.prototype.find.strings.pesach = function pesach() {
+	return this.find(c.range(15, 15+8-this.il), c.months.NISAN);
+};
+Hebcal.prototype.find.strings.sukkot = function sukkot() {
+	return this.find(c.range(15, 15+9-this.il), c.months.TISHREI);
+};
+Hebcal.prototype.find.strings.succot = Hebcal.prototype.find.strings.succos = Hebcal.prototype.find.strings.sukkos = Hebcal.prototype.find.strings.sukkot;
+Hebcal.prototype.find.strings.shavuot = function shavuot() {
+	return this.find(c.range(6, 7-this.il), c.months.SIVAN);
+};
+Hebcal.prototype.find.strings.shavuos = Hebcal.prototype.find.strings.shavuot;
+Hebcal.prototype.find.strings.rosh_hashana = function rosh_hashana() {
+	return this.find(c.range(1, 2), c.months.TISHREI);
+};
+Hebcal.prototype.find.strings.rosh_hashanah = Hebcal.prototype.find.strings.rosh_hashana;
 
 Hebcal.addZeman = HDate.addZeman;
 
 Hebcal.cities = require('./cities')(HDate);
 
 Hebcal.range = c.range;
+
+Hebcal.holidays = holidays;
 
 Object.defineProperty(Hebcal, 'defaultLocation', {
 	enumerable: true,
@@ -165,6 +251,47 @@ Hebcal.Month = function Month(month, year) {
 	}, this);
 
 	this.length = this.days.length;
+
+	Object.defineProperty(this, 'il', {
+		enumerable: true,
+		configurable: true,
+
+		get: function() {
+			return this.getDay(1).il;
+		},
+		set: function(il) {
+			this.days.forEach(function(d){
+				d.il = il;
+			});
+		}
+	});
+
+	Object.defineProperty(this, 'lat', {
+		enumerable: true,
+		configurable: true,
+
+		get: function() {
+			return this.getDay(1).lat;
+		},
+		set: function(lat) {
+			this.days.forEach(function(d){
+				d.lat = lat;
+			});
+		}
+	});
+	Object.defineProperty(this, 'long', {
+		enumerable: true,
+		configurable: true,
+
+		get: function() {
+			return this.getDay(1).long;
+		},
+		set: function(long) {
+			this.days.forEach(function(d){
+				d.long = long;
+			});
+		}
+	});
 };
 
 Hebcal.Month.prototype.isLeapYear = function isLeapYear() {
@@ -231,7 +358,7 @@ Hebcal.Month.prototype.map = function map() {
 
 Hebcal.Month.prototype.find = function find(day) {
 	if (typeof day === 'number') {
-		return [this.days[day - 1]];
+		return [this.getDay(day)];
 	} else if (typeof day === 'string') {
 		return find.strings.call(this, day);
 	} else if (Array.isArray(day)) {
@@ -258,6 +385,10 @@ Hebcal.Month.prototype.find.strings = function strings(str) {
 Hebcal.Month.prototype.find.strings.rosh_chodesh = function rosh_chodesh() {
 	return this.rosh_chodesh();
 };
+Hebcal.Month.prototype.find.strings.shabbat_mevarchim = function shabbat_mevarchim() {
+	return this.find(new HDate(c.day_on_or_before(c.days.SAT, this.getDay(29).abs())));
+};
+Hebcal.Month.prototype.find.strings.shabbos_mevarchim = Hebcal.Month.prototype.find.strings.shabbat_mevarchim;
 
 Hebcal.HDate = HDate;
 
@@ -269,7 +400,11 @@ HDate.prototype.getYearObject = function getYearObject() {
 	return this.getMonthObject().getYearObject();
 };
 
+var HDatePrev = HDate.prototype.prev;
 HDate.prototype.prev = function prev() {
+	if (!this.getMonthObject()) {
+		return HDatePrev.call(this);
+	}
 	if (this.getMonth() === c.months.TISHREI && this.getDate() === 1) { // 1st day RH
 		return this.getMonthObject().prev().getDay(-1);
 	} else {
@@ -279,7 +414,11 @@ HDate.prototype.prev = function prev() {
 	}
 };
 
+var HDateNext = HDate.prototype.next;
 HDate.prototype.next = function next() {
+	if (!this.getMonthObject()) {
+		return HDateNext.call(this);
+	}
 	if (this.getMonth() === c.months.ELUL && this.getDate() === this.getMonthObject().length) { // last day
 		return this.getMonthObject().next().getDay(1);
 	} else {
@@ -287,6 +426,23 @@ HDate.prototype.next = function next() {
 		g.setDate(g.getDate() + 1);
 		return this.getYearObject().find(g)[0];
 	}
+};
+
+HDate.prototype.holidays = function holidays() {
+	return this.getYearObject().holidays.filter(function(h){
+		return this.isSameDate(h.date);
+	}, this).map(function(h){
+		h.date.setLocation(this);
+		return h;
+	}, this);
+};
+
+HDate.prototype.omer = function omer() {
+	if (this.greg().getTime() > new HDate(16, c.months.NISAN, this.getFullYear()).greg().getTime() &&
+		this.greg().getTime() < new HDate( 6, c.months.SIVAN, this.getFullYear()).greg().getTime()) {
+		return HDate.hebrew2abs(this) - HDate.hebrew2abs(new HDate(16, c.months.NISAN, this.getFullYear())) + 1;
+	}
+	return 0;
 };
 
 module.exports = Hebcal;

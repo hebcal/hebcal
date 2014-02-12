@@ -403,10 +403,19 @@ exports.gematriya = gematriya;
 
 function range(start, end, step) {
 	step = step || 1;
+	if (step < 0) {
+		step = 0 - step;
+	}
 
 	var arr = [];
-	for (var i = start; i <= end; i += step) {
-		arr.push(i);
+	if (start < end) {
+		for (var i = start; i <= end; i += step) {
+			arr.push(i);
+		}
+	} else {
+		for (var i = start; i >= end; i -= step) {
+			arr.push(i);
+		}
 	}
 	return arr;
 }
