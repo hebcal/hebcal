@@ -26,15 +26,15 @@ function Event(date, desc, mask) {
 	this.LIGHT_CANDLES_TZEIS = !!(mask & masks.LIGHT_CANDLES_TZEIS);
 }
 
-Event.prototype.is = function is(il) {
-	if (!arguments.length) {
+Event.prototype.is = function is(date, il) {
+	if (!(arguments.length > 1)) {
 		il = Event.isIL;
 	}
-	var now = new HDate();
-	if (now.getDate() !== this.date.getDate() || now.getMonth() !== this.date.getMonth()) {
+	date = date || new HDate();
+	if (date.getDate() !== this.date.getDate() || date.getMonth() !== this.date.getMonth()) {
 		return false;
 	}
-	if (!this.IGNORE_YEAR && now.getFullYear() !== this.date.getFullYear()) {
+	if (!this.IGNORE_YEAR && date.getFullYear() !== this.date.getFullYear()) {
 		return false;
 	}
 	if (il && this.CHUL_ONLY || !il && this.IL_ONLY) {
@@ -65,9 +65,18 @@ Event.prototype.candleLighting = function candleLighting() {
 	return null;
 };
 
+Event.prototype.havdalah = function havdalah() {
+	if (this.YOM_TOV_ENDS) {
+		return new Date(this.date.sunset() + (Event.havdalah * 60 * 1000));
+	}
+	return null;
+};
+
 Event.isIL = false;
 
 Event.candleLighting = 18;
+
+Event.havdalah = 50;
 
 exports.Event = Event;
 
@@ -493,12 +502,28 @@ exports.getHolidaysForYear = function getHolidaysForYear(year) {
 		0
 	));
 
-	tmpDate = new HDate(1, c.months.TISHREI, year + 1);
 	h.push(new Event(
-		new HDate(c.day_on_or_before(c.days.SAT, tmpDate.abs() - 4)),
+		new HDate(c.day_on_or_before(c.days.SAT, new HDate(1, c.months.TISHREI, year + 1).abs() - 4)),
 		['Leil Selichot', 'Leil Selichos', 'ליל סליחות'],
 		0
 	));
+
+	var day = 6;
+	while (day < c.days_in_heb_year(year)) {
+		h.push(new Event(
+			new HDate(c.day_on_or_before(c.days.SAT, new HDate(1, c.months.TISHREI, year).abs() + day)),
+			['Shabbat', 'Shabbos', 'שבת'],
+			masks.YOM_TOV_ENDS
+		));
+
+		h.push(new Event(
+			new HDate(c.day_on_or_before(c.days.FRI, new HDate(1, c.months.TISHREI, year).abs() + day)),
+			['Erev Shabbat', 'Erev Shabbos', 'ערב שבת'],
+			masks.LIGHT_CANDLES
+		));
+
+		day += 7;
+	}
 
 	return h;
 };

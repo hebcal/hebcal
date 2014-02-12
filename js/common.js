@@ -96,9 +96,9 @@ exports.max_days_in_heb_month = max_days_in_heb_month;
 function hebrew_elapsed_days(hYear){
 	// borrowed from original JS
 	var yearl = hYear;
-	var m_elapsed = 235 * Math.floor((yearl - 1) / 19) 
-		+ 12 * ((yearl - 1) % 19) 
-		+ Math.floor(((((yearl - 1) % 19) * 7) + 1) / 19);
+	var m_elapsed = 235 * Math.floor((yearl - 1) / 19) +
+		12 * ((yearl - 1) % 19) +
+		Math.floor(((((yearl - 1) % 19) * 7) + 1) / 19);
 	
 	var p_elapsed = 204 + (793 * (m_elapsed % 1080));
 	
@@ -118,9 +118,9 @@ function hebrew_elapsed_days(hYear){
 	else
 		alt_day = day;
 	
-	if ((alt_day % 7) == 0 ||
-		(alt_day % 7) == 3 ||
-		(alt_day % 7) == 5)
+	if ((alt_day % 7) === 0 ||
+		(alt_day % 7) === 3 ||
+		(alt_day % 7) === 5)
 		return alt_day + 1;
 	else
 		return alt_day;
@@ -374,12 +374,12 @@ function gematriya(num, limit) {
 
 	num = num.map(function g(n,i){
 		if (str) {
-			return numbers[n] < numbers[num[i-1]] && numbers[n] < 100 ? numbers[n] * 1000 : numbers[n];
+			return numbers[n] < numbers[num[i - 1]] && numbers[n] < 100 ? numbers[n] * 1000 : numbers[n];
 		} else {
-			if (parseInt(n) * Math.pow(10,i) > 1000) {
-				return g(n,i-3);
+			if (parseInt(n, 10) * Math.pow(10, i) > 1000) {
+				return g(n, i-3);
 			}
-			return letters[parseInt(n) * Math.pow(10,i)];
+			return letters[parseInt(n, 10) * Math.pow(10, i)];
 		}
 	});
 
@@ -407,13 +407,13 @@ function range(start, end, step) {
 		step = 0 - step;
 	}
 
-	var arr = [];
+	var arr = [], i = start;
 	if (start < end) {
-		for (var i = start; i <= end; i += step) {
+		for (; i <= end; i += step) {
 			arr.push(i);
 		}
 	} else {
-		for (var i = start; i >= end; i -= step) {
+		for (; i >= end; i -= step) {
 			arr.push(i);
 		}
 	}

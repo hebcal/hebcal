@@ -12,15 +12,15 @@
 var c = require('./common');
 
 module.exports = function(HDate) {
-	Sedra.TYPE_NAMES = [
-	'INCOMPLETE',
-	'REGULAR ',
-	'COMPLETE',
-	];
+	var TYPE_NAMES = [
+		'INCOMPLETE',
+		'REGULAR ',
+		'COMPLETE'
+	],
 
-	Sedra.INCOMPLETE = 0;
-	Sedra.REGULAR = 1;
-	Sedra.COMPLETE = 2;
+	INCOMPLETE = 0,
+	REGULAR = 1,
+	COMPLETE = 2;
 
 	function Sedra (hebYr, israel_sw) { /* the hebrew year */
 		israel_sw = !!israel_sw;
@@ -29,11 +29,11 @@ module.exports = function(HDate) {
 		var type;
 		this.year = hebYr;
 		if (long_c && !short_k) {
-			type = Sedra.COMPLETE;
+			type = COMPLETE;
 		} else if (!long_c && short_k) {
-			type = Sedra.INCOMPLETE;
+			type = INCOMPLETE;
 		} else {
-			type = Sedra.REGULAR;
+			type = REGULAR;
 		}
 
 		var tempDt = new HDate(1,c.months.TISHREI,hebYr);
@@ -50,10 +50,10 @@ module.exports = function(HDate) {
 
 		this.theSedraArray = Sedra.sedra_years_array
 			[leap]
-			[Sedra.ROSH_DAY_INDEX(rosh_hashana_day)]
+			[ROSH_DAY_INDEX(rosh_hashana_day)]
 			[type]
 			[+israel_sw];
-		if ( null == this.theSedraArray ) {
+		if (null === this.theSedraArray) {
 			console.log(this);
 			throw new TypeError("improper sedra year type calculated.");
 		}
@@ -124,7 +124,7 @@ module.exports = function(HDate) {
 	/* parsha undoubler */
 	function U(p) { return -p; } 
 
-	var  RH = [ 'Rosh Hashana', null, 'ראש השנה' ]; //0
+	var RH = [ 'Rosh Hashana', null, 'ראש השנה' ]; //0
 	var YK  =  [ 'Yom Kippur', null, 'יום כיפור' ];  //1
 	var EOY  =  [ 'End-of-Year: Simchat-Torah, Sukkot', 'End-of-Year: Simchas-Torah, Succos', 'סופשנה: סוכות וסמחת תורה' ];  //0
 
@@ -136,15 +136,15 @@ module.exports = function(HDate) {
 	var CHMPESACH  =  [ 'Chol hamoed Pesach', null, 'חול המועד פסח' ];  //25
 	var PESACH7 = [ 'Second days of Pesach', null, 'שביעי של פסח' ]; //25
 
-	var  SHAVUOT = [ 'Shavuot', 'Shavuos', 'שבועות' ]; //33
+	var SHAVUOT = [ 'Shavuot', 'Shavuos', 'שבועות' ]; //33
 
 
 
 
-	/* The ordinary year types (keviot) */
+	// The ordinary year types (keviot)
 
 	/* Hebrew year that starts on Monday, is `incomplete' (Heshvan and
-	   Kislev each have 29 days), and has Passover start on Tuesday. */
+	 * Kislev each have 29 days), and has Passover start on Tuesday. */
 	//e.g. 5753
 	Sedra.nonleap_monday_incomplete =
 	[51, 52, EOY, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
@@ -152,7 +152,7 @@ module.exports = function(HDate) {
 	 35, 36, 37, 38, 39, 40, D (41), 43, 44, 45, 46, 47, 48, 49, D (50)];
 
 	/* Hebrew year that starts on Monday, is `complete' (Heshvan and
-	   Kislev each have 30 days), and has Passover start on Thursday. */
+	 * Kislev each have 30 days), and has Passover start on Thursday. */
 	//e.g. 5756
 	Sedra.nonleap_monday_complete_diaspora =
 	[51, 52, EOY, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
@@ -161,20 +161,20 @@ module.exports = function(HDate) {
 	 D (50)];
 
 	/* Hebrew year that starts on Monday, is `complete' (Heshvan and
-	   Kislev each have 30 days), and has Passover start on Thursday. */
+	 * Kislev each have 30 days), and has Passover start on Thursday. */
 	Sedra.nonleap_monday_complete_israel = Sedra.nonleap_monday_incomplete
 
 	/* Hebrew year that starts on Tuesday, is `regular' (Heshvan has 29
-	   days and Kislev has 30 days), and has Passover start on Thursday. */
+	 * days and Kislev has 30 days), and has Passover start on Thursday. */
 	//e.g. 5715
 	Sedra.nonleap_tuesday_regular_diaspora = Sedra.nonleap_monday_complete_diaspora
 
 	/* Hebrew year that starts on Tuesday, is `regular' (Heshvan has 29
-	   days and Kislev has 30 days), and has Passover start on Thursday. */
+	 * days and Kislev has 30 days), and has Passover start on Thursday. */
 	Sedra.nonleap_tuesday_regular_israel = Sedra.nonleap_monday_incomplete
 
 	/* Hebrew year that starts on Thursday, is `regular' (Heshvan has 29
-	   days and Kislev has 30 days), and has Passover start on Saturday. */
+	 * days and Kislev has 30 days), and has Passover start on Saturday. */
 	//e.g. 5701
 	Sedra.nonleap_thursday_regular_diaspora =
 	[52, YK, EOY, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
@@ -182,7 +182,7 @@ module.exports = function(HDate) {
 	 33, 34, 35, 36, 37, 38, 39, 40, D (41), 43, 44, 45, 46, 47, 48, 49, 50];
 
 	/* Hebrew year that starts on Thursday, is `regular' (Heshvan has 29
-	   days and Kislev has 30 days), and has Passover start on Saturday. */
+	 * days and Kislev has 30 days), and has Passover start on Saturday. */
 	// e.g. 5745
 	Sedra.nonleap_thursday_regular_israel =
 	[52, YK, EOY, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
@@ -190,7 +190,7 @@ module.exports = function(HDate) {
 	 34, 35, 36, 37, 38, 39, 40, D (41), 43, 44, 45, 46, 47, 48, 49, 50];
 
 	/* Hebrew year that starts on Thursday, is `complete' (Heshvan and
-	   Kislev each have 30 days), and has Passover start on Sunday. */
+	 * Kislev each have 30 days), and has Passover start on Sunday. */
 	//e.g. 5754
 	Sedra.nonleap_thursday_complete =
 	[52, YK, CHMSUKOT, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
@@ -198,7 +198,7 @@ module.exports = function(HDate) {
 	 34, 35, 36, 37, 38, 39, 40, D (41), 43, 44, 45, 46, 47, 48, 49, 50];
 
 	/* Hebrew year that starts on Saturday, is `incomplete' (Heshvan and Kislev
-	   each have 29 days), and has Passover start on Sunday. */
+	 * each have 29 days), and has Passover start on Sunday. */
 	//e.g. 5761
 	Sedra.nonleap_saturday_incomplete =
 	[RH, 52, SUKKOT, SHMINI, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
@@ -208,7 +208,7 @@ module.exports = function(HDate) {
 
 
 	/* Hebrew year that starts on Saturday, is `complete' (Heshvan and
-	   Kislev each have 30 days), and has Passover start on Tuesday. */
+	 * Kislev each have 30 days), and has Passover start on Tuesday. */
 	//e.g. 5716
 	Sedra.nonleap_saturday_complete =
 	[RH, 52, SUKKOT, SHMINI, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
@@ -219,7 +219,7 @@ module.exports = function(HDate) {
 
 	/* --  The leap year types (keviot) -- */
 	/* Hebrew year that starts on Monday, is `incomplete' (Heshvan and
-	   Kislev each have 29 days), and has Passover start on Thursday. */
+	 * Kislev each have 29 days), and has Passover start on Thursday. */
 	//e.g. 5746
 	Sedra.leap_monday_incomplete_diaspora =
 	[51, 52, null, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
@@ -228,7 +228,7 @@ module.exports = function(HDate) {
 	 D (50)];
 
 	/* Hebrew year that starts on Monday, is `incomplete' (Heshvan and
-	   Kislev each have 29 days), and has Passover start on Thursday. */
+	 * Kislev each have 29 days), and has Passover start on Thursday. */
 	//e.g. 5746
 	Sedra.leap_monday_incomplete_israel =
 	[51, 52, CHMSUKOT, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
@@ -236,7 +236,7 @@ module.exports = function(HDate) {
 	 34, 35, 36, 37, 38, 39, 40, D (41), 43, 44, 45, 46, 47, 48, 49, D (50)];
 
 	/* Hebrew year that starts on Monday, is `complete' (Heshvan and
-	   Kislev each have 30 days), and has Passover start on Saturday. */
+	 * Kislev each have 30 days), and has Passover start on Saturday. */
 	//e.g.5752
 	Sedra.leap_monday_complete_diaspora =
 	[51, 52, CHMSUKOT, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
@@ -244,7 +244,7 @@ module.exports = function(HDate) {
 	 33, 34, 35, 36, 37, 38, 39, 40, D (41), 43, 44, 45, 46, 47, 48, 49, 50];
 
 	/* Hebrew year that starts on Monday, is `complete' (Heshvan and
-	   Kislev each have 30 days), and has Passover start on Saturday. */
+	 * Kislev each have 30 days), and has Passover start on Saturday. */
 	//e.g.5752
 	Sedra.leap_monday_complete_israel =
 	[51, 52, CHMSUKOT, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
@@ -252,16 +252,16 @@ module.exports = function(HDate) {
 	 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50];
 
 	/* Hebrew year that starts on Tuesday, is `regular' (Heshvan has 29
-	   days and Kislev has 30 days), and has Passover start on Saturday. */
+	 * days and Kislev has 30 days), and has Passover start on Saturday. */
 	// e.g. 5715
 	Sedra.leap_tuesday_regular_diaspora = Sedra.leap_monday_complete_diaspora
 
 	/* Hebrew year that starts on Tuesday, is `regular' (Heshvan has 29
-	   days and Kislev has 30 days), and has Passover start on Saturday. */
+	 * days and Kislev has 30 days), and has Passover start on Saturday. */
 	Sedra.leap_tuesday_regular_israel= Sedra.leap_monday_complete_israel;
 
 	/* Hebrew year that starts on Thursday, is `incomplete' (Heshvan and
-	   Kislev both have 29 days), and has Passover start on Sunday. */
+	 * Kislev both have 29 days), and has Passover start on Sunday. */
 	//e.g. 5768
 	Sedra.leap_thursday_incomplete =
 	[52, YK, CHMSUKOT, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
@@ -269,7 +269,7 @@ module.exports = function(HDate) {
 	 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50];
 
 	/* Hebrew year that starts on Thursday, is `complete' (Heshvan and
-	   Kislev both have 30 days), and has Passover start on Tuesday. */
+	 * Kislev both have 30 days), and has Passover start on Tuesday. */
 	//eg. 5771
 	Sedra.leap_thursday_complete =
 	[52, YK, CHMSUKOT, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
@@ -277,7 +277,7 @@ module.exports = function(HDate) {
 	 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, D (50)];
 
 	/* Hebrew year that starts on Saturday, is `incomplete' (Heshvan and
-	   Kislev each have 29 days), and has Passover start on Tuesday. */
+	 * Kislev each have 29 days), and has Passover start on Tuesday. */
 	//e.g.5757
 	Sedra.leap_saturday_incomplete =
 	[RH, 52, SUKKOT, SHMINI, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
@@ -286,7 +286,7 @@ module.exports = function(HDate) {
 	 D (50)];
 
 	/* Hebrew year that starts on Saturday, is `complete' (Heshvan and
-	   Kislev each have 30 days), and has Passover start on Thursday. */
+	 * Kislev each have 30 days), and has Passover start on Thursday. */
 	Sedra.leap_saturday_complete_diaspora =
 	[RH, 52, null, null, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
 	 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, null, 28, 29, 30, 31, 32,
@@ -294,147 +294,149 @@ module.exports = function(HDate) {
 	 D (50)];
 
 	/* Hebrew year that starts on Saturday, is `complete' (Heshvan and
-	   Kislev each have 30 days), and has Passover start on Thursday. */
+	 * Kislev each have 30 days), and has Passover start on Thursday. */
 	Sedra.leap_saturday_complete_israel = Sedra.leap_saturday_incomplete;
 
 
 
-	Sedra.ROSH_DAY_INDEX = function(x) {return  (x==1) ? 0 : (x/2) };
+	function ROSH_DAY_INDEX(x) {
+		return  (x === 1) ? 0 : x / 2;
+	}
 
-	/* sedra_years_array[leap][rosh_day][type][israel/diaspora] */
-	Sedra.sedra_years_array =  /* [2][4][3][2] */ 
+	// sedra_years_array[leap][rosh_day][type][israel/diaspora]
+	Sedra.sedra_years_array =  // [2][4][3][2]
 	[
-		[                             /* nonleap years */
+		[                             // nonleap years
 			
-			[                           /* monday */
-				[                         /* incomplete */
+			[                           // monday
+				[                         // incomplete
 				 Sedra.nonleap_monday_incomplete,
 				 Sedra.nonleap_monday_incomplete
 				],
 				
-				[                         /* regular */
+				[                         // regular
 					null, null
 				],
 				
-				[                         /* complete */
+				[                         // complete
 					Sedra.nonleap_monday_complete_diaspora,
 					Sedra.nonleap_monday_complete_israel
-				],
+				]
 				
 			],
 			
-			[                           /* tuesday */
-				[                         /* incomplete */
+			[                           // tuesday
+				[                         // incomplete
 					null, null
 				],
 				
-				[                         /* regular */   //e.g. 5715
+				[                         // regular   //e.g. 5715
 					Sedra.nonleap_tuesday_regular_diaspora,
 					Sedra.nonleap_tuesday_regular_israel 
 					
 				],
 				
-				[                         /* complete */
+				[                         // complete
 					null, null
-				],
+				]
 			],
 			
-			[                           /* thursday */
-				[                         /* incomplete */
+			[                           // thursday
+				[                         // incomplete
 					null, null
 				],
 				
-				[                         /* regular */  //e.g. 5745
+				[                         // regular  //e.g. 5745
 					Sedra.nonleap_thursday_regular_diaspora,
 					Sedra.nonleap_thursday_regular_israel
 				],
 				
-				[                         /* complete */
+				[                         // complete
 					Sedra.nonleap_thursday_complete,
 					Sedra.nonleap_thursday_complete
-				],
+				]
 			],
 			
-			[                           /* saturday */
-				[                         /* incomplete */
+			[                           // saturday
+				[                         // incomplete
 					Sedra.nonleap_saturday_incomplete,
 					Sedra.nonleap_saturday_incomplete
 				],
 				
-				[                         /* regular */
+				[                         // regular
 					null, null
 				],
 				
-				[                         /* complete */
+				[                         // complete
 					Sedra.nonleap_saturday_complete, Sedra.nonleap_saturday_complete  //e.g. 5716
-				],
-			],
+				]
+			]
 		],
 		
 		
-		[                             /* leap years */
-			[                           /* monday */
-				[                         /* incomplete */ //e.g. 5746
+		[                             // leap years
+			[                           // monday
+				[                         // incomplete //e.g. 5746
 					Sedra.leap_monday_incomplete_diaspora,
 					Sedra.leap_monday_incomplete_israel
 				],
 				
-				[                         /* regular */
+				[                         // regular
 					null, null
 				],
 				
-				[                         /* complete */
+				[                         // complete
 					Sedra.leap_monday_complete_diaspora,
 					Sedra.leap_monday_complete_israel
-				],
+				]
 			],
 			
-			[                           /* tuesday */
-				[                         /* incomplete */
+			[                           // tuesday
+				[                         // incomplete
 				 null, null
 				],
 				
-				[                         /* regular */
+				[                         // regular
 					Sedra.leap_tuesday_regular_diaspora,
-					Sedra.leap_tuesday_regular_israel,
+					Sedra.leap_tuesday_regular_israel
 				],
 				
-				[                         /* complete */
+				[                         // complete
 					null, null
-				],
+				]
 			],
 			
-		[                           /* thursday */
-			[                         /* incomplete */
+		[                           // thursday
+			[                         // incomplete
 				Sedra.leap_thursday_incomplete,
 				Sedra.leap_thursday_incomplete
 			],
 			
-			[                         /* regular */
+			[                         // regular
 				null, null
 			],
 			
-			[                         /* complete */
+			[                         // complete
 				Sedra.leap_thursday_complete,
 				Sedra.leap_thursday_complete
-			],
+			]
 		],
 			
-			[                           /* saturday */
-				[                         /* incomplete */
+			[                           // saturday
+				[                         // incomplete
 					Sedra.leap_saturday_incomplete,
 					Sedra.leap_saturday_incomplete
 				],
 				
-				[                         /* regular */
+				[                         // regular
 					null, null
 				],
 				
-				[                         /* complete */
+				[                         // complete
 					Sedra.leap_saturday_complete_diaspora,
 					Sedra.leap_saturday_complete_israel
-				],
-			],
+				]
+			]
 		]
 	];
 
@@ -442,28 +444,27 @@ module.exports = function(HDate) {
 		return this.getSedraFromAbsDate(HDate.hebrew2abs(hDate));
 	};
 
-	/* returns a string describing the parsha on the first saturday on or after absdate*/
+	// returns an array describing the parsha on the first saturday on or after absdate
 	//FIX: ignores holidays on the birthday thru friday.
 	Sedra.prototype.getSedraFromAbsDate = function(absBirthdayDate) {
 
-		/* find the first saturday on or after today's date */
+		// find the first saturday on or after today's date
 		var absDate = c.day_on_or_before (6, absBirthdayDate + 6);
 		
 		var weekNum = (absDate - this.first_saturday) / 7;
 		var index = this.theSedraArray[weekNum];
 		
-		if (null == index)
+		if (null === index)
 			return null;
 		if( typeof(index) == 'object'){
-			// Shabbat has a chag.  return a description, plus the subsequent shabbat's chag.  
-			// runs twice if necessary
-			return [index].concat(this.getSedraFromAbsDate(absDate + 7));
+			// Shabbat has a chag.  return a description
+			return [index];
 		}
 		if (index >= 0)
 			return [Sedra.parshiot[index]];
 		
-		var i = U (index);      /* undouble the parsha */
-		return [Sedra.parshiot[i],Sedra.parshiot[i+1]];
+		var i = U (index);      // undouble the parsha
+		return [Sedra.parshiot[i], Sedra.parshiot[i + 1]];
 	};
 
 	return Sedra;

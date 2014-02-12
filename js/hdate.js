@@ -39,13 +39,13 @@ function HDate(day, month, year) {
 			this.day = 1;
 			this.month = 1;
 			this.year = typeof year === 'number' ? year :
-				year.toString().charCodeAt(0) >= 1488 && year.toString().charCodeAt(0) <= 1514 ? c.gematriya(year.toString()) : parseInt(year);
+				year.toString().charCodeAt(0) >= 1488 && year.toString().charCodeAt(0) <= 1514 ? c.gematriya(year.toString()) : parseInt(year, 10);
 
 			this.setMonth(typeof month === 'number' ? month :
 				month.charCodeAt(0) >= 1488 && month.charCodeAt(0) <= 1514 && /('|")/.test(month) ? c.gematriya(month) :
-					month.charCodeAt(0) >= 48 && month.charCodeAt(0) <= 57 /* number */ ? parseInt(month) : c.lookup_hebrew_month(month));
+					month.charCodeAt(0) >= 48 && month.charCodeAt(0) <= 57 /* number */ ? parseInt(month, 10) : c.lookup_hebrew_month(month));
 			this.setDate(typeof day === 'number' ? day :
-				day.charCodeAt(0) >= 1488 && day.charCodeAt(0) <= 1514 ? c.gematriya(day) : parseInt(day));
+				day.charCodeAt(0) >= 1488 && day.charCodeAt(0) <= 1514 ? c.gematriya(day) : parseInt(day, 10));
 			
 			fixMonth(this);
 			fixDate(this);
@@ -218,7 +218,7 @@ function abs2hebrew(d) {
 
 	hebdate.setDate(1);
 	
-	day = parseInt(d - hebrew2abs(hebdate) + 1);
+	day = parseInt(d - hebrew2abs(hebdate) + 1, 10);
 	/* if (day < 0) {
 		throw new RangeError("assertion failure d < hebrew2abs(m,d,y) => " + d + " < " + hebrew2abs(hebdate) + "!");
 	} */
@@ -254,38 +254,38 @@ HDate.prototype.getMonthName = function getMonthName(o) {
 
 HDate.prototype.getSedra = function getSedra(o) {
 	return (new Sedra(this.getFullYear(), this.il)).getSedraFromHebcalDate(this).map(function(p){
-		return c.LANGUAGE(p, o || israel_sw);
+		return c.LANGUAGE(p, o || this.il);
 	});
 };
 
 HDate.prototype.setCity = function setCity(city) {
 	var c = cities.getCity(city);
-	this.il = c[5] == cities.DST_SCHEMES.DST_ISRAEL;
+	this.il = c[5];
 	return this.setLocation(cities.getLocation(c));
 };
 
-HDate.prototype.setLocation = function setLocation(lat, long) {
+HDate.prototype.setLocation = function setLocation(lat, lon) {
 	if (typeof lat == 'object' && !Array.isArray(lat)) {
-		long = lat.long;
+		lon = lat.long;
 		lat = lat.lat;
 	}
 	if (Array.isArray(lat)) {
 		lat = (lat[0] * 60 + lat[1]) / 60;
 	}
-	if (Array.isArray(long)) {
-		long = (long[0] * 60 + long[1]) / 60;
+	if (Array.isArray(lon)) {
+		lon = (lon[0] * 60 + lon[1]) / 60;
 	}
 	if (typeof lat != 'number') {
 		throw new TypeError('incorrect lat type passed to HDate.setLocation()');
 	}
-	if (typeof long != 'number') {
+	if (typeof lon != 'number') {
 		throw new TypeError('incorrect long type passed to HDate.setLocation()');
 	}
 
 	this.lat = lat;
-	this.long = long;
+	this.long = lon;
 
-	//getSunTimes(this);
+	this.il = cities.getCity(cities.nearest(this.lat, this.long))[4];
 
 	return this;
 };

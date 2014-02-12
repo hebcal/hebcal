@@ -24,7 +24,6 @@ exports.shortDayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 function dayOfYear (date) {
 	if (!date instanceof Date) {
 		throw new TypeError('Argument to greg.dayOfYear not a Date');
-		return 0;
 	}
 	var doy = date.getDate() + 31 * date.getMonth();
 	if (date.getMonth() > 1) { // FEB
@@ -38,16 +37,16 @@ function dayOfYear (date) {
 exports.dayOfYear = dayOfYear;
 
 function LEAP (year) {
-	return !(year % 4) && ( !!(year % 100) || !(year % 400) );
+	return (year % 4) > 0 && ( (year % 100) === 0 || (year % 400) > 0 );
 }
 
-exports.greg2abs = function greg2abs(date) { /* "absolute date" */
-    return (dayOfYear(date)	/* days this year */
-            + 365 *  (date.getFullYear() - 1)	/* + days in prior years */
-            +  ( Math.floor((date.getFullYear() - 1) / 4)	/* + Julian Leap years */
-                - Math.floor((date.getFullYear() - 1) / 100)	/* - century years */
-                + Math.floor((date.getFullYear() - 1) / 400)));	/* + Gregorian leap years */
-}
+exports.greg2abs = function greg2abs(date) { // "absolute date"
+	return (dayOfYear(date) + // days this year
+			365 * (date.getFullYear() - 1) + // + days in prior years
+			( Math.floor((date.getFullYear() - 1) / 4) - // + Julian Leap years
+			Math.floor((date.getFullYear() - 1) / 100) + // - century years
+			Math.floor((date.getFullYear() - 1) / 400))); // + Gregorian leap years
+};
 
 
 /*
@@ -57,7 +56,7 @@ exports.greg2abs = function greg2abs(date) { /* "absolute date" */
  * (April, 1993), pages 383-404 for an explanation.
  */
 exports.abs2greg = function abs2greg(theDate) {
-// copied from original JS code
+// calculations copied from original JS code
 
 	var d0 = theDate - 1;
 	var n400 = Math.floor(d0 / 146097);
@@ -76,12 +75,25 @@ exports.abs2greg = function abs2greg(theDate) {
 	}
 
 	year++;
+
+
+	var d = new Date(year, 0, day); // new Date() is very smart
+	d.setFullYear(year);
+	return d;
+
+
+	console.log(year)
 	var month = 1, mlen;
+	console.log(month)
+	console.log(day)
 	while ((mlen = exports.monthLengths[+LEAP(year)][month]) < day){
 		day -= mlen;
 		month++;
+	console.log(month)
+	console.log(day)
 	}
 	var d = new Date(year, month-1, day);
 	d.setFullYear(year);
+	console.log(d)
 	return d;
-}
+};
