@@ -1,3 +1,31 @@
+/*
+	Hebcal - A Jewish Calendar Generator
+	Copyright (C) 1994-2004  Danny Sadinoff
+	Portions Copyright (c) 2002 Michael J. Radwin. All Rights Reserved.
+
+	https://github.com/hebcal/hebcal
+
+	This program is free software; you can redistribute it and/or
+	modify it under the terms of the GNU General Public License
+	as published by the Free Software Foundation; either version 2
+	of the License, or (at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+	Danny Sadinoff can be reached at 
+	danny@sadinoff.com
+
+	Michael Radwin has made significant contributions as a result of
+	maintaining hebcal.com.
+
+	The JavaScript code was completely rewritten in 2014 by Scimonster
+ */
 var c = require('./common'),
 	greg = require('./greg'),
 	Sedra = require('./sedra')(HDate),
@@ -22,7 +50,10 @@ function HDate(day, month, year) {
 				}
 				return d;
 			} else if (day instanceof HDate) {
-				return day;
+				var d = new HDate(day.getDate(), day.getMonth(), day.getFullYear());
+				d.il = day.il;
+				d.setLocation(d.lat, d.long);
+				return d;
 			} else if (typeof day === 'string' && /\s/.test(day)) {
 				var s = day.split(/\s+/);
 				if (s.length === 2) {
@@ -424,6 +455,22 @@ HDate.prototype.isSameDate = function isSameDate(other) {
 		return this.abs() === other.abs();
 	}
 	return false;
+};
+
+HDate.prototype.before = function before(day) {
+	return new HDate(c.day_on_or_before(day, this.abs() - 1));
+};
+
+HDate.prototype.nearest = function nearest(day) {
+	return new HDate(c.day_on_or_before(day, this.abs() + 3));
+};
+
+HDate.prototype.onOrAfter = function onOrAfter(day) {
+	return new HDate(c.day_on_or_before(day, this.abs() + 6));
+};
+
+HDate.prototype.after = function after(day) {
+	return new HDate(c.day_on_or_before(day, this.abs() + 7));
 };
 
 module.exports = HDate;

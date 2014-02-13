@@ -1,17 +1,46 @@
-var months = exports.months = {};
-months.NISAN    = 1;
-months.IYYAR    = 2;
-months.SIVAN    = 3;
-months.TAMUZ    = 4;
-months.AV       = 5;
-months.ELUL     = 6;
-months.TISHREI  = 7;
-months.CHESHVAN = 8;
-months.KISLEV   = 9;
-months.TEVET    = 10;
-months.SHVAT    = 11;
-months.ADAR_I   = 12;
-months.ADAR_II  = 13;
+/*
+	Hebcal - A Jewish Calendar Generator
+	Copyright (C) 1994-2004  Danny Sadinoff
+	Portions Copyright (c) 2002 Michael J. Radwin. All Rights Reserved.
+
+	https://github.com/hebcal/hebcal
+
+	This program is free software; you can redistribute it and/or
+	modify it under the terms of the GNU General Public License
+	as published by the Free Software Foundation; either version 2
+	of the License, or (at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+	Danny Sadinoff can be reached at 
+	danny@sadinoff.com
+
+	Michael Radwin has made significant contributions as a result of
+	maintaining hebcal.com.
+
+	The JavaScript code was completely rewritten in 2014 by Scimonster
+ */
+var months = exports.months = {
+	NISAN   : 1,
+	IYYAR   : 2,
+	SIVAN   : 3,
+	TAMUZ   : 4,
+	AV      : 5,
+	ELUL    : 6,
+	TISHREI : 7,
+	CHESHVAN: 8,
+	KISLEV  : 9,
+	TEVET   : 10,
+	SHVAT   : 11,
+	ADAR_I  : 12,
+	ADAR_II : 13
+};
 
 var monthNames = exports.monthNames = [
 	[
@@ -48,14 +77,15 @@ var monthNames = exports.monthNames = [
 	]
 ];
 
-var days = exports.days = {};
-days.SUN = 0;
-days.MON = 1;
-days.TUE = 2;
-days.WED = 3;
-days.THU = 4;
-days.FRI = 5;
-days.SAT = 6;
+var days = exports.days = {
+	SUN: 0,
+	MON: 1,
+	TUE: 2,
+	WED: 3,
+	THU: 4,
+	FRI: 5,
+	SAT: 6
+};
 
 function LANGUAGE(str, opts){
 	return (opts === 'h' && str[2] ? str[2] : (opts === 'a' && str[1] ? str[1] : str[0]));
@@ -73,19 +103,14 @@ function MONTHS_IN_HEB(x) {
 exports.MONTHS_IN_HEB = MONTHS_IN_HEB;
 
 function max_days_in_heb_month(month, year) {
-	if (month == months.IYYAR ||
-		month == months.TAMUZ || 
-		month == months.ELUL ||
-		month == months.TEVET || 
-		month == months.ADAR_II ||
-		(month == months.ADAR_I && !LEAP_YR_HEB(year)) ||
-		(month == months.CHESHVAN && !long_cheshvan(year)) ||
-		(month == months.KISLEV && short_kislev(year))) {
-		return 29;
-	}
-	else {
-		return 30;
-	}
+	return 30 - (month == months.IYYAR ||
+	month == months.TAMUZ || 
+	month == months.ELUL ||
+	month == months.TEVET || 
+	month == months.ADAR_II ||
+	(month == months.ADAR_I && !LEAP_YR_HEB(year)) ||
+	(month == months.CHESHVAN && !long_cheshvan(year)) ||
+	(month == months.KISLEV && short_kislev(year)));
 }
 exports.max_days_in_heb_month = max_days_in_heb_month;
 
