@@ -17,7 +17,7 @@ c/hebcal
 c/hebcal.1
 c/package.m4
 c/stamp-h1
-js/README.html
+javascript/README.html
 
 # Editor files
 *.sublime*
