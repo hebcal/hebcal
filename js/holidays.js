@@ -5,10 +5,10 @@
 
 	https://github.com/hebcal/hebcal
 
-	This program is free software; you can redistribute it and/or
-	modify it under the terms of the GNU General Public License
-	as published by the Free Software Foundation; either version 2
-	of the License, or (at your option) any later version.
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
 
 	This program is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -24,7 +24,7 @@
 	Michael Radwin has made significant contributions as a result of
 	maintaining hebcal.com.
 
-	The JavaScript code was completely rewritten in 2014 by Scimonster
+	The JavaScript code was completely rewritten in 2014 by Eyal Schachter
  */
 var c = require('./common'), HDate = require('./hdate');
 
@@ -58,7 +58,7 @@ Event.prototype.is = function is(date, il) {
 	if (!(arguments.length > 1)) {
 		il = Event.isIL;
 	}
-	date = date || new HDate();
+	date = new HDate(date);
 	if (date.getDate() !== this.date.getDate() || date.getMonth() !== this.date.getMonth()) {
 		return false;
 	}
@@ -111,7 +111,7 @@ exports.Event = Event;
 exports.standards = [ // standard holidays that don't shift based on year
 	// RH 1 is defined later, based on year, because other holidays depend on it
 	new Event(
-		new HDate(1, c.months.TISHREI, IGNORE_YEAR),
+		new HDate(2, c.months.TISHREI, IGNORE_YEAR),
 		['Rosh Hashana 2', null, 'ראש השנה ב\''],
 		masks.YOM_TOV_ENDS
 	), new Event(

@@ -5,10 +5,10 @@
 
 	https://github.com/hebcal/hebcal
 
-	This program is free software; you can redistribute it and/or
-	modify it under the terms of the GNU General Public License
-	as published by the Free Software Foundation; either version 2
-	of the License, or (at your option) any later version.
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
 
 	This program is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -24,17 +24,20 @@
 	Michael Radwin has made significant contributions as a result of
 	maintaining hebcal.com.
 
-	The JavaScript code was completely rewritten in 2014 by Scimonster
+	The JavaScript code was completely rewritten in 2014 by Eyal Schachter
  */
 var c = require('./common'),
 	HDate = require('./hdate'),
 	holidays = require('./holidays'),
 	dafyomi = require('./dafyomi'),
-	cities = require('./cities')(HDate);
+	cities = require('./cities');
 
 function Hebcal(year, month) {
 	if (!year) {
 		year = (new HDate()).getFullYear(); // this year;
+	}
+	if (typeof year !== 'number') {
+		throw new TypeError('year to Hebcal() is not a number');
 	}
 	this.year = year;
 	if (month) {
@@ -166,7 +169,7 @@ Hebcal.prototype.find = function find(day, month) {
 			return find.strings.call(this, day);
 		} else if (Array.isArray(day)) {
 			return [].concat.apply([], day.map(function(d){
-				return this.find.apply(this, d);
+				return this.find[Array.isArray(d) ? 'apply' : 'call'](this, d);
 			}, this));
 		} else if (day instanceof HDate) {
 			return this.find(day.getDate(), day.getMonth());
@@ -210,9 +213,7 @@ Hebcal.prototype.find.strings.holidays = function holidays() {
 	}, this));
 };
 Hebcal.prototype.find.strings.omer = function omer() {
-	return c.range(15+1, 15+49).map(function(d){
-		return this.find(new HDate(d, c.months.NISAN, this.year))[0];
-	}, this);
+	return this.find(c.range(15+1, 15+49), c.months.NISAN);
 };
 Hebcal.prototype.find.strings.today = function today() {
 	return this.find(new HDate());
@@ -244,6 +245,8 @@ Hebcal.addZeman = HDate.addZeman;
 Hebcal.cities = cities;
 
 Hebcal.range = c.range;
+
+Hebcal.gematriya = c.gematriya;
 
 Hebcal.holidays = holidays;
 
@@ -395,7 +398,7 @@ Hebcal.Month.prototype.getName = function getName(o) {
 
 Hebcal.Month.prototype.rosh_chodesh = function rosh_chodesh() {
 	var prev = this.prev();
-	return prev.length === 30 ? [prev.days[prev.days.length-1], this.days[0]] : [this.days[0]];
+	return prev.length === 30 ? [prev.getDay(-1), this.getDay(1)] : [this.getDay(1)];
 };
 
 Hebcal.Month.prototype.setCity = function setCity(city) {
@@ -498,7 +501,7 @@ HDate.prototype.holidays = function holidays() {
 };
 
 HDate.prototype.omer = function omer() {
-	if (this.greg().getTime() > new HDate(16, c.months.NISAN, this.getFullYear()).greg().getTime() &&
+	if (this.greg().getTime() > new HDate(15, c.months.NISAN, this.getFullYear()).greg().getTime() &&
 		this.greg().getTime() < new HDate( 6, c.months.SIVAN, this.getFullYear()).greg().getTime()) {
 		return HDate.hebrew2abs(this) - HDate.hebrew2abs(new HDate(16, c.months.NISAN, this.getFullYear())) + 1;
 	}

@@ -1,16 +1,27 @@
 {
 	"name": "hebcal",
-	"version": "0.0.1",
+	"version": "2.0",
 	"author": "Scimonster (https://github.com/Scimonster)",
-	"description": "A perpetual Jewish Calendar",
+	"contributors": [
+		"Michael J. Radwin (https://github.com/mjradwin)",
+		"Danny Sadinoff (https://github.com/dsadinoff)"
+	],
+	"description": "An easy to use, richly-featured, perpetual Jewish Calendar API",
 	"keywords": [
 		"hebcal",
 		"hebrew",
 		"calendar",
 		"jewish",
 		"holidays",
-		"sedra"
+		"sedra",
+		"date",
+		"dafyomi",
+		"zemanim",
+		"zmanim"
 	],
+	"homepage": "https://github.com/Scimonster/hebcal",
+	"bugs": "https://github.com/Scimonster/hebcal/issues",
+	"license": "GPL-3.0+",
 	"main": "hebcal.js",
 	"dependencies": {
 		"suncalc": ""

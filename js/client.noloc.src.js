@@ -46,19 +46,8 @@ Object.defineProperty(Hebcal, 'onready', {
 	}
 });
 
-if (navigator.geolocation) {
-	Hebcal.ready = false;
-	navigator.geolocation.getCurrentPosition(function(p){
-		Hebcal.defaultLocation = [p.coords.latitude,p.coords.longitude];
-		ready();
-	}, ready);
-} else {
-	ready();
-}
-
-function ready() {
-	Hebcal.ready = true;
-	if (typeof Hebcal.onready === 'function') {
-		Hebcal.onready();
-	}
+Hebcal.ready = true;
+if (typeof Hebcal.onready === 'function') {
+	finished = true;
+	Hebcal.onready();
 }

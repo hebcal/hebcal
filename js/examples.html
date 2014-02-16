@@ -46,15 +46,16 @@
 		</div>
 
 		<script type="text/javascript">
-var d = document, o, year;
+var d = document, o, year, today;
 Hebcal.onready = function() {
 	year = new Hebcal();
 	function load() {
 		o = d.querySelector('#textstyle').value;
+		today = year.find('today')[0];
 
-		d.querySelector('#today span').innerHTML = year.find('today')[0].toString(o) + '<br/>' + Hebcal.defaultCity;
-		d.querySelector('#today pre').innerHTML = JSON.stringify(year.find('today')[0].getZemanim(), null, '\t');
-		d.querySelector('#today div').innerHTML = JSON.stringify(year.find('today')[0].holidays().map(function(h){return h.getDesc(o)}), null, '\t');
+		d.querySelector('#today span').innerHTML = today.toString(o) + '<br/>' + Hebcal.defaultCity;
+		d.querySelector('#today pre').innerHTML = JSON.stringify(today.getZemanim(), null, '\t');
+		d.querySelector('#today div').innerHTML = today.getSedra(o) + '<br/>' + today.holidays().map(function(h){return h.getDesc(o)}).join('<br/>');
 	}
 	load();
 

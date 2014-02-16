@@ -5,10 +5,10 @@
 
 	https://github.com/hebcal/hebcal
 
-	This program is free software; you can redistribute it and/or
-	modify it under the terms of the GNU General Public License
-	as published by the Free Software Foundation; either version 2
-	of the License, or (at your option) any later version.
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
 
 	This program is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -24,13 +24,13 @@
 	Michael Radwin has made significant contributions as a result of
 	maintaining hebcal.com.
 
-	The JavaScript code was completely rewritten in 2014 by Scimonster
+	The JavaScript code was completely rewritten in 2014 by Eyal Schachter
  */
 var c = require('./common'),
 	greg = require('./greg'),
 	Sedra = require('./sedra')(HDate),
 	suncalc = require('suncalc'),
-	cities = require('./cities')(HDate);
+	cities = require('./cities');
 
 suncalc.addTime(-16.1, 'alot_hashacher', undefined);
 suncalc.addTime(-11.5, 'misheyakir', undefined);
@@ -42,7 +42,9 @@ function HDate(day, month, year) {
 		case 0:
 			return new HDate(new Date());
 		case 1:
-			if (day instanceof Date) {
+			if (typeof day === 'undefined') {
+				return new HDate();
+			} else if (day instanceof Date) {
 				// we were passed a Gregorian date, so convert it
 				var d = abs2hebrew(greg.greg2abs(day));
 				if (d.sunset() < day) {
@@ -97,10 +99,10 @@ Object.defineProperty(HDate, 'defaultCity', {
 	enumerable: true,
 	configurable: true,
 
-	get: function defaultCityGet() {
+	get: function() {
 		return cities.nearest(HDate.defaultLocation[0], HDate.defaultLocation[1]);
 	},
-	set: function defaultCitySet(city) {
+	set: function(city) {
 		var loc = cities.getLocation(cities.getCity(city));
 		HDate.defaultLocation = [loc.lat, loc.long];
 	}
@@ -108,12 +110,18 @@ Object.defineProperty(HDate, 'defaultCity', {
 
 function fixDate(date) {
 	if (date.day < 1) {
+		if (date.month == c.months.TISHREI) {
+			date.year -= 1;
+		}
 		date.month -= 1;
 		date.day += c.max_days_in_heb_month(date.month + 1, date.year);
 		fixMonth(date);
 		fixDate(date);
 	}
 	if (date.day > c.max_days_in_heb_month(date.month, date.year)) {
+		if (date.month == c.months.ELUL) {
+			date.year += 1;
+		}
 		date.month += 1;
 		date.day -= c.max_days_in_heb_month(date.month -1, date.year);
 		fixMonth(date);
@@ -285,7 +293,7 @@ HDate.prototype.getMonthName = function getMonthName(o) {
 
 HDate.prototype.getSedra = function getSedra(o) {
 	return (new Sedra(this.getFullYear(), this.il)).getSedraFromHebcalDate(this).map(function(p){
-		return c.LANGUAGE(p, o || this.il);
+		return c.LANGUAGE(p, o);
 	});
 };
 
@@ -320,22 +328,6 @@ HDate.prototype.setLocation = function setLocation(lat, lon) {
 
 	return this;
 };
-
-function getSunTimes(hdate) {
-	if (!(hdate instanceof HDate) || typeof hdate.lat != 'number' || typeof hdate.long != 'number') {
-		throw new TypeError('bad object given to getSunTimes()');
-	}
-	var g = hdate.greg(), d = new Date();
-	g.setHours(d.getHours());
-	g.setMinutes(d.getMinutes());
-
-	var times = suncalc.getTimes(g, hdate.lat, hdate.long);
-
-	hdate.sunrise = times.sunrise;
-	hdate.sunset = times.sunset;
-
-	hdate.hour = (hdate.sunset - hdate.sunrise) / 12; // ms in hour
-}
 
 HDate.prototype.sunrise = function sunrise() {
 	var g = this.greg(), d = new Date();
@@ -402,13 +394,13 @@ var zemanim = {
 	sof_zman_tfilla: function sof_zman_tfilla(hdate) { // Gra
 		return new Date(hdate.sunrise().getTime() + (hdate.hour() * 4));
 	},
-	mincha_gedola: function mincha_gedola(hdate) { // Gra
+	mincha_gedola: function mincha_gedola(hdate) {
 		return new Date(hdate.sunrise().getTime() + (hdate.hour() * 6.5));
 	},
-	mincha_ketana: function mincha_ketana(hdate) { // Gra
+	mincha_ketana: function mincha_ketana(hdate) {
 		return new Date(hdate.sunrise().getTime() + (hdate.hour() * 9.5));
 	},
-	plag_hamincha: function plag_hamincha(hdate) { // Gra
+	plag_hamincha: function plag_hamincha(hdate) {
 		return new Date(hdate.sunrise().getTime() + (hdate.hour() * 10.75));
 	},
 	tzeit: function tzeit(hdate) {
