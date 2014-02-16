@@ -1,107 +1,80 @@
-// $Header$
 /*
-   Hebcal - A Jewish Calendar Generator
-   Copyright (C) 2007  Danny Sadinoff
+	Hebcal - A Jewish Calendar Generator
+	Copyright (C) 1994-2004  Danny Sadinoff
+	Portions Copyright (c) 2002 Michael J. Radwin. All Rights Reserved.
 
-   Hebcal is distributed under the GNU Public License.  The program
-   and its source code may be freely distributed.  For details, see
-   the file COPYING in the distribution.
+	https://github.com/hebcal/hebcal
 
-Hebcal is, at root, a port of the GNU Emacs Calendar lisp
-code by Edward M. Reingold and Nachum Dershowitz.
-http://emr.cs.iit.edu/~reingold/ 
-http://www.math.tau.ac.il/~nachumd/
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
 
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
 
-Michael Radwin has made significant contributions as a result of
-maintaining hebcal.com.
-*/   
+	You should have received a copy of the GNU General Public License
+	along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+	Danny Sadinoff can be reached at 
+	danny@sadinoff.com
 
-// #define SUN 0
-// #define MON 1
-// #define TUE 2
-// #define WED 3
-// #define THU 4
-// #define FRI 5
-// #define SAT 6
+	Michael Radwin has made significant contributions as a result of
+	maintaining hebcal.com.
 
-// #define JAN 1
-HebcalGregorianDate.FEB = 2;
-// #define MAR 3
-// #define APR 4
-// #define MAY 5
-// #define JUN 6
-// #define JUL 7
-// #define AUG 8
-// #define SEP 9
-// #define OCT 10
-// #define NOV 11
-// #define DEC 12
-
-/* 1-based months */
-function HebcalGregorianDate( gYear, gMonth, gDay ){
-    this.gYear = gYear;
-    this.gMonth = gMonth;
-    this.gDay = gDay;
-}
-
-HebcalGregorianDate.prototype.toString = function(){
-    return "["+this.gYear  +"-"
-    + this.gMonth  +"-"
-    + this.gDay + "]";
-}
-
-
-
-/**
-   return true if  year is  a gregorian leap year.
+	The JavaScript code was completely rewritten in 2014 by Eyal Schachter
  */
-function leap(y) {
-    y = Math.floor(y);
-	return (y % 400 == 0) 
-            || (y % 100 != 0 
-                && y % 4 == 0);
-}
-
-/*
- *Return the day number within the year of the date DATE.
- *For example, dayOfYear({1,1,1987}) returns the value 1
- *while dayOfYear({12,31,1980}) returns 366.
- */
-function dayOfYear( gregDt )
-{
-    var dOY = gregDt.gDay + 31 * (gregDt.gMonth - 1);
-    if (gregDt.gMonth > HebcalGregorianDate.FEB)
-    {
-        dOY -= Math.floor((4 * gregDt.gMonth + 23) / 10);
-        if (leap(gregDt.gYear))
-            dOY++;
-    }
-    return dOY;
-}
-
-
-
-/**
-   takes a HebcalGregorianDate as input and returns a 
-   Julian day number as output.
- */
-function greg2abs(  gregDt )			/* "absolute date" */ 
-{
-    return (dayOfYear (gregDt)	/* days this year */
-            + 365 *  (gregDt.gYear - 1)	/* + days in prior years */
-            +  ( Math.floor((gregDt.gYear - 1) / 4)	/* + Julian Leap years */
-                - Math.floor((gregDt.gYear - 1) / 100)	/* - century years */
-                + Math.floor((gregDt.gYear - 1) / 400)));	/* + Gregorian leap years */
-}
-
-
-HebcalGregorianDate.GregMonthLengths = 
-[
-    [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
-    [0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+exports.monthNames = [
+	'',
+	'January',
+	'February',
+	'March',
+	'April',
+	'May',
+	'June',
+	'July',
+	'August',
+	'September',
+	'October',
+	'November',
+	'December'
 ];
+
+exports.monthLengths = [
+	[0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+	[0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+];
+
+exports.shortDayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+function dayOfYear (date) {
+	if (!date instanceof Date) {
+		throw new TypeError('Argument to greg.dayOfYear not a Date');
+	}
+	var doy = date.getDate() + 31 * date.getMonth();
+	if (date.getMonth() > 1) { // FEB
+		doy -= Math.floor((4 * (date.getMonth() + 1) + 23) / 10);
+		if (LEAP(date.getFullYear())) {
+			doy++;
+		}
+	}
+	return doy;
+}
+exports.dayOfYear = dayOfYear;
+
+function LEAP (year) {
+	return (year % 4) > 0 && ( (year % 100) === 0 || (year % 400) > 0 );
+}
+
+exports.greg2abs = function greg2abs(date) { // "absolute date"
+	return (dayOfYear(date) + // days this year
+			365 * (date.getFullYear() - 1) + // + days in prior years
+			( Math.floor((date.getFullYear() - 1) / 4) - // + Julian Leap years
+			Math.floor((date.getFullYear() - 1) / 100) + // - century years
+			Math.floor((date.getFullYear() - 1) / 400))); // + Gregorian leap years
+};
 
 
 /*
@@ -110,32 +83,45 @@ HebcalGregorianDate.GregMonthLengths =
  * Clamen, Software--Practice and Experience, Volume 23, Number 4
  * (April, 1993), pages 383-404 for an explanation.
  */
-function abs2greg( theDate ){
-//   int day, year, month, mlen;
-//   date_t d;
-//   long int d0, n400, d1, n100, d2, n4, d3, n1;
+exports.abs2greg = function abs2greg(theDate) {
+// calculations copied from original JS code
 
-  var d0 = theDate - 1;
-  var n400 = Math.floor(d0 / 146097);
-  var d1 =  Math.floor(d0 % 146097);
-  var n100 =  Math.floor(d1 / 36524);
-  var d2 = d1 % 36524;
-  var n4 =  Math.floor(d2 / 1461);
-  var d3 = d2 % 1461;
-  var n1 =  Math.floor(d3 / 365);
+	var d0 = theDate - 1;
+	var n400 = Math.floor(d0 / 146097);
+	var d1 =  Math.floor(d0 % 146097);
+	var n100 =  Math.floor(d1 / 36524);
+	var d2 = d1 % 36524;
+	var n4 =  Math.floor(d2 / 1461);
+	var d3 = d2 % 1461;
+	var n1 =  Math.floor(d3 / 365);
 
-  var day =  ((d3 % 365) + 1);
-  var year =  (400 * n400 + 100 * n100 + 4 * n4 + n1);
+	var day = ((d3 % 365) + 1);
+	var year = (400 * n400 + 100 * n100 + 4 * n4 + n1);
 
-  if (4 == n100 || 4 == n1)
-      return new HebcalGregorianDate( year, 12, 31 );
+	if (4 == n100 || 4 == n1) {
+		return new Date(year, 11, 31);
+	}
 
-  year++;
-  month = 1;
-  while ((mlen = HebcalGregorianDate.GregMonthLengths[+leap(year)][month]) < day){
-      day -= mlen;
-      month++;
-  }
-  return new HebcalGregorianDate( year, month, day );
-}
+	year++;
 
+
+	var d = new Date(year, 0, day); // new Date() is very smart
+	d.setFullYear(year);
+	return d;
+
+
+	console.log(year)
+	var month = 1, mlen;
+	console.log(month)
+	console.log(day)
+	while ((mlen = exports.monthLengths[+LEAP(year)][month]) < day){
+		day -= mlen;
+		month++;
+	console.log(month)
+	console.log(day)
+	}
+	var d = new Date(year, month-1, day);
+	d.setFullYear(year);
+	console.log(d)
+	return d;
+};

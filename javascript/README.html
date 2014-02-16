@@ -1,0 +1,428 @@
+<h1>Hebcal JavaScript</h1>
+<p>Original C written by Danny Sadinoff, with portions by Michael J. Radwin.<br>2014 JavaScript port by Eyal Schachter (age 15).</p>
+<h2>Description</h2>
+<p>Hebcal JS is a JavaScript API to aid working with the Hebrew calendar. It is available for both browser and Node.JS.</p>
+<p>It can convert between Hebrew and Gregorian dates, get weekly sedra, holidays, and halachik times (<em>zemanim</em>).</p>
+<p>You can include it in a client-side (browser) script with the <code>client.min.js</code> script in this directory. It exposes a global variable, <code>Hebcal</code>. For Node, install <code>hebcal</code> from NPM...</p>
+<pre><code class="lang-sh">$ npm install hebcal</code></pre>
+<p>...and include Hebcal with <code>var Hebcal = require(&#39;hebcal&#39;);</code></p>
+<p>Hebcal JS is currently at version 2.0. It is approximately equivalent to Hebcal C 3.14.<br>I (Eyal) did not write Hebcal JS 1.0. 2.0 is a nearly-complete rewrite of it.</p>
+<h2>Contributors</h2>
+<p>Hebcal JS was ported from C by Eyal Schachter.</p>
+<p>The original C and JavaScript code was written by Danny Sadinoff, with contributions by Michael J. Radwin.</p>
+<h2>License</h2>
+<p>Copyright (C) 1994-2011 Danny Sadinoff<br>Portions Copyright (c) 2011 Michael J. Radwin. All Rights Reserved.</p>
+<p>Hebcal JavaScript is distributed under the GNU Public License version 3. The original Hebcal C is under the GPLv2. The program and its source code may be freely distributed. For details, see the file COPYING in the distribution.</p>
+<p>Remember, the GPL means you can&#39;t use this in a closed-source program!</p>
+<p>If you are going to use this program, please drop me a line. I&#39;d like to know who you are, what version you&#39;re using, and how you&#39;re using Hebcal, and anything else you&#39;d like to tell me, so that I can adjust the program to meet users&#39; needs.</p>
+<h1>API</h1>
+<p>This is where every property and method is listed.</p>
+<h2>Information on certain standards</h2>
+<h3>Descriptions</h3>
+<p>Sometimes a &quot;description array&quot; will be mentioned. This is an array with between 1 and 3 properties: <code>[Sfardit pronounciation[, Ashkenazis pronounciation[, Hebrew spelling]]]</code>.</p>
+<p>Methods that fetch a value from this array expect one of the following strings: &quot;a&quot; for Ashkenazis, &quot;h&quot;, for Hebrew, and anything else for Sfardit.</p>
+<h3>Month names</h3>
+<p>Hebcal is not too particular about month names, and only checks up to the second letter. That means that, despite being totally incorrect, &quot;cheese&quot; will return the same value as &quot;cheshvan&quot;. Month names work in both Hebrew and English.</p>
+<p>Nisan, Iyyar, Sivan, Tamuz, Av, Elul, Tishrei, Cheshvan, Kislev, Tevet, Shvat, Adar (1, 2).<br>ניסו, אייר, סיון, תמוז, אב, אלול, תשרי, חשון, כסלב, טבת, שבט, אדר (1, 2).</p>
+<h3>Sun times</h3>
+<p>Hebcal JS uses the <a href="https://github.com/mourner/suncalc">SunCalc</a> JavaScript library to calculate sun times. They do not provide an accuracy claim, but I have found their times to be up to 3 minutes off from the accepted times. Do not rely on Zemanim until the last moment!</p>
+<h3>Finding location in browser</h3>
+<p>Both scripts run on the exact same code, except for one thing. In the browser, Hebcal will attempt to set <code>Hebcal.defaultLocation</code> to the user&#39;s location using the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Geolocation">geolocation</a> API. The <code>Hebcal.onready</code> event is fired once the location has been obtained, or failed to be obtained.</p>
+<p>This will cause any webpages with the Hebcal script to request the user&#39;s permission to view their location. If they deny it, the default location will be <code>[0, 0]</code>.</p>
+<p>To turn of this feature, use the <code>client.noloc.min.js</code> script instead of the usual <code>client.min.js</code> script. The unminified version is <code>client.noloc.js</code>.</p>
+<h2><code>Hebcal</code></h2>
+<p>The global variable (if running in the browser) <code>Hebcal</code> is the entrypoint to Hebcal. It is a constructor returning an object represtenting a Hebrew year, and also has other useful properties.</p>
+<pre><code>new Hebcal([year[, month]]);</code></pre>
+<p><code>year</code>, if provided, should be an <code>int</code> representing a Hebrew year, for example, <code>5774</code>. If it is falsey (includes <code>null</code>, <code>undefined</code>, <code>0</code>, <code>false</code>, etc), it defaults to the current year. If it is not falsy, and not a number, Hebcal will throw an error.</p>
+<p><code>month</code>, if provided, supports multiple types:<br><em> String -- The name of a single month.
+</em> Number -- The number of a single month (Nisan is 1, Tishrei 7).<br>* Array -- An array of either of the above two, or mixed. Basically, anything that can be passed to <code>Hebcal.Month</code> (see below).<br>If not provided, it defaults to all of the months in the given <code>year</code>.<br>If it is a different type, Hebcal will throw an error.</p>
+<p>To get the full current year:</p>
+<pre><code class="lang-js">var year = new Hebcal();</code></pre>
+<h3>Properties on <code>Hebcal</code> instances</h3>
+<h4><code>Hebcal.prototype.year</code></h4>
+<p>Number. The year represented in the <code>Hebcal</code>.</p>
+<h4><code>Hebcal.prototype.months</code></h4>
+<p>Array of <code>Hebcal.Month</code>s. Is not intended to be used directly, but rather with the <code>getMonth()</code> and <code>map()</code> methods.</p>
+<h4><code>Hebcal.prototype.holidays</code></h4>
+<p>Array of holidays, as <code>Hebcal.holidays.Event</code>s, for the represented year. Can be used directly.</p>
+<h4><code>Hebcal.prototype.length</code></h4>
+<p>Number of days in the year.</p>
+<h4><code>Hebcal.prototype.il</code></h4>
+<p>Boolean get/set. Whether the current location is in Israel or not. This is relevant with regards to holidays.<br>This gets set by <code>Hebcal.defaultCity</code>, and <code>year.setCity()</code>. It&#39;s possible that you may have to set it yourself in certain circumstances.</p>
+<h4><code>Hebcal.prototype.lat</code> and <code>long</code></h4>
+<p>Number get/sets. The latitude and longitude of the current location. This is relevant with regards to getting times for dates.<br>Default: 0.</p>
+<h4><code>Hebcal.prototype.setCity(city)</code></h4>
+<pre><code class="lang-js">year.setCity(&#39;Jerusalem&#39;);</code></pre>
+<p>Sets the lat/long to the given city&#39;s location. Returns the <code>Hebcal</code> it was called upon. This allows for easy method chaining.</p>
+<p>For more information regarding cities, see <code>Hebcal.cities</code> below.</p>
+<h4><code>Hebcal.prototype.setLocation(latitude, longitude)</code></h4>
+<pre><code class="lang-js">year.setLocation(40.716, -74.016); // coords of New York</code></pre>
+<p>Sets the lat/long to the given location. Returns the <code>Hebcal</code> it was called upon.</p>
+<h4><code>Hebcal.prototype.isLeapYear()</code></h4>
+<pre><code class="lang-js">var isleap = year.isLeapYear();</code></pre>
+<p>Takes 0 arguments, returns a boolean.</p>
+<h4><code>Hebcal.prototype.next()</code></h4>
+<pre><code class="lang-js">var nextYear = year.next();</code></pre>
+<p>Takes 0 arguments, returns <code>Hebcal</code> representing the following year.</p>
+<h4><code>Hebcal.prototype.prev()</code></h4>
+<pre><code class="lang-js">var prevYear = year.prev();</code></pre>
+<p>Takes 0 arguments, returns <code>Hebcal</code> representing the preceding year.</p>
+<h4><code>Hebcal.prototype.getMonth(month)</code></h4>
+<pre><code class="lang-js">var tishrei = year.getMonth(7);
+var adar2 = year.getMonth(-1);
+var shvat = year.getMonth(&#39;shvat&#39;);
+var elul = year.getMonth(&#39;אלול&#39;);
+var nextNisan = year.getMonth(13); // in a non-leap year</code></pre>
+<p>Takes a single argument, the month to get. Returns <code>Hebcal.Month</code> representing the requested month.</p>
+<p>If the month is a positive number, it is a month index. Remember, Nisan is 1, Tishrei 7.<br>If the month is a negative number, it is a month index from the end of the year.<br>If the month is a string, it can be a month name in Hebrew or English.</p>
+<h4><code>Hebcal.prototype.map(mapFunc[, thisArg])</code></h4>
+<p>A shortcut for <code>year.months.map(mapFunc, [thisArg])</code>.</p>
+<h4><code>Hebcal.prototype.addHoliday(event)</code></h4>
+<p>Add a holiday to the list of holidays. Throws an error if <code>event</code> is not a <code>Hebcal.holidays.Event</code>. Returns the <code>Hebcal</code> it was called upon.</p>
+<pre><code class="lang-js">year.addHoliday(new Hebcal.holidays.Event(new Date(2014,0,1), &#39;New Years Day&#39;, Hebcal.holidays.masks.USER_EVENT));</code></pre>
+<p>See <code>Hebcal.holidays</code> for more information on creating an event.</p>
+<h4><code>Hebcal.prototype.find()</code></h4>
+<p>A &quot;magical&quot; method that allows finding dates in the year. It supports several types of arguments, and is extensible. Returns an array of <code>Hebcal.HDate</code>s.</p>
+<p>If called with a single argument:</p>
+<ul>
+<li><code>Hebcal.HDate</code>: Find that Hebrew date in the year. This is useful, because getting a date specifically from the year, and not recreating it, gives it a few additional properties, such as a pre-set location, and a reference to the containing year.</li>
+<li><code>Date</code>: Find that Gregorian date in the year.</li>
+<li><code>Array</code>: An array of acceptible arguments to <code>year.find()</code>. If an item is an array, it is treated as passing multiple arguments to <code>find()</code>.</li>
+<li><code>String</code>: A description of a date. See <code>find.strings</code> below.</li>
+</ul>
+<p>If called with two arguments: the first represents a day, or list of days, in a month; and the second represents a month, or list of months.<br>The day is anything that can be passed to <code>Hebcal.Month.prototype.find()</code> (see below).<br>If the month is a:</p>
+<ul>
+<li><code>Hebcal.Month</code>: Search for the day in that month. This is usually used only internally; it&#39;s more user-friendly to use one of the other types.</li>
+<li><code>Number</code>: A number to be given to <code>Hebcal.prototype.getMonth()</code>.</li>
+<li><code>String</code>: A month name.</li>
+<li><code>Array</code>: An array of any of the above, mixed as you please.</li>
+</ul>
+<h5><code>Hebcal.prototype.find.strings</code></h5>
+<p>This is technically a function for internal use, but it also serves as the extension point for passing strings. Simply set a property on it, and that can be used as a string to <code>Hebcal.prototype.find()</code>.<br>To let the passed string be more user-friendly, the following conversions are done: convert to lowercase; replace spaces with underscores. This means that &quot;rosh chodesh&quot;, &quot;Rosh Chodesh&quot;, and &quot;ROSH_CHODESH&quot; all evaluate to &quot;rosh_chodesh&quot;.</p>
+<p>The following properties are defined by default:</p>
+<ul>
+<li><code>rosh_chodesh</code> (all roshei chodashim in the year)</li>
+<li><code>holidays</code> (days with a holiday defined in <code>year.holidays</code>)</li>
+<li><code>omer</code> (days in sefirat ha&#39;omer)</li>
+<li><code>pesach</code></li>
+<li><code>sukkot</code> (aliased as <code>sukkos</code>, <code>succot</code>, <code>succos</code>)</li>
+<li><code>shavuot</code> (aliased as <code>shavuos</code>)</li>
+<li><code>rosh_hashana</code> (aliased as <code>rosh_hashanah</code>)</li>
+<li><code>today</code></li>
+<li><code>yesterday</code></li>
+<li><code>tomorrow</code></li>
+</ul>
+<p>To extend the list, add a property of <code>Hebcal.prototype.find.strings</code>. The name should be all lowercase, and spaces replaced with underscores, as described above. The property itself should be a function taking a no arguments. Within the function, <code>this</code> refers to the object that <code>find()</code> is being called on. It should return an Array. It is perfectly acceptible to return the result of another <code>find()</code> call.</p>
+<h2><code>Hebcal.addZeman(zeman, func)</code></h2>
+<p>An alias of <code>Hebcal.HDate.addZeman</code>. See there.</p>
+<h2><code>Hebcal.cities</code></h2>
+<p>Get locations for several cities around the world.</p>
+<h3><code>Hebcal.cities.getCity(cityName)</code></h3>
+<p>Returns an array describing the location of a city, or an array of <code>0</code>s if the city wasn&#39;t found. This array is intended to be passed to <code>Hebcal.cities.getLocation()</code>.</p>
+<p><code>[latdeg, latmins, longdeg, longmins, Israel]</code></p>
+<h3><code>Hebcal.cities.getLocation(cityInfo)</code></h3>
+<p>Is intended to receive the return value of <code>getCity()</code>. Returns an object containing 2 properties: <code>lat</code> and <code>long</code>, with the numbers in degrees, including minutes.</p>
+<p>An end-user should rarely need either of these; they are mainly used by <code>Hebcal.defaultCity</code> and <code>Hebcal.setCity()</code> and the methods they call.</p>
+<h3><code>Hebcal.cities.listCities()</code></h3>
+<p>Return an array containing the names of all supported cities.</p>
+<h3><code>Hebcal.cities.addCity(city, info)</code></h3>
+<p>Add a city to the list of cities. The first argument should be the name, the second an array of the kind that <code>getCity()</code> returns.<br>This method does not return anything.</p>
+<h3><code>Hebcal.cities.nearest(lat, long)</code></h3>
+<p>Return the name of the city nearest to the given coordinates.</p>
+<p>The coordinates can be given either as numbers, or as arrays of <code>[deg, mins]</code>.</p>
+<h2><code>Hebcal.defaultCity</code></h2>
+<p>String get/set. The nearest city to <code>Hebcal.defaultLocation</code>.</p>
+<h2><code>Hebcal.defaultLocation</code></h2>
+<p>Array of coordinates that are used as the default location when creating a new instance of <code>Hebcal</code> or <code>Hebcal.HDate</code>.</p>
+<p><code>[latdeg, longdeg]</code></p>
+<h2><code>Hebcal.holidays</code></h2>
+<p>A holiday/event interface.</p>
+<h3><code>Hebcal.holidays.masks</code></h3>
+<p>An object containing bitmasks for use when creating a <code>Hebcal.holidays.Event</code>.</p>
+<pre><code class="lang-js">masks.USER_EVENT          = 1;
+masks.LIGHT_CANDLES       = 2;
+masks.YOM_TOV_ENDS        = 4;
+masks.CHUL_ONLY           = 8; // chutz l&#39;aretz (Diaspora)
+masks.IL_ONLY             = 16; // b&#39;aretz (Israel)
+masks.LIGHT_CANDLES_TZEIS = 32;</code></pre>
+<h3><code>Hebcal.holidays.IGNORE_YEAR</code></h3>
+<p>A constant to be passed to both <code>Date</code> and <code>Hebcal.HDate</code> constructors. It means run this holiday every year, not just one specific year. It is automatically applied to Gregorian dates.</p>
+<h3><code>new Hebcal.holidays.Event(date, desc[, masks])</code></h3>
+<p>A constructor for Events. This is meant to be added to a holidays list.</p>
+<p><code>date</code> can be either a Gregorian <code>Date</code> object or a <code>Hebcal.HDate</code> object. If Gregorian, <code>Hebcal.holidays.IGNORE_YEAR</code> is assumed.</p>
+<p><code>desc</code> can be a description array, or string. A description array looks like: <code>[Sfardit pronounciation[, Ashkenazis pronounciation[, Hebrew spelling]]]</code>. If the Sfardit and Ashkenazis are the same, pass <code>null</code> for Ashkenazis.</p>
+<p><code>masks</code> should be a bitmask of the items in <code>Hebcal.holidays.masks</code>. I.e. <code>Hebcal.holidays.masks.IL_ONLY | Hebcal.holidays.masks.YOM_TOV_ENDS</code>.</p>
+<h4><code>Hebcal.holidays.Event.prototype.date</code></h4>
+<p>A <code>Hebcal.HDate</code> representing the date passed to the constructor.</p>
+<h4><code>Hebcal.holidays.Event.prototype.desc</code></h4>
+<p>An Array, either the array passed as <code>desc</code>, or the string passed, wrapped in an array.</p>
+<h4><code>Hebcal.holidays.Event.prototype.IGNORE_YEAR</code></h4>
+<p>Boolean, whether or not we ignore the year of the date. Always true for Gregorian dates.</p>
+<h4><code>Hebcal.holidays.Event.prototype.USER_EVENT</code></h4>
+<h4><code>Hebcal.holidays.Event.prototype.LIGHT_CANDLES</code></h4>
+<h4><code>Hebcal.holidays.Event.prototype.YOM_TOV_ENDS</code></h4>
+<h4><code>Hebcal.holidays.Event.prototype.CHUL_ONLY</code></h4>
+<h4><code>Hebcal.holidays.Event.prototype.IL_ONLY</code></h4>
+<h4><code>Hebcal.holidays.Event.prototype.LIGHT_CANDLES_TZEIS</code></h4>
+<p>Booleans, whether or not the bitmasks for those values were provided.</p>
+<h4><code>Hebcal.holidays.Event.prototype.is([date[, il]])</code></h4>
+<p>Returns a Boolean, whether or not the event applies for a given date.</p>
+<p><code>date</code>, if provided, can be a <code>Hebcal.HDate</code> or a Gregorian <code>Date</code>. If undefined, defaults to the current date.</p>
+<p><code>il</code>, if provided, should be a Boolean whether or not you are in Israel. If undefined, defaults to the value of <code>Hebcal.holidays.Event.isIL</code>.</p>
+<h4><code>Hebcal.holidays.Event.prototype.masks()</code></h4>
+<p>Returns a number representing the original bitmask passed to the constructor.</p>
+<h4><code>Hebcal.holidays.Event.prototype.getDesc(o)</code></h4>
+<p>Returns a string of the description. <code>o</code> can be one of the standard language strings.</p>
+<h4><code>Hebcal.holidays.Event.prototype.candleLighting()</code></h4>
+<p>Return a <code>Date</code> object representing the candle-lighting time for an event, if applicable. Otherwise, returns null.</p>
+<p>The number of minutes before sunset can be customized with the <code>Hebcal.holidays.Event.candleLighting</code> property.</p>
+<h4><code>Hebcal.holidays.Event.prototype.havdalah()</code></h4>
+<p>Return a <code>Date</code> object representing the havdalah time for an event, if applicable. Otherwise, returns null.</p>
+<p>The number of minutes after sunset can be customized with the <code>Hebcal.holidays.Event.havdalah</code> property.</p>
+<h4><code>Hebcal.holidays.Event.isIL</code></h4>
+<p>Boolean, are we in Israel? Is not automatically set. Default <code>false</code>.</p>
+<h4><code>Hebcal.holidays.Event.candleLighting</code></h4>
+<p>The number of minutes before sunset to light candles. Defaults to 18.</p>
+<h4><code>Hebcal.holidays.Event.havdalah</code></h4>
+<p>The number of minutes after sunset to make havdalah. Defaults to 50.</p>
+<h3><code>Hebcal.holidays.standards</code></h3>
+<p>Array of standard holidays that do not change based on years. Is used internally, and exported only incidentally.</p>
+<h3><code>Hebcal.holidays.getHolidaysForYear(year)</code></h3>
+<p>Returns an array of all holidays for the year, including variable ones. Is used internally, and exported only incidentally.</p>
+<h2><code>Hebcal.candleLighting</code></h2>
+<p>An alias of <code>Hebcal.holidays.Event.candleLighting</code>.</p>
+<h2><code>Hebcal.havdalah</code></h2>
+<p>An alias of <code>Hebcal.holidays.Event.havdalah</code>.</p>
+<h2><code>Hebcal.gematriya(num | string[, limit])</code></h2>
+<p>Return a gematriya string from a number, or a number from a string. Is imperfect above 1000.</p>
+<p>The <code>limit</code> parameter can be a number, which is how many digits to truncate the original number to. Digits are removed from the beginning.</p>
+<pre><code class="lang-js">Hebcal.gematriya(5774, 3) === &#39;תשע&quot;ד&#39; // first converted to 774
+Hebcal.gematriya(5774) === &#39;התשע&quot;ד&#39;
+Hebcal.gematriya(5) === &quot;ה&#39;&quot;
+Hebcal.gematriya(&#39;התשע&quot;ד&#39;) === 5774 // the ה before a high number means 5000
+Hebcal.gematriya(&#39;ה&quot;ד&#39;) === 9 // just adds them up
+Hebcal.gematriya(1234) === &#39;תתררל&quot;ד&#39;</code></pre>
+<h2><code>Hebcal.range(start, end[, step])</code></h2>
+<p>Return an array containing numbers between <code>start</code> and <code>end</code>, at an interval of <code>step</code>. Can be useful with <code>find()</code>, for fetching a bunch of days.</p>
+<p><code>step</code> defaults to 1 if not provided.</p>
+<pre><code class="lang-js">Hebcal.range(1, 10) // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+Hebcal.range(1, 10, 2) // [1, 3, 5, 7, 9]
+Hebcal.range(15, 1, 3) // [15, 12, 9, 6, 3]
+Hebcal.range(1, 2, 0.25) // [1, 1.25, 1.5, 1.75, 2]</code></pre>
+<h2><code>new Hebcal.Month(month, year)</code></h2>
+<p>This constructor contains information on a Hebrew month. It is not intended to be directly constructed, but is fetched by <code>Hebcal.prototype.getMonth()</code>, so is useful to the end-user.</p>
+<pre><code class="lang-js">var month = new Hebcal.Month(7, 5774); // Tishrei
+var month = new Hebcal.Month(&#39;Tishrei&#39;, 5774); // Tishrei</code></pre>
+<p><code>month</code> can be a month name or number; <code>year</code> must be a number. An error is thrown if one of these conditions is not met.</p>
+<h3><code>Hebcal.Month.prototype.month</code></h3>
+<p>A number representing the <code>month</code> argument to the constructor.</p>
+<h3><code>Hebcal.Month.prototype.year</code></h3>
+<p>A number representing the <code>year</code> argument to the constructor.</p>
+<h3><code>Hebcal.Month.prototype.days</code></h3>
+<p>An array of days in the month. Each day is an instance of <code>Hebcal.HDate</code>.</p>
+<h3><code>Hebcal.Month.prototype.length</code></h3>
+<p>Number; the length of the month. Equivalent to the length of the <code>days</code> array.</p>
+<h3><code>Hebcal.Month.prototype.il</code></h3>
+<p>Boolean get/set. Whether or not the location is in Israel. Is usually set by the parent year.</p>
+<h3><code>Hebcal.Month.prototype.lat</code>, <code>Hebcal.Month.prototype.long</code></h3>
+<p>Number get/set. Latitude/Longitude of the location. Is usually set by the parent year.</p>
+<h3><code>Hebcal.Month.prototype.__year</code></h3>
+<p>Internal, non-enumerable. A reference to the containing year. Only set if the month was created by a <code>Hebcal()</code>.</p>
+<h3><code>Hebcal.Month.prototype.isLeapYear()</code></h3>
+<p>Returns a Boolean, whether or not the year is a leap year.</p>
+<h3><code>Hebcal.Month.prototype.prev()</code></h3>
+<p>Returns a <code>Hebcal.Month</code> representing the previous month.</p>
+<h3><code>Hebcal.Month.prototype.next()</code></h3>
+<p>Returns a <code>Hebcal.Month</code> representing the following month.</p>
+<h3><code>Hebcal.Month.prototype.getDay(day)</code></h3>
+<p>Returns a <code>Hebcal.HDate</code> at a 1-based index in the month. Negative indices are from the end of the month.</p>
+<h3><code>Hebcal.Month.prototype.getYearObject()</code></h3>
+<p>Returns <code>this.__year</code> internal value.</p>
+<h3><code>Hebcal.Month.prototype.getName(o)</code></h3>
+<p>Returns a string with the name of the month. Takes a standard options string.</p>
+<h3><code>Hebcal.Month.prototype.rosh_chodesh()</code></h3>
+<p>Returns an array containing <code>Hebcal.HDate</code>s for that month&#39;s Rosh Chodesh. Returns an array whether Rosh Chodesh is one or two days.</p>
+<h3><code>Hebcal.Month.prototype.map(mapFunc[, thisArg])</code></h3>
+<p>A shortcut for <code>month.days.map(mapFunc, [thisArg])</code>.</p>
+<h3><code>Hebcal.Month.prototype.find(day)</code></h3>
+<p>A method similar to <code>Hebcal.prototype.find()</code> (see there), but specifically for a single month.</p>
+<p>If <code>day</code> is a number, it is a 1-based index in the month. String, <code>Hebcal.HDate</code>, <code>Date</code>, and Array rules are the same as for <code>Hebcal.prototype.find()</code>.</p>
+<p>Default strings are:</p>
+<ul>
+<li><code>rosh_chodesh</code>: Same as <code>Hebcal.Month.prototype.rosh_chodesh()</code></li>
+<li><code>shabbat_mevarchim</code> (aliased as <code>shabbos_mevarchim</code>): The last Shabbat in the month.</li>
+</ul>
+<p>Strings are extensible in the same manner: Add a property of <code>Hebcal.Month.prototype.find.strings</code>. Name conversion rules and function context apply the same as with <code>Hebcal.prototype.find()</code>.</p>
+<p><code>find()</code> returns an array of <code>Hebcal.HDate</code>s.</p>
+<p>This method is sometimes called by <code>Hebcal.prototype.find()</code>.</p>
+<h2><code>new Hebcal.HDate([day[, month[, year]]])</code></h2>
+<p>An <code>HDate</code> represents a Hebrew date.</p>
+<p><code>HDate</code> supports multiple types.</p>
+<p>If 0 arguments are passed, or only one is and it is undefined, return an <code>HDate</code> object representing the current date.</p>
+<pre><code class="lang-js">var day = new Hebcal.HDate();`</code></pre>
+<p>If 1 argument is passed:</p>
+<ul>
+<li>Gregorian <code>Date</code>: An <code>HDate</code> object representing that date. If the date is after sunset, it is the next day.</li>
+<li><code>HDate</code>: Clone the object.</li>
+<li>String: Split the string by whitespace, and parse that.</li>
+<li>Number: Number of days since December 31, 1 BCE.</li>
+</ul>
+<pre><code class="lang-js">var day = new Hebcal.HDate(new Date(2014, 0, 1));
+var day = new Hebcal.HDate(&#39;1 Tishrei 5774&#39;);
+var day = new Hebcal.HDate(&#39;15 Adar2 5774&#39;);</code></pre>
+<p>If 2: An <code>HDate</code> with the given <code>day</code> and <code>month</code>, and the current year.</p>
+<pre><code class="lang-js">var day = new Hebcal.HDate(15, 1); // Pesach
+var day = new Hebcal.HDate(&quot;ו&#39;&quot;, &quot;סיון&quot;);</code></pre>
+<p>If 3: Numbers, or a month name for the second argument. Days and months are 1 based. If any values are out of range, e.g. the 31st of Nisan, convert them to proper values, i.e. 1st of Iyyar.</p>
+<pre><code class="lang-js">var day = new Hebcal.HDate(7, 2, 5770);
+var day = new Hebcal.HDate(40, &#39;elul&#39;, 5773); // 11 Tishrei 5774</code></pre>
+<p><code>Hebcal.HDate</code> will throw an error if bad arguments are passed.</p>
+<p>The location will be set to <code>Hebcal.defaultLocation</code>.</p>
+<h3><code>Hebcal.HDate.prototype.year</code></h3>
+<p>Number. The year passed to the constructor, possibly fixed up. It is preferred to get this value with <code>Hebcal.HDate.prototype.getFullYear()</code>.</p>
+<h3><code>Hebcal.HDate.prototype.month</code></h3>
+<p>Number. The month passed to the constructor, possibly fixed up. It is preferred to get this value with <code>Hebcal.HDate.prototype.getMonth()</code>.</p>
+<h3><code>Hebcal.HDate.prototype.day</code></h3>
+<p>Number. The day passed to the constructor, possibly fixed up. It is preferred to get this value with <code>Hebcal.HDate.prototype.getDate()</code>.</p>
+<h3><code>Hebcal.HDate.prototype.lat</code></h3>
+<h3><code>Hebcal.HDate.prototype.long</code></h3>
+<p>Numbers. The latitude/longitude of the location. These default to the values of <code>Hebcal.defaultLocation</code>.</p>
+<h3><code>Hebcal.HDate.prototype.il</code></h3>
+<p>Boolean. Whether the current location is in Israel or not. This is relevant with regards to holidays.<br>This gets set by <code>Hebcal.defaultCity</code>, and <code>day.setCity()</code>. It&#39;s possible that you may have to set it yourself in certain circumstances.</p>
+<h3><code>Hebcal.HDate.prototype.__month</code></h3>
+<p>Internal, non-enumerable. A reference to the containing month. Only set if the day was created by a <code>Hebcal.Month()</code>.</p>
+<h3><code>Hebcal.HDate.prototype.getFullYear()</code></h3>
+<p>Number. The year of the date.</p>
+<h3><code>Hebcal.HDate.prototype.getMonth()</code></h3>
+<p>Number. The month of the date. 1 is Nisan, 7 is Tishrei, 13 is Adar B.</p>
+<h3><code>Hebcal.HDate.prototype.getTishreiMonth()</code></h3>
+<p>Number. The Tishrei-based month of the date. 1 is Tishrei, 7 is Nisan, 13 is Elul in a leap year.</p>
+<h3><code>Hebcal.HDate.prototype.daysInMonth()</code></h3>
+<p>Number. The number of days in the month.</p>
+<h3><code>Hebcal.HDate.prototype.getDate()</code></h3>
+<p>Number. The day of the month of the date.</p>
+<h3><code>Hebcal.HDate.prototype.getDay()</code></h3>
+<p>Number. The day of the week of the date. 0 is Sunday, as with <code>Date.prototype.getDay()</code>.</p>
+<h3><code>Hebcal.HDate.prototype.setFullYear(year)</code></h3>
+<p>Sets the year of the date. Returns the object it was called upon.</p>
+<h3><code>Hebcal.HDate.prototype.setMonth(month)</code></h3>
+<p>Sets the month of the date. Returns the object it was called upon.</p>
+<h3><code>Hebcal.HDate.prototype.setTishreiMonth(month)</code></h3>
+<p>Sets the Tishrei-based month of the date. Returns the object it was called upon.</p>
+<h3><code>Hebcal.HDate.prototype.setDate(date)</code></h3>
+<p>Sets the day of the month of the date. Returns the object it was called upon.</p>
+<h3><code>Hebcal.HDate.prototype.greg()</code></h3>
+<p>Returns a <code>Date</code> object with the Gregorian date of the Hebrew date. The time is midnight.</p>
+<h3><code>Hebcal.HDate.prototype.gregEve()</code></h3>
+<p>Returns a <code>Date</code> object with the Gregorian date of the start of the Hebrew date, the previous evening. The time is sunset.</p>
+<h3><code>Hebcal.HDate.prototype.abs()</code></h3>
+<p>Return a number representing the number of days since December 31, 1 BCE, an &quot;absolute date&quot;.</p>
+<h3><code>Hebcal.HDate.prototype.toString(o)</code></h3>
+<p>Return a string with the current day, month, and year. Takes a standard language options string.</p>
+<pre><code class="lang-js">new Hebcal.HDate().toString() // 16 Adar I 5774
+new Hebcal.HDate(1,7,5769).toString() // 1 Tishrei 5769
+new Hebcal.HDate(15,1,5773).toString(&#39;h&#39;) // ט&quot;ו ניסן התשע&quot;ג</code></pre>
+<h3><code>Hebcal.HDate.prototype.getMonthName(o)</code></h3>
+<p>Return a string of the current month name. Takes a standard language options string.</p>
+<h3><code>Hebcal.HDate.prototype.getSedra(o)</code></h3>
+<p>Return an array of strings with the parshiot read on Shabbat, or a special event that takes precedence. Takes a standard language options string. Ashkenazis names for parshiot are not currently supported.</p>
+<pre><code class="lang-js">new Hebcal.HDate(24,12,5773).getSedra() // [ &#39;Vayakhel&#39;, &#39;Pekudei&#39; ]
+new Hebcal.HDate(18,1,5774).getSedra() // [ &#39;Chol hamoed Pesach&#39; ]
+new Hebcal.HDate(12,6,5774).getSedra() // [ &#39;Ki Tavo&#39; ]
+new Hebcal.HDate(15,7,5774).getSedra(&#39;a&#39;) // [ &#39;Chol hamoed Succos&#39; ]
+new Hebcal.HDate(19,12,5773).getSedra() // [ &#39;Ki Tisa&#39; ]
+new Hebcal.HDate(19,12,5773).getSedra(&#39;a&#39;) // [ &#39;Ki Tisa&#39; ]
+new Hebcal.HDate(8,8,5774).getSedra(&#39;h&#39;) // [ &#39;לך-לך&#39; ]</code></pre>
+<h3><code>Hebcal.HDate.prototype.setCity(city)</code></h3>
+<p>Set the location to the coordinates of a given city. For more about cities, see <code>Hebcal.cities</code>. Returns the object it was called upon.</p>
+<h3><code>Hebcal.HDate.prototype.setLocation(lat, long)</code></h3>
+<p>Set the location to the given coordinates. Returns the object it was called upon.</p>
+<p><code>lat</code> and <code>long</code> can be numbers, the coordinates in degrees, or arrays, <code>[deg, mins]</code>.</p>
+<h3><code>Hebcal.HDate.prototype.sunrise()</code></h3>
+<p>Returns a <code>Date</code> with the sunrise time for the day. This is calculated based on the location. Please read the SunCalc disclaimer.</p>
+<h3><code>Hebcal.HDate.prototype.sunset()</code></h3>
+<p>Returns a <code>Date</code> with the sunset time for the day. This is calculated based on the location. Please read the SunCalc disclaimer.</p>
+<h3><code>Hebcal.HDate.prototype.hour()</code></h3>
+<p>Returns the number of milliseconds in a halachik hour (sha&#39;a zmaniya). This is intended mostly for internal use.</p>
+<h3><code>Hebcal.HDate.prototype.hourMins()</code></h3>
+<p>Returns the number of minutes in a halachik hour (sha&#39;a zmaniya). This is more useful for most people than milliseconds.</p>
+<h3><code>Hebcal.HDate.prototype.nightHour()</code></h3>
+<p>Returns the number of milliseconds in a halachik hour for the night. This is intended mostly for internal use.</p>
+<h3><code>Hebcal.HDate.prototype.nightHourMins()</code></h3>
+<p>Returns the number of minutes in a halachik hour for the night. This is more useful for most people than milliseconds.</p>
+<h3><code>Hebcal.HDate.prototype.getZemanim()</code></h3>
+<p>Returns an object containing halachik times (zemanim) for the day. Each property is a <code>Date</code> object. By default, these are:</p>
+<ul>
+<li><code>chatzot</code> (calculated as sunrise + six hours)</li>
+<li><code>chatzot_night</code> (calculated as sunset + six hours)</li>
+<li><code>alot_hashacher</code> (calculated as when the sun is at -16.1 degrees, as per <a href="http://www.myzmanim.com/read/degrees.aspx">MyZmanim.com</a>)</li>
+<li><code>misheyakir</code> (calculated as when the sun is at -11.5 degrees, as per <a href="http://www.myzmanim.com/read/sources.aspx">MyZmanim.com</a>)</li>
+<li><code>misheyakir_machmir</code> (calculated as when the sun is at -10.2 degrees, as per <a href="http://www.myzmanim.com/read/sources.aspx">MyZmanim.com</a>)</li>
+<li><code>sof_zman_shma</code> (calculated as sunrise + 3 hours, according to the Gra and Baal HaTanya)</li>
+<li><code>sof_zman_tfilla</code> (calculated as sunrise + 4 hours, according to the Gra and Baal HaTanya)</li>
+<li><code>mincha_gedola</code> (calculated as sunrise + 6.5 hours)</li>
+<li><code>mincha_ketana</code> (calculated as sunrise + 9.5 hours)</li>
+<li><code>plag_hamincha</code> (calculated as sunrise + 10.75 hours)</li>
+<li><code>tzeit</code> (calculated as when the sun is at -8.5 degrees, as per <a href="http://www.myzmanim.com/read/sources.aspx">MyZmanim.com</a>)</li>
+</ul>
+<p>You can add a zeman to be returned with <code>Hebcal.HDate.addZeman()</code> (aliased as <code>Hebcal.addZeman()</code>).</p>
+<h3><code>Hebcal.HDate.prototype.next()</code></h3>
+<p>Return tomorrow. Or rather, an <code>HDate</code> representing the next day.</p>
+<p>If part of a <code>Hebcal()</code> year, return the day from the year. Otherwise, return a new object. (The difference is mainly with location, and back-reference to the month/year).</p>
+<h3><code>Hebcal.HDate.prototype.prev()</code></h3>
+<p>Return yesterday. Or rather, an <code>HDate</code> representing the previous day.</p>
+<p>If part of a <code>Hebcal()</code> year, return the day from the year. Otherwise, return a new object. (The difference is mainly with location, and back-reference to the month/year).</p>
+<h3><code>Hebcal.HDate.prototype.isSameDate(otherHDate)</code></h3>
+<p>Returns a Boolean whether or not the two dates represent the same day.</p>
+<h3><code>Hebcal.HDate.prototype.before(dayNumber)</code></h3>
+<p>Returns an <code>HDate</code> representing the last day <code>dayNumber</code> before the current date. Sunday is 0, Saturday 6.</p>
+<pre><code class="lang-js">new Hebcal.HDate(new Date(&#39;Wednesday February 19, 2014&#39;)).before(6).greg() // Sat Feb 15 2014</code></pre>
+<h3><code>Hebcal.HDate.prototype.nearest(dayNumber)</code></h3>
+<p>Returns an <code>HDate</code> representing the nearest <code>dayNumber</code> to the current date. Sunday is 0, Saturday 6.</p>
+<pre><code class="lang-js">new Hebcal.HDate(new Date(&#39;Wednesday February 19, 2014&#39;)).nearest(6).greg() // Sat Feb 22 2014
+new Hebcal.HDate(new Date(&#39;Tuesday February 18, 2014&#39;)).nearest(6).greg() // Sat Feb 15 2014</code></pre>
+<h3><code>Hebcal.HDate.prototype.onOrAfter(dayNumber)</code></h3>
+<p>Returns an <code>HDate</code> representing the a <code>dayNumber</code> on or after the current date. Sunday is 0, Saturday 6.</p>
+<pre><code class="lang-js">new Hebcal.HDate(new Date(&#39;Wednesday February 19, 2014&#39;)).onOrAfter(6).greg() // Sat Feb 22 2014
+new Hebcal.HDate(new Date(&#39;Saturday February 22, 2014&#39;)).onOrAfter(6).greg() // Sat Feb 22 2014
+new Hebcal.HDate(new Date(&#39;Sunday February 23, 2014&#39;)).onOrAfter(6).greg() // Sat Mar 01 2014</code></pre>
+<h3><code>Hebcal.HDate.prototype.after(dayNumber)</code></h3>
+<p>Returns an <code>HDate</code> representing the the first <code>dayNumber</code> after the current date. Sunday is 0, Saturday 6.</p>
+<pre><code class="lang-js">new Hebcal.HDate(new Date(&#39;Wednesday February 19, 2014&#39;)).after(6).greg() // Sat Feb 22 2014
+new Hebcal.HDate(new Date(&#39;Saturday February 22, 2014&#39;)).after(6).greg() // Sat Mar 01 2014
+new Hebcal.HDate(new Date(&#39;Sunday February 23, 2014&#39;)).after(6).greg() // Sat Mar 01 2014</code></pre>
+<h3><code>Hebcal.HDate.prototype.getMonthObject()</code></h3>
+<p>Return <code>this.__month</code> internal.</p>
+<h3><code>Hebcal.HDate.prototype.getYearObject()</code></h3>
+<p>Call <code>getYearObject()</code> of <code>this.getMonthObject()</code>.</p>
+<h3><code>Hebcal.HDate.prototype.holidays()</code></h3>
+<p>Return an array containing <code>Hebcal.holidays.Event</code>s applying to the current day.</p>
+<h3><code>Hebcal.HDate.prototype.omer()</code></h3>
+<p>Return a number representing the day of Sefirat Omer. Returns 0 if not during Sefirah.</p>
+<pre><code class="lang-js">new Hebcal.HDate(20, &#39;iyyar&#39;).omer() // 35
+new Hebcal.HDate(16, &#39;nisan&#39;).omer() // 1
+new Hebcal.HDate(15, &#39;nisan&#39;).omer() // 0</code></pre>
+<h3><code>Hebcal.HDate.prototype.dafyomi(o)</code></h3>
+<p>Return a string containing the day&#39;s Daf Yomi. Takes a standard language options string.</p>
+<pre><code class="lang-js">new Hebcal.HDate(15, &#39;nisan&#39;, 5774).dafyomi() // Beitzah 16
+new Hebcal.HDate(15, &#39;elul&#39;, 5772).dafyomi(&#39;a&#39;) // Berachos 30</code></pre>
+<h3><code>Hebcal.HDate.defaultLocation</code></h3>
+<p>An alias of <code>Hebcal.defaultLocation</code>.</p>
+<h3><code>Hebcal.HDate.defaultCity</code></h3>
+<p>An alias of <code>Hebcal.defaultCity</code>.</p>
+<h3><code>Hebcal.HDate.hebrew2abs(hdate)</code></h3>
+<p>Return an absolute date from an <code>HDate</code>. Equivalent to <code>Hebcal.HDate.prototype.abs()</code>.</p>
+<h3><code>Hebcal.HDate.abs2hebrew(absdate)</code></h3>
+<p>Return an <code>HDate</code> from absolute date. Equivalent to <code>new Hebcal.HDate(absdate)</code>.</p>
+<h3><code>Hebcal.HDate.addZeman(zeman, func)</code></h3>
+<p>Add a zeman to the object of times returned by <code>Hebcal.HDate.prototype.getZemanim()</code>. This function is aliased as <code>Hebcal.addZeman()</code>.</p>
+<p><code>zeman</code> should be the name of the zeman; <code>func</code> should be a function taking one parameter, the <code>HDate</code> to get the zeman for. <code>func</code> should return a <code>Date</code> object with the time.</p>
+<h2><code>Hebcal.ready</code> (client-side only)</h2>
+<p>Boolean; whether the geolocating code has completed or failed yet. If using the noloc script, it is always true.</p>
+<h2><code>Hebcal.onready()</code> (client-side only)</h2>
+<p>Set this to a function to be executed when geolocation has finished. Is called immediately upon being set in a no-loc environment.</p>
+<p>This function is liable to be buggy.</p>
+<h2>Finale</h2>
+<p>That&#39;s it! You now know everything there is to know about Hebcal JavaScript! Good luck with whatever you choose to do with it!</p>
+<p>If you have any other requests for features, drop me an issue or even a pull request.</p>
+
