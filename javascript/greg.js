@@ -65,8 +65,9 @@ function dayOfYear (date) {
 exports.dayOfYear = dayOfYear;
 
 function LEAP (year) {
-	return (year % 4) > 0 && ( (year % 100) === 0 || (year % 400) > 0 );
+	return !(year % 4) && ( !!(year % 100) || !(year % 400) );
 }
+exports.LEAP = LEAP;
 
 exports.greg2abs = function greg2abs(date) { // "absolute date"
 	return (dayOfYear(date) + // days this year
