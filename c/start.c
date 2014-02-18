@@ -124,7 +124,7 @@ static char
    "hebcal warranty -- Tells you how there's NO WARRANTY for hebcal.",
    "hebcal copying -- Prints the details of the GNU copyright.",
    "",
-   "Hebcal prints out hebrew calendars one solar year at a time.",
+   "Hebcal prints out Hebrew calendars one solar year at a time.",
    "Given one argument, it will print out the calendar for that year.",
    "Given two numeric arguments mm yyyy, it prints out the calendar for ",
    "month mm of year yyyy.",
