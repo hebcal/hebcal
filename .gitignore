@@ -2,22 +2,21 @@ Makefile
 Makefile.in
 .deps
 .*~
-c/aclocal.m4
-c/autom4te.cache
-c/config.h
-c/config.h.in.orig
-c/config.log
-c/config.status
-c/configure
-c/doc/hebcal.info
-c/doc/stamp-vti
-c/doc/version.texi
-c/doc/version.texi.orig
-c/hebcal
-c/hebcal.1
-c/package.m4
-c/stamp-h1
-javascript/README.html
+aclocal.m4
+autom4te.cache
+config.h
+config.h.in.orig
+config.log
+config.status
+configure
+doc/hebcal.info
+doc/stamp-vti
+doc/version.texi
+doc/version.texi.orig
+hebcal
+hebcal.1
+package.m4
+stamp-h1
 
 # Editor files
 *.sublime*
