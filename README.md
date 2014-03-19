@@ -40,6 +40,16 @@ usage: hebcal [-8acdDeFHhiorsStTwy]
        hebcal copying
 ```
 
+Hebcal prints out Hebrew calendars one solar year at a time.
+Given one argument, it will print out the calendar for that year.
+Given two numeric arguments `mm yyyy`, it prints out the calendar for 
+month `mm` of year `yyyy`.
+
+For example, `hebcal -ho`
+will just print out the days of the omer for the current year.
+Note: Use COMPLETE Years.  You probably aren't interested in 
+hebcal 93, but rather hebcal 1993.
+
 ### Options
 Option | Description
 --- | ---
@@ -75,25 +85,81 @@ Option | Description
    -z | Use specified timezone, disabling daylight savings time, overriding the `-C` (localize to city) switch.
    -Z scheme | change to daylight savings scheme.  The possible values of scheme are currently `usa`, `israel`, `eu`, and `none`.
 
-### Commands
-Command | Description
---- | ---
-hebcal help    | Print this message.
-hebcal info    | Print version and localization data.
-hebcal DST     | Print a list of available daylight savings schemes.
-hebcal cities  | Print a list of available cities.
-hebcal warranty | Tells you how there's NO WARRANTY for hebcal.
-hebcal copying | Prints the details of the GNU copyright.
+## Candle-lighting times
 
-Hebcal prints out Hebrew calendars one solar year at a time.
-Given one argument, it will print out the calendar for that year.
-Given two numeric arguments `mm yyyy`, it prints out the calendar for 
-month `mm` of year `yyyy`.
+Hebcal’s candlelighting times are only approximations. If you ever have any doubts about it’s times, consult your local halachic authority. If you enter geographic coordinates above the artic circle or antarctic circle, the times are guaranteed to be wrong.
 
-For example, `hebcal -ho`
-will just print out the days of the omer for the current year.
-Note: Use COMPLETE Years.  You probably aren't interested in 
-hebcal 93, but rather hebcal 1993.
+Hebcal contains a small database of cities with their associated geographic information and time-zone information. The geographic and time information necessary to calculate sundown times can come to hebcal any of three ways:
+
+1. The default: the system manager sets a default city when the program is compiled. 
+2. Hebcal looks in the environment variable HEBCAL_CITY for the name of a city in hebcal’s database, and if it finds one, hebcal will make that the new default city. 
+3. 1 and 2 may be overridden by command line arguments, including those specified in the HEBCAL_OPTS environment variable. The most natural way to do this is to use the −c city command. This will localize hebcal to city. A list of the cities hebcal knows about can be obtained by typing `hebcal cities` at the command prompt. If the city you want isn’t on that list, you can directly control hebcal’s geographic information with the −l, −L −z and −Z DST switches. Note that changing the geographic coordinates causes the timezone to default to Zulu and the daylight savings time processor to default to ’none.’ To get a list of possible values for DST, type `hebcal DST` at the command prompt.
+For a status report on customizations, type `hebcal info` at the command prompt.
+
+## Environment
+
+Hebcal uses two environment variables: 
+<dl>
+<dt>HEBCAL_CITY
+<dd>Hebcal uses this value as the default city for sunset calculations. A list of available cities is available with from hebcal with the command: <code>hebcal cities</code>
+<dt>HEBCAL_OPTS
+<dd>The value of this variable is automatically processed as if it were typed at the command line before any other actual command−line−arguments.
+</dl>
+
+## Author
+Danny Sadinoff
+
+## See Also
+
+calendar(1), emacs(1), hcal(1), hdate(1), omer(1), remind(1), rise(1)
+
+The latest version of the code will be available from https://github.com/hebcal/hebcal
+
+The original motivation for the algorithms in this program was the _Tur Shulchan Aruch_.
+
+For version 3, much of the program was rewritten using Emacs 19’s calendar routines by Edward M. Reingold and Nachum Dershowitz. Their program is extremely clear and provides many instructive examples of fine calendar code in emacs-LISP.
+
+A well written treatment of the Jewish calendar for the layman can be found in _Understanding the Jewish Calendar_ by Rabbi Nathan Bushwick. A more complete bibliography on the topic can be found there, as well as in the _Encyclopedia Judaica_ entry on the calendar.
+
+## Diagnostics
+<dl>
+<dt>hebcal help
+<dd>Prints a shorter version of this manpage, with comments on each option.
+<dt>hebcal info
+<dd>Prints the version number and default values of the program.
+<dt>hebcal DST
+<dd>Prints a list of available daylight savings time schemes, suitable as arguments to the −Z DST option.
+<dt>hebcal cities
+<dd>Prints a list of cities which hebcal knows about, suitable as arguments to the −C city option. If your city does not appear on this list, put the necessary defaults in the DST_OPTS environment variable.
+<dt>hebcal copying
+<dd>Prints the GNU license, with information about copying the program. See below.
+<dt>hebcal warranty
+<dd>Tells you how there’s NO WARRANTY for hebcal.
+</dl>
+
+## Disclaimer
+This is just a program I wrote during summer school and while avoiding my senior project. It should not be invested with any sort of halachic authority.
+
+## Bugs
+Hebrew dates are only valid before sundown on that secular date. An option to control this will be added in a later release.
+
+Negative longitudes are EAST of Greenwich.
+
+Some combinations of options produce weird results, e.g. 
+  `hebcal -dH nisan 5744` 
+  `hebcal -dH 5744` 
+
+This comes into play when you use the *ENV_OPT* environment variable.
+
+The sunup/sundown routines aren’t accurate enough. If you enter geographic coordinates above the artic circle or antarctic circle, the times are guaranteed to be wrong.
+
+Hebcal only translates between the Gregorian calendar and the Jewish calendar. This means that the results will be at least partly useless where and when the Gregorian calendar was not used, e.g. before the 1752 in Britain and before circa 1918 in Russia. See the wikipedia entry for "Daylight saving time" for a splendid chart depicting when the changeover from the Julian to the Gregorian calendars occurred in various places.
+
+Hebcal cannot handle date computations before 2 C.E. sorry.
+
+Daylight-Savings time rules are as up-to-date as a nonpaying job allows. US DST rules are correct only back to 1966.
+
+Hebcal assumes that the Energy Policy Act of 2005, which changes the DST rules in the US will go into effect, even though congress may still revert it.
 
 
 ## DISTRIBUTION
