@@ -39,7 +39,6 @@ AC_ARG_WITH(default-city,
 AC_CONFIG_FILES([hebcal.1])
 AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([tests/Makefile])
-AC_CONFIG_FILES([doc/Makefile])
 
 
 AC_OUTPUT

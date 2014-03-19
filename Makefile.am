@@ -5,16 +5,16 @@
 # Portions Copyright (c) 2002 Michael J. Radwin. All Rights Reserved.
 # See section COPYING for conditions for redistribution
 
-# FIX do something with 
+# FIX do something with
 # groff -T html -man man/man1/hebcal.1 >hebcal-manpage.html
 #-----------------------------------------------------------------
 
-#AM_CPPFLAGS += -DHEBCAL_OPTS='"$(HEBCAL_OPTS)"' 
+#AM_CPPFLAGS += -DHEBCAL_OPTS='"$(HEBCAL_OPTS)"'
 AM_CPPFLAGS = -DVERSION='"$(PACKAGE_VERSION)"'
 
 # AM_CFLAGS = -Wall
 
-SUBDIRS = tests doc
+SUBDIRS = tests
 
 bin_PROGRAMS = hebcal
 

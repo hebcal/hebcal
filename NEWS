@@ -1,3 +1,9 @@
+Changes in 3.15
+* Daf Yomi via new -F option, courtesy of Aaron Peromsik
+  https://github.com/hebcal/hebcal/pull/82
+* Build/SCM: moved JavaScript, Perl, and Java implementations
+  out of hebcal/hebcal into separate repositories
+
 Changes in 3.14
 * Properly display Parashat Vayeilech or Ha'Azinu when using -S option
   (Print sedrah of the week on all calendar days) in certain
@@ -55,7 +61,7 @@ Changes in 3.8
 * fixed spelling of shabbat Chazon
 * fixed yom Haatzmaut 2007
 * added support for Mexico DST scheme (no longer the same as US & Canada)
-* Correct Gibraltar time zone to UTC+1, not UTC-10. Thanks to 
+* Correct Gibraltar time zone to UTC+1, not UTC-10. Thanks to
   Jack Gross <jacobbgross@hotmail.com> for reporting the bug.
 
 Changes in 3.7
@@ -81,7 +87,7 @@ changes in 3.5
  this section on energy consumption in the United States. Congress
  retains the right to revert the Daylight Saving Time back to the 2005
  time schedules once the Department study is complete.
-  - CRS Report for Congress 
+  - CRS Report for Congress
     Mark Gurevitz
     http://opencrs.cdt.org/rpts/RS22284_20050927.pdf
 
@@ -93,8 +99,8 @@ changes in 3.5
 
 * Simplified city customization.
   http://sourceforge.net/tracker/index.php?func=detail&aid=991704&group_id=340&atid=100340
-  You can now pass a 
-      --with-default-city=Chicago 
+  You can now pass a
+      --with-default-city=Chicago
   argument to configure, and it will do the right thing.
 
 * Fixed some spelling issues
@@ -103,9 +109,9 @@ http://sourceforge.net/tracker/index.php?func=detail&aid=1151200&group_id=340&at
 KNOWN ISSUES in 3.5:
 * Triple-Purim not properly represented
   http://sourceforge.net/tracker/index.php?func=detail&aid=1165732&group_id=340&atid=100340
-  In years where 15 Adar falls on Saturday, the observances of Shushan purim are 
+  In years where 15 Adar falls on Saturday, the observances of Shushan purim are
   distributed over Friday, Saturday and Sunday.  This is not represented, and Shushan
-  Purim is indicated as falling on Sunday.  The megilah is read on Friday 
+  Purim is indicated as falling on Sunday.  The megilah is read on Friday
   in Jerusalem.
 
 * Incorrect weekly sedra displayed near Rosh Hashana
