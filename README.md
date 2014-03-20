@@ -60,12 +60,12 @@ Option | Description
 -C city | Set latitude, longitude, timezone and daylight savings scheme according to specified city. This option implies the -c option.
    -d | print the hebrew date for the entire date range.
    -D | print the hebrew date for dates with some event.
-   -e | Ouput "european" dates -- DD.MM.YYYY format.
+   -e | Ouput "European" dates -- DD.MM.YYYY format.
+   -f FORMAT | change output to `FORMAT`. see below for format strings
+   -F | Output the Daf Yomi for the entire date range.
    -h | Suppress default holidays.
    -H | Use Hebrew date ranges - only needed when e.g. `hebcal -H 5373`
    -i | Use Israeli sedra scheme.
-   -f FORMAT | change output to `FORMAT`. see below for format strings
-   -F | Output the Daf Yomi for the entire date range.
    -I file | Get non-yahrtzeit Hebrew user events from specified file. The format is: `mmm dd string`, Where `mmm` is a Hebrew month name.
    -l xx,yy | Set the latitude for solar calculations to `xx` degrees and `yy` minutes.  Negative values are south.
    -L xx,yy | Set the longitude for solar calculations to `xx` degrees and `yy` minutes.  *Negative values are EAST*. The `-l` and `-L` switches must both be used, or not at all. These switches override the `-C` (localize to city) switch.
@@ -123,17 +123,17 @@ A well written treatment of the Jewish calendar for the layman can be found in _
 
 ## Diagnostics
 <dl>
-<dt>hebcal help
+<dt>`hebcal help`
 <dd>Prints a shorter version of this manpage, with comments on each option.
-<dt>hebcal info
+<dt>`hebcal info`
 <dd>Prints the version number and default values of the program.
-<dt>hebcal DST
+<dt>`hebcal DST`
 <dd>Prints a list of available daylight savings time schemes, suitable as arguments to the −Z DST option.
-<dt>hebcal cities
+<dt>`hebcal cities`
 <dd>Prints a list of cities which hebcal knows about, suitable as arguments to the −C city option. If your city does not appear on this list, put the necessary defaults in the DST_OPTS environment variable.
-<dt>hebcal copying
+<dt>`hebcal copying`
 <dd>Prints the GNU license, with information about copying the program. See below.
-<dt>hebcal warranty
+<dt>`hebcal warranty`
 <dd>Tells you how there’s NO WARRANTY for hebcal.
 </dl>
 
@@ -149,17 +149,17 @@ Some combinations of options produce weird results, e.g.
   `hebcal -dH nisan 5744` 
   `hebcal -dH 5744` 
 
-This comes into play when you use the *ENV_OPT* environment variable.
+This comes into play when you use the *HEBCAL_OPTS* environment variable.
 
 The sunup/sundown routines aren’t accurate enough. If you enter geographic coordinates above the artic circle or antarctic circle, the times are guaranteed to be wrong.
 
-Hebcal only translates between the Gregorian calendar and the Jewish calendar. This means that the results will be at least partly useless where and when the Gregorian calendar was not used, e.g. before the 1752 in Britain and before circa 1918 in Russia. See the wikipedia entry for "Daylight saving time" for a splendid chart depicting when the changeover from the Julian to the Gregorian calendars occurred in various places.
+Hebcal only translates between the Gregorian calendar and the Jewish calendar. This means that the results will be at least partly useless where and when the Gregorian calendar was not used, e.g. before the 1752 in Britain and before circa 1918 in Russia. See ["Daylight saving time" on Wikipedia](https://en.wikipedia.org/wiki/Daylight_saving_time) for a splendid chart depicting when the changeover from the Julian to the Gregorian calendars occurred in various places.
 
 Hebcal cannot handle date computations before 2 C.E. sorry.
 
 Daylight-Savings time rules are as up-to-date as a nonpaying job allows. US DST rules are correct only back to 1966.
 
-Hebcal assumes that the Energy Policy Act of 2005, which changes the DST rules in the US will go into effect, even though congress may still revert it.
+Hebcal assumes that the Energy Policy Act of 2005, which changes the DST rules in the US will go into effect, even though Congress may still revert it.
 
 
 ## DISTRIBUTION
