@@ -123,17 +123,17 @@ A well written treatment of the Jewish calendar for the layman can be found in _
 
 ## Diagnostics
 <dl>
-<dt>`hebcal help`
+<dt>hebcal help
 <dd>Prints a shorter version of this manpage, with comments on each option.
-<dt>`hebcal info`
+<dt>hebcal info
 <dd>Prints the version number and default values of the program.
-<dt>`hebcal DST`
+<dt>hebcal DST
 <dd>Prints a list of available daylight savings time schemes, suitable as arguments to the −Z DST option.
-<dt>`hebcal cities`
+<dt>hebcal cities
 <dd>Prints a list of cities which hebcal knows about, suitable as arguments to the −C city option. If your city does not appear on this list, put the necessary defaults in the DST_OPTS environment variable.
-<dt>`hebcal copying`
+<dt>hebcal copying
 <dd>Prints the GNU license, with information about copying the program. See below.
-<dt>`hebcal warranty`
+<dt>hebcal warranty
 <dd>Tells you how there’s NO WARRANTY for hebcal.
 </dl>
 
@@ -146,9 +146,8 @@ Hebrew dates are only valid before sundown on that secular date. An option to co
 Negative longitudes are EAST of Greenwich.
 
 Some combinations of options produce weird results, e.g. 
-  `hebcal -dH nisan 5744` 
-  `hebcal -dH 5744` 
-
+  `hebcal -dH nisan 5744`
+  `hebcal -dH 5744`
 This comes into play when you use the *HEBCAL_OPTS* environment variable.
 
 The sunup/sundown routines aren’t accurate enough. If you enter geographic coordinates above the artic circle or antarctic circle, the times are guaranteed to be wrong.
