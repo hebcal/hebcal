@@ -162,13 +162,31 @@ Hebcal assumes that the Energy Policy Act of 2005, which changes the DST rules i
 
 ## Build & Install
 
-Since you're reading this, you have already successfully unpacked the source files.  The next step is to customize the program for your city.
+To build hebcal from the source repository, you'll need a few more tools than are needed in order to build from distributions. In particular, you'll need
 
-Examine cities.h.  If your city is in there, run configure using the
+* GNU autoconf version 2.59
+* GNU automake version 1.9.5  or later
+* GNU m4 version 1.4.3 or later
+* GNU make v3.79 or later
+* Perl v5.0 or later
+
+Once you have those, you can prepare the build environment as follows:
+
+```
+aclocal && autoconf && automake --foreign --add-missing && ./configure && make
+```
+
+If you would like customize the program for your city, pass additional options to `configure` above.
+
+Examine `cities.h`.  If your city is in there, run `configure` using the
   `--with-default-city=CITYNAME` option as follows:
-   ```./configure --with-default-city=Chicago```
+   ```
+   ./configure --with-default-city=Chicago
+   ```
 you may have to quote spaces:
-   ```./configure --with-default-city="Los Angeles"```
+   ```
+   ./configure --with-default-city="Los Angeles"
+   ```
 
 If your city is NOT on the list, then in order to customize hebcal to your city, you will need to pass it the latitude, longitude, timezone and daylight savings code (see the manual).
 
@@ -178,16 +196,24 @@ You are in timezone Z-6, with the daylight savings scheme normal to
 the US.  We'll round the geographic coordinates to the nearest minute.
 
 In order to get candlelighting times for the current year, you would type
-  ```hebcal -ch -l44,1 -L 88,33 -z-6 -Zusa```
+  ```
+  hebcal -ch -l44,1 -L 88,33 -z-6 -Zusa
+  ```
 
 Now this can get rough on the fingers if you do it a lot, so the `HEBCAL_OPTS` environment variable is available for you to use.  Every time hebcal is run, it checks this variable.  If it is non-empty, the arguments in that variable are read as though they were typed at the command line before the ones you actually type.
 
 So you might set `HEBCAL_OPTS` to be
-   ```-l44,1 -L 88,33 -z-6 -Zusa```
+   ```
+   -l44,1 -L 88,33 -z-6 -Zusa
+   ```
 and if you type
-    ```hebcal -ch```
+    ```
+    hebcal -ch
+    ```
 hebcal will think you typed
-    ```hebcal -l44,1 -L 88,33 -z-6 -Zusa  -ch```
+    ```
+    hebcal -l44,1 -L 88,33 -z-6 -Zusa  -ch
+    ```
 
 REMEMBER: negative longitudes are EAST of Greenwich.
 
