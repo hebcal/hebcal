@@ -3,4 +3,4 @@ compiler:
   - gcc
   - clang
 # Change this to your needs
-script: aclocal && autoconf && automake --add-missing && ./configure && make
+script: aclocal && autoconf && automake --foreign --add-missing && ./configure && make

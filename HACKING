@@ -1,6 +1,6 @@
 To build hebcal from the source repository, you'll need a few more
 tools than are needed in order to build from distributions.   In
-particular, you'll need 
+particular, you'll need
 
 GNU autoconf version 2.59
 GNU automake version 1.9.5  or later
@@ -10,9 +10,10 @@ Perl v5.0 or later
 
 Once you have those, you can prepare the build environment as follows:
 
-aclocal && autoconf && automake --add-missing && ./configure && make
+aclocal && autoconf && automake --foreign --add-missing && ./configure && make
 
 If you have any questions, concerns or feedback, please feel free to
-post them in the hebcal project trackers at http://hebcal.sf.net/ or 
-contact Danny Sadinoff directly at hebcal@sadinoff.com
+post them in the hebcal project trackers at
+https://github.com/hebcal/hebcal/issues or contact Danny Sadinoff
+directly at hebcal@sadinoff.com
 
