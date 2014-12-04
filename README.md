@@ -92,8 +92,8 @@ Hebcal’s candlelighting times are only approximations. If you ever have any do
 Hebcal contains a small database of cities with their associated geographic information and time-zone information. The geographic and time information necessary to calculate sundown times can come to hebcal any of three ways:
 
 1. The default: the system manager sets a default city when the program is compiled.
-2. Hebcal looks in the environment variable HEBCAL_CITY for the name of a city in hebcal’s database, and if it finds one, hebcal will make that the new default city.
-3. 1 and 2 may be overridden by command line arguments, including those specified in the HEBCAL_OPTS environment variable. The most natural way to do this is to use the −c city command. This will localize hebcal to city. A list of the cities hebcal knows about can be obtained by typing `hebcal cities` at the command prompt. If the city you want isn’t on that list, you can directly control hebcal’s geographic information with the −l, −L −z and −Z DST switches. Note that changing the geographic coordinates causes the timezone to default to Zulu and the daylight savings time processor to default to ’none.’ To get a list of possible values for DST, type `hebcal DST` at the command prompt.
+2. Hebcal looks in the environment variable `HEBCAL_CITY` for the name of a city in hebcal’s database, and if it finds one, hebcal will make that the new default city.
+3. 1 and 2 may be overridden by command line arguments, including those specified in the `HEBCAL_OPTS` environment variable. The most natural way to do this is to use the `−c city` command. This will localize hebcal to city. A list of the cities hebcal knows about can be obtained by typing `hebcal cities` at the command prompt. If the city you want isn’t on that list, you can directly control hebcal’s geographic information with the `−l`, `−L`, `−z`, and `−Z DST` switches. Note that changing the geographic coordinates causes the timezone to default to Zulu and the daylight savings time processor to default to ’none.’ To get a list of possible values for DST, type `hebcal DST` at the command prompt.
 For a status report on customizations, type `hebcal info` at the command prompt.
 
 ## Environment
@@ -166,9 +166,9 @@ Since you're reading this, you have already successfully unpacked the source fil
 
 Examine cities.h.  If your city is in there, run configure using the
   `--with-default-city=CITYNAME` option as follows:
-   `./configure --with-default-city=Chicago`
+   ```./configure --with-default-city=Chicago```
 you may have to quote spaces:
-   `./configure --with-default-city="Los Angeles"`
+   ```./configure --with-default-city="Los Angeles"```
 
 If your city is NOT on the list, then in order to customize hebcal to your city, you will need to pass it the latitude, longitude, timezone and daylight savings code (see the manual).
 
@@ -178,22 +178,23 @@ You are in timezone Z-6, with the daylight savings scheme normal to
 the US.  We'll round the geographic coordinates to the nearest minute.
 
 In order to get candlelighting times for the current year, you would type
-  `hebcal -ch -l44,1 -L 88,33 -z-6 -Zusa`
+  ```hebcal -ch -l44,1 -L 88,33 -z-6 -Zusa```
 
 Now this can get rough on the fingers if you do it a lot, so the `HEBCAL_OPTS` environment variable is available for you to use.  Every time hebcal is run, it checks this variable.  If it is non-empty, the arguments in that variable are read as though they were typed at the command line before the ones you actually type.
 
-So you might set HEBCAL_OPTS to be
-   `-l44,1 -L 88,33 -z-6 -Zusa`
+So you might set `HEBCAL_OPTS` to be
+   ```-l44,1 -L 88,33 -z-6 -Zusa```
 and if you type
-    `hebcal -ch`
+    ```hebcal -ch```
 hebcal will think you typed
-    `hebcal -l44,1 -L 88,33 -z-6 -Zusa  -ch`
+    ```hebcal -l44,1 -L 88,33 -z-6 -Zusa  -ch```
 
 REMEMBER: negative longitudes are EAST of Greenwich.
 
 For information on setting environment variables, consult your local guru.
 
 Once an install is complete, there are three ways to change cities, or pick a city not on the list:
+
 1. change the `CITY` environment variable
 2. change the `HEBCAL_OPTS` variable to reflect the new city's coordinates.
 3. pass a `-C city` argument to hebcal.
