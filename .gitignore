@@ -8,7 +8,6 @@ config.h
 config.h.in.orig
 config.log
 config.status
-configure
 doc/hebcal.info
 doc/stamp-vti
 doc/version.texi
