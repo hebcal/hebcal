@@ -1,6 +1,9 @@
-Changes in 3.16
+Changes in 3.17
 * Build/SCM: include generated configure script in repo to simplify
   user build and remove dependency on autoconf, automake, aclocal.
+
+Changes in 3.16
+* Not released
 
 Changes in 3.15
 * Daf Yomi via new -F option, courtesy of Aaron Peromsik
