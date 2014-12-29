@@ -5,7 +5,7 @@ AC_PREREQ(2.57)
 AC_INIT(hebcal,3.15,hebcal-bugs@sadinoff.com)
 AC_CONFIG_SRCDIR([common.c])
 dnl #AM_INIT_AUTOMAKE([no-dependencies check-news])
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([foreign])
 AM_CONFIG_HEADER([config.h])
 
 # Checks for programs.
