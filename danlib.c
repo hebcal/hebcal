@@ -84,12 +84,16 @@ int isAllNums ( const char *s )
   return (n == len);
 }
 
+static int tensDigit (int i)
+{
+    return (i % 100) / 10;
+}
 
-/* returns he proper ordinal suffix of a number */
+/* returns the proper ordinal suffix of a number */
 const char *
     numSuffix (int i)
 {
-    if ((i / 10) == 1)
+    if (tensDigit(i) == 1)
         return "th";
     switch (i % 10)
     {
