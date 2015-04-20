@@ -2,7 +2,7 @@
   See section COPYING for conditions for redistribution
 */
 #ifndef __DANLIB__
-#define __DANLIB
+#define __DANLIB__
 
 #include <stdio.h>
 
