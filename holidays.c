@@ -296,7 +296,12 @@ holinput_t inp_holidays[] =
       CHUL_ONLY|YOM_TOV_ENDS,
       NULL
    },
-
+   {
+      {AV, 15, IGNORE_YEAR},
+      {"Tu B'Av", NULL, "\350\"\345 \341\340\341"},
+      0,
+      NULL
+   },
    {
       {ELUL, 29, IGNORE_YEAR},
       {"Erev Rosh Hashana", NULL, "\362\370\341 \370\340\371 \344\371\360\344"},
@@ -333,7 +338,6 @@ holinput_t inp_holidays[] =
 #define HOLIDAY_EREV_TISH_A_B_AV   LANGUAGE2(var_hol_names[25].name)
 #define HOLIDAY_LEIL_SELICHOT      LANGUAGE2(var_hol_names[26].name)
 #define HOLIDAY_SIGD      LANGUAGE2(var_hol_names[27].name)
-#define HOLIDAY_TU_BAV      LANGUAGE2(var_hol_names[28].name)
 
 struct variable_holiday_names {
    char *(name[3]);
@@ -366,7 +370,6 @@ struct variable_holiday_names {
   {{"Erev Tish'a B'Av", NULL, "\362\370\341 \372\371\362\344 \341\340\341"}},
   {{"Leil Selichot", NULL, "Leil Selichot"}},
   {{"Sigd", NULL, "\215\161\215\153\215\146\215\147"}},
-  {{"Tu B'Av", NULL, "\350\"\345  \341\340\341"}},
 };
 
 /*-------------------------------------------------------------------------*/
