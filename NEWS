@@ -1,3 +1,7 @@
+Changes in 3.18
+* Add Tu B'Av, minor holiday, on the 15th of Av (#98)
+* Add Sigd, modern holiday, on 29th of Cheshvan, beginning in 2008 (#96)
+
 Changes in 3.17
 * Build/SCM: include generated configure script in repo to simplify
   user build and remove dependency on autoconf, automake, aclocal.
