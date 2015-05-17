@@ -19,7 +19,7 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-   Danny Sadinoff can be reached at 
+   Danny Sadinoff can be reached at
    danny@sadinoff.com
 
  */
@@ -332,6 +332,8 @@ holinput_t inp_holidays[] =
 #define HOLIDAY_EREV_PURIM   LANGUAGE2(var_hol_names[24].name)
 #define HOLIDAY_EREV_TISH_A_B_AV   LANGUAGE2(var_hol_names[25].name)
 #define HOLIDAY_LEIL_SELICHOT      LANGUAGE2(var_hol_names[26].name)
+#define HOLIDAY_SIGD      LANGUAGE2(var_hol_names[27].name)
+#define HOLIDAY_TU_BAV      LANGUAGE2(var_hol_names[28].name)
 
 struct variable_holiday_names {
    char *(name[3]);
@@ -363,6 +365,8 @@ struct variable_holiday_names {
   {{"Erev Purim", NULL, "\362\370\341 \364\345\370\351\355"}},
   {{"Erev Tish'a B'Av", NULL, "\362\370\341 \372\371\362\344 \341\340\341"}},
   {{"Leil Selichot", NULL, "Leil Selichot"}},
+  {{"Sigd", NULL, "\215\161\215\153\215\146\215\147"}},
+  {{"Tu B'Av", NULL, "\350\"\345  \341\340\341"}},
 };
 
 /*-------------------------------------------------------------------------*/
@@ -382,20 +386,20 @@ holstorep_t getHolstorep( void )
 
 /* pushes a copy of a holiday on to a holiday     */
 /* list, returning the typemask of the pushed element */
-int PushHoliday( 
+int PushHoliday(
     holstorep_t hp, /* the holiday to be added */
     holstorep_t *lp         /* pointer to the list to be added to. */
     )
 {
     holstorep_t temp;
-    
+
     temp = getHolstorep ();
     initStr (&temp->name, MAX_LINE_LEN);
     strcpy (temp->name, hp->name);
     temp->typeMask = hp->typeMask;
-    
+
     if ( ! *lp )     /* if there are no holidays here yet, start a new bucket */
-        *lp = temp;        
+        *lp = temp;
     else
     {
         temp->next = *lp;         /* put hp at the head of the list */
@@ -411,36 +415,36 @@ static void load_variable_holidays( int hYear )
     date_t tempDt;
     long int roshHashana, passover, tishaBav, tevet10;
     holstorep_t tmpholp;
-    
+
     tempDt.yy = hYear;
     tempDt.mm = TISHREI;
     tempDt.dd = 1;
     roshHashana = hebrew2abs (tempDt);
-    
+
     tempDt.yy = hYear;
     tempDt.mm = TEVET;
     tempDt.dd = 10;
     tevet10 = hebrew2abs (tempDt);
-    
+
     tempDt.mm = NISAN;
     tempDt.dd = 15;
     passover = hebrew2abs (tempDt);
-    
+
     tempDt.mm = AV;
     tempDt.dd = 9;
     tishaBav = hebrew2abs (tempDt);
-    
+
     tmpholp = getHolstorep ();   /* allocate hsnode */
     tmpholp->name = HOLIDAY_TZOM_GEDALIAH;
     PushHoliday (tmpholp, &var_holidays[TISHREI]
                  [roshHashana % 7L == THU ? 4 : 3]);
-    
+
     tmpholp = getHolstorep ();
     tmpholp->name = HOLIDAY_SHABBAT_SHUVA;
     tempDt = abs2hebrew (day_on_or_before (SAT, 7L + roshHashana));
     PushHoliday (tmpholp, &var_holidays[TISHREI][tempDt.dd]);
-    
-    
+
+
     /*    printf( "hyear is %d\n",hYear); */
     if (short_kislev (hYear))
     {
@@ -466,28 +470,28 @@ static void load_variable_holidays( int hYear )
         tmpholp->name = HOLIDAY_CHANUKAH_8TH_DAY;
         PushHoliday (tmpholp, &var_holidays[TEVET][2]);
     }
-    
+
     tmpholp = getHolstorep ();
     tmpholp->name = HOLIDAY_SHABBAT_SHEKALIM;
     tempDt = abs2hebrew (day_on_or_before (SAT, passover - 43L));
     PushHoliday (tmpholp, &var_holidays[tempDt.mm][tempDt.dd]);
-    
+
     tmpholp = getHolstorep ();
     tmpholp->name = HOLIDAY_SHABBAT_ZACHOR;
     tempDt = abs2hebrew (day_on_or_before (SAT, passover - 30L));
     PushHoliday (tmpholp, &var_holidays[tempDt.mm][tempDt.dd]);
-    
+
     tmpholp = getHolstorep ();
     tmpholp->name = HOLIDAY_TA_ANIT_ESTHER;
     tempDt = abs2hebrew (passover - (passover % 7L == TUE ? 33L : 31));
     PushHoliday (tmpholp, &var_holidays[tempDt.mm][tempDt.dd]);
-    
+
     if (LEAP_YR_HEB (hYear))
     {
         tmpholp = getHolstorep ();
         tmpholp->name = HOLIDAY_PURIM_KATAN;
         PushHoliday (tmpholp, &var_holidays[ADAR_I][14]);
-        
+
         tmpholp = getHolstorep ();
         tmpholp->name = HOLIDAY_EREV_PURIM;
         PushHoliday (tmpholp, &var_holidays[ADAR_II][13]);
@@ -506,7 +510,7 @@ static void load_variable_holidays( int hYear )
         tmpholp->name = HOLIDAY_PURIM;
         PushHoliday (tmpholp, &var_holidays[ADAR_I][14]);
     }
-    
+
     tmpholp = getHolstorep ();
     tmpholp->name = HOLIDAY_SHUSHAN_PURIM;
     tempDt = abs2hebrew (passover - (passover % 7L == SUN ? 28L : 29));
@@ -516,12 +520,12 @@ static void load_variable_holidays( int hYear )
     tmpholp->name = HOLIDAY_SHABBAT_PARAH;
     tempDt = abs2hebrew (day_on_or_before (SAT, passover - 14L) - 7L);
     PushHoliday (tmpholp, &var_holidays[tempDt.mm][tempDt.dd]);
-    
+
     tmpholp = getHolstorep ();
     tmpholp->name = HOLIDAY_SHABBAT_HACHODESH;
     tempDt = abs2hebrew (day_on_or_before (SAT, passover - 14L));
     PushHoliday (tmpholp, &var_holidays[tempDt.mm][tempDt.dd]);
-    
+
     tmpholp = getHolstorep ();
     tmpholp->name = HOLIDAY_TA_ANIT_BECHOROT;
     if ((passover - 1L) % 7L == SAT)
@@ -532,12 +536,12 @@ static void load_variable_holidays( int hYear )
     else
         PushHoliday (tmpholp, &var_holidays[NISAN][14]);
 
-    
+
     tmpholp = getHolstorep ();
     tmpholp->name = HOLIDAY_SHABBAT_HAGADOL;
     tempDt = abs2hebrew (day_on_or_before (SAT, passover - 1L));
     PushHoliday (tmpholp, &var_holidays[tempDt.mm][tempDt.dd]);
-    
+
     if (hYear >= 5711)
     {                            /* Yom HaShoah first observed in 1951 */
 			long int nisan27;
@@ -575,7 +579,7 @@ static void load_variable_holidays( int hYear )
             tempDt.dd = 5;
         else if( passover % 7L == TUE ) /* no Yom Hazikaron on motzei shabbat allowed after 5764*/
             tempDt.dd = 6;
-        else 
+        else
             tempDt.dd = 5;
         PushHoliday (tmpholp, &var_holidays[IYYAR][tempDt.dd - 1]);
 
@@ -591,6 +595,12 @@ static void load_variable_holidays( int hYear )
         PushHoliday (tmpholp, &var_holidays[IYYAR][28]);
     }
 
+    if (hYear >= 5769) {
+        tmpholp = getHolstorep ();
+        tmpholp->name = HOLIDAY_SIGD;
+        PushHoliday (tmpholp, &var_holidays[CHESHVAN][29]);
+    }
+
     tmpholp = getHolstorep ();
     tmpholp->name = HOLIDAY_TZOM_TAMMUZ;
     if (tishaBav % 7L == SAT)
@@ -598,34 +608,34 @@ static void load_variable_holidays( int hYear )
     else
         tempDt = abs2hebrew (tishaBav - 21L);
     PushHoliday (tmpholp, &var_holidays[tempDt.mm][tempDt.dd]);
-    
+
     tmpholp = getHolstorep ();
     tmpholp->name = HOLIDAY_SHABBAT_CHAZON;
     tempDt = abs2hebrew (day_on_or_before (SAT, tishaBav));
     PushHoliday (tmpholp, &var_holidays[tempDt.mm][tempDt.dd]);
-    
+
     tmpholp = getHolstorep ();
     tmpholp->name = HOLIDAY_EREV_TISH_A_B_AV;
     PushHoliday (tmpholp, &var_holidays[AV]
                  [tishaBav % 7L == SAT ? 9 : 8]);
-    
+
     tmpholp = getHolstorep ();
     tmpholp->name = HOLIDAY_TISH_A_B_AV;
     PushHoliday (tmpholp, &var_holidays[AV]
                  [tishaBav % 7L == SAT ? 10 : 9]);
-    
+
     tmpholp = getHolstorep ();
     tmpholp->name = HOLIDAY_SHABBAT_NACHAMU;
     tempDt = abs2hebrew (day_on_or_before (SAT, tishaBav + 7L));
     PushHoliday (tmpholp, &var_holidays[tempDt.mm][tempDt.dd]);
-    
+
     tmpholp = getHolstorep ();
     tmpholp->name = HOLIDAY_ASARA_B_TEVET;
     if (tevet10 % 7L == SAT)
         PushHoliday (tmpholp, &var_holidays[TEVET][11]);
     else
         PushHoliday (tmpholp, &var_holidays[TEVET][10]);
-    
+
     tempDt.mm = TISHREI;
     tempDt.dd = 1;
     tempDt.yy = hYear + 1;
@@ -637,19 +647,19 @@ static void load_variable_holidays( int hYear )
 
 
 /*-------------------------------------------------------------------------*/
-/* this function stores the user "holidays" drawn from inFile in the 
-   var_holidays array.  The intent is that it will be loaded every new 
-   Jewish year.  Gross, I know, but an efficient version will have to wait 
+/* this function stores the user "holidays" drawn from inFile in the
+   var_holidays array.  The intent is that it will be loaded every new
+   Jewish year.  Gross, I know, but an efficient version will have to wait
    until %ID% + .1
    */
 
 void init_user_holidays( int hyear )
 {
     holstorep_t tmpholp;
-    
+
     char *s, *monthStr, *eventStr, nextChar;
     int index, inMonth, inDay, lineNum = 1;
-    
+
     initStr (&s, MAX_LINE_LEN);
     initStr (&monthStr, MAX_LINE_LEN);
     rewind (inFile);
@@ -709,7 +719,7 @@ void init_user_holidays( int hyear )
 
 /*-------------------------------------------------------------------------*/
 /* this function stores yahrtzeits found in yFile.
-   each record is stored in mm dd yyyy str format using GREGORIAN dates 
+   each record is stored in mm dd yyyy str format using GREGORIAN dates
    */
 
 void init_yahrtzeits( int hyear )
@@ -895,7 +905,7 @@ void freeHolidays( holstorep_t *holiList )
         free (cur);
         cur = next;
     }
-    
+
     *holiList = NULL;
 }
 /*-------------------------------------------------------------------------*/
@@ -906,10 +916,10 @@ int getHebHolidays( date_t dth, holstorep_t *holiList )
 {
     int tmpMask;
     holstorep_t tmpholip, chp;   /* current holiday pointer */
-    
+
     tmpMask = 0;
     *holiList = NULL;
-    
+
     for (chp = holidays[dth.mm][dth.dd]; /* static holidays */
          chp;
          chp = chp->next)
@@ -922,10 +932,10 @@ int getHebHolidays( date_t dth, holstorep_t *holiList )
     {
         tmpMask |= PushHoliday (chp, holiList);
     }
-    
+
     if (dth.dd == 1)
     {
-        
+
         if(dth.mm == TISHREI)     /* special processing for rosh hashana */
         {
             tmpholip = getHolstorep ();
@@ -937,7 +947,7 @@ int getHebHolidays( date_t dth, holstorep_t *holiList )
             PushHoliday (tmpholip, &var_holidays[TISHREI][1]);
             tmpMask |= PushHoliday (tmpholip, holiList);
         }
-        else 
+        else
         {
             if( ! suppress_rosh_chodesh_sw )      /* rosh Chodesh Processing... */
             {
@@ -960,13 +970,13 @@ int getHebHolidays( date_t dth, holstorep_t *holiList )
             }
         }
     }
-    
-    
+
+
     if (dth.dd == 30 && ! suppress_rosh_chodesh_sw)
     {
         tmpholip = getHolstorep ();
         initStr (&tmpholip->name, NM_LEN);
-        strcat (tmpholip->name, 
+        strcat (tmpholip->name,
                 iso8859_8_sw ? "\370\340\371 \347\343\371 " :
                 "Rosh Chodesh ");
         if (!tabs_sw)
@@ -981,7 +991,7 @@ int getHebHolidays( date_t dth, holstorep_t *holiList )
         } /* don't name the rosh chodesh if -y switch */
         tmpMask |= PushHoliday (tmpholip, holiList);
     }
-    
+
 
     return tmpMask;
 }
