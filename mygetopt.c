@@ -5,7 +5,7 @@
 
 
 #include <stdio.h>
-#include "mystring.h"
+#include <string.h>
 
 #define ERR(S, C) if(Opterr){\
 		       char errbuf[3];\

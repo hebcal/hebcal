@@ -53,9 +53,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "mytime.h"
-#include "mystring.h"
-#include "mymath.h"
+#include <time.h>
+#include <string.h>
+#include <math.h>
 #include "rise.h"
 #include "danlib.h"
 #include "myerror.h"

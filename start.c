@@ -28,13 +28,13 @@
 #include <stdio.h>
 #include <ctype.h>
 #include "config.h"
-#include "mystring.h"
-#include "mymath.h"
+#include <string.h>
+#include <math.h>
 #include "hebcal.h"
 #include "common.h"
 #include "mygetopt.h"
 #include "danlib.h"
-#include "stdlib.h"
+#include <stdlib.h>
 #include "cities.h"
 
 #define ENV_CITY "HEBCAL_CITY"

@@ -24,7 +24,7 @@
  */
 
 
-#include "mystdio.h"
+#include <stdio.h>
 #include "danlib.h"
 #include <time.h>
 #include <string.h>
