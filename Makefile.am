@@ -22,12 +22,12 @@ bin_PROGRAMS = hebcal
 
 hebcal_c_files = common.c danlib.c error.c mygetopt.c greg.c hebcal.c\
          timelib.c astro.c tm2unixtime.c unixtime2tm.c dow.c parse_tz.c \
-         holidays.c rise.c sedra.c start.c gnu.c format.c dafyomi.c
+         holidays.c sedra.c start.c gnu.c format.c dafyomi.c
 
 hebcal_h_files = common.h  danlib.h format.h greg.h hebcal.h \
           myerror.h mygetopt.h \
           timezonedb.h timelib.h astro.h timelib_structs.h \
-          rise.h sedra.h cities.h
+          sedra.h cities.h
 
 hebcal_SOURCES = $(hebcal_c_files) $(hebcal_h_files)
 

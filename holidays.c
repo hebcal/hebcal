@@ -33,7 +33,6 @@
 #include "hebcal.h"
 #include "common.h"
 #include "danlib.h"
-#include "rise.h"
 
 #define NM_LEN 60
 
