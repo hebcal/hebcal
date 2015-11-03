@@ -29,6 +29,7 @@
 #include "stdio.h"
 #include "greg.h"
 #include "myerror.h"
+#include "timelib.h"
 
 #ifndef ENV_CITY_STR
 #define ENV_CITY_STR "HC_CITY"
@@ -44,7 +45,7 @@
 
 extern FILE *inFile, *yFile;
 
-extern int DST_scheme,
+extern int
     ashkenazis_sw, 
     iso8859_8_sw,
     dafYomi_sw,
@@ -53,7 +54,7 @@ extern int DST_scheme,
     hebrewDates_sw,
     inputFile_sw,
     israel_sw,
-    latdeg, latmin, latsec, longdeg, longmin, longsec, TZ, 
+    latdeg, latmin, latsec, longdeg, longmin, longsec,
     latlong_sw,
     printOmer_sw,
     printHebDates_sw,
@@ -69,6 +70,9 @@ extern int DST_scheme,
     weekday_sw, 
     yearDigits_sw,
     yahrtzeitFile_sw;
+extern int twentyFourHour_sw;
+
+extern timelib_tzinfo *TZ_INFO;
 
 extern int havdalah_minutes,
    light_offset;
@@ -80,15 +84,6 @@ typedef struct hebrew_year {
    int first_day_of_week;
    int leap_p;
 } year_t;
-
-enum dst_type {
-    DST_USOFA = 0,
-    DST_NONE = 1,
-    DST_ISRAEL = 2,
-    DST_EU = 3,
-    DST_AUNZ = 4,
-    DST_MX = 5
-};
 
 /* holiday typemask entries */
 #define USER_EVENT 1
@@ -121,8 +116,8 @@ int getHebHolidays( date_t, struct hsnode ** );
 void incHebGregDate( date_t *, date_t *,long *,int *,year_t * );
 void PrintGregDate( date_t );
 void main_calendar( long,long );
-void print_candlelighting_times( int, int, date_t, int );
-void print_sunrise_sunset(date_t, int);
+void print_candlelighting_times( int, int, date_t );
+void print_sunrise_sunset(date_t);
 void reset_Omer( int hYear );
 
 extern const char * license[];

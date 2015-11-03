@@ -29,7 +29,6 @@ usage: hebcal [-8acdDeFHhiorsStTwy]
             [-L longitude -l latitude]
             [-m havdalah_minutes_past_sundown ]
             [-z timezone]
-            [-Z daylight_savings_option]
             [-f format_option]
             [[ month [ day ]] year ]
        hebcal help
@@ -57,7 +56,7 @@ Option | Description
 -a | Use ashkenazis hebrew.
 -b mins | Set candle-lighting to occur this many minutes before sundown
 -c | Print candlelighting times.
--C city | Set latitude, longitude, timezone and daylight savings scheme according to specified city. This option implies the -c option.
+-C city | Set latitude, longitude, and timezone according to specified city. This option implies the -c option.
    -d | print the hebrew date for the entire date range.
    -D | print the hebrew date for dates with some event.
    -e | Ouput "European" dates -- DD.MM.YYYY format.
@@ -82,8 +81,7 @@ Option | Description
    -x | Suppress Rosh Chodesh.
    -y | Print only last two digits of year.
    -Y file | Get yahrtzeit dates from specified file. The format is: `mm dd yyyy string`. The first three fields specify a *Gregorian* date.
-   -z | Use specified timezone, disabling daylight savings time, overriding the `-C` (localize to city) switch.
-   -Z scheme | change to daylight savings scheme.  The possible values of scheme are currently `usa`, `israel`, `eu`, and `none`.
+   -z | Use specified timezone, overriding the `-C` (localize to city) switch.
 
 ## Candle-lighting times
 
@@ -93,7 +91,7 @@ Hebcal contains a small database of cities with their associated geographic info
 
 1. The default: the system manager sets a default city when the program is compiled.
 2. Hebcal looks in the environment variable `HEBCAL_CITY` for the name of a city in hebcal’s database, and if it finds one, hebcal will make that the new default city.
-3. 1 and 2 may be overridden by command line arguments, including those specified in the `HEBCAL_OPTS` environment variable. The most natural way to do this is to use the `−c city` command. This will localize hebcal to city. A list of the cities hebcal knows about can be obtained by typing `hebcal cities` at the command prompt. If the city you want isn’t on that list, you can directly control hebcal’s geographic information with the `−l`, `−L`, `−z`, and `−Z DST` switches. Note that changing the geographic coordinates causes the timezone to default to Zulu and the daylight savings time processor to default to ’none.’ To get a list of possible values for DST, type `hebcal DST` at the command prompt.
+3. 1 and 2 may be overridden by command line arguments, including those specified in the `HEBCAL_OPTS` environment variable. The most natural way to do this is to use the `−c city` command. This will localize hebcal to city. A list of the cities hebcal knows about can be obtained by typing `hebcal cities` at the command prompt. If the city you want isn’t on that list, you can directly control hebcal’s geographic information with the `−l`, `−L`, `−z`, and `−Z DST` switches. Note that changing the geographic coordinates causes the timezone to default to 'UTC'.
 For a status report on customizations, type `hebcal info` at the command prompt.
 
 ## Environment
@@ -127,8 +125,6 @@ A well written treatment of the Jewish calendar for the layman can be found in _
 <dd>Prints a shorter version of this manpage, with comments on each option.
 <dt>hebcal info
 <dd>Prints the version number and default values of the program.
-<dt>hebcal DST
-<dd>Prints a list of available daylight savings time schemes, suitable as arguments to the −Z DST option.
 <dt>hebcal cities
 <dd>Prints a list of cities which hebcal knows about, suitable as arguments to the −C city option. If your city does not appear on this list, put the necessary defaults in the DST_OPTS environment variable.
 <dt>hebcal copying
@@ -188,23 +184,23 @@ you may have to quote spaces:
    ./configure --with-default-city="Los Angeles"
    ```
 
-If your city is NOT on the list, then in order to customize hebcal to your city, you will need to pass it the latitude, longitude, timezone and daylight savings code (see the manual).
+If your city is NOT on the list, then in order to customize hebcal to your city, you will need to pass it the latitude, longitude, and timezone (see the manual).
 
 Suppose you live in Oshkosh, Wisconsin.
 Your lattitude is 44d1'29", and your longitude is 88d32'33".
-You are in timezone Z-6, with the daylight savings scheme normal to
-the US.  We'll round the geographic coordinates to the nearest minute.
+You are in timezone `America/Chicago`.
+We'll round the geographic coordinates to the nearest minute.
 
 In order to get candlelighting times for the current year, you would type
   ```
-  hebcal -ch -l44,1 -L 88,33 -z-6 -Zusa
+  hebcal -ch -l44,1 -L 88,33 -z America/Chicago
   ```
 
 Now this can get rough on the fingers if you do it a lot, so the `HEBCAL_OPTS` environment variable is available for you to use.  Every time hebcal is run, it checks this variable.  If it is non-empty, the arguments in that variable are read as though they were typed at the command line before the ones you actually type.
 
 So you might set `HEBCAL_OPTS` to be
    ```
-   -l44,1 -L 88,33 -z-6 -Zusa
+   -l44,1 -L 88,33 -z America/Chicago
    ```
 and if you type
     ```
@@ -212,7 +208,7 @@ and if you type
     ```
 hebcal will think you typed
     ```
-    hebcal -l44,1 -L 88,33 -z-6 -Zusa  -ch
+    hebcal -l44,1 -L 88,33 -z America/Chicago -ch
     ```
 
 REMEMBER: negative longitudes are EAST of Greenwich.

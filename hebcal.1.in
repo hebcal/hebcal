@@ -1,6 +1,6 @@
 .\" hebcal.1  -*- nroff -*-
 .\" Copyright(c) 1994-2006  Danny Sadinoff
-.\" Portions Copyright (c) 2002 Michael J. Radwin. All Rights Reserved.
+.\" Portions Copyright (c) 2010 Michael J. Radwin. All Rights Reserved.
 .\" See section COPYING for conditions for redistribution
 .TH HEBCAL 1 "Hebcal Version @VERSION@" "Danny Sadinoff"
 .\" "
@@ -49,12 +49,6 @@ hebcal - a Jewish calendar generator
 ]
 .if n .ti +5
 .br
-[
-.B \-Z
-.BI daylight_savings_scheme
-]
-.if n .ti +5
-.br
 [[
 .BI month
 [
@@ -66,8 +60,6 @@ hebcal - a Jewish calendar generator
 .B hebcal help
 .br
 .B hebcal info
-.br
-.B hebcal DST
 .br
 .B hebcal cities
 .br
@@ -347,18 +339,8 @@ by typing
 at the command prompt.  If the city you want isn't on that list, you
 can directly control hebcal's geographic information with the \c
 .B \-l, \-L \-z \c
-and \c
-.BI "\-Z " "DST " \c
 switches.  Note that changing the geographic coordinates
-causes the timezone to default to Zulu and the daylight
-savings time processor to default to 'none.' To get a
-list of possible values for \c
-.I DST,
-type
-.nf
-	hebcal DST
-.fi
-at the command prompt.
+causes the timezone to default to UTC.
 .PP
 For a status report on customizations, type 
 type
@@ -441,8 +423,10 @@ The value of this variable is automatically processed as if it were
 typed at the command line \c
 .I before \c
 any other actual command\-line\-arguments.
-.SH AUTHOR
+.SH AUTHORS
 Danny Sadinoff
+.br
+Michael J. Radwin
 .SH SEE ALSO
 calendar(1), emacs(1), hcal(1), hdate(1), omer(1), remind(1), rise(1)
 .PP
@@ -474,19 +458,13 @@ Prints a shorter version of this manpage, with comments on each option.
 .B hebcal info
 Prints the version number and default values of the program. 
 .TP
-.B hebcal DST
-Prints a list of available daylight savings time schemes, suitable as
-arguments to the \c
-.BI "\-Z " "DST " \c
-option.
-.TP
 .B hebcal cities
 Prints a list of cities which hebcal knows about, suitable as
 arguments to the \c
 .BI "\-C " "city " \c
 option.  If your city does not appear on this list, put the necessary
 defaults in the
-.B DST_OPTS \c
+.B HEBCAL_OPTS \c
  environment variable.
 .TP
 .B hebcal copying
@@ -530,12 +508,6 @@ a splendid chart depicting when the changeover from
 the Julian to the Gregorian calendars occurred in various places.
 .PP
 Hebcal cannot handle date computations before 2 C.E.  sorry.
-.PP
-Daylight-Savings time rules are as up-to-date as a nonpaying job
-allows.  US DST rules are correct only back to 1966.  
-.PP
-Hebcal assumes that the Energy Policy Act of 2005, which changes the DST 
-rules in the US will go into effect, even though congress may still revert it.
 .SH BUG REPORTS TO
 Danny Sadinoff
 .br
@@ -543,7 +515,7 @@ danny@sadinoff.com
 .SH COPYING
 Copyright (c) 1994-2006 Danny Sadinoff
 .br
-Portions Copyright (c) 2002 Michael J. Radwin. All Rights Reserved.
+Portions Copyright (c) 2010 Michael J. Radwin. All Rights Reserved.
 .PP
 Permission is granted to make and distribute verbatim copies of
 this manual provided the copyright notice and this permission notice

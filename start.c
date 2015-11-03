@@ -1,7 +1,7 @@
 /*
    Hebcal - A Jewish Calendar Generator
    Copyright (C) 1994-2006  Danny Sadinoff
-   Portions Copyright (c) 2002 Michael J. Radwin. All Rights Reserved.
+   Portions Copyright (c) 2010 Michael J. Radwin. All Rights Reserved.
 
    https://github.com/hebcal/hebcal
 
@@ -50,13 +50,13 @@ int ok_to_run = 1;
 #define TODAY 3
 
 char *progname;
-static int theYear, theMonth, theDay, yearDirty, rangeType, zonep, schemep,
+static int theYear, theMonth, theDay, yearDirty, rangeType,
     latp, longp;			/* has the user inputted lat and long? */
 static char
     *cityName, *helpArray[] =
 {
    "Hebcal Version " VERSION " By Danny Sadinoff",
-   "usage: hebcal [-8acdDeFHhiorsStTwy]",
+   "usage: hebcal [-8acdDeEFHhiorsStTwy]",
    "            [-b candle_lighting_minutes_before_sundown ]",
    "            [-I file]",
    "            [-Y yahrtzeit_file]",
@@ -64,26 +64,25 @@ static char
    "            [-L longitude -l latitude]",
    "            [-m havdalah_minutes_past_sundown ]",
    "            [-z timezone]",
-   "            [-Z daylight_savings_option]",
    "            [-f format_option]",
    "            [[ month [ day ]] year ]",
    "       hebcal help",
    "       hebcal info",
-   "       hebcal DST",
    "       hebcal cities",
    "       hebcal warranty",
    "       hebcal copying",
    "OPTIONS:",
    "   -8 : Use 8-bit Hebrew (ISO-8859-8-Logical).",
-   "   -a : Use ashkenazis hebrew.",
+   "   -a : Use ashkenazis Hebrew.",
    "   -b mins : Set candle-lighting to occur this many minutes before sundown ",
    "   -c : Print candlelighting times.",
    "   -C city : Set latitude, longitude, timezone and daylight",
    "             savings scheme according to specified city. ",
    "             This option implies the -c option.",
-   "   -d : print the hebrew date for the entire date range.",
-   "   -D : print the hebrew date for dates with some event.",
+   "   -d : print the Hebrew date for the entire date range.",
+   "   -D : print the Hebrew date for dates with some event.",
    "   -e : Ouput \"European\" dates -- DD.MM.YYYY format.",
+   "   -E : Ouput 24-hour times (e.g. 18:37 instead of 6:37).",
    "   -f FORMAT : change output to FORMAT. see below for format strings",
    "   -F : Output the Daf Yomi for the entire date range.",
    "   -h : Suppress default holidays.",
@@ -112,14 +111,10 @@ static char
    "   -Y file : Get yahrtzeit dates from specified file.",
    "             The format is: mm dd yyyy string",
    "             the first three fields specify a *Gregorian* date.",
-   "   -z : Use specified timezone, disabling daylight savings time,",
-   "        overriding the -C (localize to city) switch.",
-   "   -Z scheme : change to daylight savings scheme.  The possible values",
-   "        of scheme are currently usa, israel, eu, and none.",
+   "   -z : Use specified timezone, overriding -C (localize to city).",
    "",
    "hebcal help    -- Print this message.",
    "hebcal info    -- Print version and localization data.",
-   "hebcal DST     -- Print a list of available daylight savings schemes.",
    "hebcal cities  -- Print a list of available cities.",
    "hebcal warranty -- Tells you how there's NO WARRANTY for hebcal.",
    "hebcal copying -- Prints the details of the GNU copyright.",
@@ -156,26 +151,6 @@ static char
    "            https://github.com/hebcal/hebcal"
 };
 
-typedef struct dst
-{
-    char *name;
-    int DST_scheme;
-}
-dst_t;
-
-dst_t savings_bank[] =
-{
-    {"usa", DST_USOFA},
-    {"none", DST_NONE},
-    {"israel", DST_ISRAEL},
-    {"eu", DST_EU},
-    {"aunz", DST_AUNZ},
-    {"mx", DST_MX},
-    {"", 0}
-};
-
-
-
 void print_version_data(void)
 {
     printf("hebcal version " VERSION "\n");
@@ -185,8 +160,7 @@ void print_version_data(void)
            latdeg < 0 ? 'S' : 'N');
     printf("          %dd%d' %c longitude\n", abs(longdeg), abs(longmin),
            longdeg > 0 ? 'W' : 'E');
-    printf("          GMT %s%d:00\n",
-           TZ < 0 ? "" : "+", TZ);
+    printf("          Timezone: %s\n", TZ_INFO->name);
     printf("\nEnvironment variable for default city: %s\n", ENV_CITY);
     printf("\nEnvironment variable for default options: %s\n", ENV_OPTS);
 }
@@ -231,42 +205,16 @@ void print_city_data( void )
          cities[cnum].name;
          cnum++)
     {
-	dst_t *pdst;
-	const char *dst_name = NULL;
-
-	for (pdst = savings_bank; pdst->name != NULL; pdst++)
-	{
-	    if (cities[cnum].DST_scheme == pdst->DST_scheme)
-	    {
-		dst_name = pdst->name;
-		break;
-	    }
-	}
-
-        printf("%s (%dd%d' %c lat, %dd%d' %c long, GMT %s%d:00, %s)\n",
+        printf("%s (%dd%d' %c lat, %dd%d' %c long, %s)\n",
               cities[cnum].name,
                abs(cities[cnum].latdeg), abs(cities[cnum].latmin),
                cities[cnum].latdeg < 0 ? 'S' : 'N',
                abs(cities[cnum].longdeg), abs(cities[cnum].longmin),
                cities[cnum].longdeg > 0 ? 'W' : 'E',
-               cities[cnum].TZ < 0 ? "" : "+", cities[cnum].TZ,
-               dst_name ? dst_name : "unknown"
+               cities[cnum].tz
             );
     }
 }
-
-void print_DST_data(void)
-{
-    size_t cnum;
-
-    for (cnum = 0;
-         (cnum < sizeof(savings_bank) / sizeof(dst_t));
-         cnum++)
-    {
-        puts(savings_bank[cnum].name);
-    }
-}
-
 
 void localize_to_city(const char *cityNameArg)
 {
@@ -295,11 +243,7 @@ void localize_to_city(const char *cityNameArg)
                 longdeg = pcity->longdeg;
                 longmin = pcity->longmin;
             }
-            if (!zonep)
-            {
-                TZ = pcity->TZ;
-                DST_scheme = pcity->DST_scheme;
-            }
+	    TZ_INFO = timelib_parse_tzfile(pcity->tz, timelib_builtin_db());
             free(cityStr);
             initStr(&cityName, strlen(pcity->name));
             strcpy(cityName, pcity->name);
@@ -310,22 +254,6 @@ void localize_to_city(const char *cityNameArg)
     warn("run 'hebcal cities' for a list of cities.", "");
     ok_to_run = 0;
 }
-
-void set_DST_scheme(const char* schemeArg)
-{
-    size_t len = strlen(schemeArg);
-    dst_t *pdst;
-
-    for (pdst = savings_bank; pdst->name != NULL; pdst++)
-        if (0 == istrncasecmp(len, schemeArg, pdst->name))
-      {
-          DST_scheme = pdst->DST_scheme;
-          return;
-      }
-
-    die("unknown daylight savings scheme: %s.  \"hebcal DST\" for options.", schemeArg);
-}
-
 
 void set_default_city( void )
 {
@@ -353,7 +281,7 @@ void handleArgs(int argc, char *argv[])
 
    char *usage =		/* not quite sure how compatible this is */
    "usage: \n\
-   hebcal [-acdDehHiMoOrsStTwxy]\n\
+   hebcal [-acdDeEFhHiMoOrsStTwxy]\n\
           [-b candle_lighting_minutes_before_sundown]\n\
           [-I input_file]\n\
           [-Y yahrtzeit_file]\n\
@@ -361,11 +289,9 @@ void handleArgs(int argc, char *argv[])
           [-L longitude -l latitude]\n\
           [-m havdalah_minutes]\n\
           [-z timezone]\n\
-          [-Z daylight_savings_scheme]\n\
           [[month [day]] year]\n\
    hebcal help\n\
    hebcal info\n\
-   hebcal DST\n\
    hebcal cities\n\
    hebcal warranty\n\
    hebcal copying\n";
@@ -374,7 +300,7 @@ void handleArgs(int argc, char *argv[])
 
    Getopt(argc, argv, "", 1);
    while (EOF !=
-          (option = Getopt(argc, argv, "ab:cC:dDeFf:hHI:il:L:m:MoOrsStTwxyY:z:Z:8", 0)))
+          (option = Getopt(argc, argv, "ab:cC:dDeEFf:hHI:il:L:m:MoOrsStTwxyY:z:8", 0)))
    {
        switch ((char) option)
        {
@@ -411,6 +337,9 @@ void handleArgs(int argc, char *argv[])
        case 'e':		/* european date format */
 	   euroDates_sw = 1;
 	   break;
+       case 'E':                /* 24-hour time format */
+           twentyFourHour_sw = 1;
+           break;
        case 'f':		/* output format */
            formatString = strdup(Optarg);
 	   break;
@@ -497,19 +426,10 @@ void handleArgs(int argc, char *argv[])
        case 'x':		/* input file */
 	   suppress_rosh_chodesh_sw = 1;
 	   break;
-	case 'Z':
-            schemep = 1;
-            sscanf(Optarg, "%s", dummy);
-            set_DST_scheme(dummy);
-            break;
-            
-            
        case 'z':		/* time zone */
-	   if (!(sscanf(Optarg, "%d", &TZ) == 1))
+	   TZ_INFO = timelib_parse_tzfile(Optarg, timelib_builtin_db());
+	   if (TZ_INFO == NULL)
                die("unable to read time zone argument: %s", Optarg);
-	   if (!schemep)
-               DST_scheme = DST_NONE;
-	   zonep = 1;
 	   break;
            
        default:
@@ -562,11 +482,6 @@ void handleArgs(int argc, char *argv[])
 	   print_city_data();
 	   exit(0);
        }
-       else if (0 == istrncasecmp(3, argv[Optind], "DST"))
-       {
-	   print_DST_data();
-	   exit(0);
-       }
        else if (0 == istrncasecmp(3, argv[Optind], "copying"))
        {
 	   print_copying();
@@ -596,11 +511,11 @@ void handleArgs(int argc, char *argv[])
        }
        else if (isAllNums(argv[Optind]))
 	   if (hebrewDates_sw)
-               die("Don't use numbers to specify hebrew months.", "");
+               die("Don't use numbers to specify Hebrew months.", "");
 	   else
 	      theMonth = atoi(argv[Optind]);	/* gregorian month */
        else if (hebrewDates_sw)
-	   die("Unknown hebrew month: %s", argv[Optind]);
+	   die("Unknown Hebrew month: %s", argv[Optind]);
        else
 	   die(usage, "");	/* bad gregorian month. */
        
@@ -626,11 +541,11 @@ void handleArgs(int argc, char *argv[])
        }
        else if (isAllNums(argv[Optind]))
 	   if (hebrewDates_sw)
-               die("Don't use numbers to specify hebrew months.", "");
+               die("Don't use numbers to specify Hebrew months.", "");
 	   else
                theMonth = atoi(argv[Optind]);	/* gregorian month */
 	else if (hebrewDates_sw)
-            die("Unknown hebrew month: %s", argv[Optind]);
+            die("Unknown Hebrew month: %s", argv[Optind]);
 	else
             die("bad month.%s", usage);	/* bad gregorian month. */
 

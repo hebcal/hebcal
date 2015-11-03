@@ -1,3 +1,6 @@
+Changes in 4.0
+* Use Olson zoneinfo database for time zones (#112)
+
 Changes in 3.18
 * Add Tu B'Av, minor holiday, on the 15th of Av (#98)
 * Add Sigd, modern holiday, on 29th of Cheshvan, beginning in 2008 (#96)

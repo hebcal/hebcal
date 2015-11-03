@@ -114,6 +114,8 @@ am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(man1dir)"
 PROGRAMS = $(bin_PROGRAMS)
 am__objects_1 = common.$(OBJEXT) danlib.$(OBJEXT) error.$(OBJEXT) \
 	mygetopt.$(OBJEXT) greg.$(OBJEXT) hebcal.$(OBJEXT) \
+	timelib.$(OBJEXT) astro.$(OBJEXT) tm2unixtime.$(OBJEXT) \
+	unixtime2tm.$(OBJEXT) dow.$(OBJEXT) parse_tz.$(OBJEXT) \
 	holidays.$(OBJEXT) rise.$(OBJEXT) sedra.$(OBJEXT) \
 	start.$(OBJEXT) gnu.$(OBJEXT) format.$(OBJEXT) \
 	dafyomi.$(OBJEXT)
@@ -358,17 +360,19 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 
 #AM_CPPFLAGS += -DHEBCAL_OPTS='"$(HEBCAL_OPTS)"'
-AM_CPPFLAGS = -DVERSION='"$(PACKAGE_VERSION)"'
+AM_CPPFLAGS = -DVERSION='"$(PACKAGE_VERSION)"' -DHAVE_STDLIB_H -DHAVE_STRING_H -DHAVE_INTTYPES_H
 
 # AM_CFLAGS = -Wall
 SUBDIRS = tests
 
 #sanity_check_SOURCES = common.c danlib.c error.c greg.c sanity-check.c
 hebcal_c_files = common.c danlib.c error.c mygetopt.c greg.c hebcal.c\
+         timelib.c astro.c tm2unixtime.c unixtime2tm.c dow.c parse_tz.c \
          holidays.c rise.c sedra.c start.c gnu.c format.c dafyomi.c
 
 hebcal_h_files = common.h  danlib.h format.h greg.h hebcal.h \
           myerror.h mygetopt.h \
+          timezonedb.h timelib.h astro.h timelib_structs.h \
           rise.h sedra.h cities.h
 
 hebcal_SOURCES = $(hebcal_c_files) $(hebcal_h_files)
@@ -487,9 +491,11 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/astro.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/common.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dafyomi.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/danlib.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dow.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/error.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/format.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gnu.Po@am__quote@
@@ -497,9 +503,13 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hebcal.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/holidays.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mygetopt.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/parse_tz.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rise.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sedra.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/start.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/timelib.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tm2unixtime.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/unixtime2tm.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

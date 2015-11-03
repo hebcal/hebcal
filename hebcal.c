@@ -1,7 +1,7 @@
 /*
    Hebcal - A Jewish Calendar Generator
    Copyright (C) 1994-2004  Danny Sadinoff
-   Portions Copyright (c) 2002 Michael J. Radwin. All Rights Reserved.
+   Portions Copyright (c) 2010 Michael J. Radwin. All Rights Reserved.
 
    https://github.com/hebcal/hebcal
 
@@ -26,12 +26,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 #include "hebcal.h"
 #include "common.h"
 #include "danlib.h"
 #include "myerror.h"
-#include "rise.h"
+#include "timelib.h"
 #include "sedra.h"
 #include "format.h"
 #include "greg.h"
@@ -46,8 +47,12 @@ int
   israel_sw, latlong_sw, printOmer_sw, printMolad_sw, printSunriseSunset_sw, sedraAllWeek_sw, sedrot_sw, noGreg_sw,
   printHebDates_sw, printSomeHebDates_sw, noHolidays_sw, tabs_sw, weekday_sw,  suppress_rosh_chodesh_sw,
   dafYomi_sw,
-  yearDigits_sw, yahrtzeitFile_sw, DST_scheme, DST_value;
+  yearDigits_sw, yahrtzeitFile_sw;
+timelib_tzinfo *TZ_INFO;
+int latdeg, latmin, longdeg, longmin;
+
 int iso8859_8_sw;
+int twentyFourHour_sw;
 long beginOmer, endOmer;
 FILE *inFile, *yFile;
 char *formatString;
@@ -154,259 +159,159 @@ void PrintGregDate( date_t dt )
 
 /*-------------------------------------------------------------------------*/
 
-void set_DST_bounds (long *beginDST, long *endDST, int gregYr)
+/* For computational purposes, sunrise or sunset is defined to occur
+ * when the geometric zenith distance of center of the Sun is 90.8333
+ * degrees. That is, the center of the Sun is geometrically 50
+ * arcminutes below a horizontal plane. For an observer at sea level
+ * with a level, unobstructed horizon, under average atmospheric
+ * conditions, the upper limb of the Sun will then appear to be tangent
+ * to the horizon. The 50-arcminute geometric depression of the Sun's
+ * center used for the computations is obtained by adding the average
+ * apparent radius of the Sun (16 arcminutes) to the average amount of
+ * atmospheric refraction at the horizon (34 arcminutes).
+ *
+ * http://aa.usno.navy.mil/faq/docs/RST_defs.php
+ *
+ * Update Jan 2014: since timelib_astro_rise_set_altitude() subtracts 16
+ * arcminutes to account for the apparent radius of the sun ("upper limb
+ * correction"), we should use 34 minutes and not 50 mintues here.
+ */
+#define SUNRISE_SUNSET_ALTITUDE ((double)(-34.0/60.0))
+
+static int get_rise_set(date_t todayGreg, double *h_rise, double *h_set, double *gmt_offset)
 {
-    date_t tempDt;
-    
-    tempDt.yy = gregYr;
-    tempDt.dd = 1;
-    tempDt.mm = 4;
-    
-    switch (DST_scheme)
-    {
-    case DST_USOFA:
-      /* FIX: this needs more work for historical DST, obviously */
-      if( gregYr >= 1966 && gregYr < 1987 ) 
-	{
-        /*  the last sunday in April */
-	  tempDt.dd = 30;
-	  tempDt.mm = 4;
-	  *beginDST = day_on_or_before (SUN, greg2abs (tempDt) );
+    double latitude, longitude;
+    timelib_sll rise, set, transit;
+    int             rs;
+    timelib_time   *t;
+    double n_offset;
+    int hour, minute;
 
-        /*  the sunday before the first of november */
-        tempDt.dd = 1;
-        tempDt.mm = 11;
-        *endDST = day_on_or_before (SUN, greg2abs (tempDt) - 1L);
-        DST_value = 60;
-        break;
-	}
-      else if( gregYr >= 1987 && gregYr < 2007 )
-	{
-        /*  the first sunday in April */
-        *beginDST = day_on_or_before (SUN, greg2abs (tempDt) + 6L);
+    latitude = (double) latdeg + (latmin / 60.0);
+    longitude = (longdeg * -1.0) + ((longmin * -1.0) / 60.0);
 
+    t = timelib_time_ctor();
+    t->y = todayGreg.yy;
+    t->m = todayGreg.mm;
+    t->d = todayGreg.dd;
+    t->h = 17;			/* assume 5pm */
 
-        /*  the sunday before the first of november */
-        tempDt.dd = 1;
-        tempDt.mm = 11;
-        *endDST = day_on_or_before (SUN, greg2abs (tempDt) - 1L);
+    timelib_set_timezone(t, TZ_INFO);
+    /* t->tz_info = TZ_INFO; */
+    /* t->zone_type = TIMELIB_ZONETYPE_ID; */
+    /* t->is_localtime = 1; */
+    /* t->have_zone = 1; */
+    timelib_update_ts(t, TZ_INFO);
 
-        DST_value = 60;
-        break;
-	}
-      else if( gregYr >= 2007 )
-	{
-        /*  Second Sunday in March */
-        tempDt.dd = 1;
-        tempDt.mm = 3;
-        *beginDST = day_on_or_before (SUN, greg2abs(tempDt) + 13L);
-
-
-        /*  first sunday of november */
-        tempDt.dd = 1;
-        tempDt.mm = 11;
-        *endDST = day_on_or_before (SUN, greg2abs(tempDt) +6L);
-
-        DST_value = 60;
-        break;
-	}
-    case DST_MX:
-	/* the first sunday in April */
-	*beginDST = day_on_or_before (SUN, greg2abs (tempDt) + 6L);
-
-	/*  the sunday before the first of november */
-	tempDt.dd = 1;
-	tempDt.mm = 11;
-	*endDST = day_on_or_before (SUN, greg2abs (tempDt) - 1L);
-
-	DST_value = 60;
-	break;
-    case DST_EU:
-        /* The EU version of Daylight Saving Time runs from the last
-         * Sunday in March through the last Sunday in October.
-       * it starts at 1am instead of 2am, but that's not relevant here.
-       * http://webexhibits.org/daylightsaving/g.html
-       */
-        *beginDST = day_on_or_before (SUN, greg2abs (tempDt) - 1L);
-        tempDt.dd = 1;
-        tempDt.mm = 11;
-        /*  the sunday before the first of november */
-        *endDST = day_on_or_before (SUN, greg2abs (tempDt) - 1L);
-        DST_value = 60;
-        break;
-    case DST_AUNZ:
-        /* Australasia is the inverse of European Union */
-        *endDST = day_on_or_before (SUN, greg2abs (tempDt) - 1L);
-        tempDt.dd = 1;
-        tempDt.mm = 11;
-        *beginDST = day_on_or_before (SUN, greg2abs (tempDt) - 1L);
-        DST_value = 60;
-        break;
-    case DST_ISRAEL:
-	if (gregYr >= 2005) {
-	    /* Starting in 2005, DST begins in Israel on the
-	       last Friday before April 2nd, at 2:00 a.m. */
-	    /* http://www.gov.il/FirstGov/NewsEng/SavingTime_news.htm */
-	    tempDt.dd = 1;
-	    tempDt.mm = 4;
-	    *beginDST = day_on_or_before (FRI, greg2abs (tempDt));
-	} else {
-	    /* daylight savings time begins in Israel on the */
-	    /* first Sunday after Passover ends on Nisan 21: */
-	    tempDt.mm = NISAN;
-	    tempDt.dd = 28;
-	    tempDt.yy = gregYr + 3760;
-	    *beginDST = day_on_or_before (SUN, hebrew2abs (tempDt));
-	}
-        
-  if (gregYr >= 2013) {
-    /*
-      IDT will end on the last Sunday of October
-      http://en.wikipedia.org/wiki/Israel_Summer_Time#2013.E2.80.93Present
-    */
-        tempDt.dd = 1;
-        tempDt.mm = 11;
-        /*  the sunday before the first of november */
-        *endDST = day_on_or_before (SUN, greg2abs (tempDt) - 1L);
-  }
-  else {      
-        /* daylight savings time ends in Israel on the Sunday Selichot */
-        /* begins: */
-        tempDt.mm = TISHREI;
-        tempDt.dd = 1;
-        tempDt.yy = gregYr + 3761;        /* next year */
-        *endDST = day_on_or_before (SUN, hebrew2abs (tempDt) - 3L);
-  } 
-        DST_value = 60;
-        break;
-    case DST_NONE:
-        *endDST = *beginDST = 0L;
-        DST_value = 0;
-        break;
-    default:
-        DST_value = 0;
-        break;
-    }
+    *gmt_offset = timelib_get_current_offset(t) / 3600;
+    rs = timelib_astro_rise_set_altitude(t, longitude, latitude,
+					 SUNRISE_SUNSET_ALTITUDE, 1,
+					 h_rise, h_set, &rise, &set, &transit);
+    timelib_time_dtor(t);
+    return rs;
 }
 
-/*-------------------------------------------------------------------------*/
 
-void 
-set_DST( long beginDST, long endDST, long todayAbs, int *DST )
+void print_sunrise_sunset(date_t todayGreg)
 {
-    if (beginDST > endDST)
-    {
-	/* Australia */
-	if (todayAbs >= beginDST || todayAbs < endDST)
-	{
-	    *DST = DST_value;
-	}
-	else
-	{
-	    *DST = 0;
-	}
-    }
-    else
-    {
-	if (beginDST <= todayAbs && todayAbs < endDST)
-	    *DST = DST_value;
-	else
-	    *DST = 0;
-    }
-}
+    double gmt_offset;
+    double h_rise, h_set, N_rise, N_set;
+    int rise_hour, rise_minute, set_hour, set_minute;
 
-/*-------------------------------------------------------------------------*/
-
-void print_sunrise_sunset(date_t todayGreg, int DST)
-{
-    double xsunrise, xsunset;
-    int day_adj, status;
+    get_rise_set(todayGreg, &h_rise, &h_set, &gmt_offset);
     
+    N_rise = h_rise + gmt_offset;
+    N_set = h_set + gmt_offset;
+
+    if (N_rise > 24 || N_rise < 0) {
+	N_rise -= floor(N_rise / 24) * 24;
+    }
+
+    rise_hour = (int) N_rise;
+    if (rise_hour > 12) {
+	rise_hour = rise_hour % 12;
+    }
+    rise_minute = (int) (60 * (N_rise - (int) N_rise));
+
+    /* ugly: repeat for sunset */
+    if (N_set > 24 || N_set < 0) {
+	N_set -= floor(N_set / 24) * 24;
+    }
+
+    set_hour = (int) N_set;
+    if (set_hour > 12) {
+	set_hour = set_hour % 12;
+    }
+    set_minute = (int) (60 * (N_set - (int) N_set));
+
     PrintGregDate (todayGreg);
-    
-    status = suntime (&xsunrise, &xsunset, dayOfYear (todayGreg),
-                    SUNRISE, SUNSET);
-    if (status & NO_SUNSET)
-        printf ("No sunset today.\n");
-    else
-    {
-        char * time_rise =timeadj ("", xsunrise, DST, &day_adj);
-        char * time_set =timeadj ("", xsunset, DST, &day_adj);
-        printf ("%s:%s; %s:%s\n",
-                "Sunrise",
-                time_rise,
-                "Sunset",
-                time_set
-            );
-        free( time_rise );
-        free( time_set );
-        /*              printf("%s %s %.1lf\n",timeadj ("",xsunrise,0,&day_adj),
-                        timeadj ("",xsunset,0,&day_adj),
-                        (xsunset-xsunrise) * 5.0 + 120.0);
-        */
-    }
+
+    printf ("%s:%2d:%02d; %s:%2d:%02d\n",
+	    "Sunrise",
+	    rise_hour, rise_minute,
+	    "Sunset",
+	    set_hour, set_minute
+	);
 }
 
-void print_candlelighting_times( int mask, int weekday, date_t todayGreg, int DST)
+void print_candlelighting_times( int mask, int weekday, date_t todayGreg)
 {
-    /* offset of sunset to candlelighting in minutes */
-    
+    double gmt_offset;
+    double h_rise, h_set, N;
+    const int calc_sunset = 1;
+    double n_offset;
+    int hour, minute;
+    int rs;
+
+    rs = get_rise_set(todayGreg, &h_rise, &h_set, &gmt_offset);
+    if (rs != 0) {
+        return;
+    }
+
+    N = (calc_sunset ? h_set : h_rise) + gmt_offset;
+
     if (weekday == FRI || (mask & LIGHT_CANDLES))
     {
-        double xsunrise, xsunset;
-        int day_adj, status;
-        
-        PrintGregDate (todayGreg);
-        
-        status = suntime (&xsunrise, &xsunset, dayOfYear (todayGreg),
-                        SUNRISE, SUNSET);
-        if (status & NO_SUNSET)
-            printf ("No sunset today.\n");
-        else
-        {
-            char * time =timeadj ("", xsunset, light_offset + DST, &day_adj);
-            printf ("%s: %s\n",
-                    iso8859_8_sw ? "\344\343\354\367\372 \360\370\345\372" :
-                    "Candle lighting",
-                    time
-                );
-            free( time );
-            /*              printf("%s %s %.1lf\n",timeadj ("",xsunrise,0,&day_adj),
-                            timeadj ("",xsunset,0,&day_adj),
-                            (xsunset-xsunrise) * 5.0 + 120.0);
-            */
-        }
+	n_offset = light_offset / 60.0;
     }
-    
+
+    if (weekday == SAT || ((mask & YOM_TOV_ENDS) && weekday != FRI))
+    {
+	n_offset = havdalah_minutes / 60.0;
+    }
+
+    N += n_offset;
+
+    if (N > 24 || N < 0)
+    {
+	N -= floor(N / 24) * 24;
+    }
+
+    hour = (int) N;
+    if (hour > 12 && !twentyFourHour_sw) {
+	hour = hour % 12;
+    }
+    minute = (int) (60 * (N - (int) N));
+
+    if (weekday == FRI || (mask & LIGHT_CANDLES)) 
+    {
+        PrintGregDate (todayGreg);
+	printf("%s: %2d:%02d\n", 
+	       iso8859_8_sw ? "\344\343\354\367\372 \360\370\345\372" : "Candle lighting",
+	       hour, minute);
+    }
+
     /* offset of sunset to havdallah in minutes */
     if (weekday == SAT ||
-        ((mask & YOM_TOV_ENDS) &&
-        weekday != FRI))
+       ((mask & YOM_TOV_ENDS) &&
+	weekday != FRI))
     {
-        double xsunrise, xsunset;
-        int day_adj, status;
-        
-      
         PrintGregDate (todayGreg);
-        
-        status = suntime (&xsunrise, &xsunset, dayOfYear (todayGreg),
-                          SUNRISE, SUNSET);
-        if (status & NO_SUNSET)
-            printf ("No sunset today.\n");
-        else
-        {
-            char * time = timeadj ("",
-                                   xsunset,
-                                   havdalah_minutes + DST,
-                                   &day_adj);
-            printf ("%s (%d %s):%s\n",
-                    iso8859_8_sw ? "\344\341\343\354\344" : "Havdalah",
-                    havdalah_minutes,
-                    iso8859_8_sw ? "\343\367\345\372" : "min",
-                    time
-                    );
-            free( time );
-        }
+	printf("%s (%d %s):%2d:%02d\n", 
+	       iso8859_8_sw ? "\344\341\343\354\344" : "Havdalah",
+	       havdalah_minutes,
+	       iso8859_8_sw ? "\343\367\345\372" : "min",
+	       hour, minute);
     }
 }
 
@@ -430,11 +335,10 @@ void reset_Omer( int hYear )
 void main_calendar( long todayAbs, long endAbs) /* the range of the desired printout */
 {
     date_t todayGreg, todayHeb;
-    long beginDST, endDST;
     holstorep_t holi_start,holip;         /* a list of holidays for today */
     year_t theYear;
     char *omerStr ;
-    int omer, day_of_week, returnedMask, DST;
+    int omer, day_of_week, returnedMask;
     int omer_today, sedra_today, candle_today, holidays_today, molad_today;
     molad_t moladNext;
     int monthNext;
@@ -443,8 +347,6 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
     todayGreg = abs2greg (todayAbs);
     
     theYear = yearData (todayHeb.yy);
-    set_DST_bounds (&beginDST, &endDST, todayGreg.yy);
-    set_DST (beginDST, endDST, todayAbs, &DST);
 
     /*============== Main Year Loop ==============*/
     
@@ -473,11 +375,6 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
           (todayHeb.dd >= 23 && todayHeb.dd <= 29) &&
           (todayHeb.mm != ELUL); /* no birkat hachodesh before rosh hashana */
       
-      // Set DST if we are using time based functions
-      if (print_sunrise_sunset || candle_today || molad_today)
-      {
-        set_DST (beginDST, endDST, todayAbs, &DST); 
-      }
       if (printHebDates_sw ||
           (printSomeHebDates_sw && 
            (holidays_today || sedra_today || omer_today || candle_today)))
@@ -492,7 +389,7 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
       
       if (printSunriseSunset_sw)
       {
-          print_sunrise_sunset(todayGreg, DST);
+          print_sunrise_sunset(todayGreg);
       }
       
       /* print the sedra, if desired */
@@ -553,7 +450,7 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
       if (candle_today)
       {
           print_candlelighting_times (returnedMask,
-                                      day_of_week, todayGreg, DST);
+                                      day_of_week, todayGreg);
       }
       
       /* Print Molad */
@@ -573,12 +470,6 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
       }
 
       incHebGregDate (&todayHeb, &todayGreg, &todayAbs, &day_of_week, &theYear);
-      
-      if (1 == todayGreg.dd &&  /* happy new year! */
-          JAN == todayGreg.mm)
-      {
-          set_DST_bounds (&beginDST, &endDST, todayGreg.yy);
-      }
       
 #     ifdef PLUG_LEAKS
       free_holidays(*holip);
