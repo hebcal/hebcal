@@ -21,7 +21,7 @@ be individualy turned on or off:
 ## Synopsis
 
 ```
-usage: hebcal [-8acdDeFHhiorsStTwy]
+usage: hebcal [-8acdDeEFHhiorsStTwy]
             [-b candle_lighting_minutes_before_sundown ]
             [-I file]
             [-Y yahrtzeit_file]
@@ -52,13 +52,14 @@ hebcal 93, but rather hebcal 1993.
 Option | Description
 --- | ---
 -8 | Use 8-bit Hebrew (ISO-8859-8-Logical).
--a | Use ashkenazis hebrew.
+-a | Use ashkenazis Hebrew.
 -b mins | Set candle-lighting to occur this many minutes before sundown
 -c | Print candlelighting times.
 -C city | Set latitude, longitude, and timezone according to specified city. This option implies the -c option.
-   -d | print the hebrew date for the entire date range.
-   -D | print the hebrew date for dates with some event.
+   -d | print the Hebrew date for the entire date range.
+   -D | print the Hebrew date for dates with some event.
    -e | Ouput "European" dates -- DD.MM.YYYY format.
+   -E | Ouput 24-hour times (e.g. 18:37 instead of 6:37).
    -f FORMAT | change output to `FORMAT`. see below for format strings
    -F | Output the Daf Yomi for the entire date range.
    -h | Suppress default holidays.
