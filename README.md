@@ -33,7 +33,6 @@ usage: hebcal [-8acdDeFHhiorsStTwy]
             [[ month [ day ]] year ]
        hebcal help
        hebcal info
-       hebcal DST
        hebcal cities
        hebcal warranty
        hebcal copying
@@ -91,7 +90,7 @@ Hebcal contains a small database of cities with their associated geographic info
 
 1. The default: the system manager sets a default city when the program is compiled.
 2. Hebcal looks in the environment variable `HEBCAL_CITY` for the name of a city in hebcal’s database, and if it finds one, hebcal will make that the new default city.
-3. 1 and 2 may be overridden by command line arguments, including those specified in the `HEBCAL_OPTS` environment variable. The most natural way to do this is to use the `−c city` command. This will localize hebcal to city. A list of the cities hebcal knows about can be obtained by typing `hebcal cities` at the command prompt. If the city you want isn’t on that list, you can directly control hebcal’s geographic information with the `−l`, `−L`, `−z`, and `−Z DST` switches. Note that changing the geographic coordinates causes the timezone to default to 'UTC'.
+3. 1 and 2 may be overridden by command line arguments, including those specified in the `HEBCAL_OPTS` environment variable. The most natural way to do this is to use the `−c city` command. This will localize hebcal to city. A list of the cities hebcal knows about can be obtained by typing `hebcal cities` at the command prompt. If the city you want isn’t on that list, you can directly control hebcal’s geographic information with the `−l`, `−L`, and `−z` switches. Note that changing the geographic coordinates causes the timezone to default to 'UTC'.
 For a status report on customizations, type `hebcal info` at the command prompt.
 
 ## Environment
@@ -126,7 +125,7 @@ A well written treatment of the Jewish calendar for the layman can be found in _
 <dt>hebcal info
 <dd>Prints the version number and default values of the program.
 <dt>hebcal cities
-<dd>Prints a list of cities which hebcal knows about, suitable as arguments to the −C city option. If your city does not appear on this list, put the necessary defaults in the DST_OPTS environment variable.
+<dd>Prints a list of cities which hebcal knows about, suitable as arguments to the −C city option.
 <dt>hebcal copying
 <dd>Prints the GNU license, with information about copying the program. See below.
 <dt>hebcal warranty
@@ -151,10 +150,6 @@ The sunup/sundown routines aren’t accurate enough. If you enter geographic coo
 Hebcal only translates between the Gregorian calendar and the Jewish calendar. This means that the results will be at least partly useless where and when the Gregorian calendar was not used, e.g. before the 1752 in Britain and before circa 1918 in Russia. See ["Daylight saving time" on Wikipedia](https://en.wikipedia.org/wiki/Daylight_saving_time) for a splendid chart depicting when the changeover from the Julian to the Gregorian calendars occurred in various places.
 
 Hebcal cannot handle date computations before 2 C.E. sorry.
-
-Daylight-Savings time rules are as up-to-date as a nonpaying job allows. US DST rules are correct only back to 1966.
-
-Hebcal assumes that the Energy Policy Act of 2005, which changes the DST rules in the US will go into effect, even though Congress may still revert it.
 
 ## Build & Install
 
