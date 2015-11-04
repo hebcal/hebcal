@@ -1,5 +1,8 @@
 Changes in 4.0
-* Use Olson zoneinfo database for time zones (#112)
+* Use Olson zoneinfo database for time zones (#112).
+  The `-z` option now takes a timezone ID such as `America/Chicago`
+  and the `-Z` option (formerly Daylight Saving Time rule) has been removed.
+* Add -E option for 24-hour times (e.g. 18:37 instead of 6:37pm)
 
 Changes in 3.18
 * Add Tu B'Av, minor holiday, on the 15th of Av (#98)
@@ -130,3 +133,67 @@ KNOWN ISSUES in 3.5:
 
 * Incorrect weekly sedra displayed near Rosh Hashana
   http://sourceforge.net/tracker/index.php?func=detail&aid=1323641&group_id=340&atid=100340
+
+Changes in 3.4.1
+*  Fixed  the lack of manpage in the dist.
+
+Changes in 3.4
+* Support for Australia DST scheme
+* Add 4 cities: Melbourne, Sydney, Ottawa, Baghdad
+* Added manpage to the build
+
+Changes in 3.4-beta3
+- removed reference to NAN in the code.  It's a silly idea.
+- taught autoconf how to find libm.
+- various other autoconf/automake tricks, like "make check" from another directory
+- figured out how to distribute gpl.texi
+- Broke "no release after 1am rule"
+
+Changes in 3.4-beta2
+- fixed massive distribution error, which left the source missing three .h files.
+- Resolved never to roll a release after 1am.
+- factored out cities into cities.h
+- implemented ouline of a test suite
+
+Changes in 3.4-beta1
+- Fixed bug #s 797972,645240 "Chanukah 7 candles repeated twice",
+    per suggestion & Ambrose C. Li's and Norman Abramovitz's
+    suggestions
+
+- Fixed bug 895450: certain out of range years were causing segfaults.
+
+- Preliminary implementation of the -f FORMAT option
+
+CHANGES since version 3.2
+   - New option: -8 for hebrew output in iso-8859-8-logical charset
+   - Canada and Mexico observe USA Daylight Saving Time rule.
+   - Support the 1996 European Union DST scheme for EU cities.
+   - Added cities: Ashdod, Be'er Sheva, Eilat, Haifa, Petach Tikvah,
+     Tel Aviv, Tiberias
+   - Added cities: Kiev, La Paz, Montreal, Moscow, Paris, Saint Petersburg
+   - "hebcal cities" prints out lat/long and time zone offset from GMT.
+   - Corrected time zone for Johannesburg
+   - Corrected DST rule for Phoenix and Hawaii
+   - Corrected problem with Yahrzeit/Birthdays observed in Adar II
+
+CHANGES since version 3.0b
+   - Shabbat starts 40 minutes before sundown in Jerusalem.
+   - Added a -m option to set when havdalah takes place.  It defaults to
+     72 minutes after sundown.
+   - The environment variables that hebcal reads are no longer
+     configurable at compilation time.  That was a needless piece of
+     complexity.
+
+CHANGES since version 2.1
+   The changes to hebcal since version 2.1 are too numerous to mention
+   here;  see the file CHANGES in the distribution.  A brief overview
+   follows:
+
+   - The biggest change is the addition of candlelighting times.
+   - All of the algorithms have been speeded up.
+   - Numerous errors, especially Yahrtzeit handling, have been
+     corrected.
+   - Hebcal can now print Hebrew date ranges, something I've wanted
+     since version 1.  You can now query hebcal with
+       hebcal Nisan 5754
+       to get the holidays of Nisan 5754.
