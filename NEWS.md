@@ -1,3 +1,6 @@
+Changes in 4.0.2
+* automake/configure script changes to disable "maintainer mode"
+
 Changes in 4.0.1
 * Use 24-hour times when both `-E` and `-O` options present
 
