@@ -228,7 +228,7 @@ void print_sunrise_sunset(date_t todayGreg)
     }
 
     rise_hour = (int) N_rise;
-    if (rise_hour > 12) {
+    if (rise_hour > 12 && !twentyFourHour_sw) {
 	rise_hour = rise_hour % 12;
     }
     rise_minute = (int) (60 * (N_rise - (int) N_rise));
@@ -239,7 +239,7 @@ void print_sunrise_sunset(date_t todayGreg)
     }
 
     set_hour = (int) N_set;
-    if (set_hour > 12) {
+    if (set_hour > 12 && !twentyFourHour_sw) {
 	set_hour = set_hour % 12;
     }
     set_minute = (int) (60 * (N_set - (int) N_set));

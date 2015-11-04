@@ -1,3 +1,6 @@
+Changes in 4.0.1
+* Use 24-hour times when both `-E` and `-O` options present
+
 Changes in 4.0
 * Use Olson zoneinfo database for time zones (#112).
   The `-z` option now takes a timezone ID such as `America/Chicago`
