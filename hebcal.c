@@ -472,8 +472,9 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
       /* print the sedra, if desired */
       if (sedra_today)
       {
-          const char *sedraStr = sedra( todayAbs );
-          if (NULL != sedraStr)
+          char sedraStr[40];
+          int foundSedra = sedra( todayAbs, sedraStr, 40 );
+          if (foundSedra)
           {
               PrintGregDate( todayGreg );
               printf( "%s %s\n",
