@@ -281,7 +281,7 @@ void handleArgs(int argc, char *argv[])
 
    char *usage =		/* not quite sure how compatible this is */
    "usage: \n\
-   hebcal [-acdDeEFhHiMoOrsStTwxy]\n\
+   hebcal [-acdDeEfFhHiMoOrsStTwxyZ]\n\
           [-b candle_lighting_minutes_before_sundown]\n\
           [-I input_file]\n\
           [-Y yahrtzeit_file]\n\
@@ -300,7 +300,7 @@ void handleArgs(int argc, char *argv[])
 
    Getopt(argc, argv, "", 1);
    while (EOF !=
-          (option = Getopt(argc, argv, "ab:cC:dDeEFf:hHI:il:L:m:MoOrsStTwxyY:z:8", 0)))
+          (option = Getopt(argc, argv, "ab:cC:dDeEFf:hHI:il:L:m:MoOrsStTwxyY:z:Z8", 0)))
    {
        switch ((char) option)
        {
@@ -430,6 +430,12 @@ void handleArgs(int argc, char *argv[])
 	   TZ_INFO = timelib_parse_tzfile(Optarg, timelib_builtin_db());
 	   if (TZ_INFO == NULL)
                die("unable to read time zone argument: %s", Optarg);
+       case 'Z':
+	   default_zemanim = (ZMAN_SUNRISE | ZMAN_SZKS | ZMAN_TEFILAH | 
+			      ZMAN_CHATZOT |
+			      ZMAN_MINCHA_GEDOLA | ZMAN_MINCHA_KETANA |
+			      ZMAN_PLAG_HAMINCHA | ZMAN_SUNSET | ZMAN_TZAIT_42);
+	   
 	   break;
            
        default:

@@ -69,7 +69,8 @@ extern int
     tabs_sw,
     weekday_sw, 
     yearDigits_sw,
-    yahrtzeitFile_sw;
+    yahrtzeitFile_sw,
+   default_zemanim;
 extern int twentyFourHour_sw;
 
 extern timelib_tzinfo *TZ_INFO;
@@ -105,6 +106,23 @@ typedef struct hsnode{  /* holiday storage structure */
     unsigned int typeMask;
     struct hsnode *next;
 } holstore_t, *holstorep_t;
+
+
+#define ZMAN_ALOT_HASHACHAR (1 <<  0)
+#define ZMAN_MISHEYAKIR     (1 <<  1)
+#define ZMAN_SUNRISE        (1 <<  2)
+#define ZMAN_SZKS           (1 <<  3)
+#define ZMAN_TEFILAH        (1 <<  4)
+#define ZMAN_CHATZOT        (1 <<  5)
+#define ZMAN_MINCHA_GEDOLA  (1 <<  6)
+#define ZMAN_MINCHA_KETANA  (1 <<  7)
+#define ZMAN_PLAG_HAMINCHA  (1 <<  8)
+#define ZMAN_SUNSET         (1 <<  9)
+#define ZMAN_CANDLES_BEFORE (1 << 10)
+#define ZMAN_CANDLES_AFTER  (1 << 11)
+#define ZMAN_TZAIT_42       (1 << 12)
+#define ZMAN_TZAIT_72       (1 << 13)
+#define ZMAN_HAVDALAH       (1 << 14)
 
 year_t yearData( int );
 date_t nextHebDate( date_t );
