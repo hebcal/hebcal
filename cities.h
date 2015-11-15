@@ -51,10 +51,12 @@ city_t cities[] =
     {"Ottawa", 45, 42, 75, 71, "America/Toronto"},
     {"Panama City", 8, 58, 79, 32, "America/Panama"},
     {"Paris", 48, 52, -2, -20, "Europe/Paris"},
+    {"Pawtucket",  41, 52, 71, 23, "America/New_York"}, 
     {"Petach Tikvah", 32, 5, -34, -53, "Asia/Jerusalem"},
     {"Philadelphia", 39, 57, 75, 10, "America/New_York"},
     {"Phoenix", 33, 27, 112, 4, "America/Phoenix"},
     {"Pittsburgh", 40, 26, 80, 0, "America/New_York"},
+    {"Providence",  41, 50, 71, 23, "America/New_York"},
     {"Portland", 45, 31, 122, 40, "America/Los_Angeles"},
     {"Saint Louis", 38, 38, 90, 12, "America/Chicago"},
     {"Saint Petersburg", 59, 53, -30, -15, "Europe/Moscow"},
@@ -69,5 +71,6 @@ city_t cities[] =
     {"Vancouver", 49, 16, 123, 7, "America/Vancouver"},
     {"White Plains",  41, 2, 73, 45, "America/New_York"},
     {"Washington DC", 38, 55, 77, 0, "America/New_York"},
+    {"Worcester",  42, 16, 71, 52, "America/New_York"},
     {0, 0, 0, 0, 0, 0}
 };
