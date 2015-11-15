@@ -68,6 +68,7 @@ extern int
     suppress_rosh_chodesh_sw,
     tabs_sw,
     weekday_sw, 
+    abbrev_sw,
     yearDigits_sw,
     yahrtzeitFile_sw,
    default_zemanim;

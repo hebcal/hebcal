@@ -47,6 +47,7 @@ int
   israel_sw, latlong_sw, printOmer_sw, printMolad_sw, printSunriseSunset_sw, sedraAllWeek_sw, sedrot_sw, noGreg_sw,
   printHebDates_sw, printSomeHebDates_sw, noHolidays_sw, tabs_sw, weekday_sw,  suppress_rosh_chodesh_sw,
   sunsetAlways_sw, sunriseAlways_sw, default_zemanim,  
+  abbrev_sw, first_weekday, this_weekday,
   dafYomi_sw,
   yearDigits_sw, yahrtzeitFile_sw;
 timelib_tzinfo *TZ_INFO;
@@ -383,7 +384,7 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
     holstorep_t holi_start,holip;         /* a list of holidays for today */
     year_t theYear;
     char *omerStr ;
-    int omer, day_of_week, returnedMask;
+    int omer, day_of_week, first_weekday, returnedMask;
     int omer_today, sedra_today, candle_today, holidays_today, molad_today;
     molad_t moladNext;
     int monthNext;
@@ -394,6 +395,8 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
 /* Used to decide whether a particular type of daily info should be
    included in the abbreviated view. In abbreviated mode things like
    sunrise, daf, omer are printed once a week. */
+#define INCLUDE_TODAY(_sw) \
+  ( (_sw) && ((!abbrev_sw) || (first_weekday == day_of_week)))
     
     todayHeb = abs2hebrew (todayAbs);
     todayGreg = abs2greg (todayAbs);
@@ -415,7 +418,7 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
     reset_Omer (todayHeb.yy);
     if (sedraAllWeek_sw || sedrot_sw)
         reset_sedra (todayHeb.yy);
-    day_of_week = (int) (todayAbs % 7L);
+    first_weekday = day_of_week = (int) (todayAbs % 7L);
     while (todayAbs <= endAbs)
     {
         /* get the holidays for today */
@@ -432,7 +435,9 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
           (todayHeb.dd >= 23 && todayHeb.dd <= 29) &&
           (todayHeb.mm != ELUL); /* no birkat hachodesh before rosh hashana */
       
-      today_zemanim = default_zemanim;
+      today_zemanim = 0;
+      if (INCLUDE_TODAY(default_zemanim))
+         today_zemanim |= default_zemanim;
       if (candleLighting_sw)
       {
          if (day_of_week == FRI)
@@ -451,10 +456,10 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
              (day_of_week == SAT || returnedMask & YOM_TOV_ENDS))
             today_zemanim |= ZMAN_HAVDALAH;
       }
-      
-      if (printHebDates_sw ||
-          (printSomeHebDates_sw && 
-           (holidays_today || sedra_today || omer_today || today_zemanim)))
+      if (INCLUDE_TODAY(printHebDates_sw) ||
+          ((printSomeHebDates_sw || printHebDates_sw) && 
+           (holidays_today || sedra_today || omer_today || 
+            (today_zemanim & (ZMAN_CANDLES_BEFORE|ZMAN_CANDLES_AFTER|ZMAN_HAVDALAH)))))
       {
           PrintGregDate (todayGreg);
           printf ("%d%s%s %s, %d\n", todayHeb.dd,       /* print the hebrew date */
@@ -499,7 +504,7 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
       }
       
       /* Print the Omer */
-      if (omer_today)
+      if (INCLUDE_TODAY(omer_today))
       {
           initStr (&omerStr, NM_LEN);
           omer = (int) (todayAbs - beginOmer + 1L);
@@ -519,11 +524,9 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
           free( omerStr );
       }
       
-
-      if (dafYomi_sw) {
-	  hebcal_dafyomi(&todayGreg);
-      }
-
+      if (INCLUDE_TODAY(dafYomi_sw))
+         hebcal_dafyomi(&todayGreg);
+      
       /* Print CandleLighting times  */
       if (today_zemanim)
       {
@@ -553,6 +556,7 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
       free_holidays(*holip);
 #     endif
     }
+#undef INCLUDE_TODAY
 }
 
 
