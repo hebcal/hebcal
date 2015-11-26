@@ -186,12 +186,12 @@ static struct _zman {
    { ZMAN_MINCHA_GEDOLA,  "Mincha Gedolah", "Mincha Gedolah", "Mincha Gedolah", 6.5, 0 },
    { ZMAN_MINCHA_KETANA,  "Mincha Ketanah", "Mincha Ketanah", "Mincha Ketanah", 9.5, 0 },
    { ZMAN_PLAG_HAMINCHA,  "Plag HaMincha", "Plag HaMincha", "Plag HaMincha", 10.75, 0 },
-   { ZMAN_SUNSET,         "Sunset", "Sunset", "Sunset", 12, 0 },
    { ZMAN_CANDLES_BEFORE,  "Light Candles Before", "Light Candles Before", "\344\343\354\367\372 \360\370\345\372" , 12, -18 },
-   { ZMAN_CANDLES_AFTER,   "Light Candles After", "Light Candles After", "\344\343\354\367\372 \360\370\345\372" , 12, 72 },
+   { ZMAN_SUNSET,          "Sunset", "Sunset", "Sunset", 12, 0 },
    { ZMAN_TZAIT_42,        "Tzait HaKochavim", "Tzais HaKochavim", "Tzait HaKochavim", 12, 42 },
    { ZMAN_TZAIT_72,        "Tzait HaKochavim", "Tzais HaKochavim", "Tzait HaKochavim", 12, 72 },
-   { ZMAN_HAVDALAH,        "Havdalah after", "Havdalah after", "\344\341\343\354\344", 12, 72 }
+   { ZMAN_HAVDALAH,        "Havdalah after", "Havdalah after", "\344\341\343\354\344", 12, 72 },
+   { ZMAN_CANDLES_AFTER,   "Light Candles After", "Light Candles After", "\344\343\354\367\372 \360\370\345\372" , 12, 72 }
 };
 
 /* For computational purposes, sunrise or sunset is defined to occur
@@ -455,6 +455,9 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
          if (!(today_zemanim & (ZMAN_CANDLES_BEFORE | ZMAN_CANDLES_AFTER)) &&
              (day_of_week == SAT || returnedMask & YOM_TOV_ENDS))
             today_zemanim |= ZMAN_HAVDALAH;
+         if (!(today_zemanim & (ZMAN_CANDLES_BEFORE)) &&
+             (returnedMask & CHANUKAH_CANDLES))
+           today_zemanim |= ZMAN_CANDLES_AFTER; /* even if havdalah */
       }
       if (INCLUDE_TODAY(printHebDates_sw) ||
           ((printSomeHebDates_sw || printHebDates_sw) && 

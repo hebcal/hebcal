@@ -144,37 +144,37 @@ holinput_t inp_holidays[] =
    {
       {KISLEV, 24, IGNORE_YEAR},
       {"Chanukah: 1 Candle", NULL, "\347\360\345\353\344: \340' \360\370"},
-      0,
+      CHANUKAH_CANDLES,
       NULL
    },
    {
       {KISLEV, 25, IGNORE_YEAR},
       {"Chanukah: 2 Candles", NULL, "\347\360\345\353\344: \341' \360\370\345\372"},
-      0,
+      CHANUKAH_CANDLES,
       NULL
    },
    {
       {KISLEV, 26, IGNORE_YEAR},
       {"Chanukah: 3 Candles", NULL, "\347\360\345\353\344: \342' \360\370\345\372"},
-      0,
+      CHANUKAH_CANDLES,
       NULL
    },
    {
       {KISLEV, 27, IGNORE_YEAR},
       {"Chanukah: 4 Candles", NULL, "\347\360\345\353\344: \343' \360\370\345\372"},
-      0,
+      CHANUKAH_CANDLES,
       NULL
    },
    {
       {KISLEV, 28, IGNORE_YEAR},
       {"Chanukah: 5 Candles", NULL, "\347\360\345\353\344: \344' \360\370\345\372"},
-      0,
+      CHANUKAH_CANDLES,
       NULL
    },
    {
       {KISLEV, 29, IGNORE_YEAR},
       {"Chanukah: 6 Candles", NULL, "\347\360\345\353\344: \345' \360\370\345\372"},
-      0,
+      CHANUKAH_CANDLES,
       NULL
    },
    {
@@ -452,9 +452,11 @@ static void load_variable_holidays( int hYear )
     {
         tmpholp = getHolstorep ();
         tmpholp->name = HOLIDAY_CHANUKAH_7_CANDLES;
+        tmpholp->typeMask = CHANUKAH_CANDLES;
         PushHoliday (tmpholp, &var_holidays[TEVET][1]);
         tmpholp = getHolstorep ();
         tmpholp->name = HOLIDAY_CHANUKAH_8_CANDLES;
+        tmpholp->typeMask = CHANUKAH_CANDLES;
         PushHoliday (tmpholp, &var_holidays[TEVET][2]);
         tmpholp = getHolstorep ();
         tmpholp->name = HOLIDAY_CHANUKAH_8TH_DAY;
@@ -464,9 +466,11 @@ static void load_variable_holidays( int hYear )
     {
         tmpholp = getHolstorep ();
         tmpholp->name = HOLIDAY_CHANUKAH_7_CANDLES;
+        tmpholp->typeMask = CHANUKAH_CANDLES;
         PushHoliday (tmpholp, &var_holidays[KISLEV][30]);
         tmpholp = getHolstorep ();
         tmpholp->name = HOLIDAY_CHANUKAH_8_CANDLES;
+        tmpholp->typeMask = CHANUKAH_CANDLES;
         PushHoliday (tmpholp, &var_holidays[TEVET][1]);
         tmpholp = getHolstorep ();
         tmpholp->name = HOLIDAY_CHANUKAH_8TH_DAY;
