@@ -42,7 +42,7 @@
 #include "sedra.h"
 #include "common.h"
 
-const char *sedrot[][3] =
+static const char *sedrot[][3] =
 {
     {"Bereshit",        "Bereshis",     "\341\370\340\371\351\372"},
     {"Noach",   "Noach",        "\360\347"},
@@ -72,7 +72,7 @@ const char *sedrot[][3] =
     {"Shmini",  "Shmini",       "\371\356\351\360\351"},
     {"Tazria",  "Sazria",       "\372\346\370\351\362"},
     {"Metzora", "Metzora",      "\356\366\370\362"},
-    {"Achrei Mot",      "Achrei Mos",   "\340\347\370\351 \356\345\372"},
+    {"Acharei Mot",      "Acharei Mos",   "\340\347\370\351 \356\345\372"},
     {"Kedoshim",        "Kedoshim",     "\367\343\371\351\355"},
     {"Emor",    "Emor", "\340\356\345\370"},
     {"Behar",   "Behar",        "\341\344\370"},
@@ -301,14 +301,15 @@ void reset_sedra( int hebYr ) /* the hebrew year */
 }
 
 
-/* returns a string "Parshat <parsha>" based on the current parsha number */
-/* NOTE-- the returned value lives in a static buffer. */
-char * sedra( long absDate )
+/* Fills input "buf" of size buf_len with a string "Parshat <parsha>"
+   based on the current parsha number, and returns 1; or returns 0 if
+   it can't find the parsha for some reason.
+ */
+int sedra( long absDate, char *buf, int buf_len )
 {
     
     int index;
     int weekNum;
-    static char buf[40];        /* FIX: eeeevill */
     
     /* find the first saturday on or after today's date */
     absDate = day_on_or_before (6, absDate + 6L);
@@ -329,9 +330,9 @@ char * sedra( long absDate )
     *buf = '\0';                        /* reset the return buffer */
     
     if (index >= 0)
-        strncpy (buf, LANGUAGE2(sedrot[index]), 40);
+        strncpy (buf, LANGUAGE2(sedrot[index]), buf_len);
     else if (-1 == index)
-        return NULL;
+        return 0;
     else
     {
         int i = U (index);      /* undouble the parsha */
@@ -339,5 +340,5 @@ char * sedra( long absDate )
                  LANGUAGE2(sedrot[i]),
                  LANGUAGE2(sedrot[i + 1]));
     }
-    return buf;
+    return 1;
 }

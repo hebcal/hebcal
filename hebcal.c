@@ -46,6 +46,8 @@ int
   ashkenazis_sw, candleLighting_sw, euroDates_sw, hebrewDates_sw, inputFile_sw,
   israel_sw, latlong_sw, printOmer_sw, printMolad_sw, printSunriseSunset_sw, sedraAllWeek_sw, sedrot_sw, noGreg_sw,
   printHebDates_sw, printSomeHebDates_sw, noHolidays_sw, tabs_sw, weekday_sw,  suppress_rosh_chodesh_sw,
+  sunsetAlways_sw, sunriseAlways_sw, default_zemanim,  
+  abbrev_sw, first_weekday, this_weekday,
   dafYomi_sw,
   yearDigits_sw, yahrtzeitFile_sw;
 timelib_tzinfo *TZ_INFO;
@@ -158,6 +160,39 @@ void PrintGregDate( date_t dt )
 }
 
 /*-------------------------------------------------------------------------*/
+/* 
+ * zemanim TODO: 
+ * -  more iso8859 text.
+ * -  add times for chametz on erev pesach.
+ * -  add midnight on the seder nights.
+ * -  allow user to choose between mogen avraham and gra
+ *    (mogen avraham counts the 12 hrs from alos to 72 tzais. 
+ *     gra counts sunrise to sunset.)
+ */
+static struct _zman {
+   int flags;
+   char *name_sfrd;
+   char *name_ashk;
+   char *name_8859_8;
+   double variable_hour;
+   int min_offset;
+} zemanim[] = {
+   { ZMAN_ALOT_HASHACHAR, "Alot HaShachar", "Alos HaShachar", "Alot HaShachar", 0, -72},
+   { ZMAN_MISHEYAKIR,     "Misheyakir", "Misheyakir", "Misheyakir", 0, -45},
+   { ZMAN_SUNRISE,        "Sunrise", "Sunrise", "Sunrise", 0, 0, },
+   { ZMAN_SZKS,           "Kriat Shema, sof zeman", "Krias Shema, sof zeman", "Kriat Shema, sof zeman", 3, 0 },
+   { ZMAN_TEFILAH,        "Tefilah, sof zeman", "Tefilah, sof zeman", "Tefilah, sof zeman", 4, 0 }, 
+   { ZMAN_CHATZOT,        "Chatzot hayom", "Chatzos hayom", "Chatzot hayom", 6, 0 },
+   { ZMAN_MINCHA_GEDOLA,  "Mincha Gedolah", "Mincha Gedolah", "Mincha Gedolah", 6.5, 0 },
+   { ZMAN_MINCHA_KETANA,  "Mincha Ketanah", "Mincha Ketanah", "Mincha Ketanah", 9.5, 0 },
+   { ZMAN_PLAG_HAMINCHA,  "Plag HaMincha", "Plag HaMincha", "Plag HaMincha", 10.75, 0 },
+   { ZMAN_CANDLES_BEFORE,  "Light Candles Before", "Light Candles Before", "\344\343\354\367\372 \360\370\345\372" , 12, -18 },
+   { ZMAN_SUNSET,          "Sunset", "Sunset", "Sunset", 12, 0 },
+   { ZMAN_TZAIT_42,        "Tzait HaKochavim", "Tzais HaKochavim", "Tzait HaKochavim", 12, 42 },
+   { ZMAN_TZAIT_72,        "Tzait HaKochavim", "Tzais HaKochavim", "Tzait HaKochavim", 12, 72 },
+   { ZMAN_HAVDALAH,        "Havdalah after", "Havdalah after", "\344\341\343\354\344", 12, 72 },
+   { ZMAN_CANDLES_AFTER,   "Light Candles After", "Light Candles After", "\344\343\354\367\372 \360\370\345\372" , 12, 72 }
+};
 
 /* For computational purposes, sunrise or sunset is defined to occur
  * when the geometric zenith distance of center of the Sun is 90.8333
@@ -260,58 +295,69 @@ void print_candlelighting_times( int mask, int weekday, date_t todayGreg)
     double h_rise, h_set, N;
     const int calc_sunset = 1;
     double n_offset;
-    int hour, minute;
+    int hour, minute, pm;
     int rs;
-
+    int num_zmanim = sizeof (zemanim) / sizeof (struct _zman); 
+    int i_zman;
+    double var_hr_hours = 0.0, day_span;
+    char *zman_name;
+ 
     rs = get_rise_set(todayGreg, &h_rise, &h_set, &gmt_offset);
     if (rs != 0) {
         return;
     }
-
-    N = (calc_sunset ? h_set : h_rise) + gmt_offset;
-
-    if (weekday == FRI || (mask & LIGHT_CANDLES))
+             
+    day_span = h_set - h_rise;
+    if (day_span < 0)
+      day_span += 24;
+    var_hr_hours = day_span / 12.0;
+        
+    for (i_zman = 0; i_zman < num_zmanim; i_zman ++)
     {
-	n_offset = light_offset / 60.0;
-    }
+       double var_hour;
+       char *name;
+      
+       if ( (zemanim[i_zman].flags & mask) == 0 )
+          continue;
+        
+       var_hour = zemanim[i_zman].variable_hour;
+       
+       if (var_hour < 12.0)
+       {
+          N = h_rise + var_hour * var_hr_hours;
+          n_offset = (zemanim[i_zman].min_offset) / 60.0;
+       }
+       else
+       {
+          N = h_set + (var_hour - 12) * var_hr_hours;
+          n_offset = (zemanim[i_zman].min_offset) / 60.0;
+       }
 
-    if (weekday == SAT || ((mask & YOM_TOV_ENDS) && weekday != FRI))
-    {
-	n_offset = havdalah_minutes / 60.0;
-    }
-
-    N += n_offset;
-
-    if (N > 24 || N < 0)
-    {
-	N -= floor(N / 24) * 24;
-    }
-
-    hour = (int) N;
-    if (hour > 12 && !twentyFourHour_sw) {
-	hour = hour % 12;
-    }
-    minute = (int) (60 * (N - (int) N));
-
-    if (weekday == FRI || (mask & LIGHT_CANDLES)) 
-    {
-        PrintGregDate (todayGreg);
-	printf("%s: %2d:%02d\n", 
-	       iso8859_8_sw ? "\344\343\354\367\372 \360\370\345\372" : "Candle lighting",
-	       hour, minute);
-    }
-
-    /* offset of sunset to havdallah in minutes */
-    if (weekday == SAT ||
-       ((mask & YOM_TOV_ENDS) &&
-	weekday != FRI))
-    {
-        PrintGregDate (todayGreg);
-	printf("%s (%d %s):%2d:%02d\n", 
-	       iso8859_8_sw ? "\344\341\343\354\344" : "Havdalah",
-	       havdalah_minutes,
-	       iso8859_8_sw ? "\343\367\345\372" : "min",
-	       hour, minute);
+       N += gmt_offset;
+       N += n_offset;
+       if (N > 24 || N < 0)
+       {
+           N -= floor(N / 24) * 24;
+       }
+       
+       hour = (int) N;
+       pm = (hour > 11);
+       if (hour > 12 && !twentyFourHour_sw) {
+           hour = hour % 12;
+       }
+       minute = (int) (60 * (N - (int) N));
+       
+       PrintGregDate (todayGreg);
+       zman_name = iso8859_8_sw ? zemanim[i_zman].name_8859_8 :
+          ashkenazis_sw ? zemanim[i_zman].name_ashk :
+             zemanim[i_zman].name_sfrd;
+       if (twentyFourHour_sw) 
+         printf ("%s: %2d:%02d\n", zman_name, hour,
+                 minute);
+       else
+         printf ("%s: %2d:%02d %s\n", zman_name, hour,
+                 minute, pm ? "pm": "am" );
+         
     }
 }
 
@@ -338,15 +384,33 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
     holstorep_t holi_start,holip;         /* a list of holidays for today */
     year_t theYear;
     char *omerStr ;
-    int omer, day_of_week, returnedMask;
+    int omer, day_of_week, first_weekday, returnedMask;
     int omer_today, sedra_today, candle_today, holidays_today, molad_today;
     molad_t moladNext;
     int monthNext;
+    int today_zemanim, i_zman;
+    int num_zmanim = sizeof (zemanim) / sizeof (struct _zman); 
+    char buffer[80];
+    
+/* Used to decide whether a particular type of daily info should be
+   included in the abbreviated view. In abbreviated mode things like
+   sunrise, daf, omer are printed once a week. */
+#define INCLUDE_TODAY(_sw) \
+  ( (_sw) && ((!abbrev_sw) || (first_weekday == day_of_week)))
     
     todayHeb = abs2hebrew (todayAbs);
     todayGreg = abs2greg (todayAbs);
     
     theYear = yearData (todayHeb.yy);
+
+    /* plug in light_offset before starting the loop */
+    for (i_zman = 0; i_zman < num_zmanim; i_zman ++)
+       if (zemanim[i_zman].flags == ZMAN_CANDLES_BEFORE)
+          zemanim[i_zman].min_offset = light_offset;
+       else if (zemanim[i_zman].flags == ZMAN_CANDLES_AFTER ||
+                zemanim[i_zman].flags == ZMAN_HAVDALAH )
+          zemanim[i_zman].min_offset = havdalah_minutes;
+        
 
     /*============== Main Year Loop ==============*/
     
@@ -354,7 +418,7 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
     reset_Omer (todayHeb.yy);
     if (sedraAllWeek_sw || sedrot_sw)
         reset_sedra (todayHeb.yy);
-    day_of_week = (int) (todayAbs % 7L);
+    first_weekday = day_of_week = (int) (todayAbs % 7L);
     while (todayAbs <= endAbs)
     {
         /* get the holidays for today */
@@ -364,10 +428,6 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
       omer_today = printOmer_sw &&
           (todayAbs >= beginOmer) &&
           (todayAbs <= endOmer);
-      candle_today = candleLighting_sw &&
-          (day_of_week >= FRI ||
-           (returnedMask & LIGHT_CANDLES) ||
-           (returnedMask & YOM_TOV_ENDS));
       holidays_today = holip &&
         (!noHolidays_sw || (returnedMask & USER_EVENT));
       molad_today = printMolad_sw &&
@@ -375,9 +435,34 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
           (todayHeb.dd >= 23 && todayHeb.dd <= 29) &&
           (todayHeb.mm != ELUL); /* no birkat hachodesh before rosh hashana */
       
-      if (printHebDates_sw ||
-          (printSomeHebDates_sw && 
-           (holidays_today || sedra_today || omer_today || candle_today)))
+      today_zemanim = 0;
+      if (INCLUDE_TODAY(default_zemanim))
+         today_zemanim |= default_zemanim;
+      if (candleLighting_sw)
+      {
+         if (day_of_week == FRI)
+            today_zemanim |= ZMAN_CANDLES_BEFORE;
+         else
+         {
+            if (returnedMask & LIGHT_CANDLES)
+               today_zemanim |= (day_of_week == SAT) ?
+                  ZMAN_CANDLES_AFTER : ZMAN_CANDLES_BEFORE;
+            else 
+               if ((returnedMask & CHUL_ONLY) &&
+                   ! (returnedMask & YOM_TOV_ENDS))
+                  today_zemanim |= ZMAN_CANDLES_AFTER;
+         }
+         if (!(today_zemanim & (ZMAN_CANDLES_BEFORE | ZMAN_CANDLES_AFTER)) &&
+             (day_of_week == SAT || returnedMask & YOM_TOV_ENDS))
+            today_zemanim |= ZMAN_HAVDALAH;
+         if (!(today_zemanim & (ZMAN_CANDLES_BEFORE)) &&
+             (returnedMask & CHANUKAH_CANDLES))
+           today_zemanim |= ZMAN_CANDLES_AFTER; /* even if havdalah */
+      }
+      if (INCLUDE_TODAY(printHebDates_sw) ||
+          ((printSomeHebDates_sw || printHebDates_sw) && 
+           (holidays_today || sedra_today || omer_today || 
+            (today_zemanim & (ZMAN_CANDLES_BEFORE|ZMAN_CANDLES_AFTER|ZMAN_HAVDALAH)))))
       {
           PrintGregDate (todayGreg);
           printf ("%d%s%s %s, %d\n", todayHeb.dd,       /* print the hebrew date */
@@ -395,8 +480,9 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
       /* print the sedra, if desired */
       if (sedra_today)
       {
-          const char *sedraStr = sedra( todayAbs );
-          if (NULL != sedraStr)
+          char sedraStr[40];
+          int foundSedra = sedra( todayAbs, sedraStr, 40 );
+          if (foundSedra)
           {
               PrintGregDate( todayGreg );
               printf( "%s %s\n",
@@ -421,7 +507,7 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
       }
       
       /* Print the Omer */
-      if (omer_today)
+      if (INCLUDE_TODAY(omer_today))
       {
           initStr (&omerStr, NM_LEN);
           omer = (int) (todayAbs - beginOmer + 1L);
@@ -441,15 +527,13 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
           free( omerStr );
       }
       
-
-      if (dafYomi_sw) {
-	  hebcal_dafyomi(&todayGreg);
-      }
-
+      if (INCLUDE_TODAY(dafYomi_sw))
+         hebcal_dafyomi(&todayGreg);
+      
       /* Print CandleLighting times  */
-      if (candle_today)
+      if (today_zemanim)
       {
-          print_candlelighting_times (returnedMask,
+          print_candlelighting_times (today_zemanim,
                                       day_of_week, todayGreg);
       }
       
@@ -475,6 +559,7 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
       free_holidays(*holip);
 #     endif
     }
+#undef INCLUDE_TODAY
 }
 
 

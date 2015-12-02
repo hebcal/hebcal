@@ -56,7 +56,7 @@ static char
     *cityName, *helpArray[] =
 {
    "Hebcal Version " VERSION " By Danny Sadinoff",
-   "usage: hebcal [-8acdDeEFHhiorsStTwy]",
+   "usage: hebcal [-8acdDeEFHhiorsStTwWy]",
    "            [-b candle_lighting_minutes_before_sundown ]",
    "            [-I file]",
    "            [-Y yahrtzeit_file]",
@@ -106,6 +106,7 @@ static char
    "   -t : Only output for today's date.",
    "   -T : Print today's pertinent information, no gregorian date.",
    "   -w : Add day of the week.",
+   "   -W : Sunrise, daf, omer via other options show once a week. ",
    "   -x : Suppress Rosh Chodesh.",
    "   -y : Print only last two digits of year.",
    "   -Y file : Get yahrtzeit dates from specified file.",
@@ -281,7 +282,7 @@ void handleArgs(int argc, char *argv[])
 
    char *usage =		/* not quite sure how compatible this is */
    "usage: \n\
-   hebcal [-acdDeEFhHiMoOrsStTwxy]\n\
+   hebcal [-acdDeEfFhHiMoOrsStTwWxyZ]\n\
           [-b candle_lighting_minutes_before_sundown]\n\
           [-I input_file]\n\
           [-Y yahrtzeit_file]\n\
@@ -300,7 +301,7 @@ void handleArgs(int argc, char *argv[])
 
    Getopt(argc, argv, "", 1);
    while (EOF !=
-          (option = Getopt(argc, argv, "ab:cC:dDeEFf:hHI:il:L:m:MoOrsStTwxyY:z:8", 0)))
+          (option = Getopt(argc, argv, "ab:cC:dDeEFf:hHI:il:L:m:MoOrsStTwWxyY:z:Z8", 0)))
    {
        switch ((char) option)
        {
@@ -415,6 +416,9 @@ void handleArgs(int argc, char *argv[])
        case 'w':		/* print days of the week */
 	   weekday_sw = 1;
 	   break;
+       case 'W':		/* abbreviated week view */
+           abbrev_sw = 1;
+	   break;
        case 'y':		/* Print only last 2 digits of year */
 	   yearDigits_sw = 1;
 	   break;
@@ -430,6 +434,12 @@ void handleArgs(int argc, char *argv[])
 	   TZ_INFO = timelib_parse_tzfile(Optarg, timelib_builtin_db());
 	   if (TZ_INFO == NULL)
                die("unable to read time zone argument: %s", Optarg);
+       case 'Z':
+	   default_zemanim = (ZMAN_SUNRISE | ZMAN_SZKS | ZMAN_TEFILAH | 
+			      ZMAN_CHATZOT |
+			      ZMAN_MINCHA_GEDOLA | ZMAN_MINCHA_KETANA |
+			      ZMAN_PLAG_HAMINCHA | ZMAN_SUNSET | ZMAN_TZAIT_42);
+	   
 	   break;
            
        default:
