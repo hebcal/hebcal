@@ -29,12 +29,12 @@ sanity_check_LDADD  = ../common.o ../danlib.o ../error.o ../greg.o
 AM_CPPFLAGS  = -I $(top_srcdir)
 
 TESTS = hebcal-1 hebcal-2 hebcal-3 \
-	hebcal-4 hebcal-5 hebcal-6
+	hebcal-4 hebcal-5 hebcal-6 hebcal-7
 
 TESTS_okayfiles = hebcal-test1.ok hebcal-test2.ok hebcal-test3.ok \
-	hebcal-test4.ok hebcal-test5.ok hebcal-test6.ok
+	hebcal-test4.ok hebcal-test5.ok hebcal-test6.ok hebcal-test7.ok
 TESTS_outputfiles = hebcal-test1.out hebcal-test2.out hebcal-test3.out \
-	hebcal-test4.out hebcal-test5.out hebcal-test6.out
+	hebcal-test4.out hebcal-test5.out hebcal-test6.out hebcal-test7.out
 MOSTLYCLEANFILES = $(TESTS_outputfiles)
 
 EXTRA_DIST = $(TESTS) $(TESTS_okayfiles)
