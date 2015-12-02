@@ -7,4 +7,4 @@ os:
   - osx
 sudo: false
 # Change this to your needs
-script: aclocal && autoconf && automake --foreign --add-missing && ./configure && make
+script: aclocal && autoconf && automake --foreign --add-missing && ./configure && make all check
