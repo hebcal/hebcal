@@ -1,3 +1,7 @@
+Changes in 4.1
+* Zemanim with new `-Z` feature, courtesy @aperomsik (#114)
+* Chanukah candle-lighting times
+
 Changes in 4.0.2
 * automake/configure script changes to disable "maintainer mode"
 
