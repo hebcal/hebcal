@@ -1,8 +1,6 @@
 #!/bin/sh
 # This script takes no arguments.
 
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
 LANGUAGE=
 LC_ALL=
 LC_MESSAGES=
@@ -10,7 +8,6 @@ LANG=
 export LANGUAGE LC_ALL LC_MESSAGES LANG
 
 
-tmpfiles="$tmpfiles hebcal-test3.out"
 : ${HEBCAL=../hebcal}
 ${HEBCAL} 4 2012 > hebcal-test3.out
 
@@ -19,8 +16,6 @@ ${HEBCAL} 4 2012 > hebcal-test3.out
 : ${srcdir=.}
 ${DIFF} ${srcdir}/hebcal-test3.ok hebcal-test3.out
 result=$?
-
-rm -f $tmpfiles
 
 exit $result
 

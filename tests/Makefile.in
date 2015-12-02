@@ -451,9 +451,15 @@ top_srcdir = @top_srcdir@
 sanity_check_SOURCES = sanity-check.c
 sanity_check_LDADD = ../common.o ../danlib.o ../error.o ../greg.o 
 AM_CPPFLAGS = -I $(top_srcdir)
-TESTS = hebcal-1 hebcal-2 hebcal-3
-TESTS_okayfiles = hebcal-test1.ok hebcal-test2.ok hebcal-test3.ok
-TESTS_outputfiles = hebcal-test1.out hebcal-test2.out hebcal-test3.out
+TESTS = hebcal-1 hebcal-2 hebcal-3 \
+	hebcal-4
+
+TESTS_okayfiles = hebcal-test1.ok hebcal-test2.ok hebcal-test3.ok \
+	hebcal-test4.ok
+
+TESTS_outputfiles = hebcal-test1.out hebcal-test2.out hebcal-test3.out \
+	hebcal-test4.out
+
 MOSTLYCLEANFILES = $(TESTS_outputfiles)
 EXTRA_DIST = $(TESTS) $(TESTS_okayfiles)
 all: all-am
@@ -723,6 +729,13 @@ hebcal-3.log: hebcal-3
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+hebcal-4.log: hebcal-4
+	@p='hebcal-4'; \
+	b='hebcal-4'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
 .test.log:
 	@p='$<'; \
 	$(am__set_b); \
@@ -892,11 +905,6 @@ uninstall-am:
 
 .PRECIOUS: Makefile
 
-
-#TESTS_ENVIRONMENT = top_srcdir=$(top_srcdir) srcdir=$(srcdir) PATH=.:..:$$PATH \
-#		    HEBCAL=`echo hebcal|sed '$(transform)'` \
-#		    SANITY_CHECK=`echo sanity-check|sed '$(transform)'` \
-#		    $(SHELL)
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

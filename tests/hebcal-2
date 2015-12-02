@@ -7,8 +7,6 @@ LC_MESSAGES=
 LANG=
 export LANGUAGE LC_ALL LC_MESSAGES LANG
 
-
-tmpfiles="$tmpfiles hello-test2.out"
 : ${SANITY_CHECK='./sanity-check'}
 ${SANITY_CHECK} > hebcal-test2.out
 
@@ -17,8 +15,6 @@ ${SANITY_CHECK} > hebcal-test2.out
 : ${srcdir=.}
 ${DIFF} ${srcdir}/hebcal-test2.ok hebcal-test2.out
 result=$?
-
-rm -f $tmpfiles
 
 exit $result
 
