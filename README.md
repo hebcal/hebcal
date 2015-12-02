@@ -21,7 +21,7 @@ be individualy turned on or off:
 ## Synopsis
 
 ```
-usage: hebcal [-8acdDeEFHhiorsStTwyZ]
+usage: hebcal [-8acdDeEFHhiorsStTwWyZ]
             [-b candle_lighting_minutes_before_sundown ]
             [-I file]
             [-Y yahrtzeit_file]
@@ -78,6 +78,7 @@ Option | Description
    -t | Only output for today's date.
    -T | Print today's pertinent information, no gregorian date.
    -w | Add day of the week.
+   -W | Weekly view. Omer, dafyomi, and non-date-specific zemanim are shown once a week, on the day which corresponds to the first day in the range.
    -x | Suppress Rosh Chodesh.
    -y | Print only last two digits of year.
    -Y file | Get yahrtzeit dates from specified file. The format is: `mm dd yyyy string`. The first three fields specify a *Gregorian* date.
