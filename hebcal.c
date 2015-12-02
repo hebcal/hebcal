@@ -186,12 +186,12 @@ static struct _zman {
    { ZMAN_MINCHA_GEDOLA,  "Mincha Gedolah", "Mincha Gedolah", "Mincha Gedolah", 6.5, 0 },
    { ZMAN_MINCHA_KETANA,  "Mincha Ketanah", "Mincha Ketanah", "Mincha Ketanah", 9.5, 0 },
    { ZMAN_PLAG_HAMINCHA,  "Plag HaMincha", "Plag HaMincha", "Plag HaMincha", 10.75, 0 },
-   { ZMAN_CANDLES_BEFORE,  "Light Candles Before", "Light Candles Before", "\344\343\354\367\372 \360\370\345\372" , 12, -18 },
+   { ZMAN_CANDLES_BEFORE,  "Candle lighting", "Candle lighting", "\344\343\354\367\372 \360\370\345\372" , 12, -18 },
    { ZMAN_SUNSET,          "Sunset", "Sunset", "Sunset", 12, 0 },
    { ZMAN_TZAIT_42,        "Tzait HaKochavim", "Tzais HaKochavim", "Tzait HaKochavim", 12, 42 },
    { ZMAN_TZAIT_72,        "Tzait HaKochavim", "Tzais HaKochavim", "Tzait HaKochavim", 12, 72 },
-   { ZMAN_HAVDALAH,        "Havdalah after", "Havdalah after", "\344\341\343\354\344", 12, 72 },
-   { ZMAN_CANDLES_AFTER,   "Light Candles After", "Light Candles After", "\344\343\354\367\372 \360\370\345\372" , 12, 72 }
+   { ZMAN_HAVDALAH,        "Havdalah", "Havdalah", "\344\341\343\354\344", 12, 72 },
+   { ZMAN_CANDLES_AFTER,   "Candle lighting", "Candle lighting", "\344\343\354\367\372 \360\370\345\372" , 12, 72 }
 };
 
 /* For computational purposes, sunrise or sunset is defined to occur
@@ -351,13 +351,15 @@ void print_candlelighting_times( int mask, int weekday, date_t todayGreg)
        zman_name = iso8859_8_sw ? zemanim[i_zman].name_8859_8 :
           ashkenazis_sw ? zemanim[i_zman].name_ashk :
              zemanim[i_zman].name_sfrd;
-       if (twentyFourHour_sw) 
-         printf ("%s: %2d:%02d\n", zman_name, hour,
-                 minute);
-       else
-         printf ("%s: %2d:%02d %s\n", zman_name, hour,
-                 minute, pm ? "pm": "am" );
-         
+       if (zemanim[i_zman].flags == ZMAN_HAVDALAH) {
+            printf("%s (%d %s):%2d:%02d\n",
+                zman_name,
+                havdalah_minutes,
+                iso8859_8_sw ? "\343\367\345\372" : "min",
+                hour, minute);
+       } else {
+            printf ("%s: %2d:%02d\n", zman_name, hour, minute);
+       }
     }
 }
 

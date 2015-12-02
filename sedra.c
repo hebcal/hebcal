@@ -72,7 +72,7 @@ static const char *sedrot[][3] =
     {"Shmini",  "Shmini",       "\371\356\351\360\351"},
     {"Tazria",  "Sazria",       "\372\346\370\351\362"},
     {"Metzora", "Metzora",      "\356\366\370\362"},
-    {"Acharei Mot",      "Acharei Mos",   "\340\347\370\351 \356\345\372"},
+    {"Achrei Mot",      "Achrei Mos",   "\340\347\370\351 \356\345\372"},
     {"Kedoshim",        "Kedoshim",     "\367\343\371\351\355"},
     {"Emor",    "Emor", "\340\356\345\370"},
     {"Behar",   "Behar",        "\341\344\370"},

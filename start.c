@@ -434,6 +434,7 @@ void handleArgs(int argc, char *argv[])
 	   TZ_INFO = timelib_parse_tzfile(Optarg, timelib_builtin_db());
 	   if (TZ_INFO == NULL)
                die("unable to read time zone argument: %s", Optarg);
+           break;
        case 'Z':
 	   default_zemanim = (ZMAN_SUNRISE | ZMAN_SZKS | ZMAN_TEFILAH | 
 			      ZMAN_CHATZOT |
