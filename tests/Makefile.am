@@ -35,8 +35,3 @@ TESTS_outputfiles = hebcal-test1.out hebcal-test2.out hebcal-test3.out
 MOSTLYCLEANFILES = $(TESTS_outputfiles)
 
 EXTRA_DIST = $(TESTS) $(TESTS_okayfiles)
-
-TESTS_ENVIRONMENT = top_srcdir=$(top_srcdir) srcdir=$(srcdir) PATH=.:..:$$PATH \
-		    HEBCAL=`echo hebcal|sed '$(transform)'` \
-		    SANITY_CHECK=`echo sanity-check|sed '$(transform)'` \
-		    $(SHELL)
