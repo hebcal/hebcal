@@ -113,7 +113,7 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(man1dir)"
 PROGRAMS = $(bin_PROGRAMS)
 am__objects_1 = common.$(OBJEXT) danlib.$(OBJEXT) error.$(OBJEXT) \
-	mygetopt.$(OBJEXT) greg.$(OBJEXT) hebcal.$(OBJEXT) \
+	cargo.$(OBJEXT) greg.$(OBJEXT) hebcal.$(OBJEXT) \
 	timelib.$(OBJEXT) astro.$(OBJEXT) tm2unixtime.$(OBJEXT) \
 	unixtime2tm.$(OBJEXT) dow.$(OBJEXT) parse_tz.$(OBJEXT) \
 	holidays.$(OBJEXT) sedra.$(OBJEXT) start.$(OBJEXT) \
@@ -361,12 +361,12 @@ AM_CPPFLAGS = -DVERSION='"$(PACKAGE_VERSION)"' -DHAVE_STDLIB_H -DHAVE_STRING_H -
 SUBDIRS = tests
 
 #sanity_check_SOURCES = common.c danlib.c error.c greg.c sanity-check.c
-hebcal_c_files = common.c danlib.c error.c mygetopt.c greg.c hebcal.c\
+hebcal_c_files = common.c danlib.c error.c cargo.c greg.c hebcal.c\
          timelib.c astro.c tm2unixtime.c unixtime2tm.c dow.c parse_tz.c \
          holidays.c sedra.c start.c gnu.c format.c dafyomi.c
 
 hebcal_h_files = common.h  danlib.h format.h greg.h hebcal.h \
-          myerror.h mygetopt.h \
+          myerror.h cargo.h \
           timezonedb.h timelib.h astro.h timelib_structs.h \
           sedra.h cities.h
 

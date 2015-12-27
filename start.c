@@ -32,7 +32,8 @@
 #include <math.h>
 #include "hebcal.h"
 #include "common.h"
-#include "mygetopt.h"
+#include <errno.h>
+#include "cargo.h"
 #include "danlib.h"
 #include <stdlib.h>
 #include "cities.h"
@@ -55,64 +56,7 @@ static int theYear, theMonth, theDay, yearDirty, rangeType,
 static char
     *cityName, *helpArray[] =
 {
-   "Hebcal Version " VERSION " By Danny Sadinoff",
-   "usage: hebcal [-8acdDeEFHhiorsStTwWy]",
-   "            [-b candle_lighting_minutes_before_sundown ]",
-   "            [-I file]",
-   "            [-Y yahrtzeit_file]",
-   "            [-C city]",
-   "            [-L longitude -l latitude]",
-   "            [-m havdalah_minutes_past_sundown ]",
-   "            [-z timezone]",
-   "            [-f format_option]",
-   "            [[ month [ day ]] year ]",
-   "       hebcal help",
-   "       hebcal info",
-   "       hebcal cities",
-   "       hebcal warranty",
-   "       hebcal copying",
-   "OPTIONS:",
-   "   -8 : Use 8-bit Hebrew (ISO-8859-8-Logical).",
-   "   -a : Use ashkenazis Hebrew.",
-   "   -b mins : Set candle-lighting to occur this many minutes before sundown ",
-   "   -c : Print candlelighting times.",
-   "   -C city : Set latitude, longitude, timezone and daylight",
-   "             savings scheme according to specified city. ",
-   "             This option implies the -c option.",
-   "   -d : print the Hebrew date for the entire date range.",
-   "   -D : print the Hebrew date for dates with some event.",
-   "   -e : Ouput \"European\" dates -- DD.MM.YYYY format.",
-   "   -E : Ouput 24-hour times (e.g. 18:37 instead of 6:37).",
-   "   -f FORMAT : change output to FORMAT. see below for format strings",
-   "   -F : Output the Daf Yomi for the entire date range.",
-   "   -h : Suppress default holidays.",
-   "   -H : Use Hebrew date ranges - only needed when e.g. hebcal -H 5373",
-   "   -i : Use Israeli sedra scheme.",
-   "   -I file : Get non-yahrtzeit Hebrew user events from specified file.",
- "        The format is : mmm dd string, Where mmm is a Hebrew month name.",
-   "   -l xx,yy : Set the latitude for solar calculations to",
-   "              xx degrees and yy minutes.  Negative values are south.",
-   "   -L xx,yy : Set the longitude for solar calculations to",
-   "              xx degrees and yy minutes.  *Negative values are EAST*.",
-   "        The -l and -L switches must both be used, or not at all.",
-   "        These switches override the -C (localize to city) switch.",
-   "   -m mins : Set havdalah to occur this many minutes after sundown ",
-   "   -M : Print the molad on shabbat mevorchim.",
-   "   -o : Add days of the omer.",
-   "   -O : Output sunrise and sunset times every day.",
-   "   -r : Tab delineated format.",
-   "   -s : Add weekly sedrot on saturday.",
-   "   -S : Print sedrah of the week on all calendar days.",
-   "   -t : Only output for today's date.",
-   "   -T : Print today's pertinent information, no gregorian date.",
-   "   -w : Add day of the week.",
-   "   -W : Sunrise, daf, omer via other options show once a week. ",
-   "   -x : Suppress Rosh Chodesh.",
-   "   -y : Print only last two digits of year.",
-   "   -Y file : Get yahrtzeit dates from specified file.",
-   "             The format is: mm dd yyyy string",
-   "             the first three fields specify a *Gregorian* date.",
-   "   -z : Use specified timezone, overriding -C (localize to city).",
+   "hebcal [options] [[ month [ day ]] year ]",
    "",
    "hebcal help    -- Print this message.",
    "hebcal info    -- Print version and localization data.",
@@ -273,181 +217,265 @@ void set_default_city( void )
 }
 
 
-/* FIX: this wants to become gnu-ish */
+static void displayHelp(cargo_t cargo) {
+   size_t i, numLines = sizeof(helpArray) / sizeof(char *);
+   cargo_print_usage(cargo, CARGO_USAGE_FULL);
+   for (i = 0; i < numLines; i++) {
+      puts(helpArray[i]);
+   }
+}
+
 void handleArgs(int argc, char *argv[])
 {
-   char dummy[10];
    date_t greg_today;
-   int option;
+   cargo_t cargo;
+   int ret = 0;
+   const char **remain;
+   size_t remain_count;
+   char *cityNameArg = NULL;
+   char *inFileName = NULL;
+   char *tzid = NULL;
+   char *yahrtzeitFileName = NULL;
+   int today_sw = 0;
+   int zemanim_sw = 0;
+   int help_sw = 0;
+   int version_sw = 0;
+   char *latitudeStr = NULL;
+   char *longitudeStr = NULL;
 
-   char *usage =		/* not quite sure how compatible this is */
-   "usage: \n\
-   hebcal [-acdDeEfFhHiMoOrsStTwWxyZ]\n\
-          [-b candle_lighting_minutes_before_sundown]\n\
-          [-I input_file]\n\
-          [-Y yahrtzeit_file]\n\
-          [-C city]\n\
-          [-L longitude -l latitude]\n\
-          [-m havdalah_minutes]\n\
-          [-z timezone]\n\
-          [[month [day]] year]\n\
-   hebcal help\n\
-   hebcal info\n\
-   hebcal cities\n\
-   hebcal warranty\n\
-   hebcal copying\n";
+   setDate(&greg_today);        /* keep the current greg. date here */
 
-   setDate(&greg_today);	/* keep the current greg. date here */
-
-   Getopt(argc, argv, "", 1);
-   while (EOF !=
-          (option = Getopt(argc, argv, "ab:cC:dDeEFf:hHI:il:L:m:MoOrsStTwWxyY:z:Z8", 0)))
-   {
-       switch ((char) option)
-       {
-       case 'a':		/* ashkenazis hebrew */
-	   ashkenazis_sw = 1;
-	   break;
-       case '8':		/* ashkenazis hebrew */
-	   iso8859_8_sw = 1;
-	   break;
-       case 'b':		/* candle_lighting_minutes_before_sundown */
-	   if (!(sscanf(Optarg, "%d", &light_offset) == 1))
-               die("unable to read candle_lighting_minutes_before_sundown argument: %s", Optarg);
-	   light_offset *= -1;
-	   break;
-       case 'c':		/* calculate candlelighting times on fridays */
-	   candleLighting_sw = 1;
-	   break;
-       case 'C':
-	   localize_to_city(Optarg);
-	   candleLighting_sw = 1;
-	   break;
-       case 'd':		/* print hebrew date */
-	   printHebDates_sw = 1;
-	   break;
-       case 'D':		/* print hebrew date when there's */
-	   /* something else to print */
-	   printSomeHebDates_sw = 1;
-	   break;
-       case 'I':		/* input file */
-	   inputFile_sw = 1;
-	   if (!(inFile = fopen(Optarg, "r")))
-               die("could not open input file %s.", Optarg);
-	   break;
-       case 'e':		/* european date format */
-	   euroDates_sw = 1;
-	   break;
-       case 'E':                /* 24-hour time format */
-           twentyFourHour_sw = 1;
-           break;
-       case 'f':		/* output format */
-           formatString = strdup(Optarg);
-	   break;
-       case 'F':    /* Daf Yomi */
-	   dafYomi_sw = 1;
-	   break;
-       case 'h':		/* suppress internal holidays */
-	   noHolidays_sw = 1;
-	   break;
-       case 'H':		/* suppress use hebrew range dates */
-	   hebrewDates_sw = 1;
-	   break;
-       case 'i':		/* use Israeli sedra scheme */
-	   israel_sw = 1;
-	   break;
-       case 'l':		/* latitude */
-	   latdeg = latmin = 0;
-	   latp = 1;
-	   if (sscanf(Optarg, "%d,%d", &latdeg, &latmin) < 2)
-               die("unable to read latitude argument: %s", Optarg);
-	   if ((abs(latdeg) > 90) ||
-	       latmin > 60 || latmin < 0)
-	      die("latitude argument out of range", "");
-	   latmin = abs(latmin);
-	   if (latdeg < 0)
-               latmin = -latmin;
-	   break;
-       case 'L':		/* longitude */
-	   longdeg = longmin = 0;
-	   longp = 1;
-	   if (sscanf(Optarg, "%d,%d", &longdeg, &longmin) < 2)
-               die("unable to read longitude argument: %s", Optarg);
-	   if ((abs(longdeg) > 180) ||
-	       longmin > 60 || longmin < 0)
-	      die("longitude argument out of range", "");
-	   longmin = abs(longmin);
-	   if (longdeg < 0)
-               longmin = -longmin;
-	   break;
-       case 'm':		/* havdalah_minutes */
-	   if (!(sscanf(Optarg, "%d", &havdalah_minutes) == 1))
-               die("unable to read havdalah_minutes argument: %s", Optarg);
-	   break;
-       case 'M':		/* print the molad */
-           printMolad_sw = 1;
-           break;
-       case 'o':		/* print the omer */
-	   printOmer_sw = 1;
-	   break;
-       case 'O':		/* print sunrise and sunset */
-	   printSunriseSunset_sw = 1;
-	   break;
-       case 'r':		/* Tab-delineated Format */
-	   tabs_sw = 1;
-	   break;
-       case 's':		/* print sedrot */
-	   sedrot_sw = 1;
-	   break;
-       case 'S':		/* print sedra every day. */
-	   sedraAllWeek_sw = 1;
-	   break;
-       case 'T':		/* do hebcal for today, omit gregorian date. */
-	   noGreg_sw = 1;
-/*** note this falls through to 't' case ***/
-       case 't':		/* do hebcal for today. */
-	   printHebDates_sw = 1;
-	   rangeType = TODAY;
-	   theMonth = greg_today.mm;	/* year and month specified */
-	   theDay = greg_today.dd;	/* printc theDay of theMonth */
-	   yearDirty = 1;
-	   printOmer_sw = 1;
-	   break;
-       case 'w':		/* print days of the week */
-	   weekday_sw = 1;
-	   break;
-       case 'W':		/* abbreviated week view */
-           abbrev_sw = 1;
-	   break;
-       case 'y':		/* Print only last 2 digits of year */
-	   yearDigits_sw = 1;
-	   break;
-       case 'Y':		/* input file */
-	   yahrtzeitFile_sw = 1;
-	   if (!(yFile = fopen(Optarg, "r")))
-               die("could not open yahrtzeit input file %s.", Optarg);
-	   break;
-       case 'x':		/* input file */
-	   suppress_rosh_chodesh_sw = 1;
-	   break;
-       case 'z':		/* time zone */
-	   TZ_INFO = timelib_parse_tzfile(Optarg, timelib_builtin_db());
-	   if (TZ_INFO == NULL)
-               die("unable to read time zone argument: %s", Optarg);
-           break;
-       case 'Z':
-	   default_zemanim = (ZMAN_SUNRISE | ZMAN_SZKS | ZMAN_TEFILAH | 
-			      ZMAN_CHATZOT |
-			      ZMAN_MINCHA_GEDOLA | ZMAN_MINCHA_KETANA |
-			      ZMAN_PLAG_HAMINCHA | ZMAN_SUNSET | ZMAN_TZAIT_42);
-	   
-	   break;
-           
-       default:
-	   die(usage, "");
-       }
+   if (cargo_init(&cargo, CARGO_NO_AUTOHELP, "%s", argv[0])) {
+     fprintf(stderr, "Failed to init command line parsing\n");
+     return;
    }
-   
+
+   ret |= cargo_add_option(cargo, 0, "--ashkenazis -a",
+                           "Use ashkenazis Hebrew",
+                           "b", &ashkenazis_sw);
+
+   ret |= cargo_add_group(cargo, 0, "candles",
+                           "Candle lighting",
+                           "Options related to candle-lighting times.");
+
+   ret |= cargo_add_option(cargo, 0, "<candles> --candlelighting -c",
+                           "Print candlelighting times",
+                           "b", &candleLighting_sw);
+
+   ret |= cargo_add_option(cargo, 0, "<candles> --city -C",
+                           "City for candle-lighting",
+                           "s", &cityNameArg);
+
+   ret |= cargo_add_option(cargo, 0, "<candles> --candle-mins -b",
+                           "Set candle-lighting to occur this many minutes before sundown",
+                           "i", &light_offset);
+
+   ret |= cargo_add_option(cargo, 0, "<candles> --havdalah-mins -m",
+                           "Set Havdalah to occur this many minutes after sundown",
+                           "i", &havdalah_minutes);
+
+   ret |= cargo_add_option(cargo, 0, "<candles> --latitude -l",
+                           "Set the latitude for solar calculations to xx degrees and yy minutes. Negative values are south",
+                           "s", &latitudeStr);
+
+   ret |= cargo_add_option(cargo, 0, "<candles> --longitude -L",
+                           "Set the longitude for solar calculations to xx degrees and yy minutes. Negative values are EAST. The -l and -L switches must both be used, or not at all. These switches override the -C (localize to city) switch",
+                           "s", &longitudeStr);
+
+   ret |= cargo_add_option(cargo, 0, "--dates-all -d",
+                           "Print the Hebrew date for the entire date range",
+                           "b", &printHebDates_sw);
+
+   ret |= cargo_add_option(cargo, 0, "--dates-some -D",
+                           "Print the Hebrew date for dates with some event",
+                           "b", &printSomeHebDates_sw);
+
+   ret |= cargo_add_option(cargo, 0, "--infile -I",
+                           "Get non-yahrtzeit Hebrew user events from specified file. The format is: mmm dd string, Where mmm is a Hebrew month name",
+                           "s", &inFileName);
+
+   ret |= cargo_add_option(cargo, 0, "--euro-dates -e",
+                           "Ouput 'European' dates -- DD.MM.YYYY format",
+                           "b", &euroDates_sw);
+
+   ret |= cargo_add_option(cargo, 0, "--twenty-four-hour -E", "Ouput 24-hour times (e.g. 18:37 instead of 6:37)",
+                           "b", &twentyFourHour_sw);
+
+   ret |= cargo_add_option(cargo, 0, "--format -f",
+                           "change output to FORMAT",
+                           "s", &formatString);
+
+   ret |= cargo_add_option(cargo, 0, "--dafyomi -F",
+                           "Output the Daf Yomi for the entire date range",
+                           "b", &dafYomi_sw);
+
+   ret |= cargo_add_option(cargo, 0, "--no-holidays -h",
+                           "Suppress default holidays",
+                           "b", &noHolidays_sw);
+
+   ret |= cargo_add_option(cargo, 0, "--hebrew-date -H",
+                           "Use Hebrew date ranges - only needed when e.g. hebcal -H 5373",
+                           "b", &hebrewDates_sw);
+
+   ret |= cargo_add_option(cargo, 0, "--israeli -i",
+                           "Israeli holiday and sedra schedule",
+                           "b", &israel_sw);
+
+   ret |= cargo_add_option(cargo, 0, "--molad -M",
+                           "Print the molad on Shabbat Mevorchim",
+                           "b", &printMolad_sw);
+
+   ret |= cargo_add_option(cargo, 0, "--omer -o",
+                           "Add days of the Omer",
+                           "b", &printOmer_sw);
+
+   ret |= cargo_add_option(cargo, 0, "--sunriseset -O",
+                           "Output sunrise and sunset times every day",
+                           "b", &printSunriseSunset_sw);
+
+   ret |= cargo_add_option(cargo, 0, "--tabs -r",
+                           "Tab delineated format",
+                           "b", &tabs_sw);
+
+   ret |= cargo_add_option(cargo, 0, "--sedrot -s",
+                           "Add weekly sedrot on Saturday",
+                           "b", &sedrot_sw);
+
+   ret |= cargo_add_option(cargo, 0, "--daily-sedra -S",
+                           "Print sedrah of the week on all calendar days",
+                           "b", &sedraAllWeek_sw);
+
+   ret |= cargo_add_option(cargo, 0, "--today -t", "Only output for today's date",
+                           "b", &today_sw);
+
+   ret |= cargo_add_option(cargo, 0, "--today-nogreg -T", "Print today's pertinent information, no gregorian date",
+                           "b", &noGreg_sw);
+
+   ret |= cargo_add_option(cargo, 0, "--weekday -w", "Add day of the week",
+                           "b", &weekday_sw);
+
+   ret |= cargo_add_option(cargo, 0, "--abbreviated -W", "Weekly view. Omer, dafyomi, and non-date-specific zemanim are shown once a week, on the day which corresponds to the first day in the range.",
+                           "b", &abbrev_sw);
+
+   ret |= cargo_add_option(cargo, 0, "--year-abbrev -y", "Print only last two digits of year",
+                           "b", &yearDigits_sw);
+
+   ret |= cargo_add_option(cargo, 0, "--yahrtzeit -Y",
+                           "Get yahrtzeit dates from specified file."
+                           " The format is: mm dd yyyy string"
+                           " the first three fields specify a *Gregorian* date.",
+                           "s", &yahrtzeitFileName);
+
+   ret |= cargo_add_option(cargo, 0, "--no-rosh-chodesh -x", "Suppress Rosh Chodesh",
+                           "b", &suppress_rosh_chodesh_sw);
+
+   ret |= cargo_add_option(cargo, 0, "<candles> --timezone -z", "Use specified timezone, overriding the -C (localize to city) switch",
+                           "s", &tzid);
+
+   ret |= cargo_add_option(cargo, 0, "<candles> --zmanim -Z", "Print zemanim (experimental)",
+                           "b", &zemanim_sw);
+
+   ret |= cargo_add_option(cargo, 0, "--help", "Show this help",
+                           "b", &help_sw);
+
+   ret |= cargo_add_option(cargo, 0, "--version", "Show version number",
+                           "b", &version_sw);
+
+   if (cargo_parse(cargo, 0, 1, argc, argv)) {
+      exit(1);
+   }
+
+   if (help_sw) {
+      displayHelp(cargo);
+      exit(0);
+   }
+
+   if (version_sw) {
+      printf("Hebcal version %s\n", VERSION);
+      exit(0);
+   }
+
+   errno = 0;
+
+   if (light_offset > 0) {
+      light_offset *= -1;
+   }
+
+   if (cityNameArg != NULL) {
+      candleLighting_sw = 1;
+      cityName = cityNameArg;
+      localize_to_city(cityName);
+   }
+
+   if (inFileName != NULL) {
+      inputFile_sw = 1;
+      if (!(inFile = fopen(inFileName, "r"))) {
+         die("could not open input file %s.", inFileName);
+      }
+   }
+
+   if (noGreg_sw) {
+      today_sw = 1;
+   }
+
+   if (today_sw) {
+      printHebDates_sw = 1;
+      rangeType = TODAY;
+      theMonth = greg_today.mm;    /* year and month specified */
+      theDay = greg_today.dd;      /* printc theDay of theMonth */
+      yearDirty = 1;
+      printOmer_sw = 1;
+   }
+
+   if (yahrtzeitFileName != NULL) {
+      yahrtzeitFile_sw = 1;
+      if (!(yFile = fopen(yahrtzeitFileName, "r"))) {
+         die("could not open yahrtzeit input file %s.", yahrtzeitFileName);
+      }
+   }
+
+   if (latitudeStr != NULL) {
+      if (sscanf(latitudeStr, "%d,%d", &latdeg, &latmin) < 2) {
+         die("unable to read latitude argument: %s", latitudeStr);
+      }
+      latp = 1;
+      if ((abs(latdeg) > 90) || latmin > 60 || latmin < 0) {
+         die("Error, latitude argument out of range: %s", latitudeStr);
+      }
+      latmin = abs(latmin);
+      if (latdeg < 0) {
+         latmin = -latmin;
+      }
+   }
+
+   if (longitudeStr != NULL) {
+      if (sscanf(longitudeStr, "%d,%d", &longdeg, &longmin) < 2) {
+         die("unable to read longitude argument: %s", longitudeStr);
+      }
+      longp = 1;
+      if ((abs(longdeg) > 180) || longmin > 60 || longmin < 0) {
+         die("Error, longitude argument out of range: %s", longitudeStr);
+      }
+      longmin = abs(longmin);
+      if (longdeg < 0) {
+         longmin = -longmin;
+      }
+   }
+
+   if (tzid != NULL) {
+      TZ_INFO = timelib_parse_tzfile(tzid, timelib_builtin_db());
+      if (TZ_INFO == NULL) {
+         die("unable to read time zone argument: %s", tzid);
+      }
+   }
+
+   if (zemanim_sw) {
+      default_zemanim = (ZMAN_SUNRISE | ZMAN_SZKS | ZMAN_TEFILAH |
+                           ZMAN_CHATZOT |
+                           ZMAN_MINCHA_GEDOLA | ZMAN_MINCHA_KETANA |
+                           ZMAN_PLAG_HAMINCHA | ZMAN_SUNSET | ZMAN_TZAIT_42);
+   }
+
    if (latp)
        cityName = "User Defined City";
    if (latp ^ longp)
@@ -456,7 +484,11 @@ void handleArgs(int argc, char *argv[])
    if( !strcmp(cityName, "Jerusalem" ))
        light_offset = -40;	/* does everyone hold by this? */
 
-   switch (argc - Optind)	/* suck up the date */
+
+   // Print remaining options.
+   remain = cargo_get_args(cargo, &remain_count);
+
+   switch (remain_count)	/* suck up the date */
    {
    case 0:			/* process this year */
        if (hebrewDates_sw)
@@ -466,99 +498,99 @@ void handleArgs(int argc, char *argv[])
        break;
        
    case 1:
-       if (isAllNums(argv[Optind]))
+       if (isAllNums(remain[0]))
        {
-	   theYear = atoi(argv[Optind]);	/* just year specified */
+	   theYear = atoi(remain[0]);	/* just year specified */
 	   yearDirty = 1;		/* print whole year */
        }
-       else if (0 == istrncasecmp(5, argv[Optind], "help"))
+       else if (0 == istrncasecmp(5, remain[0], "help"))
        {
-	   size_t lineNumber;
-           
-	   for (lineNumber = 0;
-		(lineNumber < sizeof(helpArray) / sizeof(char *));
-                lineNumber++)
-	   {
-	      puts(helpArray[lineNumber]);
-	   }
-	   exit(0);
+           displayHelp(cargo);
+           exit(0);
        }
-       else if (0 == istrncasecmp(3, argv[Optind], "info"))
+       else if (0 == istrncasecmp(3, remain[0], "info"))
        {
 	   print_version_data();
 	   exit(0);
        }
-       else if (0 == istrncasecmp(3, argv[Optind], "cities"))
+       else if (0 == istrncasecmp(3, remain[0], "cities"))
        {
 	   print_city_data();
 	   exit(0);
        }
-       else if (0 == istrncasecmp(3, argv[Optind], "copying"))
+       else if (0 == istrncasecmp(3, remain[0], "copying"))
        {
 	   print_copying();
 	   exit(0);
        }
-       else if (0 == istrncasecmp(3, argv[Optind], "warranty"))
+       else if (0 == istrncasecmp(3, remain[0], "warranty"))
        {
 	   print_warranty();
 	   exit(0);
        }
        else
-	   die(usage, "");
+       {
+           cargo_print_usage(cargo, CARGO_USAGE_SHORT);
+           exit(1);
+       }
        break;
        
    case 2:
-       if (!isAllNums(argv[Optind + 1]))
-	   die(usage, "");
-       theYear = atoi(argv[Optind + 1]);		/* print theMonth of theYear */
-       
-       theMonth = lookup_hebrew_month(argv[Optind]);
-       
-       if (theMonth)
-       {
-	   hebrewDates_sw = 1;	/* automagically turn it on */
-	   if (theMonth == ADAR_II && !LEAP_YR_HEB(theYear))
-               theMonth = ADAR_I;	/* silently fix this mistake */
+       if (!isAllNums(remain[1])) {
+           cargo_print_usage(cargo, CARGO_USAGE_SHORT);
+           exit(1);
        }
-       else if (isAllNums(argv[Optind]))
-	   if (hebrewDates_sw)
-               die("Don't use numbers to specify Hebrew months.", "");
-	   else
-	      theMonth = atoi(argv[Optind]);	/* gregorian month */
-       else if (hebrewDates_sw)
-	   die("Unknown Hebrew month: %s", argv[Optind]);
-       else
-	   die(usage, "");	/* bad gregorian month. */
+       theYear = atoi(remain[1]);		/* print theMonth of theYear */
        
-       Optind++;
+       theMonth = lookup_hebrew_month(remain[0]);
+       
+       if (theMonth) {
+	   hebrewDates_sw = 1;	/* automagically turn it on */
+	   if (theMonth == ADAR_II && !LEAP_YR_HEB(theYear)) {
+               theMonth = ADAR_I;	/* silently fix this mistake */
+           }
+       } else if (isAllNums(remain[0])) {
+	   if (hebrewDates_sw) {
+               die("Don't use numbers to specify Hebrew months.", "");
+	   } else {
+	      theMonth = atoi(remain[0]);	/* gregorian month */
+           }
+       } else if (hebrewDates_sw) {
+	   die("Unknown Hebrew month: %s", remain[0]);
+       } else {
+            die("bad gregorian month: %s", remain[0]);
+       }
+       
        yearDirty = 1;
        rangeType = MONTH;
 	break;
         
    case 3:
-       if (!(isAllNums(argv[Optind + 1])
-             && isAllNums(argv[Optind + 2])))
-	   die(usage, "");
-       theDay = atoi(argv[Optind + 1]);	/* print theDay of theMonth */
-       theYear = atoi(argv[Optind + 2]);		/* print theMonth of theYear */
-       
-       theMonth = lookup_hebrew_month(argv[Optind]);
-       
-       if (theMonth)
-       {
-	   hebrewDates_sw = 1;	/* automagically turn it on */
-	   if (theMonth == ADAR_II && !LEAP_YR_HEB(theYear))
-               theMonth = ADAR_I;	/* silently fix this mistake */
+       if (!(isAllNums(remain[1]) && isAllNums(remain[2]))) {
+           cargo_print_usage(cargo, CARGO_USAGE_SHORT);
+           exit(1);
        }
-       else if (isAllNums(argv[Optind]))
-	   if (hebrewDates_sw)
+       theDay = atoi(remain[1]);	/* print theDay of theMonth */
+       theYear = atoi(remain[2]);		/* print theMonth of theYear */
+       
+       theMonth = lookup_hebrew_month(remain[0]);
+       
+       if (theMonth) {
+	   hebrewDates_sw = 1;	/* automagically turn it on */
+	   if (theMonth == ADAR_II && !LEAP_YR_HEB(theYear)) {
+               theMonth = ADAR_I;	/* silently fix this mistake */
+           }
+       } else if (isAllNums(remain[0])) {
+	   if (hebrewDates_sw) {
                die("Don't use numbers to specify Hebrew months.", "");
-	   else
-               theMonth = atoi(argv[Optind]);	/* gregorian month */
-	else if (hebrewDates_sw)
-            die("Unknown Hebrew month: %s", argv[Optind]);
-	else
-            die("bad month.%s", usage);	/* bad gregorian month. */
+	   } else {
+               theMonth = atoi(remain[0]);	/* gregorian month */
+           }
+	} else if (hebrewDates_sw) {
+            die("Unknown Hebrew month: %s", remain[0]);
+        } else {
+            die("bad gregorian month: %s", remain[0]);
+        }
 
        if (theDay < 1)
 	   die("The day of the month must be greater than 0", "");
@@ -585,8 +617,11 @@ void handleArgs(int argc, char *argv[])
        yearDirty = 1;
        break;
    default:
-       die(usage, "");
+        displayHelp(cargo);
+        exit(1);
    }
+
+   cargo_destroy(&cargo);
 }
 
 
