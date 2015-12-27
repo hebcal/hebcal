@@ -403,8 +403,7 @@ void handleArgs(int argc, char *argv[])
 
    if (cityNameArg != NULL) {
       candleLighting_sw = 1;
-      cityName = cityNameArg;
-      localize_to_city(cityName);
+      localize_to_city(cityNameArg);
    }
 
    if (inFileName != NULL) {
