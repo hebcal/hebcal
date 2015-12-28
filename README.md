@@ -109,6 +109,13 @@ Hebcal uses two environment variables:
 ## Author
 Danny Sadinoff
 
+With contributions from
+
+* Michael J. Radwin
+* Eyal Schachter (JavaScript port)
+* Aaron Peromsik (Daf Yomi, experimental zmanim feature)
+* Ben Sandler (Molad and daily Sunrise/Sunset features)
+
 ## See Also
 
 calendar(1), emacs(1), hcal(1), hdate(1), omer(1), remind(1), rise(1)
@@ -119,7 +126,10 @@ The original motivation for the algorithms in this program was the _Tur Shulchan
 
 For version 3, much of the program was rewritten using Emacs 19’s calendar routines by Edward M. Reingold and Nachum Dershowitz. Their program is extremely clear and provides many instructive examples of fine calendar code in emacs-LISP.
 
+For version 4, candle-lighting times were rewritting using Derick Rethans's [timelib](https://github.com/derickr/timelib). Command-line option parsing was rewritten using Joakim Söderberg's [cargo](https://github.com/JoakimSoderberg/cargo).
+
 A well written treatment of the Jewish calendar for the layman can be found in _Understanding the Jewish Calendar_ by Rabbi Nathan Bushwick. A more complete bibliography on the topic can be found there, as well as in the _Encyclopedia Judaica_ entry on the calendar.
+
 
 ## Diagnostics
 <dl>
