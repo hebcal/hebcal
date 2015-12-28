@@ -258,6 +258,10 @@ void handleArgs(int argc, char *argv[])
                            "Candle lighting",
                            "Options related to candle-lighting times.");
 
+   ret |= cargo_add_option(cargo, 0, "<candles> --candle-mins -b",
+                           "Set candle-lighting to occur this many minutes before sundown",
+                           "i", &light_offset);
+
    ret |= cargo_add_option(cargo, 0, "<candles> --candlelighting -c",
                            "Print candlelighting times",
                            "b", &candleLighting_sw);
@@ -265,14 +269,6 @@ void handleArgs(int argc, char *argv[])
    ret |= cargo_add_option(cargo, 0, "<candles> --city -C",
                            "City for candle-lighting",
                            "s", &cityNameArg);
-
-   ret |= cargo_add_option(cargo, 0, "<candles> --candle-mins -b",
-                           "Set candle-lighting to occur this many minutes before sundown",
-                           "i", &light_offset);
-
-   ret |= cargo_add_option(cargo, 0, "<candles> --havdalah-mins -m",
-                           "Set Havdalah to occur this many minutes after sundown",
-                           "i", &havdalah_minutes);
 
    ret |= cargo_add_option(cargo, 0, "<candles> --latitude -l",
                            "Set the latitude for solar calculations to xx degrees and yy minutes. Negative values are south",
@@ -282,6 +278,10 @@ void handleArgs(int argc, char *argv[])
                            "Set the longitude for solar calculations to xx degrees and yy minutes. Negative values are EAST. The -l and -L switches must both be used, or not at all. These switches override the -C (localize to city) switch",
                            "s", &longitudeStr);
 
+   ret |= cargo_add_option(cargo, 0, "<candles> --havdalah-mins -m",
+                           "Set Havdalah to occur this many minutes after sundown",
+                           "i", &havdalah_minutes);
+
    ret |= cargo_add_option(cargo, 0, "--dates-all -d",
                            "Print the Hebrew date for the entire date range",
                            "b", &printHebDates_sw);
@@ -289,10 +289,6 @@ void handleArgs(int argc, char *argv[])
    ret |= cargo_add_option(cargo, 0, "--dates-some -D",
                            "Print the Hebrew date for dates with some event",
                            "b", &printSomeHebDates_sw);
-
-   ret |= cargo_add_option(cargo, 0, "--infile -I",
-                           "Get non-yahrtzeit Hebrew user events from specified file. The format is: mmm dd string, Where mmm is a Hebrew month name",
-                           "s", &inFileName);
 
    ret |= cargo_add_option(cargo, 0, "--euro-dates -e",
                            "Ouput 'European' dates -- DD.MM.YYYY format",
@@ -317,9 +313,16 @@ void handleArgs(int argc, char *argv[])
                            "Use Hebrew date ranges - only needed when e.g. hebcal -H 5373",
                            "b", &hebrewDates_sw);
 
+   ret |= cargo_add_option(cargo, 0, "--help", "Show this help",
+                           "b", &help_sw);
+
    ret |= cargo_add_option(cargo, 0, "--israeli -i",
                            "Israeli holiday and sedra schedule",
                            "b", &israel_sw);
+
+   ret |= cargo_add_option(cargo, 0, "--infile -I",
+                           "Get non-yahrtzeit Hebrew user events from specified file. The format is: mmm dd string, Where mmm is a Hebrew month name",
+                           "s", &inFileName);
 
    ret |= cargo_add_option(cargo, 0, "--molad -M",
                            "Print the molad on Shabbat Mevorchim",
@@ -351,11 +354,17 @@ void handleArgs(int argc, char *argv[])
    ret |= cargo_add_option(cargo, 0, "--today-nogreg -T", "Print today's pertinent information, no gregorian date",
                            "b", &noGreg_sw);
 
+   ret |= cargo_add_option(cargo, 0, "--version", "Show version number",
+                           "b", &version_sw);
+
    ret |= cargo_add_option(cargo, 0, "--weekday -w", "Add day of the week",
                            "b", &weekday_sw);
 
    ret |= cargo_add_option(cargo, 0, "--abbreviated -W", "Weekly view. Omer, dafyomi, and non-date-specific zemanim are shown once a week, on the day which corresponds to the first day in the range.",
                            "b", &abbrev_sw);
+
+   ret |= cargo_add_option(cargo, 0, "--no-rosh-chodesh -x", "Suppress Rosh Chodesh",
+                           "b", &suppress_rosh_chodesh_sw);
 
    ret |= cargo_add_option(cargo, 0, "--year-abbrev -y", "Print only last two digits of year",
                            "b", &yearDigits_sw);
@@ -366,20 +375,11 @@ void handleArgs(int argc, char *argv[])
                            " the first three fields specify a *Gregorian* date.",
                            "s", &yahrtzeitFileName);
 
-   ret |= cargo_add_option(cargo, 0, "--no-rosh-chodesh -x", "Suppress Rosh Chodesh",
-                           "b", &suppress_rosh_chodesh_sw);
-
    ret |= cargo_add_option(cargo, 0, "<candles> --timezone -z", "Use specified timezone, overriding the -C (localize to city) switch",
                            "s", &tzid);
 
    ret |= cargo_add_option(cargo, 0, "<candles> --zmanim -Z", "Print zemanim (experimental)",
                            "b", &zemanim_sw);
-
-   ret |= cargo_add_option(cargo, 0, "--help", "Show this help",
-                           "b", &help_sw);
-
-   ret |= cargo_add_option(cargo, 0, "--version", "Show version number",
-                           "b", &version_sw);
 
    if (cargo_parse(cargo, 0, 1, argc, argv)) {
       exit(1);
