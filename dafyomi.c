@@ -8,6 +8,10 @@
 #include <string.h>
 #include "hebcal.h"
 #include "dafyomi.h"
+#include "config.h"
+#include "gettext.h"
+
+#define _(String) gettext(String)
 
 #define NM_LEN 60
 
@@ -131,15 +135,12 @@ void hebcal_dafyomi( date_t *greg_day  )
 	 j = 1 + dafcnt;
       }
       j ++;
-   }         
+   }
 
    sprintf(buffer,
-           iso8859_8_sw ? "гу йеой: %s %d" : "Daf Yomi: %s %d",
-           iso8859_8_sw ? shas[count].hname :
-             ashkenazis_sw ? shas[count].aname : shas[count].sname,
+           _("Daf Yomi: %s %d"),
+           _(shas[count].sname),
            blatt );
    PrintGregDate(*greg_day);
    printf("%s\n", buffer);
 }
-
-   
