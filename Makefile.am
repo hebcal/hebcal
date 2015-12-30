@@ -14,7 +14,7 @@ AM_CPPFLAGS = -DVERSION='"$(PACKAGE_VERSION)"' -DHAVE_STDLIB_H -DHAVE_STRING_H -
 
 # AM_CFLAGS = -Wall
 
-SUBDIRS = tests
+SUBDIRS = po tests
 
 bin_PROGRAMS = hebcal
 
@@ -32,7 +32,7 @@ hebcal_h_files = common.h  danlib.h format.h greg.h hebcal.h \
 hebcal_SOURCES = $(hebcal_c_files) $(hebcal_h_files)
 
 man1_MANS = hebcal.1
-EXTRA_DIST = $(man1_MANS) OLD_NEWS HACKING
+EXTRA_DIST = config.rpath m4/ChangeLog  $(man1_MANS) OLD_NEWS HACKING
 
 BUILT_SOURCES =$(srcdir)/package.m4
 
@@ -64,3 +64,5 @@ $(srcdir)/package.m4: $(top_srcdir)/configure.ac
 	} >$(srcdir)/package.m4
 
 check-recursive:  all
+
+ACLOCAL_AMFLAGS = -I m4

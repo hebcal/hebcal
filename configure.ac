@@ -20,6 +20,8 @@ AC_CHECK_LIB(m, sqrt)
 dnl AC_CHECK_LIB(m, acos)
 dnl AC_CHECK_LIB(m, fabs)
 
+AM_GNU_GETTEXT([external])
+
 # Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS([stdlib.h string.h sys/time.h])
@@ -37,7 +39,7 @@ AC_ARG_WITH(default-city,
              AC_DEFINE_UNQUOTED(CITY,"$withval",["The Default City"]),
              AC_DEFINE(CITY,"New_York",["The default city"]))
 
-AC_CONFIG_FILES([hebcal.1])
+AC_CONFIG_FILES([hebcal.1 po/Makefile.in])
 AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([tests/Makefile])
 
