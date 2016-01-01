@@ -14,7 +14,7 @@ AM_CPPFLAGS = -DVERSION='"$(PACKAGE_VERSION)"' -DHAVE_STDLIB_H -DHAVE_STRING_H -
 
 # AM_CFLAGS = -Wall
 
-SUBDIRS = intl po tests
+SUBDIRS = po tests
 
 bin_PROGRAMS = hebcal
 

@@ -1,30 +1,4 @@
-2015-12-30  gettextize  <bug-gnu-gettext@gnu.org>
-
-	* codeset.m4: New file, from gettext-0.18.3.
-	* fcntl-o.m4: New file, from gettext-0.18.3.
-	* glibc2.m4: New file, from gettext-0.18.3.
-	* glibc21.m4: New file, from gettext-0.18.3.
-	* intdiv0.m4: New file, from gettext-0.18.3.
-	* intl.m4: New file, from gettext-0.18.3.
-	* intldir.m4: New file, from gettext-0.18.3.
-	* intlmacosx.m4: New file, from gettext-0.18.3.
-	* intmax.m4: New file, from gettext-0.18.3.
-	* inttypes_h.m4: New file, from gettext-0.18.3.
-	* inttypes-pri.m4: New file, from gettext-0.18.3.
-	* lcmessage.m4: New file, from gettext-0.18.3.
-	* lock.m4: New file, from gettext-0.18.3.
-	* longlong.m4: New file, from gettext-0.18.3.
-	* printf-posix.m4: New file, from gettext-0.18.3.
-	* size_max.m4: New file, from gettext-0.18.3.
-	* stdint_h.m4: New file, from gettext-0.18.3.
-	* threadlib.m4: New file, from gettext-0.18.3.
-	* uintmax_t.m4: New file, from gettext-0.18.3.
-	* visibility.m4: New file, from gettext-0.18.3.
-	* wchar_t.m4: New file, from gettext-0.18.3.
-	* wint_t.m4: New file, from gettext-0.18.3.
-	* xsize.m4: New file, from gettext-0.18.3.
-
-2015-12-30  gettextize  <bug-gnu-gettext@gnu.org>
+2016-01-01  gettextize  <bug-gnu-gettext@gnu.org>
 
 	* gettext.m4: New file, from gettext-0.18.3.
 	* iconv.m4: New file, from gettext-0.18.3.
