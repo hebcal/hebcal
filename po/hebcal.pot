@@ -17,7 +17,1455 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: dafyomi.c:141
+#: ../dafyomi.c:26
+msgid "Berachot"
+msgstr ""
+
+#: ../dafyomi.c:26
+msgid "Berachos"
+msgstr ""
+
+#: ../dafyomi.c:27
+msgid "Shabbat"
+msgstr ""
+
+#: ../dafyomi.c:27
+msgid "Shabbos"
+msgstr ""
+
+#: ../dafyomi.c:28
+msgid "Eruvin"
+msgstr ""
+
+#: ../dafyomi.c:29
+msgid "Pesachim"
+msgstr ""
+
+#: ../dafyomi.c:30
+msgid "Shekalim"
+msgstr ""
+
+#: ../dafyomi.c:31
+msgid "Yoma"
+msgstr ""
+
+#: ../dafyomi.c:32
+msgid "Sukkah"
+msgstr ""
+
+#: ../dafyomi.c:33
+msgid "Beitzah"
+msgstr ""
+
+#: ../dafyomi.c:34 ../holidays.c:951
+msgid "Rosh Hashana"
+msgstr ""
+
+#: ../dafyomi.c:35
+msgid "Taanit"
+msgstr ""
+
+#: ../dafyomi.c:35
+msgid "Taanis"
+msgstr ""
+
+#: ../dafyomi.c:36
+msgid "Megillah"
+msgstr ""
+
+#: ../dafyomi.c:37
+msgid "Moed Katan"
+msgstr ""
+
+#: ../dafyomi.c:38
+msgid "Chagigah"
+msgstr ""
+
+#: ../dafyomi.c:39
+msgid "Yevamot"
+msgstr ""
+
+#: ../dafyomi.c:39
+msgid "Yevamos"
+msgstr ""
+
+#: ../dafyomi.c:40
+msgid "Ketubot"
+msgstr ""
+
+#: ../dafyomi.c:40
+msgid "Kesubos"
+msgstr ""
+
+#: ../dafyomi.c:41
+msgid "Nedarim"
+msgstr ""
+
+#: ../dafyomi.c:42
+msgid "Nazir"
+msgstr ""
+
+#: ../dafyomi.c:43
+msgid "Sotah"
+msgstr ""
+
+#: ../dafyomi.c:44
+msgid "Gitin"
+msgstr ""
+
+#: ../dafyomi.c:45
+msgid "Kiddushin"
+msgstr ""
+
+#: ../dafyomi.c:46
+msgid "Baba Kamma"
+msgstr ""
+
+#: ../dafyomi.c:46
+msgid "בבא קמא"
+msgstr ""
+
+#: ../dafyomi.c:47
+msgid "Baba Metzia"
+msgstr ""
+
+#: ../dafyomi.c:47
+msgid "בבא מציעא"
+msgstr ""
+
+#: ../dafyomi.c:48
+msgid "Baba Batra"
+msgstr ""
+
+#: ../dafyomi.c:48
+msgid "Baba Basra"
+msgstr ""
+
+#: ../dafyomi.c:48
+msgid "בבא בתרא"
+msgstr ""
+
+#: ../dafyomi.c:49
+msgid "Sanhedrin"
+msgstr ""
+
+#: ../dafyomi.c:49
+msgid "סנהדרין"
+msgstr ""
+
+#: ../dafyomi.c:50
+msgid "Makkot"
+msgstr ""
+
+#: ../dafyomi.c:50
+msgid "Makkos"
+msgstr ""
+
+#: ../dafyomi.c:50
+msgid "מכות"
+msgstr ""
+
+#: ../dafyomi.c:51
+msgid "Shevuot"
+msgstr ""
+
+#: ../dafyomi.c:51
+msgid "Shevuos"
+msgstr ""
+
+#: ../dafyomi.c:51
+msgid "שבועות"
+msgstr ""
+
+#: ../dafyomi.c:52
+msgid "Avodah Zarah"
+msgstr ""
+
+#: ../dafyomi.c:52
+msgid "עבודה זרה"
+msgstr ""
+
+#: ../dafyomi.c:53
+msgid "Horayot"
+msgstr ""
+
+#: ../dafyomi.c:53
+msgid "Horayos"
+msgstr ""
+
+#: ../dafyomi.c:53
+msgid "הוריות"
+msgstr ""
+
+#: ../dafyomi.c:54
+msgid "Zevachim"
+msgstr ""
+
+#: ../dafyomi.c:54
+msgid "זבחים"
+msgstr ""
+
+#: ../dafyomi.c:55
+msgid "Menachot"
+msgstr ""
+
+#: ../dafyomi.c:55
+msgid "Menachos"
+msgstr ""
+
+#: ../dafyomi.c:56
+msgid "Chullin"
+msgstr ""
+
+#: ../dafyomi.c:57
+msgid "Bechorot"
+msgstr ""
+
+#: ../dafyomi.c:57
+msgid "Bechoros"
+msgstr ""
+
+#: ../dafyomi.c:58
+msgid "Arachin"
+msgstr ""
+
+#: ../dafyomi.c:59
+msgid "Temurah"
+msgstr ""
+
+#: ../dafyomi.c:60
+msgid "Keritot"
+msgstr ""
+
+#: ../dafyomi.c:60
+msgid "Kerisos"
+msgstr ""
+
+#: ../dafyomi.c:61
+msgid "Meilah"
+msgstr ""
+
+#: ../dafyomi.c:62
+msgid "Kinnim"
+msgstr ""
+
+#: ../dafyomi.c:63
+msgid "Tamid"
+msgstr ""
+
+#: ../dafyomi.c:64
+msgid "Midot"
+msgstr ""
+
+#: ../dafyomi.c:64
+msgid "Midos"
+msgstr ""
+
+#: ../dafyomi.c:65
+msgid "Niddah"
+msgstr ""
+
+#: ../dafyomi.c:141
 #, c-format
 msgid "Daf Yomi: %s %d"
+msgstr ""
+
+#: ../dafyomi.c:145
+#, c-format
+msgid "%s\n"
+msgstr ""
+
+#: ../holidays.c:48
+msgid "Rosh Hashana II"
+msgstr ""
+
+#: ../holidays.c:48
+msgid "ראש השנה יום ב'"
+msgstr ""
+
+#: ../holidays.c:54
+msgid "Erev Yom Kippur"
+msgstr ""
+
+#: ../holidays.c:54
+msgid "ערב יום כפור"
+msgstr ""
+
+#: ../holidays.c:60
+msgid "Yom Kippur"
+msgstr ""
+
+#: ../holidays.c:60
+msgid "יום כפור"
+msgstr ""
+
+#: ../holidays.c:67
+msgid "Erev Sukkot"
+msgstr ""
+
+#: ../holidays.c:67
+msgid "Erev Sukkos"
+msgstr ""
+
+#: ../holidays.c:67
+msgid "ערב סוכות"
+msgstr ""
+
+#: ../holidays.c:73 ../holidays.c:79
+msgid "Sukkot I"
+msgstr ""
+
+#: ../holidays.c:73 ../holidays.c:79
+msgid "Sukkos I"
+msgstr ""
+
+#: ../holidays.c:73 ../holidays.c:79
+msgid "סוכות יום א'"
+msgstr ""
+
+#: ../holidays.c:85
+msgid "Sukkot II"
+msgstr ""
+
+#: ../holidays.c:85
+msgid "Sukkos II"
+msgstr ""
+
+#: ../holidays.c:85
+msgid "סוכות יום ב'"
+msgstr ""
+
+#: ../holidays.c:91
+msgid "Sukkot II (CH''M)"
+msgstr ""
+
+#: ../holidays.c:91
+msgid "Sukkos II (CH''M)"
+msgstr ""
+
+#: ../holidays.c:91
+msgid "סוכות יום ב' (חל המועד)"
+msgstr ""
+
+#: ../holidays.c:97
+msgid "Sukkot III (CH''M)"
+msgstr ""
+
+#: ../holidays.c:97
+msgid "Sukkos III (CH''M)"
+msgstr ""
+
+#: ../holidays.c:97
+msgid "סוכות יום ג' (חל המועד)"
+msgstr ""
+
+#: ../holidays.c:103
+msgid "Sukkot IV (CH''M)"
+msgstr ""
+
+#: ../holidays.c:103
+msgid "Sukkos IV (CH''M)"
+msgstr ""
+
+#: ../holidays.c:103
+msgid "סוכות יום ד' (חל המועד)"
+msgstr ""
+
+#: ../holidays.c:109
+msgid "Sukkot V (CH''M)"
+msgstr ""
+
+#: ../holidays.c:109
+msgid "Sukkos V (CH''M)"
+msgstr ""
+
+#: ../holidays.c:109
+msgid "סוכות יום ה' (חל המועד)"
+msgstr ""
+
+#: ../holidays.c:115
+msgid "Sukkot VI (CH''M)"
+msgstr ""
+
+#: ../holidays.c:115
+msgid "Sukkos VI (CH''M)"
+msgstr ""
+
+#: ../holidays.c:115
+msgid "סוכות יום ו' (חל המועד)"
+msgstr ""
+
+#: ../holidays.c:121
+msgid "Sukkot VII (Hoshana Raba)"
+msgstr ""
+
+#: ../holidays.c:121
+msgid "Sukkos VII (Hoshana Raba)"
+msgstr ""
+
+#: ../holidays.c:121
+msgid "סוכות יום ז' (הושנא רבה)"
+msgstr ""
+
+#: ../holidays.c:127 ../holidays.c:133
+msgid "Shmini Atzeret"
+msgstr ""
+
+#: ../holidays.c:127 ../holidays.c:133
+msgid "Shmini Atzeres"
+msgstr ""
+
+#: ../holidays.c:127 ../holidays.c:133
+msgid "שמיני עצרת"
+msgstr ""
+
+#: ../holidays.c:139
+msgid "Simchat Torah"
+msgstr ""
+
+#: ../holidays.c:139
+msgid "Simchas Torah"
+msgstr ""
+
+#: ../holidays.c:139
+msgid "שמחת תורה"
+msgstr ""
+
+#: ../holidays.c:146
+msgid "Chanukah: 1 Candle"
+msgstr ""
+
+#: ../holidays.c:146
+msgid "חנוכה: א' נר"
+msgstr ""
+
+#: ../holidays.c:152
+msgid "Chanukah: 2 Candles"
+msgstr ""
+
+#: ../holidays.c:152
+msgid "חנוכה: ב' נרות"
+msgstr ""
+
+#: ../holidays.c:158
+msgid "Chanukah: 3 Candles"
+msgstr ""
+
+#: ../holidays.c:158
+msgid "חנוכה: ג' נרות"
+msgstr ""
+
+#: ../holidays.c:164
+msgid "Chanukah: 4 Candles"
+msgstr ""
+
+#: ../holidays.c:164
+msgid "חנוכה: ד' נרות"
+msgstr ""
+
+#: ../holidays.c:170
+msgid "Chanukah: 5 Candles"
+msgstr ""
+
+#: ../holidays.c:170
+msgid "חנוכה: ה' נרות"
+msgstr ""
+
+#: ../holidays.c:176
+msgid "Chanukah: 6 Candles"
+msgstr ""
+
+#: ../holidays.c:176
+msgid "חנוכה: ו' נרות"
+msgstr ""
+
+#: ../holidays.c:182
+msgid "Tu B'Shvat"
+msgstr ""
+
+#: ../holidays.c:182
+msgid "ט\"ו בשבט"
+msgstr ""
+
+#: ../holidays.c:188
+msgid "Erev Pesach"
+msgstr ""
+
+#: ../holidays.c:188
+msgid "ערב פסח"
+msgstr ""
+
+#: ../holidays.c:194 ../holidays.c:200
+msgid "Pesach I"
+msgstr ""
+
+#: ../holidays.c:194 ../holidays.c:200
+msgid "פסח יום א'"
+msgstr ""
+
+#: ../holidays.c:206
+msgid "Pesach II"
+msgstr ""
+
+#: ../holidays.c:206
+msgid "פסחיום ב'"
+msgstr ""
+
+#: ../holidays.c:212
+msgid "Pesach II (CH''M)"
+msgstr ""
+
+#: ../holidays.c:212
+msgid "פסח יום ב' (חל המועד)"
+msgstr ""
+
+#: ../holidays.c:218
+msgid "Pesach III (CH''M)"
+msgstr ""
+
+#: ../holidays.c:218
+msgid "פסח יום ג' (חל המועד)"
+msgstr ""
+
+#: ../holidays.c:224
+msgid "Pesach IV (CH''M)"
+msgstr ""
+
+#: ../holidays.c:224
+msgid "פסח יום ד' (חל המועד)"
+msgstr ""
+
+#: ../holidays.c:231
+msgid "Pesach V (CH''M)"
+msgstr ""
+
+#: ../holidays.c:231
+msgid "פסח יום ה' (חל המועד)"
+msgstr ""
+
+#: ../holidays.c:237
+msgid "Pesach VI (CH''M)"
+msgstr ""
+
+#: ../holidays.c:237
+msgid "פסח יום ו' (חל המועד)"
+msgstr ""
+
+#: ../holidays.c:243 ../holidays.c:249
+msgid "Pesach VII"
+msgstr ""
+
+#: ../holidays.c:243 ../holidays.c:249
+msgid "פסח יום ז'"
+msgstr ""
+
+#: ../holidays.c:255
+msgid "Pesach VIII"
+msgstr ""
+
+#: ../holidays.c:255
+msgid "פסח יום ח'"
+msgstr ""
+
+#: ../holidays.c:262
+msgid "Pesach Sheni"
+msgstr ""
+
+#: ../holidays.c:262
+msgid "פסחיום שני"
+msgstr ""
+
+#: ../holidays.c:269
+msgid "Lag B'Omer"
+msgstr ""
+
+#: ../holidays.c:269
+msgid "ל\"ג בעומר"
+msgstr ""
+
+#: ../holidays.c:276
+msgid "Erev Shavuot"
+msgstr ""
+
+#: ../holidays.c:276
+msgid "Erev Shavuos"
+msgstr ""
+
+#: ../holidays.c:276
+msgid "ערב שבועות"
+msgstr ""
+
+#: ../holidays.c:282 ../holidays.c:288
+msgid "Shavuot I"
+msgstr ""
+
+#: ../holidays.c:282 ../holidays.c:288
+msgid "Shavuos I"
+msgstr ""
+
+#: ../holidays.c:282 ../holidays.c:288
+msgid "שבועות יום א'"
+msgstr ""
+
+#: ../holidays.c:294
+msgid "Shavuot II"
+msgstr ""
+
+#: ../holidays.c:294
+msgid "Shavuos II"
+msgstr ""
+
+#: ../holidays.c:294
+msgid "שבועות יום ב'"
+msgstr ""
+
+#: ../holidays.c:300
+msgid "Tu B'Av"
+msgstr ""
+
+#: ../holidays.c:300
+msgid "ט\"ו באב"
+msgstr ""
+
+#: ../holidays.c:306
+msgid "Erev Rosh Hashana"
+msgstr ""
+
+#: ../holidays.c:306
+msgid "ערב ראש השנה"
+msgstr ""
+
+#: ../holidays.c:344
+msgid "Asara B'Tevet"
+msgstr ""
+
+#: ../holidays.c:344
+msgid "עשרה בטבת"
+msgstr ""
+
+#: ../holidays.c:345
+msgid "Chanukah: 7 Candles"
+msgstr ""
+
+#: ../holidays.c:345
+msgid "חנוכה: ז' נרות"
+msgstr ""
+
+#: ../holidays.c:346
+msgid "Chanukah: 8 Candles"
+msgstr ""
+
+#: ../holidays.c:346
+msgid "חנוכה: ח' נרות"
+msgstr ""
+
+#: ../holidays.c:347
+msgid "Chanukah: 8th Day"
+msgstr ""
+
+#: ../holidays.c:347
+msgid "חנוכה: יום ח'"
+msgstr ""
+
+#: ../holidays.c:348
+msgid "Purim"
+msgstr ""
+
+#: ../holidays.c:348
+msgid "פורים"
+msgstr ""
+
+#: ../holidays.c:349
+msgid "Purim Katan"
+msgstr ""
+
+#: ../holidays.c:349
+msgid "Purim Koton"
+msgstr ""
+
+#: ../holidays.c:349
+msgid "פורים קטן"
+msgstr ""
+
+#: ../holidays.c:350
+msgid "Shabbat HaChodesh"
+msgstr ""
+
+#: ../holidays.c:350
+msgid "Shabbos HaChodesh"
+msgstr ""
+
+#: ../holidays.c:350
+msgid "שבת החדש"
+msgstr ""
+
+#: ../holidays.c:351
+msgid "Shabbat HaGadol"
+msgstr ""
+
+#: ../holidays.c:351
+msgid "Shabbos HaGadol"
+msgstr ""
+
+#: ../holidays.c:351
+msgid "שבת הגדול"
+msgstr ""
+
+#: ../holidays.c:352
+msgid "Shabbat Chazon"
+msgstr ""
+
+#: ../holidays.c:352
+msgid "Shabbos Chazon"
+msgstr ""
+
+#: ../holidays.c:352
+msgid "שבת חזון"
+msgstr ""
+
+#: ../holidays.c:353
+msgid "Shabbat Nachamu"
+msgstr ""
+
+#: ../holidays.c:353
+msgid "Shabbos Nachamu"
+msgstr ""
+
+#: ../holidays.c:353
+msgid "שבת נחמו"
+msgstr ""
+
+#: ../holidays.c:354
+msgid "Shabbat Parah"
+msgstr ""
+
+#: ../holidays.c:354
+msgid "Shabbos Parah"
+msgstr ""
+
+#: ../holidays.c:354
+msgid "שבת פרה"
+msgstr ""
+
+#: ../holidays.c:355
+msgid "Shabbat Shekalim"
+msgstr ""
+
+#: ../holidays.c:355
+msgid "Shabbos Shekalim"
+msgstr ""
+
+#: ../holidays.c:355
+msgid "שבת שקלים"
+msgstr ""
+
+#: ../holidays.c:356
+msgid "Shabbat Shuva"
+msgstr ""
+
+#: ../holidays.c:356
+msgid "Shabbos Shuvah"
+msgstr ""
+
+#: ../holidays.c:356
+msgid "שבת שובה"
+msgstr ""
+
+#: ../holidays.c:357
+msgid "Shabbat Zachor"
+msgstr ""
+
+#: ../holidays.c:357
+msgid "Shabbos Zachor"
+msgstr ""
+
+#: ../holidays.c:357
+msgid "שבת זכור"
+msgstr ""
+
+#: ../holidays.c:358
+msgid "Shushan Purim"
+msgstr ""
+
+#: ../holidays.c:358
+msgid "שושן פורים"
+msgstr ""
+
+#: ../holidays.c:359
+msgid "Ta'anit Bechorot"
+msgstr ""
+
+#: ../holidays.c:359
+msgid "Ta'anis Bechoros"
+msgstr ""
+
+#: ../holidays.c:359
+msgid "תענית בכורות"
+msgstr ""
+
+#: ../holidays.c:360
+msgid "Ta'anit Esther"
+msgstr ""
+
+#: ../holidays.c:360
+msgid "Ta'anis Esther"
+msgstr ""
+
+#: ../holidays.c:360
+msgid "תענית אסתר"
+msgstr ""
+
+#: ../holidays.c:361
+msgid "Tish'a B'Av"
+msgstr ""
+
+#: ../holidays.c:361
+msgid "תשעה באב"
+msgstr ""
+
+#: ../holidays.c:362
+msgid "Tzom Gedaliah"
+msgstr ""
+
+#: ../holidays.c:362
+msgid "צום גדליה"
+msgstr ""
+
+#: ../holidays.c:363
+msgid "Tzom Tammuz"
+msgstr ""
+
+#: ../holidays.c:363
+msgid "צום תמוז"
+msgstr ""
+
+#: ../holidays.c:364
+msgid "Yom HaAtzma'ut"
+msgstr ""
+
+#: ../holidays.c:364
+msgid "יום העצמאות"
+msgstr ""
+
+#: ../holidays.c:365
+msgid "Yom HaShoah"
+msgstr ""
+
+#: ../holidays.c:365
+msgid "יום השואה"
+msgstr ""
+
+#: ../holidays.c:366
+msgid "Yom HaZikaron"
+msgstr ""
+
+#: ../holidays.c:366
+msgid "יום הזכרון"
+msgstr ""
+
+#: ../holidays.c:367
+msgid "Yom Yerushalayim"
+msgstr ""
+
+#: ../holidays.c:367
+msgid "יום ירושלים"
+msgstr ""
+
+#: ../holidays.c:368
+msgid "Erev Purim"
+msgstr ""
+
+#: ../holidays.c:368
+msgid "ערב פורים"
+msgstr ""
+
+#: ../holidays.c:369
+msgid "Erev Tish'a B'Av"
+msgstr ""
+
+#: ../holidays.c:369
+msgid "ערב תשעה באב"
+msgstr ""
+
+#: ../holidays.c:370
+msgid "Leil Selichot"
+msgstr ""
+
+#: ../holidays.c:371
+msgid "Sigd"
+msgstr ""
+
+#: ../holidays.c:371
+msgid "qkfg"
+msgstr ""
+
+#: ../holidays.c:380
+msgid "Unable to allocate memory for holiday."
+msgstr ""
+
+#: ../holidays.c:679
+#, c-format
+msgid "input file read error. Skipping line %s"
+msgstr ""
+
+#: ../holidays.c:684
+#, c-format
+msgid "%s %d%n"
+msgstr ""
+
+#: ../holidays.c:686
+#, c-format
+msgid "Error in input file.  Skipping line %s"
+msgstr ""
+
+#: ../holidays.c:691
+#, c-format
+msgid "Numeric hebrew month in input file.  Skipping line %s"
+msgstr ""
+
+#: ../holidays.c:697
+#, c-format
+msgid "Unrecognized hebrew month in input file.  Skipping line %s"
+msgstr ""
+
+#: ../holidays.c:703
+#, c-format
+msgid "Date out of range in input file. Skipping line %s"
+msgstr ""
+
+#: ../holidays.c:749
+#, c-format
+msgid "yahrtzeit file read error. Skipping line %s"
+msgstr ""
+
+#: ../holidays.c:754
+#, c-format
+msgid "%s %d %d%n"
+msgstr ""
+
+#: ../holidays.c:756
+#, c-format
+msgid "Error in yahrtzeit file.  Skipping line %s"
+msgstr ""
+
+#: ../holidays.c:761
+#, c-format
+msgid "Non-numeric month in yahrtzeit file. Skipping line %s"
+msgstr ""
+
+#: ../holidays.c:765
+#, c-format
+msgid "%d"
+msgstr ""
+
+#: ../holidays.c:771
+#, c-format
+msgid "Date out of range in yahrtzeit file. Skipping line %s"
+msgstr ""
+
+#: ../holidays.c:949
+#, c-format
+msgid "%s %d"
+msgstr ""
+
+#: ../holidays.c:950
+msgid "ראש השנה"
+msgstr ""
+
+#: ../holidays.c:963 ../holidays.c:986
+msgid "ראש חדש "
+msgstr ""
+
+#: ../holidays.c:964 ../holidays.c:987
+msgid "Rosh Chodesh "
+msgstr ""
+
+#: ../sedra.c:47
+msgid "Bereshit"
+msgstr ""
+
+#: ../sedra.c:47
+msgid "Bereshis"
+msgstr ""
+
+#: ../sedra.c:47
+msgid "בראשית"
+msgstr ""
+
+#: ../sedra.c:48
+msgid "Noach"
+msgstr ""
+
+#: ../sedra.c:48
+msgid "נח"
+msgstr ""
+
+#: ../sedra.c:49
+msgid "Lech-Lecha"
+msgstr ""
+
+#: ../sedra.c:49
+msgid "לךלך"
+msgstr ""
+
+#: ../sedra.c:50
+msgid "Vayera"
+msgstr ""
+
+#: ../sedra.c:50
+msgid "וירא"
+msgstr ""
+
+#: ../sedra.c:51
+msgid "Chayei Sara"
+msgstr ""
+
+#: ../sedra.c:51
+msgid "חיי שרה"
+msgstr ""
+
+#: ../sedra.c:52
+msgid "Toldot"
+msgstr ""
+
+#: ../sedra.c:52
+msgid "Toldos"
+msgstr ""
+
+#: ../sedra.c:52
+msgid "תולדות"
+msgstr ""
+
+#: ../sedra.c:53
+msgid "Vayetzei"
+msgstr ""
+
+#: ../sedra.c:53
+msgid "ויצא"
+msgstr ""
+
+#: ../sedra.c:54
+msgid "Vayishlach"
+msgstr ""
+
+#: ../sedra.c:54
+msgid "וישלח"
+msgstr ""
+
+#: ../sedra.c:55
+msgid "Vayeshev"
+msgstr ""
+
+#: ../sedra.c:55
+msgid "וישב"
+msgstr ""
+
+#: ../sedra.c:56
+msgid "Miketz"
+msgstr ""
+
+#: ../sedra.c:56
+msgid "מקץ"
+msgstr ""
+
+#: ../sedra.c:57
+msgid "Vayigash"
+msgstr ""
+
+#: ../sedra.c:57
+msgid "ויגש"
+msgstr ""
+
+#: ../sedra.c:58
+msgid "Vayechi"
+msgstr ""
+
+#: ../sedra.c:58
+msgid "ויחי"
+msgstr ""
+
+#: ../sedra.c:59
+msgid "Shemot"
+msgstr ""
+
+#: ../sedra.c:59
+msgid "Shemos"
+msgstr ""
+
+#: ../sedra.c:59
+msgid "שמות"
+msgstr ""
+
+#: ../sedra.c:60
+msgid "Vaera"
+msgstr ""
+
+#: ../sedra.c:60
+msgid "וארא"
+msgstr ""
+
+#: ../sedra.c:61
+msgid "Bo"
+msgstr ""
+
+#: ../sedra.c:61
+msgid "בא"
+msgstr ""
+
+#: ../sedra.c:62
+msgid "Beshalach"
+msgstr ""
+
+#: ../sedra.c:62
+msgid "בשלח"
+msgstr ""
+
+#: ../sedra.c:63
+msgid "Yitro"
+msgstr ""
+
+#: ../sedra.c:63
+msgid "Yisro"
+msgstr ""
+
+#: ../sedra.c:63
+msgid "יתרו"
+msgstr ""
+
+#: ../sedra.c:64
+msgid "Mishpatim"
+msgstr ""
+
+#: ../sedra.c:64
+msgid "משפטים"
+msgstr ""
+
+#: ../sedra.c:65
+msgid "Terumah"
+msgstr ""
+
+#: ../sedra.c:65
+msgid "תרומה"
+msgstr ""
+
+#: ../sedra.c:66
+msgid "Tetzaveh"
+msgstr ""
+
+#: ../sedra.c:66
+msgid "תצוה"
+msgstr ""
+
+#: ../sedra.c:67
+msgid "Ki Tisa"
+msgstr ""
+
+#: ../sedra.c:67
+msgid "Ki Sisa"
+msgstr ""
+
+#: ../sedra.c:67
+msgid "כי תשא"
+msgstr ""
+
+#: ../sedra.c:68
+msgid "Vayakhel"
+msgstr ""
+
+#: ../sedra.c:68
+msgid "ויקהל"
+msgstr ""
+
+#: ../sedra.c:69
+msgid "Pekudei"
+msgstr ""
+
+#: ../sedra.c:69
+msgid "פקודי"
+msgstr ""
+
+#: ../sedra.c:70
+msgid "Vayikra"
+msgstr ""
+
+#: ../sedra.c:70
+msgid "ויקרא"
+msgstr ""
+
+#: ../sedra.c:71
+msgid "Tzav"
+msgstr ""
+
+#: ../sedra.c:71
+msgid "צו"
+msgstr ""
+
+#: ../sedra.c:72
+msgid "Shmini"
+msgstr ""
+
+#: ../sedra.c:72
+msgid "שמיני"
+msgstr ""
+
+#: ../sedra.c:73
+msgid "Tazria"
+msgstr ""
+
+#: ../sedra.c:73
+msgid "Sazria"
+msgstr ""
+
+#: ../sedra.c:73
+msgid "תזריע"
+msgstr ""
+
+#: ../sedra.c:74
+msgid "Metzora"
+msgstr ""
+
+#: ../sedra.c:74
+msgid "מצרע"
+msgstr ""
+
+#: ../sedra.c:75
+msgid "Achrei Mot"
+msgstr ""
+
+#: ../sedra.c:75
+msgid "Achrei Mos"
+msgstr ""
+
+#: ../sedra.c:75
+msgid "אחרי מות"
+msgstr ""
+
+#: ../sedra.c:76
+msgid "Kedoshim"
+msgstr ""
+
+#: ../sedra.c:76
+msgid "קדשים"
+msgstr ""
+
+#: ../sedra.c:77
+msgid "Emor"
+msgstr ""
+
+#: ../sedra.c:77
+msgid "אמור"
+msgstr ""
+
+#: ../sedra.c:78
+msgid "Behar"
+msgstr ""
+
+#: ../sedra.c:78
+msgid "בהר"
+msgstr ""
+
+#: ../sedra.c:79
+msgid "Bechukotai"
+msgstr ""
+
+#: ../sedra.c:79
+msgid "Bechukosai"
+msgstr ""
+
+#: ../sedra.c:79
+msgid "בחקתי"
+msgstr ""
+
+#: ../sedra.c:80
+msgid "Bamidbar"
+msgstr ""
+
+#: ../sedra.c:80
+msgid "במדבר"
+msgstr ""
+
+#: ../sedra.c:81
+msgid "Nasso"
+msgstr ""
+
+#: ../sedra.c:81
+msgid "נשא"
+msgstr ""
+
+#: ../sedra.c:82
+msgid "Beha'alotcha"
+msgstr ""
+
+#: ../sedra.c:82
+msgid "Beha'aloscha"
+msgstr ""
+
+#: ../sedra.c:82
+msgid "בהעלתך"
+msgstr ""
+
+#: ../sedra.c:83
+msgid "Sh'lach"
+msgstr ""
+
+#: ../sedra.c:83
+msgid "שלחלך"
+msgstr ""
+
+#: ../sedra.c:84
+msgid "Korach"
+msgstr ""
+
+#: ../sedra.c:84
+msgid "קורח"
+msgstr ""
+
+#: ../sedra.c:85
+msgid "Chukat"
+msgstr ""
+
+#: ../sedra.c:85
+msgid "Chukas"
+msgstr ""
+
+#: ../sedra.c:85
+msgid "חקת"
+msgstr ""
+
+#: ../sedra.c:86
+msgid "Balak"
+msgstr ""
+
+#: ../sedra.c:86
+msgid "בלק"
+msgstr ""
+
+#: ../sedra.c:87
+msgid "Pinchas"
+msgstr ""
+
+#: ../sedra.c:87
+msgid "פינחס"
+msgstr ""
+
+#: ../sedra.c:88
+msgid "Matot"
+msgstr ""
+
+#: ../sedra.c:88
+msgid "Matos"
+msgstr ""
+
+#: ../sedra.c:88
+msgid "מטות"
+msgstr ""
+
+#: ../sedra.c:89
+msgid "Masei"
+msgstr ""
+
+#: ../sedra.c:89
+msgid "מסעי"
+msgstr ""
+
+#: ../sedra.c:90
+msgid "Devarim"
+msgstr ""
+
+#: ../sedra.c:90
+msgid "דברים"
+msgstr ""
+
+#: ../sedra.c:91
+msgid "Vaetchanan"
+msgstr ""
+
+#: ../sedra.c:91
+msgid "Vaeschanan"
+msgstr ""
+
+#: ../sedra.c:91
+msgid "ואתחנן"
+msgstr ""
+
+#: ../sedra.c:92
+msgid "Eikev"
+msgstr ""
+
+#: ../sedra.c:92
+msgid "עקב"
+msgstr ""
+
+#: ../sedra.c:93
+msgid "Re'eh"
+msgstr ""
+
+#: ../sedra.c:93
+msgid "ראה"
+msgstr ""
+
+#: ../sedra.c:94
+msgid "Shoftim"
+msgstr ""
+
+#: ../sedra.c:94
+msgid "שופטים"
+msgstr ""
+
+#: ../sedra.c:95
+msgid "Ki Teitzei"
+msgstr ""
+
+#: ../sedra.c:95
+msgid "Ki Seitzei"
+msgstr ""
+
+#: ../sedra.c:95
+msgid "כיתצא"
+msgstr ""
+
+#: ../sedra.c:96
+msgid "Ki Tavo"
+msgstr ""
+
+#: ../sedra.c:96
+msgid "Ki Savo"
+msgstr ""
+
+#: ../sedra.c:96
+msgid "כיתבוא"
+msgstr ""
+
+#: ../sedra.c:97
+msgid "Nitzavim"
+msgstr ""
+
+#: ../sedra.c:97
+msgid "נצבים"
+msgstr ""
+
+#: ../sedra.c:98
+msgid "Vayeilech"
+msgstr ""
+
+#: ../sedra.c:98
+msgid "וילך"
+msgstr ""
+
+#: ../sedra.c:99
+msgid "Ha'Azinu"
+msgstr ""
+
+#: ../sedra.c:99
+msgid "האזינו"
+msgstr ""
+
+#: ../sedra.c:257 ../sedra.c:296
+msgid "improper sedra year type calculated."
+msgstr ""
+
+#. undouble the parsha
+#: ../sedra.c:339
+#, c-format
+msgid "%s-%s"
 msgstr ""

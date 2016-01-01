@@ -1,1 +1,3 @@
-     ../dafyomi.c
+     ../dafyomi.c \
+     ../sedra.c \
+     ../holidays.c
