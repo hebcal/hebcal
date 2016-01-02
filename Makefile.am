@@ -13,6 +13,10 @@
 AM_CPPFLAGS = -DVERSION='"$(PACKAGE_VERSION)"' -DHAVE_STDLIB_H -DHAVE_STRING_H -DHAVE_INTTYPES_H
 
 # AM_CFLAGS = -Wall
+AM_LDFLAGS = $(LIBINTL)
+
+DEFS = -DLOCALEDIR=\"@localedir@\" \
+	   @DEFS@
 
 SUBDIRS = po tests
 
@@ -65,4 +69,4 @@ $(srcdir)/package.m4: $(top_srcdir)/configure.ac
 
 check-recursive:  all
 
-ACLOCAL_AMFLAGS = -I m4
+ACLOCAL_AMFLAGS = --install -I m4

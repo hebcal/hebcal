@@ -38,6 +38,7 @@
 #include "danlib.h"
 #include <stdlib.h>
 #include "cities.h"
+#include "gettext.h"
 
 #define ENV_CITY "HEBCAL_CITY"
 #define ENV_OPTS "HEBCAL_OPTS"
@@ -554,6 +555,12 @@ void handleArgs(int argc, char *argv[])
    int option_index = 0;
 
    setDate(&greg_today);        /* keep the current greg. date here */
+
+#if defined(HAVE_GETTEXT) && defined(ENABLE_NLS)
+   setlocale(LC_ALL, "");
+   bindtextdomain("hebcal", LOCALEDIR);
+   textdomain("hebcal");
+#endif
 
    while ((c = getopt_long(argc, argv, "ab:cC:dDeEFf:hHI:il:L:m:MoOrsStTwWxyY:z:Z8",
                            long_options, &option_index)) != -1) {

@@ -3,14 +3,16 @@
 
 AC_PREREQ(2.57)
 AC_INIT(hebcal,4.2,hebcal-bugs@sadinoff.com)
-AC_CONFIG_SRCDIR([common.c])
-dnl #AM_INIT_AUTOMAKE([no-dependencies check-news])
 AM_MAINTAINER_MODE([disable])
 AM_INIT_AUTOMAKE([foreign no-dependencies no-installinfo])
+AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_SRCDIR([common.c])
 AM_CONFIG_HEADER([config.h])
 
 # Checks for programs.
 AC_PROG_CC
+
+AC_CHECK_HEADERS([getopt.h libintl.h])
 
 # Checks for libraries.
 dnl AC_CHECK_LIB(m, sin)
@@ -21,6 +23,8 @@ dnl AC_CHECK_LIB(m, acos)
 dnl AC_CHECK_LIB(m, fabs)
 
 AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT_VERSION(0.18)
+
 
 # Checks for header files.
 AC_HEADER_STDC
