@@ -1,5 +1,5 @@
 # List of source files which contain translatable strings.
-dafyomi.c
-sedra.c
-holidays.c
+#dafyomi.c
+#sedra.c
+#holidays.c
 
