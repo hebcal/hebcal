@@ -38,7 +38,7 @@
 #include "greg.h"
 #include "dafyomi.h"
 
-#define LANGUAGE(str) (ashkenazis_sw && (str)[1] ? ((str)[1]) : ((str)[0]))
+#define _(String) gettext(String)
 
 #define NM_LEN 60
 
@@ -53,7 +53,6 @@ int
 timelib_tzinfo *TZ_INFO;
 int latdeg, latmin, longdeg, longmin;
 
-int iso8859_8_sw;
 int twentyFourHour_sw;
 long beginOmer, endOmer;
 FILE *inFile, *yFile;
@@ -300,7 +299,7 @@ void print_candlelighting_times( int mask, int weekday, date_t todayGreg)
     int num_zmanim = sizeof (zemanim) / sizeof (struct _zman); 
     int i_zman;
     double var_hr_hours = 0.0, day_span;
-    char *zman_name;
+    const char *zman_name;
  
     rs = get_rise_set(todayGreg, &h_rise, &h_set, &gmt_offset);
     if (rs != 0) {
@@ -348,14 +347,11 @@ void print_candlelighting_times( int mask, int weekday, date_t todayGreg)
        minute = (int) (60 * (N - (int) N));
        
        PrintGregDate (todayGreg);
-       zman_name = iso8859_8_sw ? zemanim[i_zman].name_8859_8 :
-          ashkenazis_sw ? zemanim[i_zman].name_ashk :
-             zemanim[i_zman].name_sfrd;
+       zman_name = _(zemanim[i_zman].name_sfrd);
        if (zemanim[i_zman].flags == ZMAN_HAVDALAH) {
-            printf("%s (%d %s):%2d:%02d\n",
+            printf(_("%s (%d min):%2d:%02d\n"),
                 zman_name,
                 havdalah_minutes,
-                iso8859_8_sw ? "\343\367\345\372" : "min",
                 hour, minute);
        } else {
             printf ("%s: %2d:%02d\n", zman_name, hour, minute);
@@ -467,10 +463,10 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
             (today_zemanim & (ZMAN_CANDLES_BEFORE|ZMAN_CANDLES_AFTER|ZMAN_HAVDALAH)))))
       {
           PrintGregDate (todayGreg);
-          printf ("%d%s%s %s, %d\n", todayHeb.dd,       /* print the hebrew date */
-                  iso8859_8_sw ? "" : numSuffix( todayHeb.dd ),
-                  iso8859_8_sw ? "" : " of",
-                  LANGUAGE2(hMonths[LEAP_YR_HEB( todayHeb.yy )][todayHeb.mm].name),
+          printf ("%d%s of %s, %d\n",
+                  todayHeb.dd,       /* print the hebrew date */
+                  numSuffix( todayHeb.dd ),
+                  _(hMonths[LEAP_YR_HEB( todayHeb.yy )][todayHeb.mm].name),
                   todayHeb.yy);
       }
       
@@ -488,8 +484,7 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
           {
               PrintGregDate( todayGreg );
               printf( "%s %s\n",
-                      iso8859_8_sw ? "\364\370\371\372" :
-                      ashkenazis_sw ? "Parshas" : "Parashat",
+                      _("Parashat"),
                       sedraStr );
           }
       }
@@ -546,7 +541,7 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
           monthNext = (todayHeb.mm == MONTHS_IN_HEB(todayHeb.yy) ? 1 : todayHeb.mm + 1);
           moladNext = get_molad(todayHeb.yy, monthNext);
           printf ("Molad %s: %s, %d minutes and %d chalakim after %d %s\n",
-              hMonths[LEAP_YR_HEB(todayHeb.yy)][monthNext].name[0],
+              hMonths[LEAP_YR_HEB(todayHeb.yy)][monthNext].name,
               ShortDayNames[dayOfWeek(abs2greg(moladNext.day))],
               (int) moladNext.chalakim / 18,
               moladNext.chalakim % 18,

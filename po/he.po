@@ -71,184 +71,112 @@ msgstr "יבמות"
 
 #: ../dafyomi.c:40
 msgid "Ketubot"
-msgstr ""
-
-#: ../dafyomi.c:40
-msgid "Kesubos"
-msgstr ""
+msgstr "כתובות"
 
 #: ../dafyomi.c:41
 msgid "Nedarim"
-msgstr ""
+msgstr "נדרים"
 
 #: ../dafyomi.c:42
 msgid "Nazir"
-msgstr ""
+msgstr "נזיר"
 
 #: ../dafyomi.c:43
 msgid "Sotah"
-msgstr ""
+msgstr "סוטה"
 
 #: ../dafyomi.c:44
 msgid "Gitin"
-msgstr ""
+msgstr "גיטין"
 
 #: ../dafyomi.c:45
 msgid "Kiddushin"
-msgstr ""
+msgstr "קידושין"
 
 #: ../dafyomi.c:46
 msgid "Baba Kamma"
 msgstr "בבא קמא"
 
-#: ../dafyomi.c:46
-msgid "בבא קמא"
-msgstr ""
-
 #: ../dafyomi.c:47
 msgid "Baba Metzia"
-msgstr ""
-
-#: ../dafyomi.c:47
-msgid "בבא מציעא"
 msgstr "בבא מציעא"
 
 #: ../dafyomi.c:48
 msgid "Baba Batra"
 msgstr "בבא בתרא"
 
-#: ../dafyomi.c:48
-msgid "Baba Basra"
-msgstr ""
-
-#: ../dafyomi.c:48
-msgid "בבא בתרא"
-msgstr ""
-
 #: ../dafyomi.c:49
 msgid "Sanhedrin"
 msgstr "סנהדרין"
-
-#: ../dafyomi.c:49
-msgid "סנהדרין"
-msgstr ""
 
 #: ../dafyomi.c:50
 msgid "Makkot"
 msgstr "מכות"
 
-#: ../dafyomi.c:50
-msgid "Makkos"
-msgstr ""
-
-#: ../dafyomi.c:50
-msgid "מכות"
-msgstr ""
-
 #: ../dafyomi.c:51
 msgid "Shevuot"
 msgstr "שבועות"
-
-#: ../dafyomi.c:51
-msgid "Shevuos"
-msgstr ""
-
-#: ../dafyomi.c:51
-msgid "שבועות"
-msgstr ""
 
 #: ../dafyomi.c:52
 msgid "Avodah Zarah"
 msgstr "עבודה זרה"
 
-#: ../dafyomi.c:52
-msgid "עבודה זרה"
-msgstr ""
-
 #: ../dafyomi.c:53
 msgid "Horayot"
 msgstr "הוריות"
 
-#: ../dafyomi.c:53
-msgid "Horayos"
-msgstr ""
-
-#: ../dafyomi.c:53
-msgid "הוריות"
-msgstr ""
-
 #: ../dafyomi.c:54
 msgid "Zevachim"
-msgstr "זבחיםזבחים"
-
-#: ../dafyomi.c:54
-msgid "זבחים"
-msgstr ""
+msgstr "זבחים"
 
 #: ../dafyomi.c:55
 msgid "Menachot"
-msgstr ""
-
-#: ../dafyomi.c:55
-msgid "Menachos"
-msgstr ""
+msgstr "מנחות"
 
 #: ../dafyomi.c:56
 msgid "Chullin"
-msgstr ""
+msgstr "חולין"
 
 #: ../dafyomi.c:57
 msgid "Bechorot"
-msgstr ""
-
-#: ../dafyomi.c:57
-msgid "Bechoros"
-msgstr ""
+msgstr "בכורות"
 
 #: ../dafyomi.c:58
 msgid "Arachin"
-msgstr ""
+msgstr "ערכין"
 
 #: ../dafyomi.c:59
 msgid "Temurah"
-msgstr ""
+msgstr "תמורה"
 
 #: ../dafyomi.c:60
 msgid "Keritot"
-msgstr ""
-
-#: ../dafyomi.c:60
-msgid "Kerisos"
-msgstr ""
+msgstr "כריתות"
 
 #: ../dafyomi.c:61
 msgid "Meilah"
-msgstr ""
+msgstr "מעילה"
 
 #: ../dafyomi.c:62
 msgid "Kinnim"
-msgstr ""
+msgstr "קינים"
 
 #: ../dafyomi.c:63
 msgid "Tamid"
-msgstr ""
+msgstr "תמיד"
 
 #: ../dafyomi.c:64
 msgid "Midot"
-msgstr ""
-
-#: ../dafyomi.c:64
-msgid "Midos"
-msgstr ""
+msgstr "מדות"
 
 #: ../dafyomi.c:65
 msgid "Niddah"
-msgstr ""
+msgstr "נדה"
 
 #: ../dafyomi.c:141
 #, c-format
 msgid "Daf Yomi: %s %d"
-msgstr ""
+msgstr "דף יומי: %s %d"
 
 #: ../holidays.c:380
 msgid "Unable to allocate memory for holiday."
@@ -294,24 +222,17 @@ msgstr ""
 msgid "Non-numeric month in yahrtzeit file. Skipping line %s"
 msgstr ""
 
-#: ../holidays.c:765
-#, c-format
-msgid "%d"
-msgstr ""
-
 #: ../holidays.c:771
 #, c-format
 msgid "Date out of range in yahrtzeit file. Skipping line %s"
 msgstr ""
 
-#: ../holidays.c:949
-#, c-format
-msgid "%s %d"
-msgstr ""
-
 #: ../sedra.c:257 ../sedra.c:296
 msgid "improper sedra year type calculated."
 msgstr ""
+
+msgid "Parashat"
+msgstr "פרשת"
 
 msgid "Achrei Mot"
 msgstr "אַחֲרֵי מוֹת"
@@ -550,23 +471,8 @@ msgstr "סליחות"
 msgid "Pesach"
 msgstr "פֶּסַח"
 
-msgid "Pesach Chol ha-Moed Day 1"
-msgstr "פֶּסַח יוֹם ג׳ (חוֹל הַמוֹעד)"
-
-msgid "Pesach Chol ha-Moed Day 2"
-msgstr "פֶּסַח יוֹם ד׳ (חוֹל הַמוֹעד)"
-
-msgid "Pesach Chol ha-Moed Day 3"
-msgstr "פֶּסַח יוֹם ה׳ (חוֹל הַמוֹעד)"
-
-msgid "Pesach Chol ha-Moed Day 4"
-msgstr "פֶּסַח יוֹם ו׳ (חוֹל הַמוֹעד)"
-
 msgid "Pesach I"
 msgstr "פֶּסַח יוֹם א׳"
-
-msgid "Pesach I (on Shabbat)"
-msgstr "פֶּסַח יוֹם א׳ (בְּשַׁבָּת)"
 
 msgid "Pesach II"
 msgstr "פֶּסַח יוֹם ב׳"
@@ -579,9 +485,6 @@ msgstr "פֶּסַח יוֹם ג׳ (חוֹל הַמוֹעד)"
 
 msgid "Pesach IV (CH''M)"
 msgstr "פֶּסַח יוֹם ד׳ (חוֹל הַמוֹעד)"
-
-msgid "Pesach Shabbat Chol ha-Moed"
-msgstr "פֶּסַח שַׁבָּת חוֹל הַמוֹעד"
 
 msgid "Pesach Sheni"
 msgstr "פֶּסַח שני"
@@ -604,53 +507,53 @@ msgstr "פּוּרִים"
 msgid "Purim Katan"
 msgstr "פּוּרִים קָטָן"
 
-msgid "Rosh Chodesh Adar"
-msgstr "רֹאשׁ חודש אַדָר"
+msgid "Rosh Chodesh %s"
+msgstr "רֹאשׁ חודש %s"
 
-msgid "Rosh Chodesh Adar I"
-msgstr "רֹאשׁ חודש אַדָר א׳"
+msgid "Adar"
+msgstr "אַדָר"
 
-msgid "Rosh Chodesh Adar II"
-msgstr "רֹאשׁ חודש אַדָר ב׳"
+msgid "Adar I"
+msgstr "אַדָר א׳"
 
-msgid "Rosh Chodesh Av"
-msgstr "רֹאשׁ חודש אָב"
+msgid "Adar II"
+msgstr "אַדָר ב׳"
 
-msgid "Rosh Chodesh Cheshvan"
-msgstr "רֹאשׁ חודש חֶשְׁוָן"
+msgid "Av"
+msgstr "אָב"
 
-msgid "Rosh Chodesh Elul"
-msgstr "רֹאשׁ חודש אֱלוּל"
+msgid "Cheshvan"
+msgstr "חֶשְׁוָן"
 
-msgid "Rosh Chodesh Iyyar"
-msgstr "רֹאשׁ חודש אִיָיר"
+msgid "Elul"
+msgstr "אֱלוּל"
 
-msgid "Rosh Chodesh Kislev"
-msgstr "רֹאשׁ חודש כִּסְלֵו"
+msgid "Iyyar"
+msgstr "אִיָיר"
 
-msgid "Rosh Chodesh Nisan"
-msgstr "רֹאשׁ חודש נִיסָן"
+msgid "Kislev"
+msgstr "כִּסְלֵו"
 
-msgid "Rosh Chodesh Sh'vat"
-msgstr "רֹאשׁ חודש שְׁבָט"
+msgid "Nisan"
+msgstr "נִיסָן"
 
-msgid "Rosh Chodesh Sivan"
-msgstr "רֹאשׁ חודש סִיוָן"
+msgid "Sh'vat"
+msgstr "שְׁבָט"
 
-msgid "Rosh Chodesh Tamuz"
-msgstr "רֹאשׁ חודש תָּמוּז"
+msgid "Sivan"
+msgstr "סִיוָן"
 
-msgid "Rosh Chodesh Tevet"
-msgstr "רֹאשׁ חודש טֵבֵת"
+msgid "Tamuz"
+msgstr "תָּמוּז"
+
+msgid "Tevet"
+msgstr "טֵבֵת"
 
 msgid "Rosh Hashana"
 msgstr "רֹאשׁ הַשָּׁנָה"
 
 msgid "Rosh Hashana I"
 msgstr "רֹאשׁ הַשָּׁנָה יוֹם א׳"
-
-msgid "Rosh Hashana I (on Shabbat)"
-msgstr "רֹאשׁ הַשָּׁנָה יוֹם א׳ (בְּשַׁבָּת)"
 
 msgid "Rosh Hashana II"
 msgstr "רֹאשׁ הַשָּׁנָה יוֹם ב׳"
@@ -659,9 +562,6 @@ msgid "Shabbat Chazon"
 msgstr "שַׁבָּת חֲזוֹן"
 
 msgid "Shabbat HaChodesh"
-msgstr "שַׁבָּת הַחֹדֶשׁ"
-
-msgid "Shabbat HaChodesh (on Rosh Chodesh)"
 msgstr "שַׁבָּת הַחֹדֶשׁ"
 
 msgid "Shabbat HaGadol"
@@ -682,9 +582,6 @@ msgstr "שבת ראש חודש"
 msgid "Shabbat Shekalim"
 msgstr "שַׁבָּת שְׁקָלִים"
 
-msgid "Shabbat Shekalim (on Rosh Chodesh)"
-msgstr "שַׁבָּת שְׁקָלִים"
-
 msgid "Shabbat Shuva"
 msgstr "שַׁבָּת שׁוּבָה"
 
@@ -699,9 +596,6 @@ msgstr "שָׁבוּעוֹת יוֹם א׳"
 
 msgid "Shavuot II"
 msgstr "שָׁבוּעוֹת יוֹם ב׳"
-
-msgid "Shavuot II (on Shabbat)"
-msgstr "שָׁבוּעוֹת יוֹם ב׳ (בְּשַׁבָּת)"
 
 msgid "Shmini Atzeret"
 msgstr "שְׁמִינִי עֲצֶרֶת"
@@ -718,26 +612,8 @@ msgstr "שִׂמְחַת תּוֹרָה"
 msgid "Sukkot"
 msgstr "סוּכּוֹת"
 
-msgid "Sukkot Chol ha-Moed Day 1"
-msgstr "סוּכּוֹת יוֹם ג׳ (חוֹל הַמוֹעד)"
-
-msgid "Sukkot Chol ha-Moed Day 2"
-msgstr "סוּכּוֹת יוֹם ד׳ (חוֹל הַמוֹעד)"
-
-msgid "Sukkot Chol ha-Moed Day 3"
-msgstr "סוּכּוֹת יוֹם ה׳ (חוֹל הַמוֹעד)"
-
-msgid "Sukkot Chol ha-Moed Day 4"
-msgstr "סוּכּוֹת יוֹם ו׳ (חוֹל הַמוֹעד)"
-
-msgid "Sukkot Chol ha-Moed Day 5 (Hoshana Raba)"
-msgstr "סוּכּוֹת יוֹם ז׳ (הוֹשַׁנָא רַבָּה)"
-
 msgid "Sukkot I"
 msgstr "סוּכּוֹת יוֹם א׳"
-
-msgid "Sukkot I (on Shabbat)"
-msgstr "סוּכּוֹת יוֹם א׳ (בְּשַׁבָּת)"
 
 msgid "Sukkot II"
 msgstr "סוּכּוֹת יוֹם ב׳"
@@ -750,9 +626,6 @@ msgstr "סוּכּוֹת יוֹם ג׳ (חוֹל הַמוֹעד)"
 
 msgid "Sukkot IV (CH''M)"
 msgstr "סוּכּוֹת יוֹם ד׳ (חוֹל הַמוֹעד)"
-
-msgid "Sukkot Shabbat Chol ha-Moed"
-msgstr "סוּכּוֹת שַׁבָּת חוֹל הַמוֹעד"
 
 msgid "Sukkot V (CH''M)"
 msgstr "סוּכּוֹת יוֹם ה׳ (חוֹל הַמוֹעד)"
@@ -778,6 +651,9 @@ msgstr "טוּ בְּאָב"
 msgid "Tu BiShvat"
 msgstr "טוּ בִּשְׁבָט"
 
+msgid "Tu B'Shvat"
+msgstr "טוּ בִּשְׁבָט"
+
 msgid "Tzom Gedaliah"
 msgstr "צוֹם גְּדַלְיָה"
 
@@ -795,15 +671,6 @@ msgstr "יוֹם הַזִּכָּרוֹן"
 
 msgid "Yom Kippur"
 msgstr "יוֹם כִּפּוּר"
-
-msgid "Yom Kippur (Mincha, Alternate)"
-msgstr "יוֹם כִּפּוּר מנחה"
-
-msgid "Yom Kippur (Mincha, Traditional)"
-msgstr "יוֹם כִּפּוּר מנחה"
-
-msgid "Yom Kippur (on Shabbat)"
-msgstr "יוֹם כִּפּוּר (בְּשַׁבָּת)"
 
 msgid "Yom Yerushalayim"
 msgstr "יוֹם יְרוּשָׁלַיִם"

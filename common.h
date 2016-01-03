@@ -26,7 +26,7 @@
 
 typedef struct hmonth 
 {
-    const char *(name[3]);
+    const char *name;
 } hmonth_t;
 
 typedef hmonth_t hmonths_t [][15];

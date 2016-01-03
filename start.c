@@ -513,6 +513,7 @@ void handleArgs(int argc, char *argv[])
    int zemanim_sw = 0;
    int help_sw = 0;
    int version_sw = 0;
+   int utf8_hebrew_sw = 0;
    char *latitudeStr = NULL;
    char *longitudeStr = NULL;
    static struct option long_options[] = {
@@ -554,13 +555,13 @@ void handleArgs(int argc, char *argv[])
    int c;
    int option_index = 0;
 
-   setDate(&greg_today);        /* keep the current greg. date here */
-
 #if defined(HAVE_GETTEXT) && defined(ENABLE_NLS)
    setlocale(LC_ALL, "");
    bindtextdomain("hebcal", LOCALEDIR);
    textdomain("hebcal");
 #endif
+
+   setDate(&greg_today);        /* keep the current greg. date here */
 
    while ((c = getopt_long(argc, argv, "ab:cC:dDeEFf:hHI:il:L:m:MoOrsStTwWxyY:z:Z8",
                            long_options, &option_index)) != -1) {
@@ -579,7 +580,7 @@ void handleArgs(int argc, char *argv[])
            ashkenazis_sw = 1;
            break;
        case '8':                /* ashkenazis hebrew */
-           iso8859_8_sw = 1;
+           utf8_hebrew_sw = 1;
            break;
        case 'b':                /* candle_lighting_minutes_before_sundown */
            if (!(sscanf(optarg, "%d", &light_offset) == 1))
@@ -683,6 +684,18 @@ void handleArgs(int argc, char *argv[])
            break;
       }
    }
+
+#if defined(HAVE_GETTEXT) && defined(ENABLE_NLS)
+   if (ashkenazis_sw) {
+     setlocale(LC_ALL, "en@ashkenazis");
+   } else if (utf8_hebrew_sw) {
+     setlocale(LC_ALL, "he_IL.utf8");
+   } else {
+     setlocale(LC_ALL, "");
+   }
+   bindtextdomain("hebcal", LOCALEDIR);
+   textdomain("hebcal");
+#endif
 
    if (help_sw) {
       displayHelp();
