@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: hebcal 4.2\n"
 "Report-Msgid-Bugs-To: hebcal-bugs@sadinoff.com\n"
 "POT-Creation-Date: 2015-12-30 14:54-0500\n"
-"PO-Revision-Date: 2016-01-01 16:57-0800\n"
+"PO-Revision-Date: 2016-01-03 11:18-0800\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -19,71 +19,55 @@ msgstr ""
 
 #: ../dafyomi.c:26
 msgid "Berachot"
-msgstr ""
-
-#: ../dafyomi.c:26
-msgid "Berachos"
-msgstr ""
+msgstr "ברכות"
 
 #: ../dafyomi.c:27
 msgid "Shabbat"
-msgstr ""
-
-#: ../dafyomi.c:27
-msgid "Shabbos"
-msgstr ""
+msgstr "שבת"
 
 #: ../dafyomi.c:28
 msgid "Eruvin"
-msgstr ""
+msgstr "עירובין"
 
 #: ../dafyomi.c:29
 msgid "Pesachim"
-msgstr ""
+msgstr "פסחים"
 
 #: ../dafyomi.c:30
 msgid "Shekalim"
-msgstr ""
+msgstr "שקלים"
 
 #: ../dafyomi.c:31
 msgid "Yoma"
-msgstr ""
+msgstr "יומא"
 
 #: ../dafyomi.c:32
 msgid "Sukkah"
-msgstr ""
+msgstr "סוכה"
 
 #: ../dafyomi.c:33
 msgid "Beitzah"
-msgstr ""
+msgstr "ביצה"
 
 #: ../dafyomi.c:35
 msgid "Taanit"
-msgstr ""
-
-#: ../dafyomi.c:35
-msgid "Taanis"
-msgstr ""
+msgstr "תענית"
 
 #: ../dafyomi.c:36
 msgid "Megillah"
-msgstr ""
+msgstr "מגילה"
 
 #: ../dafyomi.c:37
 msgid "Moed Katan"
-msgstr ""
+msgstr "מועד קטן"
 
 #: ../dafyomi.c:38
 msgid "Chagigah"
-msgstr ""
+msgstr "חגיגה"
 
 #: ../dafyomi.c:39
 msgid "Yevamot"
-msgstr ""
-
-#: ../dafyomi.c:39
-msgid "Yevamos"
-msgstr ""
+msgstr "יבמות"
 
 #: ../dafyomi.c:40
 msgid "Ketubot"
@@ -115,7 +99,7 @@ msgstr ""
 
 #: ../dafyomi.c:46
 msgid "Baba Kamma"
-msgstr ""
+msgstr "בבא קמא"
 
 #: ../dafyomi.c:46
 msgid "בבא קמא"
@@ -127,11 +111,11 @@ msgstr ""
 
 #: ../dafyomi.c:47
 msgid "בבא מציעא"
-msgstr ""
+msgstr "בבא מציעא"
 
 #: ../dafyomi.c:48
 msgid "Baba Batra"
-msgstr ""
+msgstr "בבא בתרא"
 
 #: ../dafyomi.c:48
 msgid "Baba Basra"
@@ -143,7 +127,7 @@ msgstr ""
 
 #: ../dafyomi.c:49
 msgid "Sanhedrin"
-msgstr ""
+msgstr "סנהדרין"
 
 #: ../dafyomi.c:49
 msgid "סנהדרין"
@@ -151,7 +135,7 @@ msgstr ""
 
 #: ../dafyomi.c:50
 msgid "Makkot"
-msgstr ""
+msgstr "מכות"
 
 #: ../dafyomi.c:50
 msgid "Makkos"
@@ -163,7 +147,7 @@ msgstr ""
 
 #: ../dafyomi.c:51
 msgid "Shevuot"
-msgstr ""
+msgstr "שבועות"
 
 #: ../dafyomi.c:51
 msgid "Shevuos"
@@ -175,7 +159,7 @@ msgstr ""
 
 #: ../dafyomi.c:52
 msgid "Avodah Zarah"
-msgstr ""
+msgstr "עבודה זרה"
 
 #: ../dafyomi.c:52
 msgid "עבודה זרה"
@@ -183,7 +167,7 @@ msgstr ""
 
 #: ../dafyomi.c:53
 msgid "Horayot"
-msgstr ""
+msgstr "הוריות"
 
 #: ../dafyomi.c:53
 msgid "Horayos"
@@ -195,7 +179,7 @@ msgstr ""
 
 #: ../dafyomi.c:54
 msgid "Zevachim"
-msgstr "זבחים"
+msgstr "זבחיםזבחים"
 
 #: ../dafyomi.c:54
 msgid "זבחים"
