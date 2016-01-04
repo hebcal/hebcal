@@ -36,7 +36,7 @@
 
 #define _(String) gettext(String)
 
-#define NM_LEN 60
+#define NM_LEN MAX_LINE_LEN
 
 holstorep_t holidays[14][MAXDAYS], var_holidays[14][MAXDAYS];
 
