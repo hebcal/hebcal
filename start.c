@@ -687,9 +687,8 @@ void handleArgs(int argc, char *argv[])
    if (localeStr != NULL) {
      setlocale(LC_ALL, localeStr);
    } else if (ashkenazis_sw) {
-     setenv("LOCPATH", LOCALEDIR, 1);
-     setlocale(LC_ALL, "C");
-     setlocale(LC_MESSAGES, "en@translit");
+     /* setenv("LOCPATH", LOCALEDIR, 1); */
+     setlocale(LC_ALL, "en_CA.utf8");
    } else if (utf8_hebrew_sw) {
      setlocale(LC_ALL, "he_IL.utf8");
    } else {
