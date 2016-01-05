@@ -1,8 +1,3 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2016 Danny Sadinoff
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: hebcal 4.2\n"
@@ -16,6 +11,59 @@ msgstr ""
 "Last-Translator: \n"
 "Language-Team: \n"
 "X-Generator: Poedit 1.8.6\n"
+
+#: ../holidays.c:380
+msgid "Unable to allocate memory for holiday."
+msgstr ""
+
+#: ../holidays.c:679
+#, c-format
+msgid "input file read error. Skipping line %s"
+msgstr ""
+
+#: ../holidays.c:686
+#, c-format
+msgid "Error in input file.  Skipping line %s"
+msgstr ""
+
+#: ../holidays.c:691
+#, c-format
+msgid "Numeric hebrew month in input file.  Skipping line %s"
+msgstr ""
+
+#: ../holidays.c:697
+#, c-format
+msgid "Unrecognized hebrew month in input file.  Skipping line %s"
+msgstr ""
+
+#: ../holidays.c:703
+#, c-format
+msgid "Date out of range in input file. Skipping line %s"
+msgstr ""
+
+#: ../holidays.c:749
+#, c-format
+msgid "yahrtzeit file read error. Skipping line %s"
+msgstr ""
+
+#: ../holidays.c:756
+#, c-format
+msgid "Error in yahrtzeit file.  Skipping line %s"
+msgstr ""
+
+#: ../holidays.c:761
+#, c-format
+msgid "Non-numeric month in yahrtzeit file. Skipping line %s"
+msgstr ""
+
+#: ../holidays.c:771
+#, c-format
+msgid "Date out of range in yahrtzeit file. Skipping line %s"
+msgstr ""
+
+#: ../sedra.c:257 ../sedra.c:296
+msgid "improper sedra year type calculated."
+msgstr ""
 
 #: ../dafyomi.c:26
 msgid "Berachot"
@@ -178,304 +226,251 @@ msgstr "נדה"
 msgid "Daf Yomi: %s %d"
 msgstr "דף יומי: %s %d"
 
-#: ../holidays.c:380
-msgid "Unable to allocate memory for holiday."
-msgstr ""
-
-#: ../holidays.c:679
-#, c-format
-msgid "input file read error. Skipping line %s"
-msgstr ""
-
-#: ../holidays.c:686
-#, c-format
-msgid "Error in input file.  Skipping line %s"
-msgstr ""
-
-#: ../holidays.c:691
-#, c-format
-msgid "Numeric hebrew month in input file.  Skipping line %s"
-msgstr ""
-
-#: ../holidays.c:697
-#, c-format
-msgid "Unrecognized hebrew month in input file.  Skipping line %s"
-msgstr ""
-
-#: ../holidays.c:703
-#, c-format
-msgid "Date out of range in input file. Skipping line %s"
-msgstr ""
-
-#: ../holidays.c:749
-#, c-format
-msgid "yahrtzeit file read error. Skipping line %s"
-msgstr ""
-
-#: ../holidays.c:756
-#, c-format
-msgid "Error in yahrtzeit file.  Skipping line %s"
-msgstr ""
-
-#: ../holidays.c:761
-#, c-format
-msgid "Non-numeric month in yahrtzeit file. Skipping line %s"
-msgstr ""
-
-#: ../holidays.c:771
-#, c-format
-msgid "Date out of range in yahrtzeit file. Skipping line %s"
-msgstr ""
-
-#: ../sedra.c:257 ../sedra.c:296
-msgid "improper sedra year type calculated."
-msgstr ""
-
 msgid "Parashat"
-msgstr "פרשת"
+msgstr "Глава"
 
 msgid "Achrei Mot"
-msgstr "אַחֲרֵי מוֹת"
+msgstr "Ахарей Мот"
 
 msgid "Balak"
-msgstr "בָּלָק"
+msgstr "Балак"
 
 msgid "Bamidbar"
-msgstr "בְּמִדְבַּר"
+msgstr "Бамидбар"
 
 msgid "Bechukotai"
-msgstr "בְּחֻקֹּתַי"
+msgstr "Бехукотайתַי"
 
 msgid "Beha'alotcha"
-msgstr "בְּהַעֲלֹתְךָ"
+msgstr "Вегаалотха"
 
 msgid "Behar"
-msgstr "בְּהַר"
+msgstr "Бе-ар"
 
 msgid "Bereshit"
-msgstr "בְּרֵאשִׁית"
+msgstr "Берешит"
 
 msgid "Beshalach"
-msgstr "בְּשַׁלַּח"
+msgstr "Бешалах"
 
 msgid "Bo"
-msgstr "בֹּא"
+msgstr "Бо"
 
 msgid "Chayei Sara"
-msgstr "חַיֵּי שָֹרָה"
+msgstr "Хаей Сара"
 
 msgid "Chukat"
-msgstr "חֻקַּת"
+msgstr "Хукат"
 
 msgid "Devarim"
-msgstr "דְּבָרִים"
+msgstr "Дварим"
 
 msgid "Eikev"
-msgstr "עֵקֶב"
+msgstr "Эйкев"
 
 msgid "Emor"
-msgstr "אֱמוֹר"
+msgstr "Эмор"
 
 msgid "Ha'Azinu"
-msgstr "הַאֲזִינוּ"
+msgstr "А-Азину"
 
 msgid "Kedoshim"
-msgstr "קְדשִׁים"
+msgstr "Кдошим"
 
 msgid "Ki Tavo"
-msgstr "כִּי־תָבוֹא"
+msgstr "Ки Таво"
 
 msgid "Ki Teitzei"
-msgstr "כִּי־תֵצֵא"
+msgstr "Ки Теце"
 
 msgid "Ki Tisa"
-msgstr "כִּי תִשָּׂא"
+msgstr "Ки Тиса"
 
 msgid "Korach"
-msgstr "קוֹרַח"
+msgstr "Корах"
 
 msgid "Lech-Lecha"
-msgstr "לֶךְ־לְךָ"
+msgstr "Лех-Леха"
 
 msgid "Masei"
-msgstr "מַסְעֵי"
+msgstr "Масей"
 
 msgid "Matot"
-msgstr "מַּטּוֹת"
+msgstr "Матот"
 
 msgid "Metzora"
-msgstr "מְּצֹרָע"
+msgstr "Мецора"
 
 msgid "Miketz"
-msgstr "מִקֵּץ"
+msgstr "Микец"
 
 msgid "Mishpatim"
-msgstr "מִּשְׁפָּטִים"
+msgstr "Мишпатим"
 
 msgid "Nasso"
-msgstr "נָשׂא"
+msgstr "Насо"
 
 msgid "Nitzavim"
-msgstr "נִצָּבִים"
+msgstr "Ницавим"
 
 msgid "Noach"
-msgstr "נֹחַ"
+msgstr "Ноах"
 
 msgid "Pekudei"
-msgstr "פְקוּדֵי"
+msgstr "Пкудей"
 
 msgid "Pinchas"
-msgstr "פִּינְחָס"
+msgstr "Пинхас"
 
 msgid "Re'eh"
-msgstr "רְאֵה"
+msgstr "Рэ-э"
 
 msgid "Sh'lach"
-msgstr "שְׁלַח־לְךָ"
+msgstr "Шлах"
 
 msgid "Shemot"
-msgstr "שְׁמוֹת"
+msgstr "Шмот"
 
 msgid "Shmini"
-msgstr "שְּׁמִינִי"
+msgstr "Шмини"
 
 msgid "Shoftim"
-msgstr "שׁוֹפְטִים"
+msgstr "Шофтим"
 
 msgid "Tazria"
-msgstr "תַזְרִיעַ"
+msgstr "Тазриа"
 
 msgid "Terumah"
-msgstr "תְּרוּמָה"
+msgstr "Трума"
 
 msgid "Tetzaveh"
-msgstr "תְּצַוֶּה"
+msgstr "Тецаве"
 
 msgid "Toldot"
-msgstr "תּוֹלְדוֹת"
+msgstr "Толдот"
 
 msgid "Tzav"
-msgstr "צַו"
+msgstr "Цав"
 
 msgid "Vaera"
-msgstr "וָאֵרָא"
+msgstr "Ваера"
 
 msgid "Vaetchanan"
-msgstr "וָאֶתְחַנַּן"
+msgstr "Ваитханан"
 
 msgid "Vayakhel"
-msgstr "וַיַּקְהֵל"
+msgstr "Ваякгель"
 
 msgid "Vayechi"
-msgstr "וַיְחִי"
+msgstr "Ваехи"
 
 msgid "Vayeilech"
-msgstr "וַיֵּלֶךְ"
+msgstr "Ваелех"
 
 msgid "Vayera"
-msgstr "וַיֵּרָא"
+msgstr "Ваера"
 
 msgid "Vayeshev"
-msgstr "וַיֵּשֶׁב"
+msgstr "Ваешев"
 
 msgid "Vayetzei"
 msgstr "וַיֵּצֵא"
 
 msgid "Vayigash"
-msgstr "וַיִּגַּשׁ"
+msgstr "Ваигаш"
 
 msgid "Vayikra"
-msgstr "וַיִּקְרָא"
+msgstr "Ваикра"
 
 msgid "Vayishlach"
-msgstr "וַיִּשְׁלַח"
+msgstr "Ваишлах"
 
 msgid "Vezot Haberakhah"
 msgstr "וְזֹאת הַבְּרָכָה"
 
 msgid "Yitro"
-msgstr "יִתְרוֹ"
+msgstr "Итро"
 
 msgid "Asara B'Tevet"
 msgstr "עֲשָׂרָה בְּטֵבֵת"
 
 msgid "Candle lighting"
-msgstr "הדלקת נרות"
+msgstr "Зажигание свечей"
 
 msgid "Chanukah"
-msgstr "חֲנוּכָּה"
+msgstr "Ханука"
 
 msgid "Chanukah: 1 Candle"
-msgstr "חֲנוּכָּה: א׳ נֵר"
+msgstr "Ханука: 1 Свеча"
 
 msgid "Chanukah: 2 Candles"
-msgstr "חֲנוּכָּה: ב׳ נֵרוֹת"
+msgstr "Ханука: 2 Свечи"
 
 msgid "Chanukah: 3 Candles"
-msgstr "חֲנוּכָּה: ג׳ נֵרוֹת"
+msgstr "Ханука: 3 Свечи"
 
 msgid "Chanukah: 4 Candles"
-msgstr "חֲנוּכָּה: ד׳ נֵרוֹת"
+msgstr "Ханука: 4 Свечи"
 
 msgid "Chanukah: 5 Candles"
-msgstr "חֲנוּכָּה: ה׳ נֵרוֹת"
+msgstr "Ханука: 5 Свечей"
 
 msgid "Chanukah: 6 Candles"
-msgstr "חֲנוּכָּה: ו׳ נֵרוֹת"
+msgstr "Ханука: 6 Свечей"
 
 msgid "Chanukah: 7 Candles"
-msgstr "חֲנוּכָּה: ז׳ נֵרוֹת"
+msgstr "Ханука: 7 Свечей"
 
 msgid "Chanukah: 8 Candles"
-msgstr "חֲנוּכָּה: ח׳ נֵרוֹת"
+msgstr "Ханука: 8 Свечей"
 
 msgid "Chanukah: 8th Day"
-msgstr "חֲנוּכָּה: יוֹם ח׳"
+msgstr "Ханука: 8-ой День"
 
 msgid "Days of the Omer"
-msgstr "עוֹמֶר"
+msgstr "Дней Омэра"
 
 msgid "Erev Pesach"
-msgstr "עֶרֶב פֶּסַח"
+msgstr "Вечер Пэсаха"
 
 msgid "Erev Purim"
-msgstr "עֶרֶב פּוּרִים"
+msgstr "Вечер Пурима"
 
 msgid "Erev Rosh Hashana"
-msgstr "עֶרֶב רֹאשׁ הַשָּׁנָה"
+msgstr "Вечер Рош-А-Шана"
 
 msgid "Erev Shavuot"
-msgstr "עֶרֶב שָׁבוּעוֹת"
+msgstr "Вечер Шавуота"
 
 msgid "Erev Simchat Torah"
 msgstr "עֶרֶב שִׂמְחַת תּוֹרָה"
 
 msgid "Erev Sukkot"
-msgstr "עֶרֶב סוּכּוֹת"
+msgstr "Вечер Суккота"
 
 msgid "Erev Tish'a B'Av"
-msgstr "עֶרֶב תִּשְׁעָה בְּאָב"
+msgstr "Вечер Девятого Ава"
 
 msgid "Erev Yom Kippur"
-msgstr "עֶרֶב יוֹם כִּפּוּר"
+msgstr "Вечер Дня Раскаяния"
 
 msgid "Havdalah"
 msgstr "הַבדָלָה"
 
 msgid "Lag B'Omer"
-msgstr "ל״ג בְּעוֹמֶר"
+msgstr "Лаг Ба Омер"
 
 msgid "Leil Selichot"
 msgstr "סליחות"
 
 msgid "Pesach"
-msgstr "פֶּסַח"
+msgstr "Пэсах"
 
 msgid "Pesach I"
-msgstr "פֶּסַח יוֹם א׳"
+msgstr "Пэсах I"
 
 msgid "Pesach II"
-msgstr "פֶּסַח יוֹם ב׳"
+msgstr "Пэсах II"
 
 msgid "Pesach II (CH''M)"
 msgstr "פֶּסַח יוֹם ב׳ (חוֹל הַמוֹעד)"
@@ -502,61 +497,62 @@ msgid "Pesach VIII"
 msgstr "פֶּסַח יוֹם ח׳"
 
 msgid "Purim"
-msgstr "פּוּרִים"
+msgstr "Пурим"
 
 msgid "Purim Katan"
-msgstr "פּוּרִים קָטָן"
+msgstr "Маленький Пурим"
 
+#, c-format
 msgid "Rosh Chodesh %s"
-msgstr "רֹאשׁ חודש %s"
+msgstr "Новый Месяц %s"
 
 msgid "Adar"
-msgstr "אַדָר"
+msgstr "Адар"
 
 msgid "Adar I"
-msgstr "אַדָר א׳"
+msgstr "Адар I"
 
 msgid "Adar II"
-msgstr "אַדָר ב׳"
+msgstr "Адар II"
 
 msgid "Av"
-msgstr "אָב"
+msgstr "Ав"
 
 msgid "Cheshvan"
-msgstr "חֶשְׁוָן"
+msgstr "Хешван"
 
 msgid "Elul"
-msgstr "אֱלוּל"
+msgstr "Элул"
 
 msgid "Iyyar"
-msgstr "אִיָיר"
+msgstr "Ияр"
 
 msgid "Kislev"
-msgstr "כִּסְלֵו"
+msgstr "Кислев"
 
 msgid "Nisan"
-msgstr "נִיסָן"
+msgstr "Нисан"
 
 msgid "Sh'vat"
-msgstr "שְׁבָט"
+msgstr "Шват"
 
 msgid "Sivan"
-msgstr "סִיוָן"
+msgstr "Сиван"
 
 msgid "Tamuz"
-msgstr "תָּמוּז"
+msgstr "Тамуз"
 
 msgid "Tevet"
-msgstr "טֵבֵת"
+msgstr "Тевет"
 
 msgid "Rosh Hashana"
-msgstr "רֹאשׁ הַשָּׁנָה"
+msgstr "Рош-А-Шана"
 
 msgid "Rosh Hashana I"
-msgstr "רֹאשׁ הַשָּׁנָה יוֹם א׳"
+msgstr "Рош-А-Шана I"
 
 msgid "Rosh Hashana II"
-msgstr "רֹאשׁ הַשָּׁנָה יוֹם ב׳"
+msgstr "Рош-А-Шана II"
 
 msgid "Shabbat Chazon"
 msgstr "שַׁבָּת חֲזוֹן"
@@ -589,13 +585,13 @@ msgid "Shabbat Zachor"
 msgstr "שַׁבָּת זָכוֹר"
 
 msgid "Shavuot"
-msgstr "שָׁבוּעוֹת"
+msgstr "Шавуот"
 
 msgid "Shavuot I"
-msgstr "שָׁבוּעוֹת יוֹם א׳"
+msgstr "Шавуот I"
 
 msgid "Shavuot II"
-msgstr "שָׁבוּעוֹת יוֹם ב׳"
+msgstr "Шавуот II"
 
 msgid "Shmini Atzeret"
 msgstr "שְׁמִינִי עֲצֶרֶת"
@@ -607,16 +603,16 @@ msgid "Sigd"
 msgstr "סיגד"
 
 msgid "Simchat Torah"
-msgstr "שִׂמְחַת תּוֹרָה"
+msgstr "Симхат Тора"
 
 msgid "Sukkot"
-msgstr "סוּכּוֹת"
+msgstr "Суккот"
 
 msgid "Sukkot I"
-msgstr "סוּכּוֹת יוֹם א׳"
+msgstr "Суккот I"
 
 msgid "Sukkot II"
-msgstr "סוּכּוֹת יוֹם ב׳"
+msgstr "Суккот II"
 
 msgid "Sukkot II (CH''M)"
 msgstr "סוּכּוֹת יוֹם ב׳ (חוֹל הַמוֹעד)"
@@ -643,16 +639,16 @@ msgid "Ta'anit Esther"
 msgstr "תַּעֲנִית אֶסְתֵּר"
 
 msgid "Tish'a B'Av"
-msgstr "תִּשְׁעָה בְּאָב"
+msgstr "Девятое Ава"
 
 msgid "Tu B'Av"
-msgstr "טוּ בְּאָב"
+msgstr "Пятнадцатое Ава"
 
 msgid "Tu BiShvat"
-msgstr "טוּ בִּשְׁבָט"
+msgstr "Пятнадцатое Швата"
 
 msgid "Tu B'Shvat"
-msgstr "טוּ בִּשְׁבָט"
+msgstr "Пятнадцатое Швата"
 
 msgid "Tzom Gedaliah"
 msgstr "צוֹם גְּדַלְיָה"
@@ -670,7 +666,7 @@ msgid "Yom HaZikaron"
 msgstr "יוֹם הַזִּכָּרוֹן"
 
 msgid "Yom Kippur"
-msgstr "יוֹם כִּפּוּר"
+msgstr "День Раскаяния"
 
 msgid "Yom Yerushalayim"
 msgstr "יוֹם יְרוּשָׁלַיִם"
