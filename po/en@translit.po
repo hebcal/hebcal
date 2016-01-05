@@ -1,0 +1,133 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Danny Sadinoff
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: hebcal 4.2\n"
+"Report-Msgid-Bugs-To: hebcal-bugs@sadinoff.com\n"
+"POT-Creation-Date: 2015-12-30 14:54-0500\n"
+"PO-Revision-Date: 2016-01-03 11:18-0800\n"
+"Language: he\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 1.8.6\n"
+
+msgid "Achrei Mot"
+msgstr "Achrei Mos"
+
+msgid "Bechukotai"
+msgstr "Bechukosai"
+
+msgid "Beha'alotcha"
+msgstr "Beha'aloscha"
+
+msgid "Bereshit"
+msgstr "Bereshis"
+
+msgid "Chukat"
+msgstr "Chukas"
+
+msgid "Erev Shavuot"
+msgstr "Erev Shavuos"
+
+msgid "Erev Sukkot"
+msgstr "Erev Sukkos"
+
+msgid "Ki Tavo"
+msgstr "Ki Savo"
+
+msgid "Ki Teitzei"
+msgstr "Ki Seitzei"
+
+msgid "Ki Tisa"
+msgstr "Ki Sisa"
+
+msgid "Matot"
+msgstr "Matos"
+
+msgid "Purim Katan"
+msgstr "Purim Koton"
+
+msgid "Tazria"
+msgstr "Sazria"
+
+msgid "Shabbat Chazon"
+msgstr "Shabbos Chazon"
+
+msgid "Shabbat HaChodesh"
+msgstr "Shabbos HaChodesh"
+
+msgid "Shabbat HaGadol"
+msgstr "Shabbos HaGadol"
+
+msgid "Shabbat Nachamu"
+msgstr "Shabbos Nachamu"
+
+msgid "Shabbat Parah"
+msgstr "Shabbos Parah"
+
+msgid "Shabbat Shekalim"
+msgstr "Shabbos Shekalim"
+
+msgid "Shabbat Shuva"
+msgstr "Shabbos Shuvah"
+
+msgid "Shabbat Zachor"
+msgstr "Shabbos Zachor"
+
+msgid "Shavuot I"
+msgstr "Shavuos I"
+
+msgid "Shavuot II"
+msgstr "Shavuos II"
+
+msgid "Shemot"
+msgstr "Shemos"
+
+msgid "Shmini Atzeret"
+msgstr "Shmini Atzeres"
+
+msgid "Simchat Torah"
+msgstr "Simchas Torah"
+
+msgid "Sukkot I"
+msgstr "Sukkos I"
+
+msgid "Sukkot II"
+msgstr "Sukkos II"
+
+msgid "Sukkot III (CH''M)"
+msgstr "Sukkos III (CH''M)"
+
+msgid "Sukkot IV (CH''M)"
+msgstr "Sukkos IV (CH''M)"
+
+msgid "Sukkot V (CH''M)"
+msgstr "Sukkos V (CH''M)"
+
+msgid "Sukkot VI (CH''M)"
+msgstr "Sukkos VI (CH''M)"
+
+msgid "Sukkot VII (Hoshana Raba)"
+msgstr "Sukkos VII (Hoshana Raba)"
+
+msgid "Ta'anit Bechorot"
+msgstr "Ta'anis Bechoros"
+
+msgid "Ta'anit Esther"
+msgstr "Ta'anis Esther"
+
+msgid "Toldot"
+msgstr "Toldos"
+
+msgid "Vaetchanan"
+msgstr "Vaeschanan"
+
+msgid "Yitro"
+msgstr "Yisro"
+

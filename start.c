@@ -516,6 +516,7 @@ void handleArgs(int argc, char *argv[])
    int utf8_hebrew_sw = 0;
    char *latitudeStr = NULL;
    char *longitudeStr = NULL;
+   char *localeStr = NULL;
    static struct option long_options[] = {
       {"24hour", no_argument, 0, 'E'},
       {"abbreviated", no_argument, 0, 'W'},
@@ -535,6 +536,7 @@ void handleArgs(int argc, char *argv[])
       {"infile", required_argument, 0, 'I'},
       {"israeli", no_argument, 0, 'i'},
       {"latitude", required_argument, 0, 'l'},
+      {"locale", required_argument, 0, 0},
       {"longitude", required_argument, 0, 'L'},
       {"molad", no_argument, 0, 'M'},
       {"no-holidays", no_argument, 0, 'h'},
@@ -555,12 +557,6 @@ void handleArgs(int argc, char *argv[])
    int c;
    int option_index = 0;
 
-#if defined(HAVE_GETTEXT) && defined(ENABLE_NLS)
-   setlocale(LC_ALL, "");
-   bindtextdomain("hebcal", LOCALEDIR);
-   textdomain("hebcal");
-#endif
-
    setDate(&greg_today);        /* keep the current greg. date here */
 
    while ((c = getopt_long(argc, argv, "ab:cC:dDeEFf:hHI:il:L:m:MoOrsStTwWxyY:z:Z8",
@@ -571,6 +567,8 @@ void handleArgs(int argc, char *argv[])
             version_sw = 1;
          } else if (0 == strcmp("help", long_options[option_index].name)) {
             help_sw = 1;
+         } else if (0 == strcmp("locale", long_options[option_index].name)) {
+            localeStr = strdup(optarg);
          } else {
            shortUsage();
            exit(1);
@@ -686,8 +684,12 @@ void handleArgs(int argc, char *argv[])
    }
 
 #if defined(HAVE_GETTEXT) && defined(ENABLE_NLS)
-   if (ashkenazis_sw) {
-     setlocale(LC_ALL, "en@ashkenazis");
+   if (localeStr != NULL) {
+     setlocale(LC_ALL, localeStr);
+   } else if (ashkenazis_sw) {
+     setenv("LOCPATH", LOCALEDIR, 1);
+     setlocale(LC_ALL, "C");
+     setlocale(LC_MESSAGES, "en@translit");
    } else if (utf8_hebrew_sw) {
      setlocale(LC_ALL, "he_IL.utf8");
    } else {
