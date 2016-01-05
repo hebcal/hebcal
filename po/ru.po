@@ -473,22 +473,22 @@ msgid "Pesach II"
 msgstr "Пэсах II"
 
 msgid "Pesach II (CH''M)"
-msgstr "Второй день Пэсах, Холь Амоэед"
+msgstr "Второй день Пэсах, Холь Амоэд"
 
 msgid "Pesach III (CH''M)"
-msgstr "Третий день Пэсах, Холь Амоэед"
+msgstr "Третий день Пэсах, Холь Амоэд"
 
 msgid "Pesach IV (CH''M)"
-msgstr "Четвертый день Пэсах, Холь Амоэед"
+msgstr "Четвертый день Пэсах, Холь Амоэд"
 
 msgid "Pesach Sheni"
 msgstr "Второй Пэсах"
 
 msgid "Pesach V (CH''M)"
-msgstr "Пятый день Пэсах, Холь Амоэед"
+msgstr "Пятый день Пэсах, Холь Амоэд"
 
 msgid "Pesach VI (CH''M)"
-msgstr "Шестой день Пэсах, Холь Амоэед"
+msgstr "Шестой день Пэсах, Холь Амоэд"
 
 msgid "Pesach VII"
 msgstr "Седьмой день Пэсах"
@@ -573,7 +573,7 @@ msgid "Shabbat Parah"
 msgstr "שַׁבָּת פּרה"
 
 msgid "Shabbat Rosh Chodesh"
-msgstr "שבת ראש חודש"
+msgstr "Шаббат Новомесячья"
 
 msgid "Shabbat Shekalim"
 msgstr "שַׁבָּת שְׁקָלִים"
@@ -594,10 +594,10 @@ msgid "Shavuot II"
 msgstr "Шавуот II"
 
 msgid "Shmini Atzeret"
-msgstr "שְׁמִינִי עֲצֶרֶת"
+msgstr "Шмини Ацерет"
 
 msgid "Shushan Purim"
-msgstr "שׁוּשָׁן פּוּרִים"
+msgstr "Шушан Пурим"
 
 msgid "Sigd"
 msgstr "סיגד"
@@ -615,22 +615,22 @@ msgid "Sukkot II"
 msgstr "Суккот II"
 
 msgid "Sukkot II (CH''M)"
-msgstr "סוּכּוֹת יוֹם ב׳ (חוֹל הַמוֹעד)"
+msgstr "Второй день Суккота (Холь Амоэд)"
 
 msgid "Sukkot III (CH''M)"
-msgstr "סוּכּוֹת יוֹם ג׳ (חוֹל הַמוֹעד)"
+msgstr "Третий день Суккота (Холь Амоэд)"
 
 msgid "Sukkot IV (CH''M)"
-msgstr "סוּכּוֹת יוֹם ד׳ (חוֹל הַמוֹעד)"
+msgstr "Четвертый день Суккота (Холь Амоэд)"
 
 msgid "Sukkot V (CH''M)"
-msgstr "סוּכּוֹת יוֹם ה׳ (חוֹל הַמוֹעד)"
+msgstr "Пятый день Суккота (Холь Амоэд)"
 
 msgid "Sukkot VI (CH''M)"
-msgstr "סוּכּוֹת יוֹם ו׳ (חוֹל הַמוֹעד)"
+msgstr "Шестой день Суккота (Холь Амоэд)"
 
 msgid "Sukkot VII (Hoshana Raba)"
-msgstr "סוּכּוֹת יוֹם ז׳ (הוֹשַׁנָא רַבָּה)"
+msgstr "Седьмой день Суккота (Холь Амоэд)"
 
 msgid "Ta'anit Bechorot"
 msgstr "תַּעֲנִית בְּכוֹרוֹת"
@@ -651,22 +651,22 @@ msgid "Tu B'Shvat"
 msgstr "Пятнадцатое Швата"
 
 msgid "Tzom Gedaliah"
-msgstr "צוֹם גְּדַלְיָה"
+msgstr "Пост Гедальи"
 
 msgid "Tzom Tammuz"
-msgstr "צוֹם תָּמוּז"
+msgstr "Пост Тамуза"
 
 msgid "Yom HaAtzma'ut"
-msgstr "יוֹם הָעַצְמָאוּת"
+msgstr "День Независимости Израиля"
 
 msgid "Yom HaShoah"
-msgstr "יוֹם הַשּׁוֹאָה"
+msgstr "День Катастрофы"
 
 msgid "Yom HaZikaron"
-msgstr "יוֹם הַזִּכָּרוֹן"
+msgstr "День Памяти"
 
 msgid "Yom Kippur"
 msgstr "День Раскаяния"
 
 msgid "Yom Yerushalayim"
-msgstr "יוֹם יְרוּשָׁלַיִם"
+msgstr "День Иерусалима"
