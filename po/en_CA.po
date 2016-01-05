@@ -101,6 +101,9 @@ msgstr "Sukkos I"
 msgid "Sukkot II"
 msgstr "Sukkos II"
 
+msgid "Sukkot II (CH''M)"
+msgstr "Sukkos II (CH''M)"
+
 msgid "Sukkot III (CH''M)"
 msgstr "Sukkos III (CH''M)"
 
@@ -131,3 +134,5 @@ msgstr "Vaeschanan"
 msgid "Yitro"
 msgstr "Yisro"
 
+msgid "Parashat"
+msgstr "Parshas"
