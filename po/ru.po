@@ -155,7 +155,7 @@ msgstr "בבא בתרא"
 
 #: ../dafyomi.c:49
 msgid "Sanhedrin"
-msgstr "סנהדרין"
+msgstr "Сангедрин"
 
 #: ../dafyomi.c:50
 msgid "Makkot"
@@ -374,7 +374,7 @@ msgid "Vayeshev"
 msgstr "Ваешев"
 
 msgid "Vayetzei"
-msgstr "וַיֵּצֵא"
+msgstr "Ваеце"
 
 msgid "Vayigash"
 msgstr "Ваигаш"
@@ -473,28 +473,28 @@ msgid "Pesach II"
 msgstr "Пэсах II"
 
 msgid "Pesach II (CH''M)"
-msgstr "פֶּסַח יוֹם ב׳ (חוֹל הַמוֹעד)"
+msgstr "Второй день Пэсах, Холь Амоэед"
 
 msgid "Pesach III (CH''M)"
-msgstr "פֶּסַח יוֹם ג׳ (חוֹל הַמוֹעד)"
+msgstr "Третий день Пэсах, Холь Амоэед"
 
 msgid "Pesach IV (CH''M)"
-msgstr "פֶּסַח יוֹם ד׳ (חוֹל הַמוֹעד)"
+msgstr "Четвертый день Пэсах, Холь Амоэед"
 
 msgid "Pesach Sheni"
-msgstr "פֶּסַח שני"
+msgstr "Второй Пэсах"
 
 msgid "Pesach V (CH''M)"
-msgstr "פֶּסַח יוֹם ה׳ (חוֹל הַמוֹעד)"
+msgstr "Пятый день Пэсах, Холь Амоэед"
 
 msgid "Pesach VI (CH''M)"
-msgstr "פֶּסַח יוֹם ו׳ (חוֹל הַמוֹעד)"
+msgstr "Шестой день Пэсах, Холь Амоэед"
 
 msgid "Pesach VII"
-msgstr "פֶּסַח יוֹם ז׳"
+msgstr "Седьмой день Пэсах"
 
 msgid "Pesach VIII"
-msgstr "פֶּסַח יוֹם ח׳"
+msgstr "Восьмой день Пэсах"
 
 msgid "Purim"
 msgstr "Пурим"
@@ -561,7 +561,7 @@ msgid "Shabbat HaChodesh"
 msgstr "שַׁבָּת הַחֹדֶשׁ"
 
 msgid "Shabbat HaGadol"
-msgstr "שַׁבָּת הַגָּדוֹל"
+msgstr "Большой Шаббат"
 
 msgid "Shabbat Machar Chodesh"
 msgstr "שבת מחר חודש"
