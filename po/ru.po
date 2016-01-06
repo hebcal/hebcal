@@ -107,51 +107,51 @@ msgstr "Свиток"
 
 #: ../dafyomi.c:37
 msgid "Moed Katan"
-msgstr "מועד קטן"
+msgstr "Моэд Катан"
 
 #: ../dafyomi.c:38
 msgid "Chagigah"
-msgstr "חגיגה"
+msgstr "Хагига"
 
 #: ../dafyomi.c:39
 msgid "Yevamot"
-msgstr "יבמות"
+msgstr "Евамот"
 
 #: ../dafyomi.c:40
 msgid "Ketubot"
-msgstr "כתובות"
+msgstr "Ктубот"
 
 #: ../dafyomi.c:41
 msgid "Nedarim"
-msgstr "נדרים"
+msgstr "Недарим"
 
 #: ../dafyomi.c:42
 msgid "Nazir"
-msgstr "נזיר"
+msgstr "Назир"
 
 #: ../dafyomi.c:43
 msgid "Sotah"
-msgstr "סוטה"
+msgstr "Сота"
 
 #: ../dafyomi.c:44
 msgid "Gitin"
-msgstr "גיטין"
+msgstr "Гитин"
 
 #: ../dafyomi.c:45
 msgid "Kiddushin"
-msgstr "קידושין"
+msgstr "Кидушин"
 
 #: ../dafyomi.c:46
 msgid "Baba Kamma"
-msgstr "בבא קמא"
+msgstr "Баба Кама"
 
 #: ../dafyomi.c:47
 msgid "Baba Metzia"
-msgstr "בבא מציעא"
+msgstr "Баба Мециа"
 
 #: ../dafyomi.c:48
 msgid "Baba Batra"
-msgstr "בבא בתרא"
+msgstr "Баба Батра"
 
 #: ../dafyomi.c:49
 msgid "Sanhedrin"
@@ -159,67 +159,67 @@ msgstr "Сангедрин"
 
 #: ../dafyomi.c:50
 msgid "Makkot"
-msgstr "מכות"
+msgstr "Макот"
 
 #: ../dafyomi.c:51
 msgid "Shevuot"
-msgstr "שבועות"
+msgstr "Швуот"
 
 #: ../dafyomi.c:52
 msgid "Avodah Zarah"
-msgstr "עבודה זרה"
+msgstr "Авода зара"
 
 #: ../dafyomi.c:53
 msgid "Horayot"
-msgstr "הוריות"
+msgstr "Орайот"
 
 #: ../dafyomi.c:54
 msgid "Zevachim"
-msgstr "זבחים"
+msgstr "Звахим"
 
 #: ../dafyomi.c:55
 msgid "Menachot"
-msgstr "מנחות"
+msgstr "Менахот"
 
 #: ../dafyomi.c:56
 msgid "Chullin"
-msgstr "חולין"
+msgstr "Хулин"
 
 #: ../dafyomi.c:57
 msgid "Bechorot"
-msgstr "בכורות"
+msgstr "Бехорот"
 
 #: ../dafyomi.c:58
 msgid "Arachin"
-msgstr "ערכין"
+msgstr "Арахин"
 
 #: ../dafyomi.c:59
 msgid "Temurah"
-msgstr "תמורה"
+msgstr "Тмура"
 
 #: ../dafyomi.c:60
 msgid "Keritot"
-msgstr "כריתות"
+msgstr "Критот"
 
 #: ../dafyomi.c:61
 msgid "Meilah"
-msgstr "מעילה"
+msgstr "Меила"
 
 #: ../dafyomi.c:62
 msgid "Kinnim"
-msgstr "קינים"
+msgstr "Киним"
 
 #: ../dafyomi.c:63
 msgid "Tamid"
-msgstr "תמיד"
+msgstr "Тамид"
 
 #: ../dafyomi.c:64
 msgid "Midot"
-msgstr "מדות"
+msgstr "Мидот"
 
 #: ../dafyomi.c:65
 msgid "Niddah"
-msgstr "נדה"
+msgstr "Нида"
 
 #: ../dafyomi.c:141
 #, c-format
@@ -386,13 +386,13 @@ msgid "Vayishlach"
 msgstr "Ваишлах"
 
 msgid "Vezot Haberakhah"
-msgstr "וְזֹאת הַבְּרָכָה"
+msgstr "Везот Абраха"
 
 msgid "Yitro"
 msgstr "Итро"
 
 msgid "Asara B'Tevet"
-msgstr "עֲשָׂרָה בְּטֵבֵת"
+msgstr "Пост 10го Тевета"
 
 msgid "Candle lighting"
 msgstr "Зажигание свечей"
@@ -443,7 +443,7 @@ msgid "Erev Shavuot"
 msgstr "Вечер Шавуота"
 
 msgid "Erev Simchat Torah"
-msgstr "עֶרֶב שִׂמְחַת תּוֹרָה"
+msgstr "Канун Симхат Тора"
 
 msgid "Erev Sukkot"
 msgstr "Вечер Суккота"
@@ -455,13 +455,13 @@ msgid "Erev Yom Kippur"
 msgstr "Вечер Дня Раскаяния"
 
 msgid "Havdalah"
-msgstr "הַבדָלָה"
+msgstr "Авдала"
 
 msgid "Lag B'Omer"
 msgstr "Лаг Ба Омер"
 
 msgid "Leil Selichot"
-msgstr "סליחות"
+msgstr "Ночь слихот"
 
 msgid "Pesach"
 msgstr "Пэсах"
@@ -555,7 +555,7 @@ msgid "Rosh Hashana II"
 msgstr "Рош-А-Шана II"
 
 msgid "Shabbat Chazon"
-msgstr "שַׁבָּת חֲזוֹן"
+msgstr "Шаббат Хазон"
 
 msgid "Shabbat HaChodesh"
 msgstr "שַׁבָּת הַחֹדֶשׁ"
@@ -567,22 +567,22 @@ msgid "Shabbat Machar Chodesh"
 msgstr "שבת מחר חודש"
 
 msgid "Shabbat Nachamu"
-msgstr "שַׁבָּת נַחֲמוּ"
+msgstr "Шаббат Нахаму"
 
 msgid "Shabbat Parah"
-msgstr "שַׁבָּת פּרה"
+msgstr "Шаббат Пара"
 
 msgid "Shabbat Rosh Chodesh"
 msgstr "Шаббат Новомесячья"
 
 msgid "Shabbat Shekalim"
-msgstr "שַׁבָּת שְׁקָלִים"
+msgstr "Шаббат Шкалим"
 
 msgid "Shabbat Shuva"
-msgstr "שַׁבָּת שׁוּבָה"
+msgstr "Шаббат Шува"
 
 msgid "Shabbat Zachor"
-msgstr "שַׁבָּת זָכוֹר"
+msgstr "Шаббат Захор"
 
 msgid "Shavuot"
 msgstr "Шавуот"
@@ -600,7 +600,7 @@ msgid "Shushan Purim"
 msgstr "Шушан Пурим"
 
 msgid "Sigd"
-msgstr "סיגד"
+msgstr "Сигд"
 
 msgid "Simchat Torah"
 msgstr "Симхат Тора"
@@ -630,13 +630,13 @@ msgid "Sukkot VI (CH''M)"
 msgstr "Шестой день Суккота (Холь Амоэд)"
 
 msgid "Sukkot VII (Hoshana Raba)"
-msgstr "Седьмой день Суккота (Холь Амоэд)"
+msgstr "Седьмой день Суккота (Ошана Раба)"
 
 msgid "Ta'anit Bechorot"
-msgstr "תַּעֲנִית בְּכוֹרוֹת"
+msgstr "Пост первенцев"
 
 msgid "Ta'anit Esther"
-msgstr "תַּעֲנִית אֶסְתֵּר"
+msgstr "Пост Эстер"
 
 msgid "Tish'a B'Av"
 msgstr "Девятое Ава"
