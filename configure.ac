@@ -25,6 +25,7 @@ dnl AC_CHECK_LIB(m, fabs)
 AM_GNU_GETTEXT([external])
 AM_GNU_GETTEXT_VERSION(0.18)
 
+AC_SEARCH_LIBS([gettext], [intl gettextlib], [], [AC_MSG_ERROR([Missing GNU gettext])])
 
 # Checks for header files.
 AC_HEADER_STDC
