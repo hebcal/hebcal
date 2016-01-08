@@ -452,13 +452,16 @@ sanity_check_SOURCES = sanity-check.c
 sanity_check_LDADD = ../common.o ../danlib.o ../error.o ../greg.o 
 AM_CPPFLAGS = -I $(top_srcdir)
 TESTS = hebcal-1 hebcal-2 hebcal-3 \
-	hebcal-4 hebcal-5 hebcal-6 hebcal-7
+	hebcal-4 hebcal-5 hebcal-6 hebcal-7 \
+	hebcal-8 hebcal-9
 
 TESTS_okayfiles = hebcal-test1.ok hebcal-test2.ok hebcal-test3.ok \
-	hebcal-test4.ok hebcal-test5.ok hebcal-test6.ok hebcal-test7.ok
+	hebcal-test4.ok hebcal-test5.ok hebcal-test6.ok hebcal-test7.ok \
+	hebcal-test8.ok hebcal-test9.ok
 
 TESTS_outputfiles = hebcal-test1.out hebcal-test2.out hebcal-test3.out \
-	hebcal-test4.out hebcal-test5.out hebcal-test6.out hebcal-test7.out
+	hebcal-test4.out hebcal-test5.out hebcal-test6.out hebcal-test7.out \
+	hebcal-test8.out hebcal-test9.out
 
 MOSTLYCLEANFILES = $(TESTS_outputfiles)
 EXTRA_DIST = $(TESTS) $(TESTS_okayfiles)
@@ -753,6 +756,20 @@ hebcal-6.log: hebcal-6
 hebcal-7.log: hebcal-7
 	@p='hebcal-7'; \
 	b='hebcal-7'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+hebcal-8.log: hebcal-8
+	@p='hebcal-8'; \
+	b='hebcal-8'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+hebcal-9.log: hebcal-9
+	@p='hebcal-9'; \
+	b='hebcal-9'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
