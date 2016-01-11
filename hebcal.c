@@ -315,22 +315,36 @@ void print_candlelighting_times( int mask, int weekday, date_t todayGreg)
     for (i_zman = 0; i_zman < num_zmanim; i_zman ++)
     {
        double var_hour;
+       int min_offset;
        char *name;
       
        if ( (zemanim[i_zman].flags & mask) == 0 )
           continue;
         
        var_hour = zemanim[i_zman].variable_hour;
+       min_offset = zemanim[i_zman].min_offset;
+
+       if ((zemanim[i_zman].flags == ZMAN_MINCHA_GEDOLA) &&
+           var_hr_hours < 1)
+       {
+          /* In the winter, when half a solar hour is less than 30
+             minutes, some authorities use 30 minutes after noon
+             instead of 6.5 solar hours. See Shaar HaTziyun 233:8 and
+             other sources quoted at http://judaism.stackexchange.com/a/25738. 
+             myzemanim.com also appears to calculate this way.*/
+         var_hour = 6.0;
+         min_offset = 30;
+       }
        
        if (var_hour < 12.0)
        {
           N = h_rise + var_hour * var_hr_hours;
-          n_offset = (zemanim[i_zman].min_offset) / 60.0;
+          n_offset = min_offset / 60.0;
        }
        else
        {
           N = h_set + (var_hour - 12) * var_hr_hours;
-          n_offset = (zemanim[i_zman].min_offset) / 60.0;
+          n_offset = min_offset / 60.0;
        }
 
        N += gmt_offset;
@@ -450,7 +464,7 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
                today_zemanim |= (day_of_week == SAT) ?
                   ZMAN_CANDLES_AFTER : ZMAN_CANDLES_BEFORE;
             else 
-               if ((returnedMask & CHUL_ONLY) &&
+               if ((returnedMask & LIGHT_CANDLES_TZEIS) &&
                    ! (returnedMask & YOM_TOV_ENDS))
                   today_zemanim |= ZMAN_CANDLES_AFTER;
          }
