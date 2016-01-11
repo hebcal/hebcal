@@ -224,7 +224,7 @@ msgstr "Нида"
 #: ../dafyomi.c:141
 #, c-format
 msgid "Daf Yomi: %s %d"
-msgstr "דף יומי: %s %d"
+msgstr "Страница Дня: %s %d"
 
 msgid "Parashat"
 msgstr "Глава"
@@ -239,7 +239,7 @@ msgid "Bamidbar"
 msgstr "Бамидбар"
 
 msgid "Bechukotai"
-msgstr "Бехукотайתַי"
+msgstr "Бехукотай"
 
 msgid "Beha'alotcha"
 msgstr "Вегаалотха"
@@ -558,13 +558,13 @@ msgid "Shabbat Chazon"
 msgstr "Шаббат Хазон"
 
 msgid "Shabbat HaChodesh"
-msgstr "שַׁבָּת הַחֹדֶשׁ"
+msgstr "Шаббат Месяца"
 
 msgid "Shabbat HaGadol"
 msgstr "Большой Шаббат"
 
 msgid "Shabbat Machar Chodesh"
-msgstr "שבת מחר חודש"
+msgstr "Шаббат Перед Новомесячьем"
 
 msgid "Shabbat Nachamu"
 msgstr "Шаббат Нахаму"
