@@ -450,7 +450,7 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
                today_zemanim |= (day_of_week == SAT) ?
                   ZMAN_CANDLES_AFTER : ZMAN_CANDLES_BEFORE;
             else 
-               if ((returnedMask & CHUL_ONLY) &&
+               if ((returnedMask & LIGHT_CANDLES_TZEIS) &&
                    ! (returnedMask & YOM_TOV_ENDS))
                   today_zemanim |= ZMAN_CANDLES_AFTER;
          }

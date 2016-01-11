@@ -71,7 +71,7 @@ holinput_t inp_holidays[] =
    {
       {TISHREI, 15, IGNORE_YEAR},
       {"Sukkot I", "Sukkos I", "\361\345\353\345\372 \351\345\355 \340'"},
-      CHUL_ONLY,
+      CHUL_ONLY|LIGHT_CANDLES_TZEIS,
       NULL
    },
    {
@@ -125,7 +125,7 @@ holinput_t inp_holidays[] =
    {
       {TISHREI, 22, IGNORE_YEAR},
       {"Shmini Atzeret", "Shmini Atzeres", "\371\356\351\360\351 \362\366\370\372"},
-      CHUL_ONLY,
+      CHUL_ONLY|LIGHT_CANDLES_TZEIS,
       NULL
    },
    {
@@ -192,7 +192,7 @@ holinput_t inp_holidays[] =
    {
       {NISAN, 15, IGNORE_YEAR},
       {"Pesach I", NULL, "\364\361\347 \351\345\355 \340'"},
-      CHUL_ONLY,
+      CHUL_ONLY|LIGHT_CANDLES_TZEIS,
       NULL
    },
    {
@@ -241,7 +241,7 @@ holinput_t inp_holidays[] =
    {
       {NISAN, 21, IGNORE_YEAR},
       {"Pesach VII", NULL, "\364\361\347 \351\345\355 \346'"},
-      CHUL_ONLY,
+      CHUL_ONLY|LIGHT_CANDLES_TZEIS,
       NULL
    },
    {
@@ -280,7 +280,7 @@ holinput_t inp_holidays[] =
    {
       {SIVAN, 6, IGNORE_YEAR},
       {"Shavuot I", "Shavuos I", "\371\341\345\362\345\372 \351\345\355 \340'"},
-      CHUL_ONLY,
+      CHUL_ONLY|LIGHT_CANDLES_TZEIS,
       NULL
    },
    {
@@ -950,6 +950,7 @@ int getHebHolidays( date_t dth, holstorep_t *holiList )
                      iso8859_8_sw ? "\370\340\371 \344\371\360\344" :
                      "Rosh Hashana",
                      dth.yy);
+            tmpholip->typeMask = LIGHT_CANDLES_TZEIS;
             PushHoliday (tmpholip, &var_holidays[TISHREI][1]);
             tmpMask |= PushHoliday (tmpholip, holiList);
         }
