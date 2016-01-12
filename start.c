@@ -696,6 +696,14 @@ void handleArgs(int argc, char *argv[])
    }
    bindtextdomain("hebcal", LOCALEDIR);
    textdomain("hebcal");
+#else
+   if (localeStr != NULL) {
+        warn("No locale support; ignoring --locale flag", "");        
+   } else if (ashkenazis_sw) {
+        warn("No locale support; ignoring -a (ashkenazis) flag", "");
+   } else if (utf8_hebrew_sw) {
+        warn("No locale support; ignoring -8 (hebrew) flag", "");        
+   }
 #endif
 
    if (help_sw) {

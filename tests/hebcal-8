@@ -7,6 +7,12 @@ LC_MESSAGES=
 LANG=
 export LANGUAGE LC_ALL LC_MESSAGES LANG
 
+os=`uname`
+
+if [ "$os" = "Darwin" ]; then
+	exit 0
+fi
+
 testnum=8
 filebase="hebcal-test$testnum"
 outfile="$filebase.out"
