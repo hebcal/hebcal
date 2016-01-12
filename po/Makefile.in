@@ -12,7 +12,7 @@
 GETTEXT_MACRO_VERSION = 0.18
 
 PACKAGE = hebcal
-VERSION = 4.2
+VERSION = 4.3
 PACKAGE_BUGREPORT = hebcal-bugs@sadinoff.com
 
 SED = /bin/sed
@@ -36,12 +36,12 @@ INSTALL_DATA = ${INSTALL} -m 644
 # We use $(mkdir_p).
 # In automake <= 1.9.x, $(mkdir_p) is defined either as "mkdir -p --" or as
 # "$(mkinstalldirs)" or as "$(install_sh) -d". For these automake versions,
-# ${SHELL} /home/mradwin/hebcal-branch/install-sh does not start with $(SHELL), so we add it.
+# ${SHELL} /home/mradwin/hebcal-newest/install-sh does not start with $(SHELL), so we add it.
 # In automake >= 1.10, $(MKDIR_P) is derived from ${MKDIR_P}, which is defined
 # either as "/path/to/mkdir -p" or ".../install-sh -c -d". For these automake
 # versions, $(mkinstalldirs) and $(install_sh) are unused.
-mkinstalldirs = $(SHELL) ${SHELL} /home/mradwin/hebcal-branch/install-sh -d
-install_sh = $(SHELL) ${SHELL} /home/mradwin/hebcal-branch/install-sh
+mkinstalldirs = $(SHELL) ${SHELL} /home/mradwin/hebcal-newest/install-sh -d
+install_sh = $(SHELL) ${SHELL} /home/mradwin/hebcal-newest/install-sh
 MKDIR_P = /bin/mkdir -p
 mkdir_p = $(MKDIR_P)
 
@@ -172,7 +172,7 @@ $(DOMAIN).pot-update: $(POTFILES) $(srcdir)/POTFILES.in remove-potcdate.sed
 	      --files-from=$(srcdir)/POTFILES.in \
 	      --copyright-holder='$(COPYRIGHT_HOLDER)' \
 	      --package-name="$${package_gnu}hebcal" \
-	      --package-version='4.2' \
+	      --package-version='4.3' \
 	      --msgid-bugs-address="$$msgid_bugs_address" \
 	    ;; \
 	esac

@@ -92,16 +92,15 @@ bin_PROGRAMS = hebcal$(EXEEXT)
 subdir = .
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/configure $(am__configure_deps) \
-	$(srcdir)/config.h.in $(srcdir)/hebcal.1.in ABOUT-NLS AUTHORS \
-	COPYING ChangeLog compile config.guess config.rpath config.sub \
-	install-sh missing
+	$(srcdir)/config.h.in $(srcdir)/hebcal.1.in AUTHORS COPYING \
+	compile config.guess config.rpath config.sub install-sh \
+	missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/gettext.m4 \
-	$(top_srcdir)/m4/iconv.m4 $(top_srcdir)/m4/intlmacosx.m4 \
-	$(top_srcdir)/m4/lib-ld.m4 $(top_srcdir)/m4/lib-link.m4 \
-	$(top_srcdir)/m4/lib-prefix.m4 $(top_srcdir)/m4/nls.m4 \
-	$(top_srcdir)/m4/po.m4 $(top_srcdir)/m4/progtest.m4 \
-	$(top_srcdir)/configure.ac
+	$(top_srcdir)/m4/iconv.m4 $(top_srcdir)/m4/lib-ld.m4 \
+	$(top_srcdir)/m4/lib-link.m4 $(top_srcdir)/m4/lib-prefix.m4 \
+	$(top_srcdir)/m4/nls.m4 $(top_srcdir)/m4/po.m4 \
+	$(top_srcdir)/m4/progtest.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
@@ -398,7 +397,7 @@ hebcal_h_files = common.h  danlib.h format.h greg.h hebcal.h \
 
 hebcal_SOURCES = $(hebcal_c_files) $(hebcal_h_files)
 man1_MANS = hebcal.1
-EXTRA_DIST = config.rpath m4/ChangeLog  $(man1_MANS) OLD_NEWS HACKING
+EXTRA_DIST = config.rpath m4/ChangeLog  $(man1_MANS)
 BUILT_SOURCES = $(srcdir)/package.m4
 VOLUME_NAME = @PACKAGE_NAME@-@PACKAGE_VERSION@
 BINARY_DIR = $(VOLUME_NAME).bin
