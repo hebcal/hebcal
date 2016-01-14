@@ -278,7 +278,10 @@ void localize_to_city(const char *cityNameArg)
                 longdeg = pcity->longdeg;
                 longmin = pcity->longmin;
             }
-	    TZ_INFO = timelib_parse_tzfile(pcity->tz, timelib_builtin_db());
+            TZ_INFO = timelib_parse_tzfile(pcity->tz, timelib_builtin_db());
+            if (TZ_INFO == NULL) {
+                die("unable to read time zone argument: %s", pcity->tz);
+            }
             free(cityStr);
             initStr(&cityName, strlen(pcity->name));
             strcpy(cityName, pcity->name);
@@ -686,6 +689,7 @@ void handleArgs(int argc, char *argv[])
 #if defined(HAVE_GETTEXT) && defined(ENABLE_NLS)
    if (localeStr != NULL) {
      setlocale(LC_ALL, localeStr);
+     free(localeStr);
    } else if (ashkenazis_sw) {
      /* setenv("LOCPATH", LOCALEDIR, 1); */
      setlocale(LC_ALL, "en_CA.utf8");
@@ -725,6 +729,7 @@ void handleArgs(int argc, char *argv[])
    if (cityNameArg != NULL) {
       candleLighting_sw = 1;
       localize_to_city(cityNameArg);
+      free(cityNameArg);
    }
 
    if (inFileName != NULL) {
@@ -732,6 +737,7 @@ void handleArgs(int argc, char *argv[])
       if (!(inFile = fopen(inFileName, "r"))) {
          die("could not open input file %s.", inFileName);
       }
+      free(inFileName);
    }
 
    if (noGreg_sw) {
@@ -752,6 +758,7 @@ void handleArgs(int argc, char *argv[])
       if (!(yFile = fopen(yahrtzeitFileName, "r"))) {
          die("could not open yahrtzeit input file %s.", yahrtzeitFileName);
       }
+      free(yahrtzeitFileName);
    }
 
    if (latitudeStr != NULL) {
@@ -766,6 +773,7 @@ void handleArgs(int argc, char *argv[])
       if (latdeg < 0) {
          latmin = -latmin;
       }
+      free(latitudeStr);
    }
 
    if (longitudeStr != NULL) {
@@ -780,6 +788,7 @@ void handleArgs(int argc, char *argv[])
       if (longdeg < 0) {
          longmin = -longmin;
       }
+      free(longitudeStr);
    }
 
    if (tzid != NULL) {
@@ -787,6 +796,7 @@ void handleArgs(int argc, char *argv[])
       if (TZ_INFO == NULL) {
          die("unable to read time zone argument: %s", tzid);
       }
+      free(tzid);
    }
 
    if (zemanim_sw) {
