@@ -43,6 +43,8 @@
 #define ENV_CITY "HEBCAL_CITY"
 #define ENV_OPTS "HEBCAL_OPTS"
 
+static int numYears = 1;
+
 void handleArgs( int, char ** );
 int main( int, char ** );
 int ok_to_run = 1;
@@ -553,6 +555,7 @@ void handleArgs(int argc, char *argv[])
       {"version", no_argument, 0, 0},
       {"weekday", no_argument, 0, 'w'},
       {"yahrtzeit", required_argument, 0, 'Y'},
+      {"years", required_argument, 0, 0},
       {"year-abbrev", no_argument, 0, 'y'},
       {"zmanim", no_argument, 0, 'Z'},
       {NULL, 0, NULL, 0}
@@ -572,6 +575,10 @@ void handleArgs(int argc, char *argv[])
             help_sw = 1;
          } else if (0 == strcmp("locale", long_options[option_index].name)) {
             localeStr = strdup(optarg);
+         } else if (0 == strcmp("years", long_options[option_index].name)) {
+           if (!(sscanf(optarg, "%d", &numYears) == 1)) {
+               die("unable to read --years argument: %s", optarg);
+           }
          } else {
            shortUsage();
            exit(1);
@@ -951,6 +958,10 @@ void handleArgs(int argc, char *argv[])
         displayHelp();
         exit(1);
    }
+
+   if (numYears != 1 && rangeType != YEAR) {
+       die("Sorry, --years option works only with entire-year calendars", "");
+   }
 }
 
 
@@ -1047,7 +1058,7 @@ int main(int argc, char* argv[])
 	     */
 	    startAbs--;
 
-            tempDate.yy++;
+            tempDate.yy += numYears;
             endAbs = hebrew2abs(tempDate) - 1;
         }
         else
@@ -1057,7 +1068,7 @@ int main(int argc, char* argv[])
             tempDate.yy = theYear;
             startAbs = greg2abs(tempDate);
 
-            tempDate.yy++;
+            tempDate.yy += numYears;
             endAbs = greg2abs(tempDate) - 1;
         }
         break;
