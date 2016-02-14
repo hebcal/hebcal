@@ -457,7 +457,7 @@ msgstr "Вечер Дня Раскаяния"
 msgid "Havdalah"
 msgstr "Авдала"
 
-msgid "Lag B'Omer"
+msgid "Lag BaOmer"
 msgstr "Лаг Ба Омер"
 
 msgid "Leil Selichot"

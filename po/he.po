@@ -462,7 +462,7 @@ msgstr "עֶרֶב יוֹם כִּפּוּר"
 msgid "Havdalah"
 msgstr "הַבדָלָה"
 
-msgid "Lag B'Omer"
+msgid "Lag BaOmer"
 msgstr "ל״ג בְּעוֹמֶר"
 
 msgid "Leil Selichot"

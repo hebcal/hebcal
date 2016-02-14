@@ -268,7 +268,7 @@ holinput_t inp_holidays[] =
 
    {
       {IYYAR, 18, IGNORE_YEAR},
-      "Lag B'Omer",
+      "Lag BaOmer",
       0,
       NULL
    },
