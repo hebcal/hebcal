@@ -29,7 +29,6 @@ usage: hebcal [-8acdDeEFHhiorsStTwWyZ]
             [-L longitude -l latitude]
             [-m havdalah_minutes_past_sundown ]
             [-z timezone]
-            [-f format_option]
             [[ month [ day ]] year ]
        hebcal help
        hebcal info
@@ -60,7 +59,6 @@ Option | Description
    -D | print the Hebrew date for dates with some event.
    -e | Ouput "European" dates -- DD.MM.YYYY format.
    -E | Ouput 24-hour times (e.g. 18:37 instead of 6:37).
-   -f FORMAT | change output to `FORMAT`. see below for format strings
    -F | Output the Daf Yomi for the entire date range.
    -h | Suppress default holidays.
    -H | Use Hebrew date ranges - only needed when e.g. `hebcal -H 5373`
@@ -81,9 +79,12 @@ Option | Description
    -W | Weekly view. Omer, dafyomi, and non-date-specific zemanim are shown once a week, on the day which corresponds to the first day in the range.
    -x | Suppress Rosh Chodesh.
    -y | Print only last two digits of year.
+   --years N | Generate events for `N` years (default `1`)
    -Y file | Get yahrtzeit dates from specified file. The format is: `mm dd yyyy string`. The first three fields specify a *Gregorian* date.
    -z timezone | Use specified timezone, overriding the `-C` (localize to city) switch.
    -Z | **EXPERIMENTAL** Add zemanim (Alot HaShachar; Misheyakir; Kriat Shema, sof zeman; Tefilah, sof zeman; Chatzot hayom; Mincha Gedolah; Mincha Ketanah; Plag HaMincha; Tzait HaKochavim)
+   --help | Show help text
+   --version | Show version number
 
 ## Candle-lighting times
 
