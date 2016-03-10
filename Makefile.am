@@ -26,9 +26,9 @@ bin_PROGRAMS = hebcal
 
 hebcal_c_files = common.c danlib.c error.c cargo.c greg.c hebcal.c\
          timelib.c astro.c tm2unixtime.c unixtime2tm.c dow.c parse_tz.c \
-         holidays.c sedra.c start.c gnu.c format.c dafyomi.c
+         holidays.c sedra.c start.c gnu.c dafyomi.c
 
-hebcal_h_files = common.h  danlib.h format.h greg.h hebcal.h \
+hebcal_h_files = common.h  danlib.h greg.h hebcal.h \
           myerror.h cargo.h \
           timezonedb.h timelib.h astro.h timelib_structs.h \
           sedra.h cities.h

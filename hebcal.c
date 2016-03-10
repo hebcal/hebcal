@@ -34,7 +34,6 @@
 #include "myerror.h"
 #include "timelib.h"
 #include "sedra.h"
-#include "format.h"
 #include "greg.h"
 #include "dafyomi.h"
 
@@ -56,7 +55,6 @@ int latdeg, latmin, longdeg, longmin;
 int twentyFourHour_sw;
 long beginOmer, endOmer;
 FILE *inFile, *yFile;
-char *formatString;
 extern holstorep_t holidays[14][MAXDAYS], union_Adar[MAXDAYS];
 
 #define SIMCHAT_DAY 23
@@ -495,9 +493,6 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
       {
           if (!noHolidays_sw || (holip->typeMask & USER_EVENT))
           {
-/*              char buf[200];
-              puts(formatLine( todayGreg, todayHeb, holip->name, buf, 200));
-*/
               PrintGregDate( todayGreg ); 
               puts( holip->name ); 
           }

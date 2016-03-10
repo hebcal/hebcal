@@ -1,3 +1,13 @@
+Changes in 4.3
+* Removed references to non-functional `-f,--format FORMATSTR` option (#123)
+* Change from Lag B'Omer to Lag BaOmer
+* Update timezone database to 2016.1 (2016a)
+* Add `--years N` option to generate longer ranges of events
+* Add Russian and Polish transliterations for event titles.
+
+Changes in 4.2
+* Move transliterations of event titles into GNU gettext.
+
 Changes in 4.1
 * Zemanim with new `-Z` feature, courtesy @aperomsik (#114)
 * Weekly view with new `-W` switch. Omer, dafyomi, and non-date-specific zemanim are shown once a week, on the day which corresponds to the first day in the range.

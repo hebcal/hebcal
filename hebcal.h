@@ -80,9 +80,6 @@ extern timelib_tzinfo *TZ_INFO;
 extern int havdalah_minutes,
    light_offset;
 
-extern char* formatString;
-
-
 typedef struct hebrew_year {
    int first_day_of_week;
    int leap_p;

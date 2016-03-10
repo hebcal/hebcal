@@ -105,7 +105,7 @@ static char* shortUsageArray[] = {
 "              [--city CITY] [--latitude LATITUDE] [--longitude LONGITUDE]",
 "              [--havdalah-mins HAVDALAH-MINS] [--add-hebrew-dates]",
 "              [--add-hebrew-dates-for-events] [--euro-dates] [--24hour]",
-"              [--format FORMAT] [--daf-yomi] [--no-holidays]",
+"              [--daf-yomi] [--no-holidays]",
 "              [--hebrew-date] [--help] [--israeli] [--infile INFILE]",
 "              [--molad] [--omer] [--sunrise-and-sunset] [--tabs]",
 "              [--sedrot] [--daily-sedra] [--today] [--today-brief]",
@@ -126,7 +126,6 @@ static char* optionsHelpArray[] = {
 "                                       format",
 "    -E, --24hour                       Ouput 24-hour times (e.g. 18:37",
 "                                       instead of 6:37)",
-"    -f, --format FORMAT                change output to FORMAT",
 "    -F, --daf-yomi                     Output the Daf Yomi for the entire",
 "                                       date range",
 "    -h, --no-holidays                  Suppress default holidays",
@@ -410,10 +409,6 @@ void handleArgsCargo(int argc, char *argv[]) {
    ret |= cargo_add_option(cargo, 0, "--24hour -E", "Ouput 24-hour times (e.g. 18:37 instead of 6:37)",
                            "b", &twentyFourHour_sw);
 
-   ret |= cargo_add_option(cargo, 0, "--format -f",
-                           "change output to FORMAT",
-                           "s", &formatString);
-
    ret |= cargo_add_option(cargo, 0, "--daf-yomi -F",
                            "Output the Daf Yomi for the entire date range",
                            "b", &dafYomi_sw);
@@ -565,7 +560,7 @@ void handleArgs(int argc, char *argv[])
 
    setDate(&greg_today);        /* keep the current greg. date here */
 
-   while ((c = getopt_long(argc, argv, "ab:cC:dDeEFf:hHI:il:L:m:MoOrsStTwWxyY:z:Z8",
+   while ((c = getopt_long(argc, argv, "ab:cC:dDeEFhHI:il:L:m:MoOrsStTwWxyY:z:Z8",
                            long_options, &option_index)) != -1) {
        switch (c) {
        case 0: /* long option without short alias */
@@ -615,9 +610,6 @@ void handleArgs(int argc, char *argv[])
            break;
        case 'E':                /* 24-hour time format */
            twentyFourHour_sw = 1;
-           break;
-       case 'f':                /* output format */
-           formatString = strdup(optarg);
            break;
        case 'F':    /* Daf Yomi */
            dafYomi_sw = 1;

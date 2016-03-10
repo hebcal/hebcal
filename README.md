@@ -126,7 +126,7 @@ The original motivation for the algorithms in this program was the _Tur Shulchan
 
 For version 3, much of the program was rewritten using Emacs 19’s calendar routines by Edward M. Reingold and Nachum Dershowitz. Their program is extremely clear and provides many instructive examples of fine calendar code in emacs-LISP.
 
-For version 4, candle-lighting times were rewritting using Derick Rethans's [timelib](https://github.com/derickr/timelib). Command-line option parsing was rewritten using Joakim Söderberg's [cargo](https://github.com/JoakimSoderberg/cargo).
+For version 4, candle-lighting times were rewritting using Derick Rethans's [timelib](https://github.com/derickr/timelib).
 
 A well written treatment of the Jewish calendar for the layman can be found in _Understanding the Jewish Calendar_ by Rabbi Nathan Bushwick. A more complete bibliography on the topic can be found there, as well as in the _Encyclopedia Judaica_ entry on the calendar.
 
