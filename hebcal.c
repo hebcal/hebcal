@@ -37,7 +37,7 @@
 #include "greg.h"
 #include "dafyomi.h"
 
-#define _(String) gettext(String)
+#define _(String) lookup_translation(String)
 
 #define NM_LEN 60
 

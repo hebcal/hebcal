@@ -33,12 +33,11 @@
 #include "hebcal.h"
 #include "common.h"
 #include <errno.h>
-#include "cargo.h"
 #include <getopt.h>
 #include "danlib.h"
 #include <stdlib.h>
 #include "cities.h"
-#include "gettext.h"
+#include "translations.h"
 
 #define ENV_CITY "HEBCAL_CITY"
 #define ENV_OPTS "HEBCAL_OPTS"
@@ -101,11 +100,11 @@ static char
 };
 
 static char* shortUsageArray[] = {
-"Usage: hebcal [--ashkenazis] [--candle-mins CANDLE-MINS] [--candlelighting]",
+"Usage: hebcal [--ashkenazi] [--candle-mins CANDLE-MINS] [--candlelighting]",
 "              [--city CITY] [--latitude LATITUDE] [--longitude LONGITUDE]",
 "              [--havdalah-mins HAVDALAH-MINS] [--add-hebrew-dates]",
 "              [--add-hebrew-dates-for-events] [--euro-dates] [--24hour]",
-"              [--daf-yomi] [--no-holidays]",
+"              [--daf-yomi] [--no-holidays] [--lang LANG]",
 "              [--hebrew-date] [--help] [--israeli] [--infile INFILE]",
 "              [--molad] [--omer] [--sunrise-and-sunset] [--tabs]",
 "              [--sedrot] [--daily-sedra] [--today] [--today-brief]",
@@ -117,7 +116,7 @@ static char* shortUsageArray[] = {
 
 static char* optionsHelpArray[] = {
 "Options:",
-"    -a, --ashkenazis                   Use ashkenazis Hebrew",
+"    -a, --ashkenazi                    Use Ashkenazi Hebrew",
 "    -d, --add-hebrew-dates             Print the Hebrew date for the entire",
 "                                       date range",
 "    -D, --add-hebrew-dates-for-events  Print the Hebrew date for dates with",
@@ -137,6 +136,7 @@ static char* optionsHelpArray[] = {
 "                                       from specified file. The format is:",
 "                                       mmm dd string, Where mmm is a Hebrew",
 "                                       month name",
+"    --lang LANG                        Use LANG titles (he, ru, or pl)",
 "    -M, --molad                        Print the molad on Shabbat Mevorchim",
 "    -o, --omer                         Add days of the Omer",
 "    -O, --sunrise-and-sunset           Output sunrise and sunset times every",
@@ -310,15 +310,6 @@ void set_default_city( void )
       localize_to_city(cityName);
 }
 
-
-static void displayHelpCargo(cargo_t cargo) {
-   size_t i, numLines = sizeof(helpArray) / sizeof(char *);
-   cargo_print_usage(cargo, CARGO_USAGE_FULL);
-   for (i = 0; i < numLines; i++) {
-      puts(helpArray[i]);
-   }
-}
-
 static void displayHelp() {
    size_t i;
    printf("Usage: %s\n", helpArray[0]);
@@ -332,172 +323,9 @@ static void displayHelp() {
 
 static void shortUsage() {
    size_t i;
-   //cargo_print_usage(cargo, CARGO_USAGE_SHORT);
    for (i = 0; i < sizeof(shortUsageArray) / sizeof(char *); i++) {
       puts(shortUsageArray[i]);
    }
-}
-
-void handleArgsCargo(int argc, char *argv[]) {
-   date_t greg_today;
-   cargo_t cargo;
-   int ret = 0;
-   const char **remain;
-   size_t remain_count;
-   char *cityNameArg = NULL;
-   char *inFileName = NULL;
-   char *tzid = NULL;
-   char *yahrtzeitFileName = NULL;
-   int today_sw = 0;
-   int zemanim_sw = 0;
-   int help_sw = 0;
-   int version_sw = 0;
-   char *latitudeStr = NULL;
-   char *longitudeStr = NULL;
-
-   setDate(&greg_today);        /* keep the current greg. date here */
-
-   if (cargo_init(&cargo, CARGO_NO_AUTOHELP, "%s", argv[0])) {
-     fprintf(stderr, "Failed to init command line parsing\n");
-     return;
-   }
-
-   ret |= cargo_add_option(cargo, 0, "--ashkenazis -a",
-                           "Use ashkenazis Hebrew",
-                           "b", &ashkenazis_sw);
-
-   ret |= cargo_add_group(cargo, 0, "candles",
-                           "Candle lighting",
-                           "Options related to candle-lighting times.");
-
-   ret |= cargo_add_option(cargo, 0, "<candles> --candle-mins -b",
-                           "Set candle-lighting to occur this many minutes before sundown",
-                           "i", &light_offset);
-
-   ret |= cargo_add_option(cargo, 0, "<candles> --candlelighting -c",
-                           "Print candlelighting times",
-                           "b", &candleLighting_sw);
-
-   ret |= cargo_add_option(cargo, 0, "<candles> --city -C",
-                           "City for candle-lighting",
-                           "s", &cityNameArg);
-
-   ret |= cargo_add_option(cargo, 0, "<candles> --latitude -l",
-                           "Set the latitude for solar calculations to xx degrees and yy minutes. Negative values are south",
-                           "s", &latitudeStr);
-
-   ret |= cargo_add_option(cargo, 0, "<candles> --longitude -L",
-                           "Set the longitude for solar calculations to xx degrees and yy minutes. Negative values are EAST. The -l and -L switches must both be used, or not at all. These switches override the -C (localize to city) switch",
-                           "s", &longitudeStr);
-
-   ret |= cargo_add_option(cargo, 0, "<candles> --havdalah-mins -m",
-                           "Set Havdalah to occur this many minutes after sundown",
-                           "i", &havdalah_minutes);
-
-   ret |= cargo_add_option(cargo, 0, "--add-hebrew-dates -d",
-                           "Print the Hebrew date for the entire date range",
-                           "b", &printHebDates_sw);
-
-   ret |= cargo_add_option(cargo, 0, "--add-hebrew-dates-for-events -D",
-                           "Print the Hebrew date for dates with some event",
-                           "b", &printSomeHebDates_sw);
-
-   ret |= cargo_add_option(cargo, 0, "--euro-dates -e",
-                           "Ouput 'European' dates -- DD.MM.YYYY format",
-                           "b", &euroDates_sw);
-
-   ret |= cargo_add_option(cargo, 0, "--24hour -E", "Ouput 24-hour times (e.g. 18:37 instead of 6:37)",
-                           "b", &twentyFourHour_sw);
-
-   ret |= cargo_add_option(cargo, 0, "--daf-yomi -F",
-                           "Output the Daf Yomi for the entire date range",
-                           "b", &dafYomi_sw);
-
-   ret |= cargo_add_option(cargo, 0, "--no-holidays -h",
-                           "Suppress default holidays",
-                           "b", &noHolidays_sw);
-
-   ret |= cargo_add_option(cargo, 0, "--hebrew-date -H",
-                           "Use Hebrew date ranges - only needed when e.g. hebcal -H 5373",
-                           "b", &hebrewDates_sw);
-
-   ret |= cargo_add_option(cargo, 0, "--help", "Show this help",
-                           "b", &help_sw);
-
-   ret |= cargo_add_option(cargo, 0, "--israeli -i",
-                           "Israeli holiday and sedra schedule",
-                           "b", &israel_sw);
-
-   ret |= cargo_add_option(cargo, 0, "--infile -I",
-                           "Get non-yahrtzeit Hebrew user events from specified file. The format is: mmm dd string, Where mmm is a Hebrew month name",
-                           "s", &inFileName);
-
-   ret |= cargo_add_option(cargo, 0, "--molad -M",
-                           "Print the molad on Shabbat Mevorchim",
-                           "b", &printMolad_sw);
-
-   ret |= cargo_add_option(cargo, 0, "--omer -o",
-                           "Add days of the Omer",
-                           "b", &printOmer_sw);
-
-   ret |= cargo_add_option(cargo, 0, "--sunrise-and-sunset -O",
-                           "Output sunrise and sunset times every day",
-                           "b", &printSunriseSunset_sw);
-
-   ret |= cargo_add_option(cargo, 0, "--tabs -r",
-                           "Tab delineated format",
-                           "b", &tabs_sw);
-
-   ret |= cargo_add_option(cargo, 0, "--sedrot -s",
-                           "Add weekly sedrot on Saturday",
-                           "b", &sedrot_sw);
-
-   ret |= cargo_add_option(cargo, 0, "--daily-sedra -S",
-                           "Print sedrah of the week on all calendar days",
-                           "b", &sedraAllWeek_sw);
-
-   ret |= cargo_add_option(cargo, 0, "--today -t", "Only output for today's date",
-                           "b", &today_sw);
-
-   ret |= cargo_add_option(cargo, 0, "--today-brief -T", "Print today's pertinent information, no gregorian date",
-                           "b", &noGreg_sw);
-
-   ret |= cargo_add_option(cargo, 0, "--version", "Show version number",
-                           "b", &version_sw);
-
-   ret |= cargo_add_option(cargo, 0, "--weekday -w", "Add day of the week",
-                           "b", &weekday_sw);
-
-   ret |= cargo_add_option(cargo, 0, "--abbreviated -W", "Weekly view. Omer, dafyomi, and non-date-specific zemanim are shown once a week, on the day which corresponds to the first day in the range.",
-                           "b", &abbrev_sw);
-
-   ret |= cargo_add_option(cargo, 0, "--no-rosh-chodesh -x", "Suppress Rosh Chodesh",
-                           "b", &suppress_rosh_chodesh_sw);
-
-   ret |= cargo_add_option(cargo, 0, "--year-abbrev -y", "Print only last two digits of year",
-                           "b", &yearDigits_sw);
-
-   ret |= cargo_add_option(cargo, 0, "--yahrtzeit -Y",
-                           "Get yahrtzeit dates from specified file."
-                           " The format is: mm dd yyyy string"
-                           " the first three fields specify a *Gregorian* date.",
-                           "s", &yahrtzeitFileName);
-
-   ret |= cargo_add_option(cargo, 0, "<candles> --timezone -z", "Use specified timezone, overriding the -C (localize to city) switch",
-                           "s", &tzid);
-
-   ret |= cargo_add_option(cargo, 0, "<candles> --zmanim -Z", "Print zemanim (experimental)",
-                           "b", &zemanim_sw);
-
-   if (cargo_parse(cargo, 0, 1, argc, argv)) {
-      exit(1);
-   }
-
-   remain = cargo_get_args(cargo, &remain_count);
-
-   cargo_print_usage(cargo, CARGO_USAGE_FULL);
-
-   cargo_destroy(&cargo);
 }
 
 void handleArgs(int argc, char *argv[])
@@ -516,13 +344,13 @@ void handleArgs(int argc, char *argv[])
    int utf8_hebrew_sw = 0;
    char *latitudeStr = NULL;
    char *longitudeStr = NULL;
-   char *localeStr = NULL;
+   char *langStr = NULL;
    static struct option long_options[] = {
       {"24hour", no_argument, 0, 'E'},
       {"abbreviated", no_argument, 0, 'W'},
       {"add-hebrew-dates", no_argument, 0, 'd'},
       {"add-hebrew-dates-for-events", no_argument, 0, 'D'},
-      {"ashkenazis", no_argument, 0, 'a'},
+      {"ashkenazi", no_argument, 0, 'a'},
       {"candle-mins", required_argument, 0, 'b'},
       {"candlelighting", no_argument, 0, 'c'},
       {"city", required_argument, 0, 'C'},
@@ -536,7 +364,7 @@ void handleArgs(int argc, char *argv[])
       {"infile", required_argument, 0, 'I'},
       {"israeli", no_argument, 0, 'i'},
       {"latitude", required_argument, 0, 'l'},
-      {"locale", required_argument, 0, 0},
+      {"lang", required_argument, 0, 0},
       {"longitude", required_argument, 0, 'L'},
       {"molad", no_argument, 0, 'M'},
       {"no-holidays", no_argument, 0, 'h'},
@@ -568,8 +396,8 @@ void handleArgs(int argc, char *argv[])
             version_sw = 1;
          } else if (0 == strcmp("help", long_options[option_index].name)) {
             help_sw = 1;
-         } else if (0 == strcmp("locale", long_options[option_index].name)) {
-            localeStr = strdup(optarg);
+         } else if (0 == strcmp("lang", long_options[option_index].name)) {
+            langStr = strdup(optarg);
          } else if (0 == strcmp("years", long_options[option_index].name)) {
            if (!(sscanf(optarg, "%d", &numYears) == 1)) {
                die("unable to read --years argument: %s", optarg);
@@ -579,10 +407,10 @@ void handleArgs(int argc, char *argv[])
            exit(1);
          }
          break;
-       case 'a':                /* ashkenazis hebrew */
+       case 'a':
            ashkenazis_sw = 1;
            break;
-       case '8':                /* ashkenazis hebrew */
+       case '8':
            utf8_hebrew_sw = 1;
            break;
        case 'b':                /* candle_lighting_minutes_before_sundown */
@@ -685,29 +513,21 @@ void handleArgs(int argc, char *argv[])
       }
    }
 
-#if defined(HAVE_GETTEXT) && defined(ENABLE_NLS)
-   if (localeStr != NULL) {
-     setlocale(LC_ALL, localeStr);
-     free(localeStr);
+   if (langStr != NULL) {
+     hebcal_lang lang = hebcal_get_language(langStr);
+     if (lang == HEBCAL_LANG_UNDEFINED) {
+       warn("Unknown lang '%s'; using default", langStr);
+     } else {
+       hebcal_set_language(lang);
+     }
+     free(langStr);
    } else if (ashkenazis_sw) {
-     /* setenv("LOCPATH", LOCALEDIR, 1); */
-     setlocale(LC_ALL, "en_CA.utf8");
+     hebcal_set_language(HEBCAL_LANG_ASHKENAZI);
    } else if (utf8_hebrew_sw) {
-     setlocale(LC_ALL, "he_IL.utf8");
+     hebcal_set_language(HEBCAL_LANG_HE);
    } else {
-     setlocale(LC_ALL, "");
+     hebcal_set_language(HEBCAL_LANG_DEFAULT);
    }
-   bindtextdomain("hebcal", LOCALEDIR);
-   textdomain("hebcal");
-#else
-   if (localeStr != NULL) {
-        warn("No locale support; ignoring --locale flag", "");        
-   } else if (ashkenazis_sw) {
-        warn("No locale support; ignoring -a (ashkenazis) flag", "");
-   } else if (utf8_hebrew_sw) {
-        warn("No locale support; ignoring -8 (hebrew) flag", "");        
-   }
-#endif
 
    if (help_sw) {
       displayHelp();

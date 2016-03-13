@@ -9,9 +9,9 @@
 #include "hebcal.h"
 #include "dafyomi.h"
 #include "config.h"
-#include "gettext.h"
+#include "translations.h"
 
-#define _(String) gettext(String)
+#define _(String) lookup_translation(String)
 
 #define NM_LEN 60
 

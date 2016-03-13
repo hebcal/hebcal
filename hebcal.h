@@ -31,7 +31,7 @@
 #include "myerror.h"
 #include "timelib.h"
 #include "config.h"
-#include "gettext.h"
+#include "translations.h"
 
 #ifndef ENV_CITY_STR
 #define ENV_CITY_STR "HC_CITY"
@@ -42,8 +42,7 @@
 #define MAX_LINE_LEN 100
 #define LEAP_YR_HEB(x) ((1L + (long)(x)* 7L) % 19L < 7L ? 1 : 0)
 #define MONTHS_IN_HEB(x) (LEAP_YR_HEB(x) ? 13 :12)
-#define LANGUAGE(str) gettext(str)
-#define LANGUAGE2(str) gettext(str)
+#define LANGUAGE2(str) ((char *)lookup_translation(str))
 
 extern FILE *inFile, *yFile;
 

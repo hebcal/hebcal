@@ -2,17 +2,16 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.57)
-AC_INIT(hebcal,4.3,hebcal-bugs@sadinoff.com)
+AC_INIT(hebcal,4.4,hebcal-bugs@sadinoff.com)
 AM_MAINTAINER_MODE([disable])
 AM_INIT_AUTOMAKE([foreign no-dependencies no-installinfo])
-AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR([common.c])
 AM_CONFIG_HEADER([config.h])
 
 # Checks for programs.
 AC_PROG_CC
 
-AC_CHECK_HEADERS([getopt.h libintl.h])
+AC_CHECK_HEADERS([getopt.h])
 
 # Checks for libraries.
 dnl AC_CHECK_LIB(m, sin)
@@ -21,9 +20,6 @@ dnl AC_CHECK_LIB(m, atan)
 AC_CHECK_LIB(m, sqrt)
 dnl AC_CHECK_LIB(m, acos)
 dnl AC_CHECK_LIB(m, fabs)
-
-AM_GNU_GETTEXT([external])
-AM_GNU_GETTEXT_VERSION(0.18)
 
 # Checks for header files.
 AC_HEADER_STDC
@@ -42,7 +38,7 @@ AC_ARG_WITH(default-city,
              AC_DEFINE_UNQUOTED(CITY,"$withval",["The Default City"]),
              AC_DEFINE(CITY,"New_York",["The default city"]))
 
-AC_CONFIG_FILES([hebcal.1 po/Makefile.in])
+AC_CONFIG_FILES([hebcal.1])
 AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([tests/Makefile])
 

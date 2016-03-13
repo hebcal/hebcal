@@ -1,3 +1,7 @@
+Changes in 4.4
+* Remove dependency on GNU gettext and use static string tables (#115)
+* Document `--lang LANG` option for ISO 639-1 LANG code (one of `he`, `ru`, or `pl`)
+
 Changes in 4.3
 * Removed references to non-functional `-f,--format FORMATSTR` option (#123)
 * Change from Lag B'Omer to Lag BaOmer
@@ -6,7 +10,7 @@ Changes in 4.3
 * Add Russian and Polish transliterations for event titles.
 
 Changes in 4.2
-* Move transliterations of event titles into GNU gettext.
+* Move transliterations of event titles into GNU gettext. (#115)
 
 Changes in 4.1
 * Zemanim with new `-Z` feature, courtesy @aperomsik (#114)

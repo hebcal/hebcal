@@ -13,30 +13,32 @@
 AM_CPPFLAGS = -DVERSION='"$(PACKAGE_VERSION)"' -DHAVE_STDLIB_H -DHAVE_STRING_H -DHAVE_INTTYPES_H
 
 # AM_CFLAGS = -Wall
-AM_LDFLAGS = $(LIBINTL)
+# AM_LDFLAGS = $(LIBINTL)
 
-DEFS = -DLOCALEDIR=\"@localedir@\" \
-	   @DEFS@
+#DEFS = -DLOCALEDIR=\"@localedir@\" \
+#	   @DEFS@
 
-SUBDIRS = po tests
+SUBDIRS = tests
 
 bin_PROGRAMS = hebcal
 
 #sanity_check_SOURCES = common.c danlib.c error.c greg.c sanity-check.c
 
-hebcal_c_files = common.c danlib.c error.c cargo.c greg.c hebcal.c\
+hebcal_c_files = common.c danlib.c error.c greg.c hebcal.c \
          timelib.c astro.c tm2unixtime.c unixtime2tm.c dow.c parse_tz.c \
-         holidays.c sedra.c start.c gnu.c dafyomi.c
+         holidays.c sedra.c start.c gnu.c dafyomi.c \
+         strings_ashkenazi.c strings_he.c strings_pl.c strings_ru.c \
+         translations.c
 
 hebcal_h_files = common.h  danlib.h greg.h hebcal.h \
-          myerror.h cargo.h \
+          myerror.h translations.h \
           timezonedb.h timelib.h astro.h timelib_structs.h \
           sedra.h cities.h
 
 hebcal_SOURCES = $(hebcal_c_files) $(hebcal_h_files)
 
 man1_MANS = hebcal.1
-EXTRA_DIST = config.rpath m4/ChangeLog  $(man1_MANS)
+EXTRA_DIST = $(man1_MANS)
 
 BUILT_SOURCES =$(srcdir)/package.m4
 
@@ -69,4 +71,4 @@ $(srcdir)/package.m4: $(top_srcdir)/configure.ac
 
 check-recursive:  all
 
-ACLOCAL_AMFLAGS = --install -I m4
+#ACLOCAL_AMFLAGS = --install -I m4

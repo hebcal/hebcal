@@ -34,7 +34,7 @@
 #include "common.h"
 #include "danlib.h"
 
-#define _(String) gettext(String)
+#define _(String) lookup_translation(String)
 
 #define NM_LEN MAX_LINE_LEN
 
@@ -947,7 +947,7 @@ int getHebHolidays( date_t dth, holstorep_t *holiList )
         if(dth.mm == TISHREI)     /* special processing for rosh hashana */
         {
             tmpholip = getHolstorep ();
-            initStr (&tmpholip->name, 22);
+            initStr (&tmpholip->name, NM_LEN);
             sprintf (tmpholip->name, "%s %d",
                      _("Rosh Hashana"),
                      dth.yy);
