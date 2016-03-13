@@ -1,5 +1,5 @@
-/* C code produced by gperf version 3.0.3 */
-/* Command-line: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/gperf strings_he.gperf  */
+/* C code produced by gperf version 3.0.4 */
+/* Command-line: gperf strings_he.gperf  */
 /* Computed positions: -k'1,3,5,8-9,11' */
 
 #if !((' ' == 32) && ('!' == 33) && ('"' == 34) && ('#' == 35) \
@@ -83,7 +83,7 @@ hash (str, len)
       461, 461, 461, 461, 461, 461, 461, 461, 461, 461,
       461, 461, 461, 461, 461, 461, 461
     };
-  register unsigned int hval = len;
+  register int hval = len;
 
   switch (hval)
     {
@@ -114,6 +114,12 @@ hash (str, len)
   return hval;
 }
 
+#ifdef __GNUC__
+__inline
+#if defined __GNUC_STDC_INLINE__ || defined __GNUC_GNU_INLINE__
+__attribute__ ((__gnu_inline__))
+#endif
+#endif
 struct event_title *
 hebcal_lookup_he (str, len)
      register const char *str;
@@ -587,9 +593,9 @@ hebcal_lookup_he (str, len)
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
     {
-      unsigned int key = hash (str, len);
+      register int key = hash (str, len);
 
-      if (key <= MAX_HASH_VALUE)
+      if (key <= MAX_HASH_VALUE && key >= 0)
         {
           register const char *s = wordlist[key].name;
 
