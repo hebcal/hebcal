@@ -110,7 +110,7 @@ static char* shortUsageArray[] = {
 "              [--sedrot] [--daily-sedra] [--today] [--today-brief]",
 "              [--version] [--weekday] [--abbreviated] [--no-rosh-chodesh]",
 "              [--year-abbrev] [--yahrtzeit YAHRTZEIT]",
-"              [--timezone TIMEZONE] [--zmanim]",
+"              [--timezone TIMEZONE] [--years N] [--zmanim]",
 ""
 };
 
@@ -157,6 +157,7 @@ static char* optionsHelpArray[] = {
 "                                       range.",
 "    -x, --no-rosh-chodesh              Suppress Rosh Chodesh",
 "    -y, --year-abbrev                  Print only last two digits of year",
+"    --years N                          Generate events for N years (default 1)",
 "    -Y, --yahrtzeit YAHRTZEIT          Get yahrtzeit dates from specified",
 "                                       file. The format is: mm dd yyyy",
 "                                       string the first three fields",
