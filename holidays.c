@@ -181,7 +181,7 @@ holinput_t inp_holidays[] =
    },
    {
       {SHVAT, 15, IGNORE_YEAR},
-      "Tu B'Shvat",
+      "Tu BiShvat",
       0,
       NULL
    },

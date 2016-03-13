@@ -1,6 +1,7 @@
 Changes in 4.4
 * Remove dependency on GNU gettext and use static string tables (#115)
 * Document `--lang LANG` option for ISO 639-1 LANG code (one of `he`, `ru`, or `pl`)
+* Change from Tu B'Shvat to Tu BiShvat
 
 Changes in 4.3
 * Removed references to non-functional `-f,--format FORMATSTR` option (#123)
