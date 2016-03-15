@@ -1,3 +1,6 @@
+Changes in 4.5
+* Update timezone database to 2016.2 (2016b)
+
 Changes in 4.4
 * Remove dependency on GNU gettext and use static string tables (#115)
 * Document `--lang LANG` option for ISO 639-1 LANG code (one of `he`, `ru`, or `pl`)
