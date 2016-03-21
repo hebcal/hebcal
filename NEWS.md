@@ -1,3 +1,8 @@
+Changes in 4.6
+* Add candle lighting for second night of Rosh Hashana (#119)
+* Compute Mincha Gedolah in the winter using 30 minutes
+  instead of half a solar hour (#119)
+
 Changes in 4.5
 * Update timezone database to 2016.2 (2016b)
 
