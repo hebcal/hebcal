@@ -73,7 +73,7 @@ holinput_t inp_holidays[] =
    {
       {TISHREI, 15, IGNORE_YEAR},
       "Sukkot I",
-      CHUL_ONLY,
+      CHUL_ONLY|LIGHT_CANDLES_TZEIS,
       NULL
    },
    {
@@ -127,7 +127,7 @@ holinput_t inp_holidays[] =
    {
       {TISHREI, 22, IGNORE_YEAR},
       "Shmini Atzeret",
-      CHUL_ONLY,
+      CHUL_ONLY|LIGHT_CANDLES_TZEIS,
       NULL
    },
    {
@@ -194,7 +194,7 @@ holinput_t inp_holidays[] =
    {
       {NISAN, 15, IGNORE_YEAR},
       "Pesach I",
-      CHUL_ONLY,
+      CHUL_ONLY|LIGHT_CANDLES_TZEIS,
       NULL
    },
    {
@@ -243,7 +243,7 @@ holinput_t inp_holidays[] =
    {
       {NISAN, 21, IGNORE_YEAR},
       "Pesach VII",
-      CHUL_ONLY,
+      CHUL_ONLY|LIGHT_CANDLES_TZEIS,
       NULL
    },
    {
@@ -282,7 +282,7 @@ holinput_t inp_holidays[] =
    {
       {SIVAN, 6, IGNORE_YEAR},
       "Shavuot I",
-      CHUL_ONLY,
+      CHUL_ONLY|LIGHT_CANDLES_TZEIS,
       NULL
    },
    {
@@ -951,6 +951,7 @@ int getHebHolidays( date_t dth, holstorep_t *holiList )
             sprintf (tmpholip->name, "%s %d",
                      _("Rosh Hashana"),
                      dth.yy);
+            tmpholip->typeMask = LIGHT_CANDLES_TZEIS;
             PushHoliday (tmpholip, &var_holidays[TISHREI][1]);
             tmpMask |= PushHoliday (tmpholip, holiList);
         }
