@@ -373,6 +373,7 @@ void handleArgs(int argc, char *argv[])
       {"omer", no_argument, 0, 'o'},
       {"sedrot", no_argument, 0, 's'},
       {"sunrise-and-sunset", no_argument, 0, 'O'},
+      {"tabs", no_argument, 0, 'r'},
       {"timezone", required_argument, 0, 'z'},
       {"today", no_argument, 0, 't'},
       {"today-brief", no_argument, 0, 'T'},
