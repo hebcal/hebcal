@@ -56,9 +56,9 @@ Option | Description
 -c | Print candlelighting times.
 -C city | Set latitude, longitude, and timezone according to specified city. This option implies the -c option.
    -d | print the Hebrew date for the entire date range.
-   -D | print the Hebrew date for dates with some event.
-   -e | Ouput "European" dates -- DD.MM.YYYY format.
-   -E | Ouput 24-hour times (e.g. 18:37 instead of 6:37).
+   -D | print the Hebrew date for dates with some events
+   -e | Output "European" dates -- DD.MM.YYYY format.
+   -E | Output 24-hour times (e.g. 18:37 instead of 6:37).
    -F | Output the Daf Yomi for the entire date range.
    -h | Suppress default holidays.
    -H | Use Hebrew date ranges - only needed when e.g. `hebcal -H 5373`
@@ -105,7 +105,7 @@ Hebcal uses two environment variables:
 <dt>HEBCAL_CITY
 <dd>Hebcal uses this value as the default city for sunset calculations. A list of available cities is available with from hebcal with the command: <code>hebcal cities</code>
 <dt>HEBCAL_OPTS
-<dd>The value of this variable is automatically processed as if it were typed at the command line before any other actual command−line−arguments.
+<dd>The value of this variable is automatically processed as if it were typed at the command line before any other actual command-line arguments.
 </dl>
 
 ## Author
