@@ -8,7 +8,7 @@ portions by Michael J. Radwin
 
 ## Description
 Hebcal is a program which prints out the days in the Jewish calendar
-for a given gregorian year.  Hebcal is fairly flexible in terms of which
+for a given Gregorian year.  Hebcal is fairly flexible in terms of which
 events in the Jewish calendar it displays.  Each of the following can
 be individualy turned on or off:
 
@@ -72,10 +72,10 @@ Option | Description
    -o | Add days of the omer.
    -O | Output sunrise and sunset times every day.
    -r | Tab delineated format.
-   -s | Add weekly sedrot on saturday.
+   -s | Add weekly sedrot on Saturday.
    -S | Print sedrah of the week on all calendar days.
    -t | Only output for today's date.
-   -T | Print today's pertinent information, no gregorian date.
+   -T | Print today's pertinent information, no Gregorian date.
    -w | Add day of the week.
    -W | Weekly view. Omer, dafyomi, and non-date-specific zemanim are shown once a week, on the day which corresponds to the first day in the range.
    -x | Suppress Rosh Chodesh.
