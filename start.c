@@ -37,6 +37,7 @@
 #include "danlib.h"
 #include <stdlib.h>
 #include "cities.h"
+#include "city.h"
 #include "translations.h"
 
 #define ENV_CITY "HEBCAL_CITY"
@@ -253,53 +254,6 @@ void print_city_data( void )
                cities[cnum].tz
             );
     }
-}
-
-/* This function compares two city names, treating all non-alphas as blanks */
-
-/*********************************************************************/
-/* Compares two city names and returns -1, 0, or 1 like stricmp.     */
-/* The comparison is case insensitive and treats all non-alpha       */
-/* characters as equivalent to blanks (i.e., "less than" alphas).    */
-/* The function currently assumes both its input to be ASCII         */
-/* (i.e., it does not yet support accented or non-Latin city names). */
-/*********************************************************************/
-int compare_city(const char *a, const char *b)
-{
-    int result = 0;
-    const char *p, *q;
-    int current_p_is_alpha, current_q_is_alpha;
-    int current_p_normalized, current_q_normalized;
-
-    for (p = a, q = b; result == 0 && *p && *q;)
-    {
-        current_p_is_alpha = isalpha((int) *p);
-        current_q_is_alpha = isalpha((int) *q);
-        if (current_p_is_alpha && current_q_is_alpha)
-        {
-            current_p_normalized = toupper((int) *p);
-            current_q_normalized = toupper((int) *q);
-            if (current_p_normalized < current_q_normalized)
-                result = -1;
-            else if (current_p_normalized > current_q_normalized)
-                result = 1;
-            p += 1;
-            q += 1;
-        }
-        else
-        {
-            if (!current_p_is_alpha && current_q_is_alpha)
-                result = -1;                    /* space < alpha */
-            else if (current_p_is_alpha && !current_q_is_alpha)
-                result = 1;                     /* alpha > space */
-            /* Skip to either the next alpha or the end of string */
-            while (*p && !isalpha((int) *p))
-                p += 1;
-            while (*q && !isalpha((int) *q))
-                q += 1;
-        }
-    }
-    return result;
 }
 
 void localize_to_city(const char *cityNameArg)

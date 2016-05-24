@@ -18,7 +18,7 @@
 ## Process this file with automake to produce Makefile.in.
 
 #I sure wish I knew how to create a test program that doesn't get installed... -djs
-check_PROGRAMS = sanity-check
+check_PROGRAMS = sanity-check hebcal-10
 
 # sanity_check_SOURCES = $(top_srcdir)/common.c $(top_srcdir)/danlib.c \
 #               $(top_srcdir)/error.c $(top_srcdir)/greg.c sanity-check.c
@@ -26,11 +26,14 @@ check_PROGRAMS = sanity-check
 sanity_check_SOURCES = sanity-check.c
 
 sanity_check_LDADD  = ../common.o ../danlib.o ../error.o ../greg.o 
+
+hebcal_10_LDADD =  ../city.o
+
 AM_CPPFLAGS  = -I $(top_srcdir)
 
 TESTS = hebcal-1 hebcal-2 hebcal-3 \
 	hebcal-4 hebcal-5 hebcal-6 hebcal-7 \
-	hebcal-8 hebcal-9
+	hebcal-8 hebcal-9 hebcal-10
 
 TESTS_okayfiles = hebcal-test1.ok hebcal-test2.ok hebcal-test3.ok \
 	hebcal-test4.ok hebcal-test5.ok hebcal-test6.ok hebcal-test7.ok \

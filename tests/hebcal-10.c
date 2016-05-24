@@ -1,0 +1,49 @@
+/* vi: set sw=2 ai sm et: */
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "city.h"
+
+int result_code = 0;
+
+void test_compare_city( const char *a, const char *b, int expected ) {
+    int actual = compare_city(a, b);
+    printf("%s%s%s vs %s%s%s, expect %d, got %d: ",
+            (a? "\"": ""), a, (a? "\"": ""),
+            (b? "\"": ""), b, (b? "\"": ""),
+            expected, actual);
+
+    if (actual == expected) {
+        printf("OK\n");
+    } else {
+        printf("FAIL\n");
+        result_code = 1;
+    }
+}
+
+void main() {
+    /* Invalid strings */
+    test_compare_city(NULL, NULL, 0);
+    test_compare_city(NULL, "", 0);
+    test_compare_city("", NULL, 0);
+
+    /* Minimal strings */
+    test_compare_city("", "", 0);
+    test_compare_city("a", "", 1);
+    test_compare_city("", "a", -1);
+    test_compare_city("a", "a", 0);
+    test_compare_city("a", "aa", -1);
+    test_compare_city("aa", "a", 1);
+    test_compare_city("aa", "ab", -1);
+    test_compare_city("ab", "aa", 1);
+
+    /* Let's try some real cities */
+    test_compare_city("Toronto", "Toronto", 0);
+    test_compare_city("Toronto", "TORONTO", 0);
+    test_compare_city("Toronto", "Markham", 1);
+    test_compare_city("Toronto", "Vaughan", -1);
+    test_compare_city("Kitchener", "Kitchener Waterloo", -1);
+    test_compare_city("Kitchener-Waterloo", "Kitchener", 1);
+    test_compare_city("Kitchener-Waterloo", "Kitchener Waterloo", 0);
+    exit(result_code);
+}

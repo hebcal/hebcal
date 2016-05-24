@@ -87,7 +87,9 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-check_PROGRAMS = sanity-check$(EXEEXT)
+check_PROGRAMS = sanity-check$(EXEEXT) hebcal-10$(EXEEXT)
+TESTS = hebcal-1 hebcal-2 hebcal-3 hebcal-4 hebcal-5 hebcal-6 hebcal-7 \
+	hebcal-8 hebcal-9 hebcal-10$(EXEEXT)
 subdir = tests
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -98,6 +100,9 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
+hebcal_10_SOURCES = hebcal-10.c
+hebcal_10_OBJECTS = hebcal-10.$(OBJEXT)
+hebcal_10_DEPENDENCIES = ../city.o
 am_sanity_check_OBJECTS = sanity-check.$(OBJEXT)
 sanity_check_OBJECTS = $(am_sanity_check_OBJECTS)
 sanity_check_DEPENDENCIES = ../common.o ../danlib.o ../error.o \
@@ -129,8 +134,8 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(sanity_check_SOURCES)
-DIST_SOURCES = $(sanity_check_SOURCES)
+SOURCES = hebcal-10.c $(sanity_check_SOURCES)
+DIST_SOURCES = hebcal-10.c $(sanity_check_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -451,10 +456,7 @@ top_srcdir = @top_srcdir@
 sanity_check_SOURCES = sanity-check.c
 sanity_check_LDADD = ../common.o ../danlib.o ../error.o ../greg.o 
 AM_CPPFLAGS = -I $(top_srcdir)
-TESTS = hebcal-1 hebcal-2 hebcal-3 \
-	hebcal-4 hebcal-5 hebcal-6 hebcal-7 \
-	hebcal-8 hebcal-9
-
+hebcal_10_LDADD = ../city.o
 TESTS_okayfiles = hebcal-test1.ok hebcal-test2.ok hebcal-test3.ok \
 	hebcal-test4.ok hebcal-test5.ok hebcal-test6.ok hebcal-test7.ok \
 	hebcal-test8.ok hebcal-test9.ok
@@ -501,6 +503,10 @@ $(am__aclocal_m4_deps):
 
 clean-checkPROGRAMS:
 	-test -z "$(check_PROGRAMS)" || rm -f $(check_PROGRAMS)
+
+hebcal-10$(EXEEXT): $(hebcal_10_OBJECTS) $(hebcal_10_DEPENDENCIES) $(EXTRA_hebcal_10_DEPENDENCIES) 
+	@rm -f hebcal-10$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(hebcal_10_OBJECTS) $(hebcal_10_LDADD) $(LIBS)
 
 sanity-check$(EXEEXT): $(sanity_check_OBJECTS) $(sanity_check_DEPENDENCIES) $(EXTRA_sanity_check_DEPENDENCIES) 
 	@rm -f sanity-check$(EXEEXT)
@@ -770,6 +776,13 @@ hebcal-8.log: hebcal-8
 hebcal-9.log: hebcal-9
 	@p='hebcal-9'; \
 	b='hebcal-9'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+hebcal-10.log: hebcal-10$(EXEEXT)
+	@p='hebcal-10$(EXEEXT)'; \
+	b='hebcal-10'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
