@@ -217,7 +217,7 @@ Read extra events from \c
 These events are printed regardless of the \c
 .B \-h \c
 suppress holidays switch.
-
+.sp 0.6v
 There is one holiday per line in 
 .BI file,
 each with the format
@@ -332,7 +332,7 @@ Read a table of yahrtzeit dates from \c
 These events are printed regardless of the \c
 .B \-h \c
 suppress holidays switch.
-
+.sp 0.6v
 There is one death-date per line in \c
 .I file,
 each with the format
@@ -352,7 +352,7 @@ is a newline-terminated string to be printed on the \c
 .I yahrtzeit.
 An example might be 
 .br
-
+.sp 0.6v
 \	12 29 1957 Menachem Mendel's yahrtzeit.
 .br
 \	5 15 1930 Benjamin's yahrtzeit.
