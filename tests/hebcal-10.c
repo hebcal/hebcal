@@ -36,6 +36,7 @@ void main() {
     test_compare_city("aa", "a", 1);
     test_compare_city("aa", "ab", -1);
     test_compare_city("ab", "aa", 1);
+    test_compare_city("a", "a'", -1);
 
     /* Let's try some real cities */
     test_compare_city("Toronto", "Toronto", 0);
@@ -45,5 +46,6 @@ void main() {
     test_compare_city("Kitchener", "Kitchener Waterloo", -1);
     test_compare_city("Kitchener-Waterloo", "Kitchener", 1);
     test_compare_city("Kitchener-Waterloo", "Kitchener Waterloo", 0);
+    test_compare_city("Saint John", "Saint John's", -1);
     exit(result_code);
 }
