@@ -97,16 +97,16 @@ is a number from 1..31.
 .PP
 For example, the command
 .nf
-.sp
+.sp 0.6v
 	hebcal 10 1992
-.sp
+.sp 0.6v
 .fi
 will print out the holidays occurring in October of 1992 C.E., while
 the command
 .nf
-.sp
+.sp 0.6v
 	hebcal Tish 5752
-.sp
+.sp 0.6v
 .fi
 will print dates of interest in the month of Tishrei in Jewish
 calendar year 5752.
@@ -133,9 +133,9 @@ date.
 .PP
 To get a quick-reference online help, type 
 .nf
-.sp
+.sp 0.6v
 	hebcal help
-.sp
+.sp 0.6v
 .fi
 at the command prompt.
 
@@ -186,15 +186,15 @@ unaffected by this switch.
 When the \fB\-H\fP switch is used, all dates specified on the command line
 are assumed to be Hebrew dates.
 So for instance,
-.sp
+.sp 0.6v
 \	example% hebcal \-H 5754
-.sp
+.sp 0.6v
 will print data for 5754, starting in Tishrei, and ending in Elul.
 Hebcal is smart enough to detect a Hebrew month and infer that you
 want a Hebrew date range, so you could type
-.sp
+.sp 0.6v
 \	example% hebcal tish 5754
-.sp
+.sp 0.6v
 The \fB\-H\fP switch would be superfluous in this case.
 Invoking hebcal with
 just the \fB\-H\fP switch by itself will print data for the current Hebrew
@@ -221,9 +221,9 @@ suppress holidays switch.
 There is one holiday per line in 
 .BI file,
 each with the format
-.sp
+.sp 0.6v
 \	\fImonth day description\fP
-.sp
+.sp 0.6v
 where \c
 .I month \c
 is a string identifying the Jewish month in question \c
@@ -232,7 +232,7 @@ is a number from 1 to 30, and \c
 .I description
 is a newline-terminated string describing the holiday.
 An example might be 
-.sp
+.sp 0.6v
 \	Adar 1 Start cleaning kitchen for Passover.
 .br
 \	Adar 1 Start cleaning kitchen for Passover.
@@ -336,9 +336,9 @@ suppress holidays switch.
 There is one death-date per line in \c
 .I file,
 each with the format
-.sp
+.sp 0.6v
 .I "\	month\ day\ year\ description"
-.sp
+.sp 0.6v
 where \c
 .IR month ,
 .I day
@@ -416,9 +416,9 @@ command.  This will localize hebcal to \c
 A list of the cities hebcal knows about can be obtained
 by typing
 .nf
-.sp
+.sp 0.6v
 	hebcal cities
-.sp
+.sp 0.6v
 .fi
 at the command prompt.  If the city you want isn't on that list, you
 can directly control hebcal's geographic information with the \c
@@ -429,9 +429,9 @@ causes the timezone to default to UTC.
 For a status report on customizations, type 
 type
 .nf
-.sp
+.sp 0.6v
 	hebcal info
-.sp
+.sp 0.6v
 .fi
 at the command prompt.
 
@@ -442,7 +442,7 @@ To find the days of the \c
 in 1997, printing the days of the week:
 .RS
 .nf
-.sp
+.sp 0.6v
 example% hebcal -how 1997
 .br
 4/23/97 Wed, 1st day of the Omer
@@ -467,7 +467,7 @@ To print only the weekly \c
 of Nisan 5770
 .RS
 .nf
-.sp
+.sp 0.6v
 example% hebcal -hs Nisan 5770
 .br
 3/20/2010 Parashat Vayikra
@@ -475,13 +475,13 @@ example% hebcal -hs Nisan 5770
 3/27/2010 Parashat Tzav
 .br
 4/10/2010 Parashat Shmini
-.sp
+.sp 0.6v
 .RE
 .LP 
 To find out what's happening in the Jewish calendar today, use
 .RS
 .nf
-.sp
+.sp 0.6v
 example% hebcal -TS
 .br
 19 of Nisan, 5752
@@ -503,7 +503,7 @@ uses two environment variables:
 .BI "Hebcal " \c
 uses this value as the default city for sunset calculations.  A list
 of available cities is available with from hebcal with the command:
-.sp
+.sp 0.6v
 \	hebcal cities
 .TP
 .B HEBCAL_OPTS
@@ -580,11 +580,11 @@ Negative longitudes are
 of Greenwich.
 .PP
 Some combinations of options produce weird results, e.g. ,
-.sp
+.sp 0.6v
 \	hebcal -dH nisan 5744
 .br
 \	hebcal -dH 5744
-.sp
+.sp 0.6v
 This comes into play when you use the 
 .B ENV_OPT
 environment variable.
@@ -612,9 +612,9 @@ Danny Sadinoff
 danny@sadinoff.com
 
 .SH COPYING
-Copyright (c) 1994\-2006 Danny Sadinoff
+Copyright \(co 1994\-2006 Danny Sadinoff
 .br
-Portions Copyright (c) 2010 Michael J. Radwin. All Rights Reserved.
+Portions Copyright \(co 2010 Michael J. Radwin. All Rights Reserved.
 .PP
 Permission is granted to make and distribute verbatim copies of
 this manual provided the copyright notice and this permission notice
@@ -633,11 +633,11 @@ the original English.
 .PP
 For a full text of the copyright and lack of warranty information, 
 type 
-.sp
+.sp 0.6v
 \	hebcal copying
-.sp
+.sp 0.6v
 or 
-.sp
+.sp 0.6v
 \	hebcal warranty
-.sp
+.sp 0.6v
 at the command line.
