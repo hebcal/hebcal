@@ -260,7 +260,7 @@ Display calendar in
 the
 .I lang
 language,
-which must be specified as one of the ISO 639-1 codes of "he", "ru", or "pl"
+which must be specified as one of the ISO 639-1 codes of \(lqhe\(rq, \(lqru\(rq, or \(lqpl\(rq
 .TP
 .BI "\-m " mins
 Set havdalah to occur
@@ -277,8 +277,8 @@ to the output.
 .TP
 .B "\-r"
 Use a tab-delineated format, and somewhat terser
-strings.  Instead of saying \&\|" 13th day of the omer \&\|"
-hebcal will say \&\|" Omer: 13 \&\|"
+strings.  Instead of saying \&\|\(lq\ 13th day of the omer \&\|\(rq
+hebcal will say \&\|\(lq\ Omer: 13 \&\|\(rq
 .TP
 .B "\-s"
 Add the weekly 
@@ -599,7 +599,7 @@ and the Jewish calendar. This means that the results
 will be at least partly useless where and when the
 Gregorian calendar was not used, e.g. before
 1752 in Britain and before circa 1918 in Russia.  
-See the Wikipedia entry for "Daylight saving time" for
+See the Wikipedia entry for \(lqDaylight saving time\(rq for
 a splendid chart depicting when the changeover from 
 the Julian to the Gregorian calendars occurred in various places.
 .PP
