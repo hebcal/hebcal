@@ -18,6 +18,7 @@ stamp-h1
 
 # Editor files
 *.sublime*
+.*.swp
 
 
 # Object files
