@@ -588,7 +588,7 @@ Some combinations of options produce weird results, e.g. ,
 \	hebcal -dH 5744
 .sp 0.6v
 This comes into play when you use the 
-.B HEBCAL_OPT
+.B HEBCAL_OPTS
 environment variable.
 .PP
 The sunup/sundown routines aren't accurate enough.  If you enter
