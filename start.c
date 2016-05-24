@@ -255,7 +255,15 @@ void print_city_data( void )
     }
 }
 
-/* This is a proof-of-concept to address issue 30. It does not handle Unicode (e.g., accented city names) at all */
+/* This function compares two city names, treating all non-alphas as blanks */
+
+/*********************************************************************/
+/* Compares two city names and returns -1, 0, or 1 like stricmp.     */
+/* The comparison is case insensitive and treats all non-alpha       */
+/* characters as equivalent to blanks (i.e., "less than" alphas).    */
+/* The function currently assumes both its input to be ASCII         */
+/* (i.e., it does not yet support accented or non-Latin city names). */
+/*********************************************************************/
 int compare_city(const char *a, const char *b)
 {
     int result = 0;
@@ -280,11 +288,11 @@ int compare_city(const char *a, const char *b)
         }
         else
         {
-            /* We can ignore all non-alphas, or do some sort of comparison. Do the latter for now */
             if (!current_p_is_alpha && current_q_is_alpha)
-                result = -1;
+                result = -1;                    /* space < alpha */
             else if (current_p_is_alpha && !current_q_is_alpha)
-                result = 1;
+                result = 1;                     /* alpha > space */
+            /* Skip to either the next alpha or the end of string */
             while (*p && !isalpha((int) *p))
                 p += 1;
             while (*q && !isalpha((int) *q))
