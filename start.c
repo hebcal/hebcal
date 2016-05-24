@@ -190,7 +190,9 @@ static char* optionsHelpArray[] = {
 
 void print_version_data(void)
 {
+    const timelib_tzdb *db = timelib_builtin_db();
     printf("hebcal version " VERSION "\n");
+    printf("timezone_db version %s\n", db->version);
     printf("=====Defaults=====\n");
     printf("City: %s\n", cityName);
     printf("          %dd%d' %c latitude\n", abs(latdeg), abs(latmin),
