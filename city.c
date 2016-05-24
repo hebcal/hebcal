@@ -34,6 +34,8 @@
 /* characters as equivalent to blanks (i.e., "less than" alphas).    */
 /* The function currently assumes both its input to be ASCII         */
 /* (i.e., it does not yet support accented or non-Latin city names). */
+/* If either string is NULL the function tries to return something   */
+/* reasonable but the results are undefined.                         */
 /*********************************************************************/
 int compare_city(const char *a, const char *b)
 {
@@ -80,6 +82,10 @@ int compare_city(const char *a, const char *b)
     else if (*p && !*q)
       result = 1;                       /* something > nothing */
   }
+  else if (a == NULL && b != NULL && *b)
+    result = -1;                        /* nothing < something */
+  else if (a != NULL && *a && b == NULL)
+    result = 1;                         /* something > nothing */
   return result;
 }
 
