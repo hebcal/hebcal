@@ -11,6 +11,7 @@
 ..
 .SH NAME
 hebcal - a Jewish calendar generator
+.sp 0.5v
 .SH SYNOPSIS
 .B hebcal
 [ 
@@ -67,7 +68,7 @@ hebcal - a Jewish calendar generator
 .B hebcal copying
 .br
 .B hebcal warranty
-.PP
+.sp 0.5v
 .SH DESCRIPTION
 With no arguments, 
 .B hebcal
@@ -138,7 +139,7 @@ To get a quick-reference online help, type
 .sp 0.6v
 .fi
 at the command prompt.
-
+.sp 0.5v
 .SH OPTIONS
 .TP
 .B "\-8"
@@ -380,6 +381,7 @@ Show help text
 .TP
 .B \-\-version
 Show version number
+.sp 0.5v
 .SH "CANDLE\-LIGHTING TIMES"
 Hebcal's candlelighting times are only approximations.
 If you ever have any doubts about its times,
@@ -434,7 +436,7 @@ type
 .sp 0.6v
 .fi
 at the command prompt.
-
+.sp 0.5v
 .SH EXAMPLES
 .LP
 To find the days of the \c
@@ -494,7 +496,7 @@ Pesach V (CH"M)
 4th day of the Omer
 .br
 .RE
-
+.sp 0.5v
 .SH ENVIRONMENT
 .BI Hebcal
 uses two environment variables:
@@ -511,12 +513,12 @@ The value of this variable is automatically processed as if it were
 typed at the command line \c
 .I before \c
 any other actual command-line arguments.
-
+.sp 0.5v
 .SH AUTHORS
 Danny Sadinoff
 .br
 Michael J. Radwin
-
+.sp 0.5v
 .SH SEE ALSO
 calendar(1), emacs(1), hcal(1), hdate(1), omer(1), remind(1), rise(1)
 .PP
@@ -540,7 +542,7 @@ by Rabbi Nathan Bushwick.  A more complete bibliography on the topic
 can be found there, as well as in the \c
 .I Encyclopedia Judaica \c
 entry on the calendar.  
-
+.sp 0.5v
 .SH DIAGNOSTICS
 .TP
 .B hebcal help
@@ -564,12 +566,12 @@ See below.
 .TP
 .B hebcal warranty
 Tells you how there's NO WARRANTY for hebcal.
-
+.sp 0.5v
 .SH DISCLAIMER
 This is just a program I wrote during summer school and
 while avoiding my senior project.  It should not be invested
 with any sort of halachic authority.
-
+.sp 0.5v
 .SH BUGS
 Hebrew dates are only valid before sundown on that
 secular date.  An option to control this will be added
@@ -605,12 +607,12 @@ the Julian to the Gregorian calendars occurred in various places.
 .PP
 Hebcal cannot handle date computations before 2 C.E.
 Sorry.
-
+.sp 0.5v
 .SH BUG REPORTS TO
 Danny Sadinoff
 .br
 danny@sadinoff.com
-
+.sp 0.5v
 .SH COPYING
 Copyright \(co 1994\-2006 Danny Sadinoff
 .br
