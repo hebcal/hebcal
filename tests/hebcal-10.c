@@ -25,7 +25,9 @@ void main() {
     /* Invalid strings */
     test_compare_city(NULL, NULL, 0);
     test_compare_city(NULL, "", 0);
+    test_compare_city(NULL, "a", -1);
     test_compare_city("", NULL, 0);
+    test_compare_city("a", NULL, 1);
 
     /* Minimal strings */
     test_compare_city("", "", 0);
