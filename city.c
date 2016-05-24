@@ -69,10 +69,10 @@ int compare_city(const char *a, const char *b)
         else if (current_p_is_alpha && !current_q_is_alpha)
           result = 1;                     /* alpha > space */
         /* Skip to either the next alpha or the end of string */
-          while (*p && !isalpha((int) *p))
-            p += 1;
-          while (*q && !isalpha((int) *q))
-            q += 1;
+        while (*p && !isalpha((int) *p))
+          p += 1;
+        while (*q && !isalpha((int) *q))
+          q += 1;
       }
     }
     /* 0 here means the start of the strings are identical, but the end can still differ */
