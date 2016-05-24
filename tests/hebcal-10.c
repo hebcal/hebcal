@@ -57,5 +57,8 @@ void main() {
     test_compare_city("Kitchener-Waterloo", "Kitchener", 1);
     test_compare_city("Kitchener-Waterloo", "Kitchener Waterloo", 0);
     test_compare_city("Saint John", "Saint John's", -1);
+
+    /* Bug 30 - This must pass because this is why the comparator was written in the first place */
+    test_compare_city("Winston-Salem NC", "Winston Salem NC", 0);
     exit(result_code);
 }
