@@ -3,6 +3,7 @@ Makefile
 .*~
 aclocal.m4
 autom4te.cache
+compile
 config.h
 config.h.in.orig
 config.log
@@ -13,6 +14,7 @@ doc/version.texi
 doc/version.texi.orig
 hebcal
 hebcal.1
+missing
 package.m4
 stamp-h1
 
@@ -38,3 +40,12 @@ stamp-h1
 *.exe
 *.out
 *.app
+
+# Test drivers compiled from source
+tests/*.o
+tests/hebcal-10
+tests/sanity-check
+
+# Test output files
+tests/*.log
+tests/*.trs
