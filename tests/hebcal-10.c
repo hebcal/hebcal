@@ -42,11 +42,15 @@ void main() {
     test_compare_city("a", "", 1);
     test_compare_city("", "a", -1);
     test_compare_city("a", "a", 0);
+    test_compare_city("a", "A", 0);
+    test_compare_city("A", "a", 0);
     test_compare_city("a", "aa", -1);
     test_compare_city("aa", "a", 1);
     test_compare_city("aa", "ab", -1);
     test_compare_city("ab", "aa", 1);
     test_compare_city("a", "a'", -1);
+    test_compare_city("a ", "a'", 0);  /* different non-alphas at the end should not have any effect */
+    test_compare_city("a'", "a''", 0);
 
     /* Let's try some real cities */
     test_compare_city("Toronto", "Toronto", 0);
