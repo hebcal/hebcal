@@ -22,6 +22,7 @@
    Danny Sadinoff can be reached at
    danny@sadinoff.com
  */
+/* City name comparator - Written by Ambrose Li */
 
 #include <stdlib.h>
 #include "city.h"

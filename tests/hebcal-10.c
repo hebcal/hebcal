@@ -1,4 +1,6 @@
 /* vi: set sw=2 ai sm et: */
+/* Tests for city.c - Written by Ambrose Li */
+
 #include <stdio.h>
 #include <stdlib.h>
 
