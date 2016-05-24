@@ -1,4 +1,4 @@
-/*
+/* vi: set sw=2 ai sm et:
    Hebcal - A Jewish Calendar Generator
    Copyright (C) 1994-2006  Danny Sadinoff
    Portions Copyright (c) 2010 Michael J. Radwin. All Rights Reserved.
