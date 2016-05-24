@@ -308,6 +308,9 @@ void localize_to_city(const char *cityNameArg)
     char *pc;
     city_t *pcity;
 
+    if (cityName != NULL)
+        free(cityName);
+
     for (pcity = &cities[0]; pcity->name != NULL; pcity++)
         if (0 == compare_city(cityNameArg, pcity->name))
         {
