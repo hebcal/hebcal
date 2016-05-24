@@ -41,7 +41,7 @@ stamp-h1
 *.out
 *.app
 
-# Test drivers compiled from source
+# Test cases compiled from source
 tests/*.o
 tests/hebcal-10
 tests/sanity-check
