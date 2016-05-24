@@ -40,7 +40,8 @@ hebcal - a Jewish calendar generator
 .B \-l 
 .I latitude 
 .B \-L 
-.I longitude]
+.I longitude
+]
 .if n .ti +5
 .br
 	[
@@ -84,7 +85,8 @@ or
 output can be limited to a particular month or date
 in a particular year.  Note that
 .I year
-is usually a four-digit integer,  So 92 is during the Roman period,
+is usually a four-digit integer,
+so 92 is during the Roman period,
 not the late twentieth century.
 If the Hebrew dates option is turned on,
 this number represents the Jewish calendar year.
@@ -92,7 +94,7 @@ this number represents the Jewish calendar year.
 is a number from 1..12, or the name of a Jewish calendar month.
 .I day 
 is a number from 1..31.
-.sp
+.PP
 For example, the command
 .nf
 .sp
@@ -109,7 +111,8 @@ the command
 will print dates of interest in the month of Tishrei in Jewish
 calendar year 5752.
 .PP
-NOTE:  hebcal 92 is 
+Note:
+hebcal 92 is 
 .I not
 the same as hebcal 1992.  The year is assumed to be complete, so the
 former calendar preceeds the latter by nineteen centuries.
@@ -121,10 +124,10 @@ as well as the day of the week, the count of the
 and the Hebrew date.
 .PP
 Output from hebcal can be used to drive calendar(1).  
-Day\-to\-day use for hebcal is provided for in the \c
-.B -T \c
+Day-to-day use for hebcal is provided for in the
+.B \-T
 and \c
-.B -t \c
+.B \-t
 switches, which print out Jewish calendar entries for the current
 date.
 .PP
@@ -157,7 +160,7 @@ candle-lighting times.  See below.
 .BI "\-C " city
 Set latitude, longitude, and timezone according to
 .IR city .
-This option implies the -c option.
+This option implies the \fB\-c\fP option.
 .TP
 .B "\-d"
 Print the Hebrew date for the entire date range.
@@ -175,24 +178,26 @@ Output 24-hour times (e.g., 18:37 instead of 6:37)
 Output the Daf Yomi for the entire date range
 .TP
 .B "\-h"
-Suppress holidays in output.  User defined calendar events are
+Suppress holidays in output.
+User-defined calendar events are
 unaffected by this switch.
 .TP
 .B "\-H"
-When the \-H switch is used, all dates specified on the command line
+When the \fB\-H\fP switch is used, all dates specified on the command line
 are assumed to be Hebrew dates.
 So for instance,
 .sp
 \	example% hebcal \-H 5754
 .sp
-will print data for 5754, Starting in Tishrei, and ending in Elul.
+will print data for 5754, starting in Tishrei, and ending in Elul.
 Hebcal is smart enough to detect a Hebrew month and infer that you
 want a Hebrew date range, so you could type
 .sp
 \	example% hebcal tish 5754
 .sp
-The \-H switch would be superfluous in this case.  Invoking hebcal with
-just the \-H switch by itself will print data for the current Hebrew
+The \fB\-H\fP switch would be superfluous in this case.
+Invoking hebcal with
+just the \fB\-H\fP switch by itself will print data for the current Hebrew
 year, starting in Tishrei.  
 .TP
 .B "\-i"
@@ -212,7 +217,7 @@ Read extra events from \c
 These events are printed regardless of the \c
 .B \-h \c
 suppress holidays switch.
-.br
+
 There is one holiday per line in 
 .BI file,
 each with the format
@@ -232,7 +237,7 @@ An example might be
 .br
 \	Adar 1 Start cleaning kitchen for Passover.
 .TP
-.BI "\-l " "deg\fB,\fPmin"
+.BI "\-l " "deg\fB,\^\fPmin"
 Set the latitude for solar calculations to \c
 .I deg \c
 degrees and \c
@@ -240,7 +245,7 @@ degrees and \c
 minutes.
 Negative values are south.
 .TP
-.BI "\-L " "deg\fB,\fPmin"
+.BI "\-L " "deg\fB,\^\fPmin"
 Set the longitude for solar calculations to \c
 .I deg \c
 degrees and \c
@@ -388,16 +393,19 @@ associated geographic information and time-zone information.
 The geographic and time information necessary to
 calculate sundown times can come to hebcal any of three
 ways:
-.PP
-1) The default: the system manager sets a default city
+.nr step 1 1
+.IP \n[step])
+The default: the system manager sets a default city
 when the program is compiled.
 .br
-2) Hebcal looks in the environment variable 
+.IP \n+[step])
+Hebcal looks in the environment variable 
 .B HEBCAL_CITY
 for the name of a city in hebcal's database, and if it
 finds one, hebcal will make that the new default city.
 .br
-3) 1 and 2 may be overridden by command line arguments, including
+.IP \n+[step])
+1 and 2 may be overridden by command line arguments, including
 those specified in the
 .B HEBCAL_OPTS
 environment variable.
