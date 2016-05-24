@@ -253,25 +253,53 @@ void print_city_data( void )
     }
 }
 
+/* This is a proof-of-concept to address issue 30. It does not handle Unicode (e.g., accented city names) at all */
+int compare_city(const char *a, const char *b)
+{
+    int result = 0;
+    const char *p, *q;
+    int current_p_is_alpha, current_q_is_alpha;
+    int current_p_normalized, current_q_normalized;
+
+    for (p = a, q = b; result == 0 && *p && *q;)
+    {
+        current_p_is_alpha = isalpha((int) *p);
+        current_q_is_alpha = isalpha((int) *q);
+        if (current_p_is_alpha && current_q_is_alpha)
+        {
+            current_p_normalized = toupper((int) *p);
+            current_q_normalized = toupper((int) *q);
+            if (current_p_normalized < current_q_normalized)
+                result = -1;
+            else if (current_p_normalized > current_q_normalized)
+                result = 1;
+            p += 1;
+            q += 1;
+        }
+        else
+        {
+            /* We can ignore all non-alphas, or do some sort of comparison. Do the latter for now */
+            if (!current_p_is_alpha && current_q_is_alpha)
+                result = -1;
+            else if (current_p_is_alpha && !current_q_is_alpha)
+                result = 1;
+            while (*p && !isalpha((int) *p))
+                p += 1;
+            while (*q && !isalpha((int) *q))
+                q += 1;
+        }
+    }
+    return result;
+}
+
 void localize_to_city(const char *cityNameArg)
 {
     size_t len = strlen(cityNameArg);
-    char *pc, *cityStr;
+    char *pc;
     city_t *pcity;
 
-    initStr(&cityStr, strlen(cityNameArg));
-    strcpy(cityStr, cityNameArg);
-
-    if (cityName != NULL)
-        free(cityName);
-
-    /* convert non-alpha to spaces */
-    for ( pc = cityStr; *pc != '\0'; pc++ )
-        if ( ! isalpha( (int)*pc ) )
-            *pc = ' ';
-
     for (pcity = &cities[0]; pcity->name != NULL; pcity++)
-        if (0 == istrncasecmp(len, cityStr, pcity->name))
+        if (0 == compare_city(cityNameArg, pcity->name))
         {
             if (!(longp || latp))	/* -l and -L override -C  */
             {
@@ -284,7 +312,6 @@ void localize_to_city(const char *cityNameArg)
             if (TZ_INFO == NULL) {
                 die("unable to read time zone argument: %s", pcity->tz);
             }
-            free(cityStr);
             initStr(&cityName, strlen(pcity->name));
             strcpy(cityName, pcity->name);
             return;
