@@ -8,7 +8,7 @@ portions by Michael J. Radwin
 
 ## Description
 Hebcal is a program which prints out the days in the Jewish calendar
-for a given gregorian year.  Hebcal is fairly flexible in terms of which
+for a given Gregorian year.  Hebcal is fairly flexible in terms of which
 events in the Jewish calendar it displays.  Each of the following can
 be individualy turned on or off:
 
@@ -56,9 +56,9 @@ Option | Description
 -c | Print candlelighting times.
 -C city | Set latitude, longitude, and timezone according to specified city. This option implies the -c option.
    -d | print the Hebrew date for the entire date range.
-   -D | print the Hebrew date for dates with some event.
-   -e | Ouput "European" dates -- DD.MM.YYYY format.
-   -E | Ouput 24-hour times (e.g. 18:37 instead of 6:37).
+   -D | print the Hebrew date for dates with some events
+   -e | Output "European" dates -- DD.MM.YYYY format.
+   -E | Output 24-hour times (e.g. 18:37 instead of 6:37).
    -F | Output the Daf Yomi for the entire date range.
    -h | Suppress default holidays.
    -H | Use Hebrew date ranges - only needed when e.g. `hebcal -H 5373`
@@ -72,10 +72,10 @@ Option | Description
    -o | Add days of the omer.
    -O | Output sunrise and sunset times every day.
    -r | Tab delineated format.
-   -s | Add weekly sedrot on saturday.
+   -s | Add weekly sedrot on Saturday.
    -S | Print sedrah of the week on all calendar days.
    -t | Only output for today's date.
-   -T | Print today's pertinent information, no gregorian date.
+   -T | Print today's pertinent information, no Gregorian date.
    -w | Add day of the week.
    -W | Weekly view. Omer, dafyomi, and non-date-specific zemanim are shown once a week, on the day which corresponds to the first day in the range.
    -x | Suppress Rosh Chodesh.
@@ -105,7 +105,7 @@ Hebcal uses two environment variables:
 <dt>HEBCAL_CITY
 <dd>Hebcal uses this value as the default city for sunset calculations. A list of available cities is available with from hebcal with the command: <code>hebcal cities</code>
 <dt>HEBCAL_OPTS
-<dd>The value of this variable is automatically processed as if it were typed at the command line before any other actual command−line−arguments.
+<dd>The value of this variable is automatically processed as if it were typed at the command line before any other actual command-line arguments.
 </dl>
 
 ## Author
