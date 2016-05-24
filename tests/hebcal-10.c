@@ -1,6 +1,12 @@
 /* vi: set sw=2 ai sm et: */
 /* Tests for city.c - Written by Ambrose Li */
 
+/*
+   TODO: POSSIBLE EDGE CASES THAT MIGHT NEED TO BE TESTED:
+   - Two strings completely identical except there are trailing blanks in one
+   - Two cities that have almost the same name but one has an apostrophe at the end
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 
