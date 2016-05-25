@@ -25,6 +25,7 @@
 /* City name comparator - Written by Ambrose Li */
 
 #include <stdlib.h>
+#include <ctype.h>
 #include "city.h"
 
 /* This function compares two city names, treating all non-alphas as blanks */
