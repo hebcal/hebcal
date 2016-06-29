@@ -1,3 +1,7 @@
+Changes in 4.7
+* Update timezone database to 2016.5 (2016e)
+* Fixed long option `--tabs` (#125)
+
 Changes in 4.6
 * Update timezone database to 2016.3 (2016c)
 * Add candle lighting for second night of Rosh Hashana (#119)
