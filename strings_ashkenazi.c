@@ -1,5 +1,5 @@
-/* C code produced by gperf version 3.0.4 */
-/* Command-line: gperf strings_ashkenazi.gperf  */
+/* C code produced by gperf version 3.0.3 */
+/* Command-line: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/gperf strings_ashkenazi.gperf  */
 /* Computed positions: -k'4-5,8-9' */
 
 #if !((' ' == 32) && ('!' == 33) && ('"' == 34) && ('#' == 35) \
@@ -35,7 +35,7 @@ error "gperf generated tables don't work with this execution character set. Plea
 #line 7 "strings_ashkenazi.gperf"
 struct event_title { char *name; char *dest; };
 
-#define TOTAL_KEYWORDS 40
+#define TOTAL_KEYWORDS 41
 #define MIN_WORD_LENGTH 5
 #define MAX_WORD_LENGTH 25
 #define MIN_HASH_VALUE 5
@@ -64,9 +64,9 @@ hash (str, len)
       51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
       51, 51, 51, 51, 51,  5, 51, 10, 15, 51,
        0, 51, 51,  5,  0, 51, 51, 20, 51, 25,
-      51, 25, 51, 51,  0,  0, 15, 15, 51, 51,
+      51, 30, 51, 51,  0,  5, 15, 15, 51, 51,
       51,  5, 51, 51, 51, 51, 51,  0,  0, 10,
-      30,  5,  0, 51, 10,  5, 51,  0, 10, 10,
+      30,  5,  0, 51, 10,  5,  0,  0, 10, 10,
       10,  0, 15, 51,  0, 15,  5,  5,  0,  0,
       51, 51,  0, 51, 51, 51, 51, 51, 51, 51,
       51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
@@ -83,7 +83,7 @@ hash (str, len)
       51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
       51, 51, 51, 51, 51, 51, 51
     };
-  register int hval = len;
+  register unsigned int hval = len;
 
   switch (hval)
     {
@@ -105,12 +105,6 @@ hash (str, len)
   return hval;
 }
 
-#ifdef __GNUC__
-__inline
-#if defined __GNUC_STDC_INLINE__ || defined __GNUC_GNU_INLINE__
-__attribute__ ((__gnu_inline__))
-#endif
-#endif
 struct event_title *
 hebcal_lookup_ashkenazi (str, len)
      register const char *str;
@@ -182,8 +176,8 @@ hebcal_lookup_ashkenazi (str, len)
       {"Toldot","Toldos"},
 #line 39 "strings_ashkenazi.gperf"
       {"Sukkot IV (CH''M)","Sukkos IV (CH''M)"},
-#line 34 "strings_ashkenazi.gperf"
-      {"Simchat Torah","Simchas Torah"},
+#line 49 "strings_ashkenazi.gperf"
+      {"Leil Selichot","Leil Selichos"},
 #line 33 "strings_ashkenazi.gperf"
       {"Shmini Atzeret","Shmini Atzeres"},
 #line 42 "strings_ashkenazi.gperf"
@@ -192,23 +186,26 @@ hebcal_lookup_ashkenazi (str, len)
       {"Ta'anit Bechorot","Ta'anis Bechoros"},
 #line 11 "strings_ashkenazi.gperf"
       {"Beha'alotcha","Beha'aloscha"},
-#line 26 "strings_ashkenazi.gperf"
-      {"Shabbat Parah","Shabbos Parah"},
+#line 34 "strings_ashkenazi.gperf"
+      {"Simchat Torah","Simchas Torah"},
       {""},
 #line 25 "strings_ashkenazi.gperf"
       {"Shabbat Nachamu","Shabbos Nachamu"},
 #line 40 "strings_ashkenazi.gperf"
       {"Sukkot V (CH''M)","Sukkos V (CH''M)"},
-      {""}, {""}, {""},
+      {""},
+#line 26 "strings_ashkenazi.gperf"
+      {"Shabbat Parah","Shabbos Parah"},
+      {""},
 #line 9 "strings_ashkenazi.gperf"
       {"Achrei Mot","Achrei Mos"}
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
     {
-      register int key = hash (str, len);
+      unsigned int key = hash (str, len);
 
-      if (key <= MAX_HASH_VALUE && key >= 0)
+      if (key <= MAX_HASH_VALUE)
         {
           register const char *s = wordlist[key].name;
 

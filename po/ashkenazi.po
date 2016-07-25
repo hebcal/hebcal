@@ -136,3 +136,6 @@ msgstr "Yisro"
 
 msgid "Parashat"
 msgstr "Parshas"
+
+msgid "Leil Selichot"
+msgstr "Leil Selichos"

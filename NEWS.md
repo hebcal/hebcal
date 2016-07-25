@@ -1,3 +1,7 @@
+Changes in 4.8
+* Update timezone database to 2016.6 (2016f)
+* Add Ashkenazi transliteration for Leil Selichos
+
 Changes in 4.7
 * Update timezone database to 2016.5 (2016e)
 * Fixed long option `--tabs` (#125)
