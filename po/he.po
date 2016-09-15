@@ -634,7 +634,7 @@ msgid "Sukkot VI (CH''M)"
 msgstr "סוּכּוֹת יוֹם ו׳ (חוֹל הַמוֹעד)"
 
 msgid "Sukkot VII (Hoshana Raba)"
-msgstr "סוּכּוֹת יוֹם ז׳ (הוֹשַׁנָא רַבָּה)"
+msgstr "סוּכּוֹת יוֹם ז׳ (הוֹשַׁעְנָא רַבָּה)"
 
 msgid "Ta'anit Bechorot"
 msgstr "תַּעֲנִית בְּכוֹרוֹת"
