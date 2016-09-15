@@ -181,7 +181,7 @@ hebcal_lookup_he (str, len)
 #line 90 "strings_he.gperf"
       {"Tzav","צַו"},
 #line 183 "strings_he.gperf"
-      {"Sukkot VII (Hoshana Raba)","סוּכּוֹת יוֹם ז׳ (הוֹשַׁנָא רַבָּה)"},
+      {"Sukkot VII (Hoshana Raba)","סוּכּוֹת יוֹם ז׳ (הוֹשַׁעְנָא רַבָּה)"},
       {""},
 #line 168 "strings_he.gperf"
       {"Shavuot","שָׁבוּעוֹת"},
