@@ -45,6 +45,7 @@ int
   ashkenazis_sw, candleLighting_sw, euroDates_sw, hebrewDates_sw, inputFile_sw,
   israel_sw, latlong_sw, printOmer_sw, printMolad_sw, printSunriseSunset_sw, sedraAllWeek_sw, sedrot_sw, noGreg_sw,
   printHebDates_sw, printSomeHebDates_sw, noHolidays_sw, tabs_sw, weekday_sw,  suppress_rosh_chodesh_sw,
+  suppressModern_sw,
   sunsetAlways_sw, sunriseAlways_sw, default_zemanim,  
   abbrev_sw, first_weekday, this_weekday,
   dafYomi_sw,

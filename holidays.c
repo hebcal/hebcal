@@ -550,7 +550,7 @@ static void load_variable_holidays( int hYear )
     tempDt = abs2hebrew (day_on_or_before (SAT, passover - 1L));
     PushHoliday (tmpholp, &var_holidays[tempDt.mm][tempDt.dd]);
 
-    if (hYear >= 5711)
+    if (hYear >= 5711 && !suppressModern_sw)
     {                            /* Yom HaShoah first observed in 1951 */
 			long int nisan27;
 			int nisan_day = 27;
@@ -575,7 +575,7 @@ static void load_variable_holidays( int hYear )
         PushHoliday (tmpholp, &var_holidays[NISAN][nisan_day]);
     }
 
-    if (hYear > 5708)
+    if (hYear > 5708 && !suppressModern_sw)
     {                            /* only really makes sense after 1948 */
         tmpholp = getHolstorep ();
         tmpholp->name = HOLIDAY_YOM_HAZIKARON;
@@ -596,14 +596,14 @@ static void load_variable_holidays( int hYear )
         PushHoliday (tmpholp, &var_holidays[IYYAR][tempDt.dd]);
     }
 
-    if (hYear > 5727)
+    if (hYear > 5727 && !suppressModern_sw)
     {                            /* only really makes sense after 1967 */
         tmpholp = getHolstorep ();
         tmpholp->name = HOLIDAY_YOM_YERUSHALAYIM;
         PushHoliday (tmpholp, &var_holidays[IYYAR][28]);
     }
 
-    if (hYear >= 5769) {
+    if (hYear >= 5769 && !suppressModern_sw) {
         tmpholp = getHolstorep ();
         tmpholp->name = HOLIDAY_SIGD;
         PushHoliday (tmpholp, &var_holidays[CHESHVAN][29]);

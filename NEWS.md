@@ -1,3 +1,6 @@
+Changes in 4.10
+* Add `--no-modern` option to suppress modern holidays (#133)
+
 Changes in 4.9
 * Update timezone database to 2016.9 (2016i)
 

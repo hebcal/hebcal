@@ -66,6 +66,7 @@ extern int
     noGreg_sw, 
     noHolidays_sw,
     suppress_rosh_chodesh_sw,
+    suppressModern_sw,
     tabs_sw,
     weekday_sw, 
     abbrev_sw,

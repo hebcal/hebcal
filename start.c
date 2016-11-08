@@ -138,6 +138,7 @@ static char* optionsHelpArray[] = {
 "                                       month name",
 "    --lang LANG                        Use LANG titles (he, ru, or pl)",
 "    -M, --molad                        Print the molad on Shabbat Mevorchim",
+"    --no-modern                        Suppress modern holidays",
 "    -o, --omer                         Add days of the Omer",
 "    -O, --sunrise-and-sunset           Output sunrise and sunset times every",
 "                                       day",
@@ -371,6 +372,7 @@ void handleArgs(int argc, char *argv[])
       {"longitude", required_argument, 0, 'L'},
       {"molad", no_argument, 0, 'M'},
       {"no-holidays", no_argument, 0, 'h'},
+      {"no-modern", no_argument, 0, 0},
       {"no-rosh-chodesh", no_argument, 0, 'x'},
       {"omer", no_argument, 0, 'o'},
       {"sedrot", no_argument, 0, 's'},
@@ -406,6 +408,8 @@ void handleArgs(int argc, char *argv[])
            if (!(sscanf(optarg, "%d", &numYears) == 1)) {
                die("unable to read --years argument: %s", optarg);
            }
+         } else if (0 == strcmp("no-modern", long_options[option_index].name)) {
+            suppressModern_sw = 1;
          } else {
            shortUsage();
            exit(1);
