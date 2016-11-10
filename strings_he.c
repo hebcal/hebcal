@@ -1,5 +1,5 @@
-/* C code produced by gperf version 3.0.4 */
-/* Command-line: gperf strings_he.gperf  */
+/* C code produced by gperf version 3.0.3 */
+/* Command-line: /Library/Developer/CommandLineTools/usr/bin/gperf strings_he.gperf  */
 /* Computed positions: -k'1,3,5,8-9,11' */
 
 #if !((' ' == 32) && ('!' == 33) && ('"' == 34) && ('#' == 35) \
@@ -35,7 +35,7 @@ error "gperf generated tables don't work with this execution character set. Plea
 #line 7 "strings_he.gperf"
 struct event_title { char *name; char *dest; };
 
-#define TOTAL_KEYWORDS 188
+#define TOTAL_KEYWORDS 189
 #define MIN_WORD_LENGTH 2
 #define MAX_WORD_LENGTH 25
 #define MIN_HASH_VALUE 4
@@ -83,7 +83,7 @@ hash (str, len)
       461, 461, 461, 461, 461, 461, 461, 461, 461, 461,
       461, 461, 461, 461, 461, 461, 461
     };
-  register int hval = len;
+  register unsigned int hval = len;
 
   switch (hval)
     {
@@ -114,12 +114,6 @@ hash (str, len)
   return hval;
 }
 
-#ifdef __GNUC__
-__inline
-#if defined __GNUC_STDC_INLINE__ || defined __GNUC_GNU_INLINE__
-__attribute__ ((__gnu_inline__))
-#endif
-#endif
 struct event_title *
 hebcal_lookup_he (str, len)
      register const char *str;
@@ -577,6 +571,9 @@ hebcal_lookup_he (str, len)
       {""}, {""}, {""}, {""}, {""}, {""}, {""},
 #line 192 "strings_he.gperf"
       {"Yom HaAtzma'ut","יוֹם הָעַצְמָאוּת"},
+      {""}, {""}, {""}, {""}, {""}, {""}, {""},
+#line 197 "strings_he.gperf"
+      {"Yom HaAliyah","יוֹם העלייה"},
       {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
       {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
       {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
@@ -586,16 +583,16 @@ hebcal_lookup_he (str, len)
       {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
       {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
       {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
-      {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
+      {""},
 #line 105 "strings_he.gperf"
       {"Candle lighting","הדלקת נרות"}
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
     {
-      register int key = hash (str, len);
+      unsigned int key = hash (str, len);
 
-      if (key <= MAX_HASH_VALUE && key >= 0)
+      if (key <= MAX_HASH_VALUE)
         {
           register const char *s = wordlist[key].name;
 

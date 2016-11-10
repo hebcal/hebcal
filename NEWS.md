@@ -1,4 +1,5 @@
 Changes in 4.10
+* Add Yom HaAliyah, observed on 7 Cheshvan (#132)
 * Add `--no-modern` option to suppress modern holidays (#133)
 
 Changes in 4.9

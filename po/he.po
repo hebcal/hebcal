@@ -674,3 +674,6 @@ msgstr "יוֹם כִּפּוּר"
 
 msgid "Yom Yerushalayim"
 msgstr "יוֹם יְרוּשָׁלַיִם"
+
+msgid "Yom HaAliyah"
+msgstr "יוֹם העלייה"
