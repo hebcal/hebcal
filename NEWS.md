@@ -1,5 +1,6 @@
 Changes in 4.11
 * Correct yahrzeit calculation when date of death is 30 Kislev (#134)
+* Update timezone database to 2016.10 (2016j)
 
 Changes in 4.10
 * Add Yom HaAliyah, observed on 7 Cheshvan (#132)
