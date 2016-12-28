@@ -1,3 +1,6 @@
+Changes in 4.11
+* Correct yahrzeit calculation when date of death is 30 Kislev (#134)
+
 Changes in 4.10
 * Add Yom HaAliyah, observed on 7 Cheshvan (#132)
 * Add `--no-modern` option to suppress modern holidays (#133)

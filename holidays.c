@@ -803,7 +803,7 @@ void init_yahrtzeits( int hyear )
         /* If it's Kislev 30 it depends on the first anniversary; if
            that was not Kislev 30, use the day before Teveth 1. */
         else if (hDeath.mm == KISLEV && hDeath.dd == 30 &&
-                 !short_kislev (hDeath.yy + 1))
+                 short_kislev (hDeath.yy + 1))
         {
             hDeath.dd = 1;
             hDeath.mm = TEVET;
