@@ -176,7 +176,7 @@ msgstr "Nida"
 #: ../dafyomi.c:141
 #, c-format
 msgid "Daf Yomi: %s %d"
-msgstr "Daf jomi"
+msgstr "Daf jomi: %s %d"
 
 #: ../holidays.c:380
 msgid "Unable to allocate memory for holiday."

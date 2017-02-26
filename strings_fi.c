@@ -484,7 +484,7 @@ hebcal_lookup_fi (str, len)
 #line 113 "strings_fi.gperf"
       {"Chanukah: 7 Candles","Hanuka 7. Kynttilä"},
 #line 48 "strings_fi.gperf"
-      {"Daf Yomi: %s %d","Daf jomi"},
+      {"Daf Yomi: %s %d","Daf jomi: %s %d"},
 #line 44 "strings_fi.gperf"
       {"Kinnim","Kinim"},
       {""},
