@@ -119,7 +119,7 @@ am__objects_1 = common.$(OBJEXT) danlib.$(OBJEXT) error.$(OBJEXT) \
 	sedra.$(OBJEXT) start.$(OBJEXT) gnu.$(OBJEXT) \
 	dafyomi.$(OBJEXT) strings_ashkenazi.$(OBJEXT) \
 	strings_he.$(OBJEXT) strings_pl.$(OBJEXT) strings_ru.$(OBJEXT) \
-	translations.$(OBJEXT)
+	strings_fi.$(OBJEXT) translations.$(OBJEXT)
 am__objects_2 =
 am_hebcal_OBJECTS = $(am__objects_1) $(am__objects_2)
 hebcal_OBJECTS = $(am_hebcal_OBJECTS)
@@ -347,6 +347,7 @@ pdfdir = @pdfdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
+runstatedir = @runstatedir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@
@@ -371,6 +372,7 @@ hebcal_c_files = common.c danlib.c error.c greg.c hebcal.c \
          timelib.c astro.c tm2unixtime.c unixtime2tm.c dow.c parse_tz.c \
          holidays.c sedra.c start.c gnu.c dafyomi.c \
          strings_ashkenazi.c strings_he.c strings_pl.c strings_ru.c \
+	 strings_fi.c \
          translations.c
 
 hebcal_h_files = common.h  danlib.h greg.h hebcal.h \

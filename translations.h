@@ -12,6 +12,7 @@ const char * lookup_translation(const char *s);
 typedef enum hebcal_lang_e {
     HEBCAL_LANG_DEFAULT,
     HEBCAL_LANG_ASHKENAZI,
+    HEBCAL_LANG_FI,
     HEBCAL_LANG_HE,
     HEBCAL_LANG_PL,
     HEBCAL_LANG_RU,
