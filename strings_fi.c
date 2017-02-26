@@ -502,7 +502,7 @@ hebcal_lookup_fi (str, len)
 #line 111 "strings_fi.gperf"
       {"Chanukah: 5 Candles","Hanuka 5. Kynttilä"},
 #line 141 "strings_fi.gperf"
-      {"Rosh Chodesh %s","Rosh Chodesh "},
+      {"Rosh Chodesh %s","Rosh Chodesh %s"},
       {""}, {""},
 #line 104 "strings_fi.gperf"
       {"Asara B'Tevet","Asara BeTevet"},

@@ -508,7 +508,7 @@ msgid "Purim Katan"
 msgstr "Purim Katan"
 
 msgid "Rosh Chodesh %s"
-msgstr "Rosh Chodesh "
+msgstr "Rosh Chodesh %s"
 
 msgid "Adar"
 msgstr "Adar"
