@@ -1,3 +1,7 @@
+Changes in 4.12
+* Support for `--lang fi`, courtesy Petteri Hjort
+* Update timezone database to 2017.1 (2017a)
+
 Changes in 4.11
 * Correct yahrzeit calculation when date of death is 30 Kislev (#134)
 * Update timezone database to 2016.10 (2016j)
