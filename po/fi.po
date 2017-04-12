@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: hebcal 4.2\n"
 "Report-Msgid-Bugs-To: hebcal-bugs@sadinoff.com\n"
 "POT-Creation-Date: 2015-12-30 14:54-0500\n"
-"PO-Revision-Date: 2017-02-23 16:22+0200\n"
+"PO-Revision-Date: 2017-03-09 16:13+0200\n"
 "Language: fi_FI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 1.8.12\n"
 
 #: ../dafyomi.c:26
 msgid "Berachot"
@@ -23,7 +23,7 @@ msgstr "Brachot"
 
 #: ../dafyomi.c:27
 msgid "Shabbat"
-msgstr "Shabbat"
+msgstr "Shabat"
 
 #: ../dafyomi.c:28
 msgid "Eruvin"
@@ -391,13 +391,13 @@ msgid "Vayishlach"
 msgstr "Vajishlach"
 
 msgid "Vezot Haberakhah"
-msgstr "VeZot Habracha"
+msgstr "Vezot habracha"
 
 msgid "Yitro"
 msgstr "Jitro"
 
 msgid "Asara B'Tevet"
-msgstr "Asara BeTevet"
+msgstr "Asara betevet"
 
 msgid "Candle lighting"
 msgstr "Kynttilöiden sytytys"
@@ -406,31 +406,31 @@ msgid "Chanukah"
 msgstr "Hanuka"
 
 msgid "Chanukah: 1 Candle"
-msgstr "Hanuka 1. Kynttilä"
+msgstr "Hanuka 1. kynttilä"
 
 msgid "Chanukah: 2 Candles"
-msgstr "Hanuka 2. Kynttilä"
+msgstr "Hanuka 2. kynttilä"
 
 msgid "Chanukah: 3 Candles"
-msgstr "Hanuka 3. Kynttilä"
+msgstr "Hanuka 3. kynttilä"
 
 msgid "Chanukah: 4 Candles"
-msgstr "Hanuka 4. Kynttilä"
+msgstr "Hanuka 4. kynttilä"
 
 msgid "Chanukah: 5 Candles"
-msgstr "Hanuka 5. Kynttilä"
+msgstr "Hanuka 5. kynttilä"
 
 msgid "Chanukah: 6 Candles"
-msgstr "Hanuka 6. Kynttilä"
+msgstr "Hanuka 6. kynttilä"
 
 msgid "Chanukah: 7 Candles"
-msgstr "Hanuka 7. Kynttilä"
+msgstr "Hanuka 7. kynttilä"
 
 msgid "Chanukah: 8 Candles"
-msgstr "Hanuka 8. Kynttilät"
+msgstr "Hanuka 8. kynttilä"
 
 msgid "Chanukah: 8th Day"
-msgstr "Hanuka 8 päivä"
+msgstr "Hanuka 8. päivä"
 
 msgid "Days of the Omer"
 msgstr "Omerin päivä"
@@ -442,82 +442,82 @@ msgid "Erev Purim"
 msgstr "Purim aatto"
 
 msgid "Erev Rosh Hashana"
-msgstr "Rosh Hashana aatto"
+msgstr "Rosh hashana aatto"
 
 msgid "Erev Shavuot"
 msgstr "Shavuot aatto"
 
 msgid "Erev Simchat Torah"
-msgstr "Simchat Tora aatto"
+msgstr "Simchat toora  -aatto"
 
 msgid "Erev Sukkot"
-msgstr "Sukot aatto"
+msgstr "Sukot-aatto"
 
 msgid "Erev Tish'a B'Av"
-msgstr "Tisha B'Av aatto "
+msgstr "Tisha  beav -aatto "
 
 msgid "Erev Yom Kippur"
-msgstr "Jom kippur aatto"
+msgstr "Jom kipur -aatto"
 
 msgid "Havdalah"
 msgstr "Havdala"
 
 msgid "Lag BaOmer"
-msgstr "Lag BaOmer"
+msgstr "Lag baomer"
 
 msgid "Leil Selichot"
-msgstr "Slichot ilta (aatto) "
+msgstr "Slichot-ilta (aatto) "
 
 msgid "Pesach"
 msgstr "Pesach"
 
 msgid "Pesach I"
-msgstr "Pesach 1"
+msgstr "Pesach 1. päivä"
 
 msgid "Pesach II"
-msgstr "Pesach 2"
+msgstr "Pesach 2. päivä"
 
 msgid "Pesach II (CH''M)"
-msgstr "Pesach 2 (Chol Hamoed)"
+msgstr "Pesach 2. päivä (Chol hamoed)"
 
 msgid "Pesach III (CH''M)"
-msgstr "Pesach 3 (Chol Hamoed)"
+msgstr "Pesach 3. päivä (Chol hamoed)"
 
 msgid "Pesach IV (CH''M)"
-msgstr "Pesach 4 (Chol Hamoed)"
+msgstr "Pesach 4. päivä (Chol hamoed)"
 
 msgid "Pesach Sheni"
 msgstr "Pesach Sheni"
 
 msgid "Pesach V (CH''M)"
-msgstr "Pesach 5 (Chol Hamoed)"
+msgstr "Pesach 5. päivä (Chol hamoed)"
 
 msgid "Pesach VI (CH''M)"
-msgstr "Pesach 6 (Chol Hamoed)"
+msgstr "Pesach 6. päivä (Chol hamoed)"
 
 msgid "Pesach VII"
-msgstr "Pesach 7"
+msgstr "Pesach 7. päivä"
 
 msgid "Pesach VIII"
-msgstr "Pesach 8"
+msgstr "Pesach 8. päivä"
 
 msgid "Purim"
 msgstr "Purim"
 
 msgid "Purim Katan"
-msgstr "Purim Katan"
+msgstr "Purim katan"
 
 msgid "Rosh Chodesh %s"
-msgstr "Rosh Chodesh %s"
+msgstr "Rosh chodesh %s"
 
 msgid "Adar"
 msgstr "Adar"
 
 msgid "Adar I"
-msgstr "Adar 1"
+msgstr "Adar I"
 
 msgid "Adar II"
-msgstr "Adar 2"
+msgstr "Adar II"
 
 msgid "Av"
 msgstr "Av"
@@ -529,7 +529,7 @@ msgid "Elul"
 msgstr "Elul"
 
 msgid "Iyyar"
-msgstr "Iar"
+msgstr "Ijar"
 
 msgid "Kislev"
 msgstr "Kislev"
@@ -550,64 +550,64 @@ msgid "Tevet"
 msgstr "Tevet"
 
 msgid "Rosh Hashana"
-msgstr "Rosh Hashana"
+msgstr "Rosh hashana"
 
 msgid "Rosh Hashana I"
-msgstr "Rosh Hashana 1"
+msgstr "Rosh hashana 1. päivä"
 
 msgid "Rosh Hashana II"
-msgstr "Rosh Hashana 2"
+msgstr "Rosh hashana 2. päivä"
 
 msgid "Shabbat Chazon"
-msgstr "Shabat Chazon"
+msgstr "Shabat chazon"
 
 msgid "Shabbat HaChodesh"
-msgstr "Shabat HaChodesh"
+msgstr "Shabat hachodesh"
 
 msgid "Shabbat HaGadol"
-msgstr "Shabat HaGadol"
+msgstr "Shabat hagadol"
 
 msgid "Shabbat Machar Chodesh"
-msgstr "Shabat Machar Chodesh"
+msgstr "Shabat machar chodesh"
 
 msgid "Shabbat Nachamu"
-msgstr "Shabat Nechamu"
+msgstr "Shabat nechamu"
 
 msgid "Shabbat Parah"
-msgstr "Shabat Para"
+msgstr "Shabat para"
 
 msgid "Shabbat Rosh Chodesh"
-msgstr "Shabat Rosh Chodesh"
+msgstr "Shabat rosh chodesh"
 
 msgid "Shabbat Shekalim"
-msgstr "Shabat Shkalim"
+msgstr "Shabat shkalim"
 
 msgid "Shabbat Shuva"
-msgstr "Shabat Shuva"
+msgstr "Shabat shuva"
 
 msgid "Shabbat Zachor"
-msgstr "Shabat Zachor"
+msgstr "Shabat zachor"
 
 msgid "Shavuot"
 msgstr "Shavuot"
 
 msgid "Shavuot I"
-msgstr "Shavuot 1"
+msgstr "Shavuot 1. päivä"
 
 msgid "Shavuot II"
-msgstr "Shavuot 2"
+msgstr "Shavuot 2. päivä"
 
 msgid "Shmini Atzeret"
-msgstr "Shmini Atseret"
+msgstr "Shmini atseret"
 
 msgid "Shushan Purim"
-msgstr "Shushan Purim"
+msgstr "Shushan purim"
 
 msgid "Sigd"
 msgstr "Sigd"
 
 msgid "Simchat Torah"
-msgstr "Simchat Tora"
+msgstr "Simchat toora"
 
 msgid "Sukkot"
 msgstr "Sukot"
@@ -619,55 +619,55 @@ msgid "Sukkot II"
 msgstr "Sukot 2. päivä"
 
 msgid "Sukkot II (CH''M)"
-msgstr "Sukot 2. päivä (Chol Hamoed)"
+msgstr "Sukot 2. päivä (Chol hamoed)"
 
 msgid "Sukkot III (CH''M)"
-msgstr "Sukot 3. päivä (Chol Hamoed)"
+msgstr "Sukot 3. päivä (Chol hamoed)"
 
 msgid "Sukkot IV (CH''M)"
-msgstr "Sukot 4. päivä (Chol Hamoed)"
+msgstr "Sukot 4. päivä (Chol hamoed)"
 
 msgid "Sukkot V (CH''M)"
-msgstr "Sukot 5. päivä (Chol Hamoed)"
+msgstr "Sukot 5. päivä (Chol hamoed)"
 
 msgid "Sukkot VI (CH''M)"
-msgstr "Sukot 6. päivä (Chol Hamoed)"
+msgstr "Sukot 6. päivä (Chol hamoed)"
 
 msgid "Sukkot VII (Hoshana Raba)"
-msgstr "Sukot 7. päivä (Hoshana Raba)"
+msgstr "Sukot 7. päivä (Hoshana raba)"
 
 msgid "Ta'anit Bechorot"
-msgstr "Ta'anit Bechorot"
+msgstr "Ta'anit bechorot"
 
 msgid "Ta'anit Esther"
 msgstr "Ta'anit Ester"
 
 msgid "Tish'a B'Av"
-msgstr "Tisha BeAv"
+msgstr "Tisha beav"
 
 msgid "Tu B'Av"
-msgstr "Tu BeAv"
+msgstr "Tu beav"
 
 msgid "Tu BiShvat"
-msgstr "Tu Bishvat"
+msgstr "Tu bishvat"
 
 msgid "Tu B'Shvat"
-msgstr "Tu Bishvat"
+msgstr "Tu bishvat"
 
 msgid "Tzom Gedaliah"
-msgstr "Tzom Gedalia"
+msgstr "Tzom Gedalja"
 
 msgid "Tzom Tammuz"
-msgstr "Tzom Tamuz"
+msgstr "Tzom tamuz"
 
 msgid "Yom HaAtzma'ut"
-msgstr "Jom Hatsmaut"
+msgstr "Jom ha'atsmaut"
 
 msgid "Yom HaShoah"
-msgstr "Jom Hashoa"
+msgstr "Jom hashoa"
 
 msgid "Yom HaZikaron"
-msgstr "Jom Hazikaron"
+msgstr "Jom hazikaron"
 
 msgid "Yom Kippur"
 msgstr "Jom kipur"
@@ -676,4 +676,4 @@ msgid "Yom Yerushalayim"
 msgstr "Jom Jerushalaim"
 
 msgid "Yom HaAliyah"
-msgstr "Jom Alia"
+msgstr "Jom ha'alija"

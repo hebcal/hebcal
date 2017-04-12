@@ -30,6 +30,7 @@ city_t cities[] =
     {"Gibraltar", 36, 8, 5, 21, "Europe/Gibraltar"},
     {"Haifa", 32, 49, -34, -59, "Asia/Jerusalem"},
     {"Hawaii", 19, 30, 155, 30, "Pacific/Honolulu"},
+    {"Helsinki", 60, 10, 24, 55, "Europe/Helsinki"},
     {"Houston", 29, 46, 95, 22, "America/Chicago"},
     {"Jerusalem", 31, 47, -35, -14, "Asia/Jerusalem"},
     {"Johannesburg", -26, -10, -28, -2, "Africa/Johannesburg"},
