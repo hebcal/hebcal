@@ -217,8 +217,6 @@ static int get_rise_set(date_t todayGreg, double *h_rise, double *h_set, double 
     timelib_sll rise, set, transit;
     int             rs;
     timelib_time   *t;
-    double n_offset;
-    int hour, minute;
 
     latitude = (double) latdeg + (latmin / 60.0);
     longitude = (longdeg * -1.0) + ((longmin * -1.0) / 60.0);
@@ -236,7 +234,7 @@ static int get_rise_set(date_t todayGreg, double *h_rise, double *h_set, double 
     /* t->have_zone = 1; */
     timelib_update_ts(t, TZ_INFO);
 
-    *gmt_offset = timelib_get_current_offset(t) / 3600;
+    *gmt_offset = timelib_get_current_offset(t) / 3600.0;
     rs = timelib_astro_rise_set_altitude(t, longitude, latitude,
 					 SUNRISE_SUNSET_ALTITUDE, 1,
 					 h_rise, h_set, &rise, &set, &transit);
