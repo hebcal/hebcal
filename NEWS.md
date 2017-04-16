@@ -1,3 +1,10 @@
+Changes in 4.13
+* Correct candle-lighting times for for fractional timezones such as 
+  Asia/Kolkata, America/St_Johns, Asia/Kathmandu (#136)
+* Update timezone database to 2017.2 (2017b)
+* Updated Finnish translations
+* Added Helsinki to built-in city list
+
 Changes in 4.12
 * Support for `--lang fi`, courtesy Petteri Hjort
 * Update timezone database to 2017.1 (2017a)
