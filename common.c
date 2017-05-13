@@ -332,7 +332,7 @@ int long_cheshvan( int year )
     return ((days_in_heb_year (year) % 10) == 5);
 }
 
-/* true if Cheshvan is long in hebrew YEAR */
+/* true if Kislev is short in hebrew YEAR */
 int short_kislev( int year ) 
 {
     return ((days_in_heb_year (year) % 10) == 3);
