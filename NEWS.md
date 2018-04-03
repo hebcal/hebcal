@@ -1,5 +1,5 @@
 Changes in 4.14
-* Update timezone database to 2018.3 (2018c)
+* Update timezone database to 2018.4 (2018d)
 
 Changes in 4.13
 * Correct candle-lighting times for for fractional timezones such as 
