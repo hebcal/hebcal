@@ -39,6 +39,7 @@ typedef struct dateStruct {
     int yy;	/* years since year 1 BCE i.e. -1 = 2 BCE */
 } date_t;
 
+int getMonthLength(int year, int month);
 int dayOfYear( date_t );
 long greg2abs( date_t );
 date_t abs2greg(long);

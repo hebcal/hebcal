@@ -33,6 +33,7 @@
 #include "hebcal.h"
 #include "common.h"
 #include "danlib.h"
+#include "greg.h"
 
 #define _(String) lookup_translation(String)
 
@@ -775,7 +776,7 @@ void init_yahrtzeits( int hyear )
         sscanf (monthStr, "%d", &inMonth);
 
         if (inMonth > 12 || inMonth < 1 ||
-            inDay < 1 || inDay > MonthLengths[LEAP (inYear)][inMonth])
+            inDay < 1 || inDay > getMonthLength(inYear, inMonth))
         {
 
             warn ("Date out of range in yahrtzeit file. Skipping line %s",
