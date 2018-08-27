@@ -765,7 +765,7 @@ void handleArgs(int argc, char *argv[])
        {
 	   if (theMonth > 12)
                die("The month must be less than 13", "");
-	   if (theDay > MonthLengths[LEAP(theYear)][theMonth])
+	   if (theDay > getMonthLength(theYear, theMonth))
                die("Sorry, there aren't that many days in %s (then)",
                    eMonths[theMonth]);
 	}
@@ -861,7 +861,7 @@ int main(int argc, char* argv[])
         else
         {
             startAbs = greg2abs(tempDate);
-            tempDate.dd = MonthLengths[LEAP(theYear)][theMonth];
+            tempDate.dd = getMonthLength(theYear, theMonth);
             endAbs = greg2abs(tempDate);
         }
         break;

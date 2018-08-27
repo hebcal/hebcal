@@ -50,6 +50,15 @@ int MonthLengths[][13] =
     {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
 };
 
+int getMonthLength(int year, int month)
+{
+    if (month < 0 || month > 13)
+    {
+        return 0;
+    }
+    return MonthLengths[LEAP (year)][month];
+}
+
 const char *ShortDayNames[] =
 {
     "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"
