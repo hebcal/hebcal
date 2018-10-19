@@ -1,3 +1,6 @@
+Changes in 4.15
+* French translation courtesy @mneiger and @yarons (#158 and #161)
+
 Changes in 4.14
 * Update timezone database to 2018.5 (2018e)
 * FIXED missing range check on MonthLengths array, courtesy ynonp  (#157)

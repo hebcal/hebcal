@@ -66,7 +66,7 @@ Option | Description
    -I file | Get non-yahrtzeit Hebrew user events from specified file. The format is: `mmm dd string`, Where `mmm` is a Hebrew month name.
    -l xx,yy | Set the latitude for solar calculations to `xx` degrees and `yy` minutes.  Negative values are south.
    -L xx,yy | Set the longitude for solar calculations to `xx` degrees and `yy` minutes.  *Negative values are EAST*. The `-l` and `-L` switches must both be used, or not at all. These switches override the `-C` (localize to city) switch.
-   --lang LANG | Use ISO 639-1 LANG code (one of "he", "ru", "pl", or "fi")
+   --lang LANG | Use ISO 639-1 LANG code (one of "he", "ru", "pl", "fr", or "fi")
    -m mins | Set havdalah to occur this many minutes after sundown
    -M | Print the molad on shabbat mevorchim.
    -o | Add days of the omer.
