@@ -138,7 +138,7 @@ void PrintGregDate( date_t dt )
    if (!noGreg_sw)
       {
 	 if (gregDateOutputFormatCode_sw == GREG_DATEFORMAT_ISO){
-	    printf ("%d-%02d-%02d", dt.yy,dt.dd, dt.mm);        /* YYYY-MM-DD */
+	    printf ("%d-%02d-%02d", dt.yy,dt.mm, dt.dd);        /* YYYY-MM-DD */
 	 }
 	 else
 	    {
