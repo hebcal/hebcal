@@ -1,4 +1,7 @@
 Changes in 4.15
+* Scratched an itch:  added iso-8601 dates for output
+
+Changes in 4.15
 * French translation courtesy @mneiger and @yarons (#158 and #161)
 
 Changes in 4.14

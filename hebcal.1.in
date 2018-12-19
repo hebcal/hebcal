@@ -178,6 +178,10 @@ Output 24-hour times (e.g., 18:37 instead of 6:37)
 .B "\-F"
 Output the Daf Yomi for the entire date range
 .TP
+.B "\-g"
+.B "\--iso-8601"
+Emit ISO-8601 dates, i.e. YYYY-MM-DD
+.TP
 .B "\-h"
 Suppress holidays in output.
 User-defined calendar events are
