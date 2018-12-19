@@ -116,53 +116,56 @@ static char* shortUsageArray[] = {
 
 static char* optionsHelpArray[] = {
 "Options:",
-"    -a, --ashkenazi                    Use Ashkenazi Hebrew",
-"    -d, --add-hebrew-dates             Print the Hebrew date for the entire",
-"                                       date range",
-"    -D, --add-hebrew-dates-for-events  Print the Hebrew date for dates with",
-"                                       some event",
-"    -e, --euro-dates                   Ouput 'European' dates -- DD.MM.YYYY",
-"                                       format",
-"    -E, --24hour                       Ouput 24-hour times (e.g. 18:37",
-"                                       instead of 6:37)",
-"    -F, --daf-yomi                     Output the Daf Yomi for the entire",
-"                                       date range",
-"    -h, --no-holidays                  Suppress default holidays",
+"    --help                             Show this help",
+"  Input  ",
 "    -H, --hebrew-date                  Use Hebrew date ranges - only needed",
 "                                       when e.g. hebcal -H 5373",
-"    --help                             Show this help",
-"    -i, --israeli                      Israeli holiday and sedra schedule",
 "    -I, --infile INFILE                Get non-yahrtzeit Hebrew user events",
 "                                       from specified file. The format is:",
 "                                       mmm dd string, Where mmm is a Hebrew",
 "                                       month name",
+"    -t, --today                        Only output for today's date",
+"    -T, --today-brief                  Print today's pertinent information,",
+"    -Y, --yahrtzeit YAHRTZEIT          Get yahrtzeit dates from specified",
+"                                       file. The format is: mm dd yyyy",
+"                                       string the first three fields",
+"                                       specify a *Gregorian* date.",
+"                                       no gregorian date",
+"  Output  ",
+"    -a, --ashkenazi                    Use Ashkenazi Hebrew",
+"    -d, --add-hebrew-dates             Print the Hebrew date for the entire",
+"                                        date range",
+"    -D, --add-hebrew-dates-for-events  Print the Hebrew date for dates with",
+"                                        some event",
+"    -e, --euro-dates                   Ouput 'European' dates -- DD.MM.YYYY",
+"    -E, --24hour                       Ouput 24-hour times (e.g. 18:37",
+"                                        instead of 6:37)",
+"    -F, --daf-yomi                     Output the Daf Yomi for the entire",
+"                                        date range",
+"    -g, --iso-8601                     Ouput ISO 8601 dates -- YYYY-MM-DD",
+"                                            this overrides -y", 
+"    -h, --no-holidays                  Suppress default holidays",
+"    -i, --israeli                      Israeli holiday and sedra schedule",
 "    --lang LANG                        Use LANG titles (he, ru, or pl)",
 "    -M, --molad                        Print the molad on Shabbat Mevorchim",
 "    --no-modern                        Suppress modern holidays",
 "    -o, --omer                         Add days of the Omer",
 "    -O, --sunrise-and-sunset           Output sunrise and sunset times every",
-"                                       day",
+"                                        day",
 "    -r, --tabs                         Tab delineated format",
 "    -s, --sedrot                       Add weekly sedrot on Saturday",
 "    -S, --daily-sedra                  Print sedrah of the week on all",
-"                                       calendar days",
-"    -t, --today                        Only output for today's date",
-"    -T, --today-brief                  Print today's pertinent information,",
-"                                       no gregorian date",
+"                                        calendar days",
 "    --version                          Show version number",
 "    -w, --weekday                      Add day of the week",
 "    -W, --abbreviated                  Weekly view. Omer, dafyomi, and",
-"                                       non-date-specific zemanim are shown",
-"                                       once a week, on the day which",
-"                                       corresponds to the first day in the",
-"                                       range.",
+"                                        non-date-specific zemanim are shown",
+"                                        once a week, on the day which",
+"                                        corresponds to the first day in the",
+"                                        range.",
 "    -x, --no-rosh-chodesh              Suppress Rosh Chodesh",
 "    -y, --year-abbrev                  Print only last two digits of year",
 "    --years N                          Generate events for N years (default 1)",
-"    -Y, --yahrtzeit YAHRTZEIT          Get yahrtzeit dates from specified",
-"                                       file. The format is: mm dd yyyy",
-"                                       string the first three fields",
-"                                       specify a *Gregorian* date.",
 "",
 "Candle lighting:",
 "  Options related to candle-lighting times.",
@@ -361,6 +364,7 @@ void handleArgs(int argc, char *argv[])
       {"daf-yomi", no_argument, 0, 'F'},
       {"daily-sedra", no_argument, 0, 'S'},
       {"euro-dates", no_argument, 0, 'e'},
+      {"iso-8601", no_argument, 0, 'g'},
       {"format", required_argument, 0, 'f'},
       {"havdalah-mins", required_argument, 0, 'm'},
       {"hebrew-date", no_argument, 0, 'H'},
@@ -392,9 +396,10 @@ void handleArgs(int argc, char *argv[])
    int c;
    int option_index = 0;
 
+   
    setDate(&greg_today);        /* keep the current greg. date here */
 
-   while ((c = getopt_long(argc, argv, "ab:cC:dDeEFhHI:il:L:m:MoOrsStTwWxyY:z:Z8",
+   while ((c = getopt_long(argc, argv, "ab:cC:dDeEFghHI:il:L:m:MoOrsStTwWxyY:z:Z8",
                            long_options, &option_index)) != -1) {
        switch (c) {
        case 0: /* long option without short alias */
@@ -442,7 +447,10 @@ void handleArgs(int argc, char *argv[])
            inFileName = strdup(optarg);
            break;
        case 'e':                /* european date format */
-           euroDates_sw = 1;
+           gregDateOutputFormatCode_sw = GREG_DATEFORMAT_EURO;
+           break;
+       case 'g':                /* iso date format */
+           gregDateOutputFormatCode_sw = GREG_DATEFORMAT_ISO;
            break;
        case 'E':                /* 24-hour time format */
            twentyFourHour_sw = 1;

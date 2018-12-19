@@ -44,13 +44,17 @@
 #define MONTHS_IN_HEB(x) (LEAP_YR_HEB(x) ? 13 :12)
 #define LANGUAGE2(str) ((char *)lookup_translation(str))
 
+/* implied */
+#define GREG_DATEFORMAT_AMERICAN 0
+#define GREG_DATEFORMAT_EURO 1 
+#define GREG_DATEFORMAT_ISO 2
 extern FILE *inFile, *yFile;
 
 extern int
     ashkenazis_sw, 
     dafYomi_sw,
     candleLighting_sw, 
-    euroDates_sw,
+    gregDateOutputFormatCode_sw,
     hebrewDates_sw,
     inputFile_sw,
     israel_sw,

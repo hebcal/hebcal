@@ -42,7 +42,7 @@
 #define NM_LEN 60
 
 int
-  ashkenazis_sw, candleLighting_sw, euroDates_sw, hebrewDates_sw, inputFile_sw,
+  ashkenazis_sw, candleLighting_sw, gregDateOutputFormatCode_sw, hebrewDates_sw, inputFile_sw,
   israel_sw, latlong_sw, printOmer_sw, printMolad_sw, printSunriseSunset_sw, sedraAllWeek_sw, sedrot_sw, noGreg_sw,
   printHebDates_sw, printSomeHebDates_sw, noHolidays_sw, tabs_sw, weekday_sw,  suppress_rosh_chodesh_sw,
   suppressModern_sw,
@@ -135,21 +135,27 @@ void incHebGregDate(
 
 void PrintGregDate( date_t dt )
 {
-    if (!noGreg_sw)
-    {
-        if (euroDates_sw)
-            printf ("%d.%d.", dt.dd, dt.mm);        /* dd/mm/yyyy */
-        else
-            printf ("%d/%d/", dt.mm, dt.dd);        /* mm/dd/yyyy */
-        
-        if (yearDigits_sw)
-            printf ("%d", dt.yy % 100);
-        else
-            printf ("%d", dt.yy);
-        
-        if (tabs_sw)
+   if (!noGreg_sw)
+      {
+	 if (gregDateOutputFormatCode_sw == GREG_DATEFORMAT_ISO){
+	    printf ("%d-%02d-%02d", dt.yy,dt.dd, dt.mm);        /* YYYY-MM-DD */
+	 }
+	 else
+	    {
+	       if( gregDateOutputFormatCode_sw == GREG_DATEFORMAT_EURO)
+		  printf ("%d.%d.", dt.dd, dt.mm);        /* dd/mm/yyyy */
+	       else
+		  printf ("%d/%d/", dt.mm, dt.dd);        /* mm/dd/yyyy */
+	       
+	       if (yearDigits_sw)
+		  printf ("%d", dt.yy % 100);
+	       else
+		  printf ("%d", dt.yy);
+	    }
+	 
+	 if (tabs_sw)
             putchar ('\t');
-        else
+	 else
             putchar (' ');
     }
     
@@ -569,3 +575,6 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
 
 
 
+/* Local Variables: */
+/* c-basic-offset: 3 */
+/* End:              */
