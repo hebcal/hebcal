@@ -142,7 +142,7 @@ static char* optionsHelpArray[] = {
 "                                        instead of 6:37)",
 "    -F, --daf-yomi                     Output the Daf Yomi for the entire",
 "                                        date range",
-"    -g, --iso-8601                     Ouput ISO 8601 dates -- YYYY-MM-DD",
+"    -g, --iso-8601                     Output ISO 8601 dates -- YYYY-MM-DD",
 "                                            this overrides -y", 
 "    -h, --no-holidays                  Suppress default holidays",
 "    -i, --israeli                      Israeli holiday and sedra schedule",
