@@ -1,5 +1,6 @@
-Changes in 4.15
+Changes in 4.16
 * Scratched an itch:  added iso-8601 dates for output
+* Update timezone database to version 2018.9 (2018i)
 
 Changes in 4.15
 * French translation courtesy @mneiger and @yarons (#158 and #161)
