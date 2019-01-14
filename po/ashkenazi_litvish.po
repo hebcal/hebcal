@@ -441,8 +441,8 @@ msgstr "Erev Peisach"
 msgid "Erev Purim"
 msgstr "Erev Purim"
 
-msgid "Erev Rosh Hashana"
-msgstr "Erev Rosh-Hashono"
+msgid "Erev Reish Hashana"
+msgstr "Erev Reish-Hashono"
 
 msgid "Erev Shavuot"
 msgstr "Erev Shvuos"
@@ -507,8 +507,8 @@ msgstr "Purim"
 msgid "Purim Katan"
 msgstr "Purim Koton"
 
-msgid "Rosh Chodesh %s"
-msgstr "Rosh Cheidesh %s"
+msgid "Reish Chodesh %s"
+msgstr "Reish Cheidesh %s"
 
 msgid "Adar"
 msgstr "Odor"
@@ -549,14 +549,14 @@ msgstr "Tamuz"
 msgid "Tevet"
 msgstr "Teyves"
 
-msgid "Rosh Hashana"
-msgstr "Rosh Hashono"
+msgid "Reish Hashana"
+msgstr "Reish Hashono"
 
-msgid "Rosh Hashana I"
-msgstr "Rosh Hashono I"
+msgid "Reish Hashana I"
+msgstr "Reish Hashono I"
 
-msgid "Rosh Hashana II"
-msgstr "Rosh Hashono II"
+msgid "Reish Hashana II"
+msgstr "Reish Hashono II"
 
 msgid "Shabbat Chazon"
 msgstr "Shabbos Chazon"
@@ -576,8 +576,8 @@ msgstr "Shabbos Nachamu"
 msgid "Shabbat Parah"
 msgstr "Shabbos Poro"
 
-msgid "Shabbat Rosh Chodesh"
-msgstr "Shabbos Rosh Cheidesh"
+msgid "Shabbat Reish Chodesh"
+msgstr "Shabbos Reish Cheidesh"
 
 msgid "Shabbat Shekalim"
 msgstr "Shabbos Shkolim"
