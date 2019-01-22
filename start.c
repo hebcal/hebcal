@@ -136,7 +136,7 @@ static char* optionsHelpArray[] = {
 "                                       from specified file. The format is:",
 "                                       mmm dd string, Where mmm is a Hebrew",
 "                                       month name",
-"    --lang LANG                        Use LANG titles (he, ru, or pl)",
+"    --lang LANG                        Use LANG titles (fi, fr, he, ru, or pl)",
 "    -M, --molad                        Print the molad on Shabbat Mevorchim",
 "    --no-modern                        Suppress modern holidays",
 "    -o, --omer                         Add days of the Omer",
