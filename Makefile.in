@@ -119,7 +119,7 @@ am__objects_1 = common.$(OBJEXT) danlib.$(OBJEXT) error.$(OBJEXT) \
 	sedra.$(OBJEXT) start.$(OBJEXT) gnu.$(OBJEXT) \
 	dafyomi.$(OBJEXT) strings_ashkenazi.$(OBJEXT) \
 	strings_he.$(OBJEXT) strings_pl.$(OBJEXT) strings_ru.$(OBJEXT) \
-	strings_fi.$(OBJEXT) strings_fr.$(OBJEXT) \
+	strings_fi.$(OBJEXT) strings_fr.$(OBJEXT) strings_hu.$(OBJEXT) \
 	strings_ashkenazi_litvish.$(OBJEXT) \
 	strings_ashkenazi_poylish.$(OBJEXT) \
 	strings_ashkenazi_standard.$(OBJEXT) translations.$(OBJEXT)
@@ -376,6 +376,7 @@ hebcal_c_files = common.c danlib.c error.c greg.c hebcal.c \
          strings_ashkenazi.c strings_he.c strings_pl.c strings_ru.c \
          strings_fi.c \
          strings_fr.c \
+         strings_hu.c \
          strings_ashkenazi_litvish.c \
          strings_ashkenazi_poylish.c \
          strings_ashkenazi_standard.c \

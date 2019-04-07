@@ -30,6 +30,7 @@ hebcal_c_files = common.c danlib.c error.c greg.c hebcal.c \
          strings_ashkenazi.c strings_he.c strings_pl.c strings_ru.c \
          strings_fi.c \
          strings_fr.c \
+         strings_hu.c \
          strings_ashkenazi_litvish.c \
          strings_ashkenazi_poylish.c \
          strings_ashkenazi_standard.c \

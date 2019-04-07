@@ -18,6 +18,7 @@ typedef enum hebcal_lang_e {
     HEBCAL_LANG_FI,
     HEBCAL_LANG_FR,
     HEBCAL_LANG_HE,
+    HEBCAL_LANG_HU,
     HEBCAL_LANG_PL,
     HEBCAL_LANG_RU,
     HEBCAL_LANG_UNDEFINED

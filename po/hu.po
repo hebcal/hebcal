@@ -1,0 +1,675 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016 Danny Sadinoff
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Marc Neiger <marc@neiger.org>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: hebcal 4.16\n"
+"Report-Msgid-Bugs-To: hebcal-bugs@sadinoff.com\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../dafyomi.c:26
+msgid "Berachot"
+msgstr "Bráchot"
+
+#: ../dafyomi.c:27
+msgid "Shabbat"
+msgstr "Sábát"
+
+#: ../dafyomi.c:28
+msgid "Eruvin"
+msgstr "Éruvin"
+
+#: ../dafyomi.c:29
+msgid "Pesachim"
+msgstr "Peszáchim"
+
+#: ../dafyomi.c:30
+msgid "Shekalim"
+msgstr "Skálim"
+
+#: ../dafyomi.c:31
+msgid "Yoma"
+msgstr "Jomá"
+
+#: ../dafyomi.c:32
+msgid "Sukkah"
+msgstr "Szukká"
+
+#: ../dafyomi.c:33
+msgid "Beitzah"
+msgstr "Bécá"
+
+#: ../dafyomi.c:35
+msgid "Taanit"
+msgstr "Táánit"
+
+#: ../dafyomi.c:36
+msgid "Megillah"
+msgstr "Mögilá"
+
+#: ../dafyomi.c:37
+msgid "Moed Katan"
+msgstr "Moéd Kátán"
+
+#: ../dafyomi.c:38
+msgid "Chagigah"
+msgstr "Chágigá"
+
+#: ../dafyomi.c:39
+msgid "Yevamot"
+msgstr "Jövámot"
+
+#: ../dafyomi.c:40
+msgid "Ketubot"
+msgstr "Kötubot"
+
+#: ../dafyomi.c:41
+msgid "Nedarim"
+msgstr "Nödárim"
+
+#: ../dafyomi.c:42
+msgid "Nazir"
+msgstr "Názír"
+
+#: ../dafyomi.c:43
+msgid "Sotah"
+msgstr "Szotá"
+
+#: ../dafyomi.c:44
+msgid "Gitin"
+msgstr "Gitin"
+
+#: ../dafyomi.c:45
+msgid "Kiddushin"
+msgstr "Kidusin"
+
+#: ../dafyomi.c:46
+msgid "Baba Kamma"
+msgstr "Bává Kámá"
+
+#: ../dafyomi.c:47
+msgid "Baba Metzia"
+msgstr "Bává Möciá"
+
+#: ../dafyomi.c:48
+msgid "Baba Batra"
+msgstr "Bává Bátrá"
+
+#: ../dafyomi.c:49
+msgid "Sanhedrin"
+msgstr "Szánhedrin"
+
+#: ../dafyomi.c:50
+msgid "Makkot"
+msgstr "Mákot"
+
+#: ../dafyomi.c:51
+msgid "Shevuot"
+msgstr "Sávuot"
+
+#: ../dafyomi.c:52
+msgid "Avodah Zarah"
+msgstr "Ávodá Zárá"
+
+#: ../dafyomi.c:53
+msgid "Horayot"
+msgstr "Horájot"
+
+#: ../dafyomi.c:54
+msgid "Zevachim"
+msgstr "Zváchim"
+
+#: ../dafyomi.c:55
+msgid "Menachot"
+msgstr "Mönáchot"
+
+#: ../dafyomi.c:56
+msgid "Chullin"
+msgstr "Chulin"
+
+#: ../dafyomi.c:57
+msgid "Bechorot"
+msgstr "Böchorot"
+
+#: ../dafyomi.c:58
+msgid "Arachin"
+msgstr "Áráchin"
+
+#: ../dafyomi.c:59
+msgid "Temurah"
+msgstr "Tmurá"
+
+#: ../dafyomi.c:60
+msgid "Keritot"
+msgstr "Kritot"
+
+#: ../dafyomi.c:61
+msgid "Meilah"
+msgstr "Möilá"
+
+#: ../dafyomi.c:62
+msgid "Kinnim"
+msgstr "Kinim"
+
+#: ../dafyomi.c:63
+msgid "Tamid"
+msgstr "Támid"
+
+#: ../dafyomi.c:64
+msgid "Midot"
+msgstr "Midot"
+
+#: ../dafyomi.c:65
+msgid "Niddah"
+msgstr "Nidá"
+
+#: ../dafyomi.c:141
+#, c-format
+msgid "Daf Yomi: %s %d"
+msgstr "Daf Jomi: %s %d"
+
+#: ../holidays.c:380
+msgid "Unable to allocate memory for holiday."
+msgstr ""
+
+#: ../holidays.c:679
+#, c-format
+msgid "input file read error. Skipping line %s"
+msgstr "Olvasási hiba a beviteli fájlban. Sor kihagyása %s"
+
+#: ../holidays.c:686
+#, c-format
+msgid "Error in input file.  Skipping line %s"
+msgstr "Hiba a beviteli fájlban. Sor kihagyása %s"
+
+#: ../holidays.c:691
+#, c-format
+msgid "Numeric hebrew month in input file.  Skipping line %s"
+msgstr "Numerikus héber hónap a beviteli fájlban. Sor kihagyása %s"
+
+#: ../holidays.c:697
+#, c-format
+msgid "Unrecognized hebrew month in input file.  Skipping line %s"
+msgstr "Ismeretlen héber hónap a beviteli fájlban. Sor kihagyása %s"
+
+#: ../holidays.c:703
+#, c-format
+msgid "Date out of range in input file. Skipping line %s"
+msgstr "Dátum a beviteli fájlon kívül. Sor kihagyása %s"
+
+#: ../holidays.c:749
+#, c-format
+msgid "yahrtzeit file read error. Skipping line %s"
+msgstr "Jorcájt fájl-olvasási hiba. Sor kihagyása %s"
+
+#: ../holidays.c:756
+#, c-format
+msgid "Error in yahrtzeit file.  Skipping line %s"
+msgstr "Hiba a jorcájt fájlban. Sor kihagyása %s"
+
+#: ../holidays.c:761
+#, c-format
+msgid "Non-numeric month in yahrtzeit file. Skipping line %s"
+msgstr "Nem numerikus hónap a jorcájt fájlban. Sor kihagyása %s"
+
+#: ../holidays.c:771
+#, c-format
+msgid "Date out of range in yahrtzeit file. Skipping line %s"
+msgstr "Jorcájton kívül eső dátum. Sor kihagyása %s"
+
+#: ../sedra.c:257 ../sedra.c:296
+msgid "improper sedra year type calculated."
+msgstr "Nem megfelelő szidra évtípus lett kiszámítva."
+
+msgid "Parashat"
+msgstr "Párását"
+
+msgid "Achrei Mot"
+msgstr "Ácháré Mot"
+
+msgid "Balak"
+msgstr "Bálák"
+
+msgid "Bamidbar"
+msgstr "Bámidbár"
+
+msgid "Bechukotai"
+msgstr "Bechukotáj"
+
+msgid "Beha'alotcha"
+msgstr "Beháálotchá"
+
+msgid "Behar"
+msgstr "Böhár"
+
+msgid "Bereshit"
+msgstr "Bérésit"
+
+msgid "Beshalach"
+msgstr "Bösálách"
+
+msgid "Bo"
+msgstr "Bo"
+
+msgid "Chayei Sara"
+msgstr "Chájé Szárá"
+
+msgid "Chukat"
+msgstr "Chukát"
+
+msgid "Devarim"
+msgstr "Dvárim"
+
+msgid "Eikev"
+msgstr "Ékev"
+
+msgid "Emor"
+msgstr "Emor"
+
+msgid "Ha'Azinu"
+msgstr "Háázinu"
+
+msgid "Kedoshim"
+msgstr "Ködosim"
+
+msgid "Ki Tavo"
+msgstr "Ki Távó"
+
+msgid "Ki Teitzei"
+msgstr "Ki Técé"
+
+msgid "Ki Tisa"
+msgstr "Ki Tiszá"
+
+msgid "Korach"
+msgstr "Korách"
+
+msgid "Lech-Lecha"
+msgstr "Lech Löchá"
+
+msgid "Masei"
+msgstr "Mászé"
+
+msgid "Matot"
+msgstr "Mátot"
+
+msgid "Metzora"
+msgstr "Möcorá"
+
+msgid "Miketz"
+msgstr "Mikéc"
+
+msgid "Mishpatim"
+msgstr "Mispátim"
+
+msgid "Nasso"
+msgstr "Nászo"
+
+msgid "Nitzavim"
+msgstr "Nicávim"
+
+msgid "Noach"
+msgstr "Noách"
+
+msgid "Pekudei"
+msgstr "Pekudé"
+
+msgid "Pinchas"
+msgstr "Pinchász"
+
+msgid "Re'eh"
+msgstr "Röé"
+
+msgid "Sh'lach"
+msgstr "Slách"
+
+msgid "Shemot"
+msgstr "Smot"
+
+msgid "Shmini"
+msgstr "Smini"
+
+msgid "Shoftim"
+msgstr "Softim"
+
+msgid "Tazria"
+msgstr "Tázriá"
+
+msgid "Terumah"
+msgstr "Trumá"
+
+msgid "Tetzaveh"
+msgstr "Tecáve"
+
+msgid "Toldot"
+msgstr "Toldot"
+
+msgid "Tzav"
+msgstr "Cáv"
+
+msgid "Vaera"
+msgstr "Vaéra"
+
+msgid "Vaetchanan"
+msgstr "Váetchánán"
+
+msgid "Vayakhel"
+msgstr "Vájákhél"
+
+msgid "Vayechi"
+msgstr "Vájechi"
+
+msgid "Vayeilech"
+msgstr "Vájélech"
+
+msgid "Vayera"
+msgstr "Váérá"
+
+msgid "Vayeshev"
+msgstr "Vájésev"
+
+msgid "Vayetzei"
+msgstr "Vájécé"
+
+msgid "Vayigash"
+msgstr "Vájigás"
+
+msgid "Vayikra"
+msgstr "Vájikrá"
+
+msgid "Vayishlach"
+msgstr "Vájislách"
+
+msgid "Vezot Haberakhah"
+msgstr "Vözot háböráchá"
+
+msgid "Yitro"
+msgstr "Jitró"
+
+msgid "Asara B'Tevet"
+msgstr "Ászárá böTévét"
+
+msgid "Candle lighting"
+msgstr "Gyertyagyújtás"
+
+msgid "Chanukah"
+msgstr "Chánuká"
+
+msgid "Chanukah: 1 Candle"
+msgstr "Chánuká: 1 gyertya"
+
+msgid "Chanukah: 2 Candles"
+msgstr "Chánuká: 2 gyertya"
+
+msgid "Chanukah: 3 Candles"
+msgstr "Chánuká: 3 gyertya"
+
+msgid "Chanukah: 4 Candles"
+msgstr "Chánuká: 4 gyertya"
+
+msgid "Chanukah: 5 Candles"
+msgstr "Chánuká: 5 gyertya"
+
+msgid "Chanukah: 6 Candles"
+msgstr "Chánuká: 6 gyertya"
+
+msgid "Chanukah: 7 Candles"
+msgstr "Chánuká: 7 gyertya"
+
+msgid "Chanukah: 8 Candles"
+msgstr "Chánuká: 8 gyertya"
+
+msgid "Chanukah: 8th Day"
+msgstr "Chánuká: 8. nap"
+
+msgid "Days of the Omer"
+msgstr "Az omer napjai"
+
+msgid "Erev Pesach"
+msgstr "Erev Peszách"
+
+msgid "Erev Purim"
+msgstr "Erev Purim"
+
+msgid "Erev Rosh Hashana"
+msgstr "Erev Ros hásáná"
+
+msgid "Erev Shavuot"
+msgstr "Erev Sávuot"
+
+msgid "Erev Simchat Torah"
+msgstr "Erev Szimchát Tóra"
+
+msgid "Erev Sukkot"
+msgstr "Erev Szukkot"
+
+msgid "Erev Tish'a B'Av"
+msgstr "Erev Tisá böÁv"
+
+msgid "Erev Yom Kippur"
+msgstr "Erev Jom kipur"
+
+msgid "Havdalah"
+msgstr "Hávdálá"
+
+msgid "Lag BaOmer"
+msgstr "Lág báOmer"
+
+msgid "Leil Selichot"
+msgstr "Szlichot"
+
+msgid "Pesach"
+msgstr "Peszách"
+
+msgid "Pesach I"
+msgstr "Peszách I"
+
+msgid "Pesach II"
+msgstr "Peszách II"
+
+msgid "Pesach II (CH''M)"
+msgstr "Peszách II (CH''M)"
+
+msgid "Pesach III (CH''M)"
+msgstr "Peszách III (CH''M)"
+
+msgid "Pesach IV (CH''M)"
+msgstr "Peszách IV (CH''M)"
+
+msgid "Pesach Sheni"
+msgstr "Peszách séni"
+
+msgid "Pesach V (CH''M)"
+msgstr "Peszách V (CH''M)"
+
+msgid "Pesach VI (CH''M)"
+msgstr "Peszách VI (CH''M)"
+
+msgid "Pesach VII"
+msgstr "Peszách VII"
+
+msgid "Pesach VIII"
+msgstr "Peszách VIII"
+
+msgid "Purim"
+msgstr "Purim"
+
+msgid "Purim Katan"
+msgstr "Purim Kátán"
+
+msgid "Rosh Chodesh %s"
+msgstr "Ros chódes %s"
+
+msgid "Adar"
+msgstr "Ádár"
+
+msgid "Adar I"
+msgstr "Ádár I"
+
+msgid "Adar II"
+msgstr "Ádár II"
+
+msgid "Av"
+msgstr "Áv"
+
+msgid "Cheshvan"
+msgstr "Chesván"
+
+msgid "Elul"
+msgstr "Elul"
+
+msgid "Iyyar"
+msgstr "Ijár"
+
+msgid "Kislev"
+msgstr "Kiszlév"
+
+msgid "Nisan"
+msgstr "Niszán"
+
+msgid "Sh'vat"
+msgstr "Svát"
+
+msgid "Sivan"
+msgstr "Sziván"
+
+msgid "Tamuz"
+msgstr "Támuz"
+
+msgid "Tevet"
+msgstr "Tévét"
+
+msgid "Rosh Hashana"
+msgstr "Ros hásáná"
+
+msgid "Rosh Hashana I"
+msgstr "Ros hásáná I"
+
+msgid "Rosh Hashana II"
+msgstr "Ros hásáná II"
+
+msgid "Shabbat Chazon"
+msgstr "Sábát Cházon"
+
+msgid "Shabbat HaChodesh"
+msgstr "Sábát háChódes"
+
+msgid "Shabbat HaGadol"
+msgstr "Sábát háGádol"
+
+msgid "Shabbat Machar Chodesh"
+msgstr "Sábát Máchár chódes"
+
+msgid "Shabbat Nachamu"
+msgstr "Sábát Náchámu"
+
+msgid "Shabbat Parah"
+msgstr "Sábát Párá"
+
+msgid "Shabbat Rosh Chodesh"
+msgstr "Sábát Ros chódes"
+
+msgid "Shabbat Shekalim"
+msgstr "Sábát Skálim"
+
+msgid "Shabbat Shuva"
+msgstr "Sábát Suvá"
+
+msgid "Shabbat Zachor"
+msgstr "Sábát Záchor"
+
+msgid "Shavuot"
+msgstr "Sávuot"
+
+msgid "Shavuot I"
+msgstr "Sávuot I"
+
+msgid "Shavuot II"
+msgstr "Sávuot II"
+
+msgid "Shmini Atzeret"
+msgstr "Smini áceret"
+
+msgid "Shushan Purim"
+msgstr "Susán purim"
+
+msgid "Sigd"
+msgstr "Sigd"
+
+msgid "Simchat Torah"
+msgstr "Szimchát Tóra"
+
+msgid "Sukkot"
+msgstr "Szukkot"
+
+msgid "Sukkot I"
+msgstr "Szukkot I"
+
+msgid "Sukkot II"
+msgstr "Szukkot II"
+
+msgid "Sukkot II (CH''M)"
+msgstr "Szukkot II (CH''M)"
+
+msgid "Sukkot III (CH''M)"
+msgstr "Szukkot III (CH''M)"
+
+msgid "Sukkot IV (CH''M)"
+msgstr "Szukkot IV (CH''M)"
+
+msgid "Sukkot V (CH''M)"
+msgstr "Szukkot V (CH''M)"
+
+msgid "Sukkot VI (CH''M)"
+msgstr "Szukkot VI (CH''M)"
+
+msgid "Sukkot VII (Hoshana Raba)"
+msgstr "Szukkot VII (Hosáná rábá)"
+
+msgid "Ta'anit Bechorot"
+msgstr "Táánit Bechorot"
+
+msgid "Ta'anit Esther"
+msgstr "Táánit Eszter"
+
+msgid "Tish'a B'Av"
+msgstr "Tisá böÁv"
+
+msgid "Tu B'Av"
+msgstr "Tu böÁv"
+
+msgid "Tu BiShvat"
+msgstr "Tu biSvát"
+
+msgid "Tu B'Shvat"
+msgstr "Tu biSvát"
+
+msgid "Tzom Gedaliah"
+msgstr "Com Gedáljá"
+
+msgid "Tzom Tammuz"
+msgstr "Com Támuz"
+
+msgid "Yom HaAtzma'ut"
+msgstr "Jom háÁcmáut"
+
+msgid "Yom HaShoah"
+msgstr "Jom háSoá"
+
+msgid "Yom HaZikaron"
+msgstr "Jom háZikáron"
+
+msgid "Yom Kippur"
+msgstr "Jom kipur"
+
+msgid "Yom Yerushalayim"
+msgstr "Jom Jerusáláim"
+
+msgid "Yom HaAliyah"
+msgstr "Jom háAlija"

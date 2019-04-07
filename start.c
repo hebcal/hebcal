@@ -146,7 +146,7 @@ static char* optionsHelpArray[] = {
 "                                            this overrides -y", 
 "    -h, --no-holidays                  Suppress default holidays",
 "    -i, --israeli                      Israeli holiday and sedra schedule",
-"    --lang LANG                        Use LANG titles (fi, fr, he, ru, pl)",
+"    --lang LANG                        Use LANG titles (fi, fr, hu, he, ru, pl)",
 "    -M, --molad                        Print the molad on Shabbat Mevorchim",
 "    --no-modern                        Suppress modern holidays",
 "    -o, --omer                         Add days of the Omer",
