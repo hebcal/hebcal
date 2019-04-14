@@ -3,6 +3,8 @@
 use strict;
 use File::Basename;
 
+die "usage: $0 po/*.po\n" unless @ARGV;
+
 my @locales;
 my $func_prefix = "hebcal_lookup_";
 
@@ -45,6 +47,9 @@ struct event_title { char *name; char *dest; };
     push(@locales, $locale);
 }
 
+my $locale_list = join(", ", @locales);
+my $locale_list_len = scalar(@locales) + 1;
+
 my $outfile = "translations.h";
 print STDERR "$outfile\n";
 open(OUT, ">$outfile") || die "$outfile: $!";
@@ -55,6 +60,10 @@ print OUT <<EOF;
  */
 #ifndef __HEBCAL_TRANSLATIONS__
 #define __HEBCAL_TRANSLATIONS__
+
+#define HEBCAL_LANG_LIST "$locale_list"
+
+const char *hebcal_langs[$locale_list_len];
 
 struct event_title { char *name; char *dest; };
 
@@ -93,8 +102,15 @@ print OUT <<EOF;
 #include "translations.h"
 #include <string.h>
 
+const char *hebcal_langs[] = {
 EOF
 ;
+
+foreach my $locale (@locales) {
+    print OUT "   \"", $locale, "\",\n";
+}
+
+print OUT "   NULL\n};\n\n";
 
 foreach my $locale (@locales) {
     print OUT "struct event_title * ", $func_prefix, $locale, "(const char *str, unsigned int len);\n";

@@ -5,6 +5,20 @@
 #include "translations.h"
 #include <string.h>
 
+const char *hebcal_langs[] = {
+   "ashkenazi",
+   "ashkenazi_litvish",
+   "ashkenazi_poylish",
+   "ashkenazi_standard",
+   "fi",
+   "fr",
+   "he",
+   "hu",
+   "pl",
+   "ru",
+   NULL
+};
+
 struct event_title * hebcal_lookup_ashkenazi(const char *str, unsigned int len);
 struct event_title * hebcal_lookup_ashkenazi_litvish(const char *str, unsigned int len);
 struct event_title * hebcal_lookup_ashkenazi_poylish(const char *str, unsigned int len);

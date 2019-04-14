@@ -5,6 +5,10 @@
 #ifndef __HEBCAL_TRANSLATIONS__
 #define __HEBCAL_TRANSLATIONS__
 
+#define HEBCAL_LANG_LIST "ashkenazi, ashkenazi_litvish, ashkenazi_poylish, ashkenazi_standard, fi, fr, he, hu, pl, ru"
+
+const char *hebcal_langs[11];
+
 struct event_title { char *name; char *dest; };
 
 const char * lookup_translation(const char *s);

@@ -265,7 +265,8 @@ Display calendar in
 the
 .I lang
 language,
-which must be specified as one of the ISO 639-1 codes of \(lqhe\(rq, \(lqru\(rq, or \(lqpl\(rq
+which must be specified as one of the ISO 639-1 codes of
+\(lqashkenazi\(rq, \(lqashkenazi_litvish\(rq, \(lqashkenazi_poylish\(rq, \(lqashkenazi_standard\(rq, \(lqfi\(rq, \(lqfr\(rq, \(lqhe\(rq, \(lqhu\(rq, \(lqpl\(rq, \(lqru\(rq
 .TP
 .BI "\-m " mins
 Set havdalah to occur

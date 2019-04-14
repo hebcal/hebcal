@@ -1,3 +1,8 @@
+Changes in 4.17
+* Hungarian localisation #174
+* Litvish Rosh => Reish #169
+* Update timezone database to version 2019.1 (2019a)
+
 Changes in 4.16
 * Scratched an itch:  added iso-8601 dates for output
 * Update timezone database to version 2018.9 (2018i)
