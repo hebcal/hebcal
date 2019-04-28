@@ -279,6 +279,7 @@ void localize_to_city(const char *cityNameArg)
     for (pcity = &cities[0]; pcity->name != NULL; pcity++)
         if (0 == istrncasecmp(len, cityStr, pcity->name))
         {
+            int error_code = 0;
             if (!(longp || latp))	/* -l and -L override -C  */
             {
                 latdeg = pcity->latdeg;
@@ -286,8 +287,9 @@ void localize_to_city(const char *cityNameArg)
                 longdeg = pcity->longdeg;
                 longmin = pcity->longmin;
             }
-            TZ_INFO = timelib_parse_tzfile(pcity->tz, timelib_builtin_db());
+            TZ_INFO = timelib_parse_tzfile(pcity->tz, timelib_builtin_db(), &error_code);
             if (TZ_INFO == NULL) {
+                fprintf(stderr, "timelib error: %s\n", timelib_get_error_message(error_code));
                 die("unable to read time zone argument: %s", pcity->tz);
             }
             free(cityStr);
@@ -627,8 +629,10 @@ void handleArgs(int argc, char *argv[])
    }
 
    if (tzid != NULL) {
-      TZ_INFO = timelib_parse_tzfile(tzid, timelib_builtin_db());
+      int error_code = 0;
+      TZ_INFO = timelib_parse_tzfile(tzid, timelib_builtin_db(), &error_code);
       if (TZ_INFO == NULL) {
+         fprintf(stderr, "timelib error: %s\n", timelib_get_error_message(error_code));
          die("unable to read time zone argument: %s", tzid);
       }
       free(tzid);

@@ -1,3 +1,6 @@
+Changes in 4.18
+* Update timelib to 2018.01 (with small patch to keep candle-lighting consistent)
+
 Changes in 4.17
 * Hungarian localisation #174
 * Litvish Rosh => Reish #169
