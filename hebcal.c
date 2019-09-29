@@ -50,7 +50,7 @@ int
   abbrev_sw, first_weekday, this_weekday,
   dafYomi_sw,
   yearDigits_sw, yahrtzeitFile_sw;
-timelib_tzinfo *TZ_INFO;
+timelib_tzinfo *TZ_INFO = NULL;
 int latdeg, latmin, longdeg, longmin;
 
 int twentyFourHour_sw;

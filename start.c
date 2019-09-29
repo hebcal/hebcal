@@ -56,8 +56,8 @@ int ok_to_run = 1;
 char *progname;
 static int theYear, theMonth, theDay, yearDirty, rangeType,
     latp, longp;			/* has the user inputted lat and long? */
-static char
-    *cityName, *helpArray[] =
+static char *cityName = NULL;
+static char *helpArray[] =
 {
    "hebcal [options] [[ month [ day ]] year ]",
    "",
@@ -197,13 +197,17 @@ void print_version_data(void)
     const timelib_tzdb *db = timelib_builtin_db();
     printf("hebcal version " VERSION "\n");
     printf("timezone_db version %s\n", db->version);
-    printf("=====Defaults=====\n");
-    printf("City: %s\n", cityName);
-    printf("          %dd%d' %c latitude\n", abs(latdeg), abs(latmin),
-           latdeg < 0 ? 'S' : 'N');
-    printf("          %dd%d' %c longitude\n", abs(longdeg), abs(longmin),
-           longdeg > 0 ? 'W' : 'E');
-    printf("          Timezone: %s\n", TZ_INFO->name);
+    if (cityName) {
+        printf("=====Defaults=====\n");
+        printf("City: %s\n", cityName);
+        printf("          %dd%d' %c latitude\n", abs(latdeg), abs(latmin),
+                latdeg < 0 ? 'S' : 'N');
+        printf("          %dd%d' %c longitude\n", abs(longdeg), abs(longmin),
+                longdeg > 0 ? 'W' : 'E');
+        if (TZ_INFO) {
+            printf("          Timezone: %s\n", TZ_INFO->name);
+        }
+    }
     printf("\nEnvironment variable for default city: %s\n", ENV_CITY);
     printf("\nEnvironment variable for default options: %s\n", ENV_OPTS);
 }
@@ -645,12 +649,16 @@ void handleArgs(int argc, char *argv[])
                            ZMAN_PLAG_HAMINCHA | ZMAN_SUNSET | ZMAN_TZAIT_42);
    }
 
+   if (!TZ_INFO && (zemanim_sw || candleLighting_sw)) {
+      set_default_city();
+   }
+
    if (latp)
        cityName = "User Defined City";
    if (latp ^ longp)
        die("You must enter BOTH the latitude and the longitude", "");
    
-   if( !strcmp(cityName, "Jerusalem" ))
+   if(cityName && !strcmp(cityName, "Jerusalem"))
        light_offset = -40;	/* does everyone hold by this? */
 
 
@@ -824,7 +832,6 @@ int main(int argc, char* argv[])
 
     progname = argv[0];
 
-    set_default_city();
     if ((envStr = getenv(ENV_OPTS)) && strcmp(envStr, ""))
     {
         int i;
