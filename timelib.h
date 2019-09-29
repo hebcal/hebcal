@@ -2,7 +2,6 @@
  * The MIT License (MIT)
  *
  * Copyright (c) 2015-2019 Derick Rethans
- * Copyright (c) 2018 MongoDB, Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -650,7 +649,7 @@ void timelib_set_timezone_from_abbr(timelib_time *t, timelib_abbr_info abbr_info
  * It fetches the right UTC offset that is currently stored in the time
  * stamp field in 't' ('sse'), and assigns that to the 'z' field and 'dst'
  * field (whether DST is in effect at the time). It also sets the current
- * abbreviation to the 'tz_addr' field, making sure that if a value was already
+ * abbrevation to the 'tz_addr' field, making sure that if a value was already
  * set it was freed.
  *
  * The time zone information in 'tz' is *not* duplicated into the 't' field so

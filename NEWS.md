@@ -1,3 +1,7 @@
+Changes in 4.19
+* Fix crash in candle-lighting times on big endian architectures (#170)
+* Update timezone database to version 2019.2
+
 Changes in 4.18
 * Update timelib to 2018.01 (with small patch to keep candle-lighting consistent)
 
