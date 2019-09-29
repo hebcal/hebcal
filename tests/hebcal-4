@@ -1,11 +1,6 @@
 #!/bin/sh
 # This script takes no arguments.
 
-little_endian=`echo I | tr -d [:space:] | od -to2 | head -n1 | awk '{print $2}' | cut -c6`
-if [ "$little_endian" != "1" ]; then
-    exit 0
-fi
-
 LANGUAGE=
 LC_ALL=
 LC_MESSAGES=

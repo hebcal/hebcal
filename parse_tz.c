@@ -39,6 +39,13 @@
 # endif
 #endif
 
+/* mjradwin: required on Debian mips64 and sparc64 */
+#if (defined(__BYTE_ORDER) && defined(__BIG_ENDIAN))
+# if __BYTE_ORDER == __BIG_ENDIAN
+#   define WORDS_BIGENDIAN
+# endif
+#endif
+
 #if defined(__s390__)
 # if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
 #  define WORDS_BIGENDIAN
