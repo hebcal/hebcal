@@ -1,6 +1,6 @@
-/* ANSI-C code produced by gperf version 3.1 */
-/* Command-line: gperf strings_ashkenazi.gperf  */
-/* Computed positions: -k'4-5,8-9' */
+/* C code produced by gperf version 3.0.3 */
+/* Command-line: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/gperf strings_ashkenazi.gperf  */
+/* Computed positions: -k'1,3,5,8-9' */
 
 #if !((' ' == 32) && ('!' == 33) && ('"' == 34) && ('#' == 35) \
       && ('%' == 37) && ('&' == 38) && ('\'' == 39) && ('(' == 40) \
@@ -26,7 +26,7 @@
       && ('w' == 119) && ('x' == 120) && ('y' == 121) && ('z' == 122) \
       && ('{' == 123) && ('|' == 124) && ('}' == 125) && ('~' == 126))
 /* The character set is not based on ISO-646.  */
-#error "gperf generated tables don't work with this execution character set. Please report a bug to <bug-gperf@gnu.org>."
+error "gperf generated tables don't work with this execution character set. Please report a bug to <bug-gnu-gperf@gnu.org>."
 #endif
 
 #line 4 "strings_ashkenazi.gperf"
@@ -35,12 +35,12 @@
 #line 7 "strings_ashkenazi.gperf"
 struct event_title { char *name; char *dest; };
 
-#define TOTAL_KEYWORDS 41
+#define TOTAL_KEYWORDS 54
 #define MIN_WORD_LENGTH 5
 #define MAX_WORD_LENGTH 25
-#define MIN_HASH_VALUE 5
-#define MAX_HASH_VALUE 50
-/* maximum key range = 46, duplicates = 0 */
+#define MIN_HASH_VALUE 6
+#define MAX_HASH_VALUE 85
+/* maximum key range = 80, duplicates = 0 */
 
 #ifdef __GNUC__
 __inline
@@ -50,36 +50,38 @@ inline
 #endif
 #endif
 static unsigned int
-hash (register const char *str, register size_t len)
+hash (str, len)
+     register const char *str;
+     register unsigned int len;
 {
   static unsigned char asso_values[] =
     {
-      51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-      51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-      51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-      51, 51,  5, 15, 51, 51, 51, 51, 51, 25,
-      51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-      51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-      51, 51, 51, 51, 51,  5, 51, 10, 15, 51,
-       0, 51, 51,  5,  0, 51, 51, 20, 51, 25,
-      51, 30, 51, 51,  0,  5, 15, 15, 51, 51,
-      51,  5, 51, 51, 51, 51, 51,  0,  0, 10,
-      30,  5,  0, 51, 10,  5,  0,  0, 10, 10,
-      10,  0, 15, 51,  0, 15,  5,  5,  0,  0,
-      51, 51,  0, 51, 51, 51, 51, 51, 51, 51,
-      51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-      51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-      51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-      51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-      51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-      51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-      51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-      51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-      51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-      51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-      51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-      51, 51, 51, 51, 51, 51, 51, 51, 51, 51,
-      51, 51, 51, 51, 51, 51, 51
+      86, 86, 86, 86, 86, 86, 86, 86, 86, 86,
+      86, 86, 86, 86, 86, 86, 86, 86, 86, 86,
+      86, 86, 86, 86, 86, 86, 86, 86, 86, 86,
+      86, 86,  5,  0, 86, 86, 86, 86, 86, 10,
+      86, 86, 86, 86, 86, 86, 86, 86, 86, 86,
+      86, 86, 86, 86, 86, 86, 86, 86, 86, 86,
+      86, 86, 86, 86, 86,  0,  0, 10,  5, 10,
+       0, 86, 30,  0,  0,  0,  5,  0, 86, 40,
+      10, 35, 86,  0,  5,  0, 25, 50, 86,  0,
+      86,  0, 86, 86, 86, 86, 86,  0,  0,  0,
+      10, 30,  5, 86, 40, 35,  0,  0,  0,  5,
+      15,  0,  5, 86,  5,  5, 20,  0, 40,  0,
+      86, 30,  5, 86, 86, 86, 86, 86, 86, 86,
+      86, 86, 86, 86, 86, 86, 86, 86, 86, 86,
+      86, 86, 86, 86, 86, 86, 86, 86, 86, 86,
+      86, 86, 86, 86, 86, 86, 86, 86, 86, 86,
+      86, 86, 86, 86, 86, 86, 86, 86, 86, 86,
+      86, 86, 86, 86, 86, 86, 86, 86, 86, 86,
+      86, 86, 86, 86, 86, 86, 86, 86, 86, 86,
+      86, 86, 86, 86, 86, 86, 86, 86, 86, 86,
+      86, 86, 86, 86, 86, 86, 86, 86, 86, 86,
+      86, 86, 86, 86, 86, 86, 86, 86, 86, 86,
+      86, 86, 86, 86, 86, 86, 86, 86, 86, 86,
+      86, 86, 86, 86, 86, 86, 86, 86, 86, 86,
+      86, 86, 86, 86, 86, 86, 86, 86, 86, 86,
+      86, 86, 86, 86, 86, 86, 86
     };
   register unsigned int hval = len;
 
@@ -97,109 +99,150 @@ hash (register const char *str, register size_t len)
         hval += asso_values[(unsigned char)str[4]];
       /*FALLTHROUGH*/
       case 4:
-        hval += asso_values[(unsigned char)str[3]];
+      case 3:
+        hval += asso_values[(unsigned char)str[2]];
+      /*FALLTHROUGH*/
+      case 2:
+      case 1:
+        hval += asso_values[(unsigned char)str[0]];
         break;
     }
   return hval;
 }
 
 struct event_title *
-hebcal_lookup_ashkenazi (register const char *str, register size_t len)
+hebcal_lookup_ashkenazi (str, len)
+     register const char *str;
+     register unsigned int len;
 {
   static struct event_title wordlist[] =
     {
-      {""}, {""}, {""}, {""}, {""},
-#line 47 "strings_ashkenazi.gperf"
-      {"Yitro","Yisro"},
-#line 13 "strings_ashkenazi.gperf"
-      {"Chukat","Chukas"},
-#line 16 "strings_ashkenazi.gperf"
-      {"Ki Tavo","Ki Savo"},
-      {""}, {""},
-#line 19 "strings_ashkenazi.gperf"
-      {"Matot","Matos"},
-#line 21 "strings_ashkenazi.gperf"
-      {"Tazria","Sazria"},
-#line 18 "strings_ashkenazi.gperf"
-      {"Ki Tisa","Ki Sisa"},
-#line 35 "strings_ashkenazi.gperf"
-      {"Sukkot I","Sukkos I"},
-#line 36 "strings_ashkenazi.gperf"
-      {"Sukkot II","Sukkos II"},
-#line 17 "strings_ashkenazi.gperf"
-      {"Ki Teitzei","Ki Seitzei"},
-#line 32 "strings_ashkenazi.gperf"
-      {"Shemot","Shemos"},
-#line 14 "strings_ashkenazi.gperf"
-      {"Erev Shavuot","Erev Shavuos"},
-#line 28 "strings_ashkenazi.gperf"
-      {"Shabbat Shuva","Shabbos Shuvah"},
-#line 30 "strings_ashkenazi.gperf"
-      {"Shavuot I","Shavuos I"},
-#line 31 "strings_ashkenazi.gperf"
-      {"Shavuot II","Shavuos II"},
-#line 27 "strings_ashkenazi.gperf"
-      {"Shabbat Shekalim","Shabbos Shekalim"},
-#line 37 "strings_ashkenazi.gperf"
-      {"Sukkot II (CH''M)","Sukkos II (CH''M)"},
-#line 38 "strings_ashkenazi.gperf"
-      {"Sukkot III (CH''M)","Sukkos III (CH''M)"},
-#line 29 "strings_ashkenazi.gperf"
-      {"Shabbat Zachor","Shabbos Zachor"},
-#line 24 "strings_ashkenazi.gperf"
-      {"Shabbat HaGadol","Shabbos HaGadol"},
+      {""}, {""}, {""}, {""}, {""}, {""},
 #line 15 "strings_ashkenazi.gperf"
-      {"Erev Sukkot","Erev Sukkos"},
-#line 23 "strings_ashkenazi.gperf"
-      {"Shabbat HaChodesh","Shabbos HaChodesh"},
-#line 48 "strings_ashkenazi.gperf"
-      {"Parashat","Parshas"},
-#line 44 "strings_ashkenazi.gperf"
-      {"Ta'anit Esther","Ta'anis Esther"},
+      {"Makkot","Makkos"},
 #line 10 "strings_ashkenazi.gperf"
-      {"Bechukotai","Bechukosai"},
-#line 20 "strings_ashkenazi.gperf"
-      {"Purim Katan","Purim Koton"},
-#line 41 "strings_ashkenazi.gperf"
-      {"Sukkot VI (CH''M)","Sukkos VI (CH''M)"},
-#line 12 "strings_ashkenazi.gperf"
-      {"Bereshit","Bereshis"},
-#line 22 "strings_ashkenazi.gperf"
-      {"Shabbat Chazon","Shabbos Chazon"},
-#line 46 "strings_ashkenazi.gperf"
-      {"Vaetchanan","Vaeschanan"},
-#line 45 "strings_ashkenazi.gperf"
-      {"Toldot","Toldos"},
-#line 39 "strings_ashkenazi.gperf"
-      {"Sukkot IV (CH''M)","Sukkos IV (CH''M)"},
+      {"Shabbat","Shabbos"},
+#line 48 "strings_ashkenazi.gperf"
+      {"Sukkot I","Sukkos I"},
 #line 49 "strings_ashkenazi.gperf"
-      {"Leil Selichot","Leil Selichos"},
-#line 33 "strings_ashkenazi.gperf"
-      {"Shmini Atzeret","Shmini Atzeres"},
-#line 42 "strings_ashkenazi.gperf"
-      {"Sukkot VII (Hoshana Raba)","Sukkos VII (Hoshana Raba)"},
+      {"Sukkot II","Sukkos II"},
+      {""},
+#line 58 "strings_ashkenazi.gperf"
+      {"Toldot","Toldos"},
+#line 29 "strings_ashkenazi.gperf"
+      {"Ki Tavo","Ki Savo"},
+      {""},
 #line 43 "strings_ashkenazi.gperf"
-      {"Ta'anit Bechorot","Ta'anis Bechoros"},
-#line 11 "strings_ashkenazi.gperf"
-      {"Beha'alotcha","Beha'aloscha"},
-#line 34 "strings_ashkenazi.gperf"
-      {"Simchat Torah","Simchas Torah"},
-      {""},
-#line 25 "strings_ashkenazi.gperf"
-      {"Shabbat Nachamu","Shabbos Nachamu"},
-#line 40 "strings_ashkenazi.gperf"
-      {"Sukkot V (CH''M)","Sukkos V (CH''M)"},
-      {""},
+      {"Shavuot I","Shavuos I"},
+#line 44 "strings_ashkenazi.gperf"
+      {"Shavuot II","Shavuos II"},
 #line 26 "strings_ashkenazi.gperf"
+      {"Chukat","Chukas"},
+#line 50 "strings_ashkenazi.gperf"
+      {"Sukkot II (CH''M)","Sukkos II (CH''M)"},
+#line 51 "strings_ashkenazi.gperf"
+      {"Sukkot III (CH''M)","Sukkos III (CH''M)"},
+#line 42 "strings_ashkenazi.gperf"
+      {"Shabbat Zachor","Shabbos Zachor"},
+#line 37 "strings_ashkenazi.gperf"
+      {"Shabbat HaGadol","Shabbos HaGadol"},
+      {""},
+#line 36 "strings_ashkenazi.gperf"
+      {"Shabbat HaChodesh","Shabbos HaChodesh"},
+#line 41 "strings_ashkenazi.gperf"
+      {"Shabbat Shuva","Shabbos Shuvah"},
+#line 35 "strings_ashkenazi.gperf"
+      {"Shabbat Chazon","Shabbos Chazon"},
+#line 60 "strings_ashkenazi.gperf"
+      {"Yitro","Yisro"},
+#line 40 "strings_ashkenazi.gperf"
+      {"Shabbat Shekalim","Shabbos Shekalim"},
+#line 13 "strings_ashkenazi.gperf"
+      {"Ketubot","Kesubos"},
+#line 19 "strings_ashkenazi.gperf"
+      {"Bechorot","Bechoros"},
+      {""},
+#line 23 "strings_ashkenazi.gperf"
+      {"Bechukotai","Bechukosai"},
+#line 33 "strings_ashkenazi.gperf"
+      {"Purim Katan","Purim Koton"},
+#line 20 "strings_ashkenazi.gperf"
+      {"Keritot","Kerisos"},
+#line 9 "strings_ashkenazi.gperf"
+      {"Berachot","Berachos"},
+#line 46 "strings_ashkenazi.gperf"
+      {"Shmini Atzeret","Shmini Atzeres"},
+#line 21 "strings_ashkenazi.gperf"
+      {"Midot","Midos"},
+#line 45 "strings_ashkenazi.gperf"
+      {"Shemot","Shemos"},
+#line 16 "strings_ashkenazi.gperf"
+      {"Shevuot","Shevuos"},
+#line 25 "strings_ashkenazi.gperf"
+      {"Bereshit","Bereshis"},
+      {""},
+#line 14 "strings_ashkenazi.gperf"
+      {"Baba Batra","Baba Basra"},
+#line 53 "strings_ashkenazi.gperf"
+      {"Sukkot V (CH''M)","Sukkos V (CH''M)"},
+#line 54 "strings_ashkenazi.gperf"
+      {"Sukkot VI (CH''M)","Sukkos VI (CH''M)"},
+#line 18 "strings_ashkenazi.gperf"
+      {"Menachot","Menachos"},
+      {""},
+#line 32 "strings_ashkenazi.gperf"
+      {"Matot","Matos"},
+#line 11 "strings_ashkenazi.gperf"
+      {"Taanit","Taanis"},
+#line 31 "strings_ashkenazi.gperf"
+      {"Ki Tisa","Ki Sisa"},
+#line 61 "strings_ashkenazi.gperf"
+      {"Parashat","Parshas"},
+#line 57 "strings_ashkenazi.gperf"
+      {"Ta'anit Esther","Ta'anis Esther"},
+#line 55 "strings_ashkenazi.gperf"
+      {"Sukkot VII (Hoshana Raba)","Sukkos VII (Hoshana Raba)"},
+#line 34 "strings_ashkenazi.gperf"
+      {"Tazria","Sazria"},
+#line 12 "strings_ashkenazi.gperf"
+      {"Yevamot","Yevamos"},
+#line 39 "strings_ashkenazi.gperf"
       {"Shabbat Parah","Shabbos Parah"},
       {""},
-#line 9 "strings_ashkenazi.gperf"
+#line 30 "strings_ashkenazi.gperf"
+      {"Ki Teitzei","Ki Seitzei"},
+#line 28 "strings_ashkenazi.gperf"
+      {"Erev Sukkot","Erev Sukkos"},
+#line 27 "strings_ashkenazi.gperf"
+      {"Erev Shavuot","Erev Shavuos"},
+#line 62 "strings_ashkenazi.gperf"
+      {"Leil Selichot","Leil Selichos"},
+      {""},
+#line 38 "strings_ashkenazi.gperf"
+      {"Shabbat Nachamu","Shabbos Nachamu"},
+#line 56 "strings_ashkenazi.gperf"
+      {"Ta'anit Bechorot","Ta'anis Bechoros"},
+#line 24 "strings_ashkenazi.gperf"
+      {"Beha'alotcha","Beha'aloscha"},
+#line 47 "strings_ashkenazi.gperf"
+      {"Simchat Torah","Simchas Torah"},
+      {""}, {""}, {""},
+#line 52 "strings_ashkenazi.gperf"
+      {"Sukkot IV (CH''M)","Sukkos IV (CH''M)"},
+      {""}, {""}, {""}, {""},
+#line 17 "strings_ashkenazi.gperf"
+      {"Horayot","Horayos"},
+      {""}, {""}, {""}, {""}, {""}, {""}, {""},
+#line 59 "strings_ashkenazi.gperf"
+      {"Vaetchanan","Vaeschanan"},
+      {""}, {""}, {""}, {""},
+#line 22 "strings_ashkenazi.gperf"
       {"Achrei Mot","Achrei Mos"}
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
     {
-      register unsigned int key = hash (str, len);
+      unsigned int key = hash (str, len);
 
       if (key <= MAX_HASH_VALUE)
         {

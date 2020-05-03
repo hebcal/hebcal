@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: hebcal 4.2\n"
 "Report-Msgid-Bugs-To: hebcal-bugs@sadinoff.com\n"
 "POT-Creation-Date: 2015-12-30 14:54-0500\n"
-"PO-Revision-Date: 2016-01-03 11:18-0800\n"
+"PO-Revision-Date: 2020-05-03 11:18-0800\n"
 "Language: en_CA@ashkenazi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -16,6 +16,60 @@ msgstr ""
 "Last-Translator: \n"
 "Language-Team: \n"
 "X-Generator: Poedit 1.8.6\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: ../dafyomi.c:26
+msgid "Berachot"
+msgstr "Berachos"
+
+#: ../dafyomi.c:27
+msgid "Shabbat"
+msgstr "Shabbos"
+
+#: ../dafyomi.c:35
+msgid "Taanit"
+msgstr "Taanis"
+
+#: ../dafyomi.c:39
+msgid "Yevamot"
+msgstr "Yevamos"
+
+#: ../dafyomi.c:40
+msgid "Ketubot"
+msgstr "Kesubos"
+
+#: ../dafyomi.c:48
+msgid "Baba Batra"
+msgstr "Baba Basra"
+
+#: ../dafyomi.c:50
+msgid "Makkot"
+msgstr "Makkos"
+
+#: ../dafyomi.c:51
+msgid "Shevuot"
+msgstr "Shevuos"
+
+#: ../dafyomi.c:53
+msgid "Horayot"
+msgstr "Horayos"
+
+#: ../dafyomi.c:55
+msgid "Menachot"
+msgstr "Menachos"
+
+#: ../dafyomi.c:57
+msgid "Bechorot"
+msgstr "Bechoros"
+
+#: ../dafyomi.c:60
+msgid "Keritot"
+msgstr "Kerisos"
+
+#: ../dafyomi.c:64
+msgid "Midot"
+msgstr "Midos"
+
 
 msgid "Achrei Mot"
 msgstr "Achrei Mos"

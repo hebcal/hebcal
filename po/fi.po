@@ -16,6 +16,7 @@ msgstr ""
 "Last-Translator: \n"
 "Language-Team: \n"
 "X-Generator: Poedit 1.8.12\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ../dafyomi.c:26
 msgid "Berachot"
