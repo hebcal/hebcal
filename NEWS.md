@@ -1,3 +1,6 @@
+Changes in 4.20
+* Update timezone database to version 2020.1
+
 Changes in 4.19
 * Fix crash in candle-lighting times on big endian architectures (#170)
 * Update timezone database to version 2019.2
