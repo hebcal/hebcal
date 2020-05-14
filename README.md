@@ -40,6 +40,7 @@ Note: Use COMPLETE Years.  You probably aren't interested in
 hebcal 93, but rather hebcal 1993.
 
 ### Options
+#### General options
 Option | Description
 --- | ---
   --help | Show help text
@@ -74,25 +75,23 @@ Option | Description
    -r, --tabs | Tab delineated format.
    -s, --sedrot | Add weekly sedrot on Saturday.
    -S, --daily-sedra | Print sedrah of the week on all calendar days.
-   -t | Only output for today's date.
-   -T | Print today's pertinent information, no Gregorian date.
    -w, --weekday | Add day of the week.
    -W, --abbreviated | Weekly view. Omer, dafyomi, and non-date-specific zemanim are shown once a week, on the day which corresponds to the first day in the range.
    -x, --no-rosh-chodesh | Suppress Rosh Chodesh.
    -y, --year-abbrev | Print only last two digits of year.
    --years N | Generate events for `N` years (default `1`)
 
-### Options related to candle-lighting times
+#### Options related to candle-lighting times
 Option | Description
 --- | ---
-   -b mins | Set candle-lighting to occur this many minutes before sundown
-   -c | Print candlelighting times.
-   -C city | Set latitude, longitude, and timezone according to specified city. This option implies the -c option.
-   -l xx,yy | Set the latitude for solar calculations to `xx` degrees and `yy` minutes.  Negative values are south.
-   -L xx,yy | Set the longitude for solar calculations to `xx` degrees and `yy` minutes.  *Negative values are EAST*. The `-l` and `-L` switches must both be used, or not at all. These switches override the `-C` (localize to city) switch.
-   -m mins | Set havdalah to occur this many minutes after sundown
-   -z timezone | Use specified timezone, overriding the `-C` (localize to city) switch.
-   -Z | **EXPERIMENTAL** Add zemanim (Alot HaShachar; Misheyakir; Kriat Shema, sof zeman; Tefilah, sof zeman; Chatzot hayom; Mincha Gedolah; Mincha Ketanah; Plag HaMincha; Tzait HaKochavim)
+   -b, --candle-mins mins | Set candle-lighting to occur this many minutes before sundown
+   -c, --candlelighting | Print candlelighting times.
+   -C, --city city | Set latitude, longitude, and timezone according to specified city. This option implies the -c option.
+   -l, --latitude xx,yy | Set the latitude for solar calculations to `xx` degrees and `yy` minutes.  Negative values are south.
+   -L, --longitude xx,yy | Set the longitude for solar calculations to `xx` degrees and `yy` minutes.  *Negative values are EAST*. The `-l` and `-L` switches must both be used, or not at all. These switches override the `-C` (localize to city) switch.
+   -m, --havdalah-mins mins | Set havdalah to occur this many minutes after sundown
+   -z, --timezone timezone | Use specified timezone, overriding the `-C` (localize to city) switch.
+   -Z, --zmanim | **EXPERIMENTAL** Add zemanim (Alot HaShachar; Misheyakir; Kriat Shema, sof zeman; Tefilah, sof zeman; Chatzot hayom; Mincha Gedolah; Mincha Ketanah; Plag HaMincha; Tzait HaKochavim)
 
 ## Candle-lighting times
 
