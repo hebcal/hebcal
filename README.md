@@ -57,8 +57,8 @@ Option | Description
 #### Output Options
 Option | Description
 --- | ---
--8 | Use 8-bit Hebrew (ISO-8859-8-Logical).
--a, --ashkenazi | Use Ashkenazi Hebrew.
+   -8 | Use 8-bit Hebrew (ISO-8859-8-Logical).
+   -a, --ashkenazi | Use Ashkenazi Hebrew.
    -d, --add-hebrew-dates | print the Hebrew date for the entire date range.
    -D, --add-hebrew-dates-for-events | print the Hebrew date for dates with some events
    -e, --euro-dates | Output "European" dates -- DD.MM.YYYY format.
@@ -85,9 +85,9 @@ Option | Description
 ### Options related to candle-lighting times
 Option | Description
 --- | ---
--b mins | Set candle-lighting to occur this many minutes before sundown
--c | Print candlelighting times.
--C city | Set latitude, longitude, and timezone according to specified city. This option implies the -c option.
+   -b mins | Set candle-lighting to occur this many minutes before sundown
+   -c | Print candlelighting times.
+   -C city | Set latitude, longitude, and timezone according to specified city. This option implies the -c option.
    -l xx,yy | Set the latitude for solar calculations to `xx` degrees and `yy` minutes.  Negative values are south.
    -L xx,yy | Set the longitude for solar calculations to `xx` degrees and `yy` minutes.  *Negative values are EAST*. The `-l` and `-L` switches must both be used, or not at all. These switches override the `-C` (localize to city) switch.
    -m mins | Set havdalah to occur this many minutes after sundown
