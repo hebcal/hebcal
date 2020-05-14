@@ -56,6 +56,7 @@ Option | Description
 
 #### Output Options
 Option | Description
+--- | ---
 -8 | Use 8-bit Hebrew (ISO-8859-8-Logical).
 -a, --ashkenazi | Use Ashkenazi Hebrew.
    -d, --add-hebrew-dates | print the Hebrew date for the entire date range.
@@ -83,6 +84,7 @@ Option | Description
 
 ### Options related to candle-lighting times
 Option | Description
+--- | ---
 -b mins | Set candle-lighting to occur this many minutes before sundown
 -c | Print candlelighting times.
 -C city | Set latitude, longitude, and timezone according to specified city. This option implies the -c option.
