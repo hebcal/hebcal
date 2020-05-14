@@ -180,6 +180,9 @@ msgstr "Niddu"
 msgid "Daf Yomi: %s %d"
 msgstr "Daf Yoymi: %s %d"
 
+msgid "Daf Yomi"
+msgstr "Daf Yoymi"
+
 #: ../holidays.c:380
 msgid "Unable to allocate memory for holiday."
 msgstr ""
@@ -511,6 +514,9 @@ msgstr "Purim Koton"
 
 msgid "Rosh Chodesh %s"
 msgstr "Rosh Choydesh %s"
+
+msgid "Rosh Chodesh"
+msgstr "Rosh Choydesh"
 
 msgid "Adar"
 msgstr "Odor"

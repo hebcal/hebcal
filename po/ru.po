@@ -227,6 +227,9 @@ msgstr "Нида"
 msgid "Daf Yomi: %s %d"
 msgstr "Страница Дня: %s %d"
 
+msgid "Daf Yomi"
+msgstr "Страница Дня"
+
 msgid "Parashat"
 msgstr "Глава"
 
@@ -506,6 +509,9 @@ msgstr "Маленький Пурим"
 #, c-format
 msgid "Rosh Chodesh %s"
 msgstr "Новый Месяц %s"
+
+msgid "Rosh Chodesh"
+msgstr "Новый Месяц"
 
 msgid "Adar"
 msgstr "Адар"

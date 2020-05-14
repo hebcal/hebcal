@@ -513,6 +513,9 @@ msgstr "Pourim Katan"
 msgid "Rosh Chodesh %s"
 msgstr "Roch H̲odech %s"
 
+msgid "Rosh Chodesh"
+msgstr "Roch H̲odech"
+
 msgid "Adar"
 msgstr "Adar"
 

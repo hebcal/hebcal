@@ -511,6 +511,9 @@ msgstr ""
 msgid "Rosh Chodesh %s"
 msgstr "Rosz Chodesz %s"
 
+msgid "Rosh Chodesh"
+msgstr "Rosz Chodesz"
+
 msgid "Adar"
 msgstr ""
 
