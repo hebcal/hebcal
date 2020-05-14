@@ -21,15 +21,7 @@ be individualy turned on or off:
 ## Synopsis
 
 ```
-usage: hebcal [-8acdDeEFHhiorsStTwWyZ]
-            [-b candle_lighting_minutes_before_sundown ]
-            [-I file]
-            [-Y yahrtzeit_file]
-            [-C city]
-            [-L longitude -l latitude]
-            [-m havdalah_minutes_past_sundown ]
-            [-z timezone]
-            [[ month [ day ]] year ]
+usage: hebcal [options] [[ month [ day ]] year ]
        hebcal help
        hebcal info
        hebcal cities
@@ -50,42 +42,55 @@ hebcal 93, but rather hebcal 1993.
 ### Options
 Option | Description
 --- | ---
+  --help | Show help text
+  --version | Show version number
+
+#### Input Options
+Option | Description
+--- | ---
+ -H, --hebrew-date | Use Hebrew date ranges - only needed when e.g. `hebcal -H 5373`
+ -I, --infile INFILE | Get non-yahrtzeit Hebrew user events from specified file. The format is: `mmm dd string`, Where `mmm` is a Hebrew month name.
+ -t, --today | Only output for today's date
+ -T, --today-brief | Print today's pertinent information, no Gregorian date.
+ -Y, --yahrtzeit YAHRTZEIT | Get yahrtzeit dates from specified file. The format is: `mm dd yyyy string`. The first three fields specify a *Gregorian* date.
+
+#### Output Options
+Option | Description
 -8 | Use 8-bit Hebrew (ISO-8859-8-Logical).
--a | Use Ashkenazi Hebrew.
+-a, --ashkenazi | Use Ashkenazi Hebrew.
+   -d, --add-hebrew-dates | print the Hebrew date for the entire date range.
+   -D, --add-hebrew-dates-for-events | print the Hebrew date for dates with some events
+   -e, --euro-dates | Output "European" dates -- DD.MM.YYYY format.
+   -E, --24hour | Output 24-hour times (e.g. 18:37 instead of 6:37).
+   -F, --daf-yomi | Output the Daf Yomi for the entire date range.
+   -g, --iso-8601 | Output ISO 8601 dates -- YYYY-MM-DD (this overrides -y)
+   -h, --no-holidays | Suppress default holidays.
+   -i, --israeli | Use Israeli sedra scheme.
+   --lang LANG | Use ISO 639-1 LANG code (one of `ashkenazi`, `ashkenazi_litvish`, `ashkenazi_poylish`, `ashkenazi_standard`, `fi`, `fr`, `he`, `hu`, `pl`, `ru`)
+   -M, --molad | Print the molad on shabbat mevorchim.
+   -o, --omer | Add days of the omer.
+   -O, --sunrise-and-sunset | Output sunrise and sunset times every day.
+   -r, --tabs | Tab delineated format.
+   -s, --sedrot | Add weekly sedrot on Saturday.
+   -S, --daily-sedra | Print sedrah of the week on all calendar days.
+   -t | Only output for today's date.
+   -T | Print today's pertinent information, no Gregorian date.
+   -w, --weekday | Add day of the week.
+   -W, --abbreviated | Weekly view. Omer, dafyomi, and non-date-specific zemanim are shown once a week, on the day which corresponds to the first day in the range.
+   -x, --no-rosh-chodesh | Suppress Rosh Chodesh.
+   -y, --year-abbrev | Print only last two digits of year.
+   --years N | Generate events for `N` years (default `1`)
+
+### Options related to candle-lighting times
+Option | Description
 -b mins | Set candle-lighting to occur this many minutes before sundown
 -c | Print candlelighting times.
 -C city | Set latitude, longitude, and timezone according to specified city. This option implies the -c option.
-   -d | print the Hebrew date for the entire date range.
-   -D | print the Hebrew date for dates with some events
-   -e | Output "European" dates -- DD.MM.YYYY format.
-   -E | Output 24-hour times (e.g. 18:37 instead of 6:37).
-   -F | Output the Daf Yomi for the entire date range.
-   -h | Suppress default holidays.
-   -H | Use Hebrew date ranges - only needed when e.g. `hebcal -H 5373`
-   -i | Use Israeli sedra scheme.
-   -I file | Get non-yahrtzeit Hebrew user events from specified file. The format is: `mmm dd string`, Where `mmm` is a Hebrew month name.
    -l xx,yy | Set the latitude for solar calculations to `xx` degrees and `yy` minutes.  Negative values are south.
    -L xx,yy | Set the longitude for solar calculations to `xx` degrees and `yy` minutes.  *Negative values are EAST*. The `-l` and `-L` switches must both be used, or not at all. These switches override the `-C` (localize to city) switch.
-   --lang LANG | Use ISO 639-1 LANG code (one of `ashkenazi`, `ashkenazi_litvish`, `ashkenazi_poylish`, `ashkenazi_standard`, `fi`, `fr`, `he`, `hu`, `pl`, `ru`)
    -m mins | Set havdalah to occur this many minutes after sundown
-   -M | Print the molad on shabbat mevorchim.
-   -o | Add days of the omer.
-   -O | Output sunrise and sunset times every day.
-   -r | Tab delineated format.
-   -s | Add weekly sedrot on Saturday.
-   -S | Print sedrah of the week on all calendar days.
-   -t | Only output for today's date.
-   -T | Print today's pertinent information, no Gregorian date.
-   -w | Add day of the week.
-   -W | Weekly view. Omer, dafyomi, and non-date-specific zemanim are shown once a week, on the day which corresponds to the first day in the range.
-   -x | Suppress Rosh Chodesh.
-   -y | Print only last two digits of year.
-   --years N | Generate events for `N` years (default `1`)
-   -Y file | Get yahrtzeit dates from specified file. The format is: `mm dd yyyy string`. The first three fields specify a *Gregorian* date.
    -z timezone | Use specified timezone, overriding the `-C` (localize to city) switch.
    -Z | **EXPERIMENTAL** Add zemanim (Alot HaShachar; Misheyakir; Kriat Shema, sof zeman; Tefilah, sof zeman; Chatzot hayom; Mincha Gedolah; Mincha Ketanah; Plag HaMincha; Tzait HaKochavim)
-   --help | Show help text
-   --version | Show version number
 
 ## Candle-lighting times
 
