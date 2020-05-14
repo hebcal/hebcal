@@ -592,6 +592,7 @@ void handleArgs(int argc, char *argv[])
       theDay = greg_today.dd;      /* printc theDay of theMonth */
       yearDirty = 1;
       printOmer_sw = 1;
+      hebrewDates_sw = 0;
    }
 
    if (yahrtzeitFileName != NULL) {

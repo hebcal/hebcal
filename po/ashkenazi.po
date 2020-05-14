@@ -134,6 +134,9 @@ msgstr "Shabbos Shuvah"
 msgid "Shabbat Zachor"
 msgstr "Shabbos Zachor"
 
+msgid "Shavuot"
+msgstr "Shavuos"
+
 msgid "Shavuot I"
 msgstr "Shavuos I"
 

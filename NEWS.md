@@ -1,5 +1,6 @@
 Changes in 4.20
 * Update timezone database to version 2020.1
+* Fix bug in `--hebrew-date --today` CLI args (#191)
 
 Changes in 4.19
 * Fix crash in candle-lighting times on big endian architectures (#170)
