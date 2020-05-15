@@ -1,12 +1,12 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ(2.57)
-AC_INIT(hebcal,4.20,hebcal-bugs@sadinoff.com)
+AC_PREREQ([2.69])
+AC_INIT([hebcal],[4.20],[hebcal-bugs@sadinoff.com])
 AM_MAINTAINER_MODE([disable])
-AM_INIT_AUTOMAKE([foreign no-dependencies no-installinfo])
-AC_CONFIG_SRCDIR([common.c])
-AM_CONFIG_HEADER([config.h])
+AM_INIT_AUTOMAKE([foreign no-dependencies no-installinfo -Wall])
+AC_CONFIG_SRCDIR([hebcal.c])
+AC_CONFIG_HEADERS([config.h])
 
 # Checks for programs.
 AC_PROG_CC
@@ -14,13 +14,13 @@ AC_PROG_CC
 AC_CHECK_HEADERS([getopt.h])
 
 # Checks for libraries.
-AC_CHECK_LIB(m, hypot)
-dnl AC_CHECK_LIB(m, sin)
-dnl AC_CHECK_LIB(m, cos)
-dnl AC_CHECK_LIB(m, atan)
-AC_CHECK_LIB(m, sqrt)
-dnl AC_CHECK_LIB(m, acos)
-dnl AC_CHECK_LIB(m, fabs)
+AC_SEARCH_LIBS([hypot], [m])
+AC_SEARCH_LIBS([sin], [m])
+AC_SEARCH_LIBS([cos], [m])
+AC_SEARCH_LIBS([atan], [m])
+AC_SEARCH_LIBS([sqrt], [m])
+AC_SEARCH_LIBS([acos], [m])
+AC_SEARCH_LIBS([fabs], [m])
 
 # Checks for header files.
 AC_HEADER_STDC
@@ -32,12 +32,12 @@ AC_TYPE_SIZE_T
 
 # Checks for library functions.
 AC_FUNC_MALLOC
-AC_CHECK_FUNCS([sqrt strchr strdup])
-AC_ARG_WITH(default-city,
-[[  --with-default-city=CITYNAME    make the default city CITYNAME.
-                                  If unspecified, the default city will be "New York"]],
-             AC_DEFINE_UNQUOTED(CITY,"$withval",["The Default City"]),
-             AC_DEFINE(CITY,"New_York",["The default city"]))
+AC_CHECK_FUNCS([strchr strdup])
+AC_ARG_WITH([default-city],
+  [AS_HELP_STRING([--with-default-city=CITYNAME],
+     [make the default city CITYNAME.  If unspecified, the default city will be "New York"])],
+     [AC_DEFINE_UNQUOTED(CITY,"$withval",[The Default City])],
+     [AC_DEFINE(CITY,"New_York",[The Default City])])
 
 AC_CONFIG_FILES([hebcal.1])
 AC_CONFIG_FILES([Makefile])
