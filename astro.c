@@ -149,7 +149,7 @@ static void astro_sunpos(double d, double *lon, double *r)
 	E = M + e * RADEG * sind(M) * (1.0 + e * cosd(M));
 	x = cosd(E) - e;
 	y = sqrt(1.0 - e*e) * sind(E);
-	*r = sqrt(x*x + y*y);              /* Solar distance */
+	*r = hypot(x, y);                  /* Solar distance */
 	v = atan2d(y, x);                  /* True anomaly */
 	*lon = v + w;                        /* True solar longitude */
 	if (*lon >= 360.0) {
@@ -177,7 +177,7 @@ static void astro_sun_RA_dec(double d, double *RA, double *dec, double *r)
 
 	/* Convert to spherical coordinates */
 	*RA = atan2d(y, x);
-	*dec = atan2d(z, sqrt(x*x + y*y));
+	*dec = atan2d(z, hypot(x, y));
 }
 
 /**
