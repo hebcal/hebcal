@@ -14,6 +14,7 @@ AC_PROG_CC
 AC_CHECK_HEADERS([getopt.h])
 
 # Checks for libraries.
+AC_CHECK_LIB(m, hypot)
 dnl AC_CHECK_LIB(m, sin)
 dnl AC_CHECK_LIB(m, cos)
 dnl AC_CHECK_LIB(m, atan)
