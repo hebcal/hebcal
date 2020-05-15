@@ -10,6 +10,8 @@ AC_CONFIG_HEADERS([config.h])
 
 # Checks for programs.
 AC_PROG_CC
+# Enable all the warnings.
+AX_CFLAGS_WARN_ALL
 
 AC_CHECK_HEADERS([getopt.h])
 
