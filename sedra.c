@@ -197,7 +197,7 @@ void reset_sedra( int hebYr ) /* the hebrew year */
     date_t tempDt;
     int long_c, short_k, rosh_hashana_day, type;
     long int rosh_hashana;
-    size_t theSedraArraySize;
+    size_t theSedraArraySize = 0; /* avoid warning */;
     
     long_c = long_cheshvan (hebYr);
     short_k = short_kislev (hebYr);

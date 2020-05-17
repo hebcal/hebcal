@@ -295,7 +295,6 @@ void print_candlelighting_times( int mask, int weekday, date_t todayGreg)
 {
     double gmt_offset;
     double h_rise, h_set, N;
-    const int calc_sunset = 1;
     double n_offset;
     int hour, minute, pm;
     int rs;
@@ -318,7 +317,6 @@ void print_candlelighting_times( int mask, int weekday, date_t todayGreg)
     {
        double var_hour;
        int min_offset;
-       char *name;
       
        if ( (zemanim[i_zman].flags & mask) == 0 )
           continue;
@@ -400,12 +398,11 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
     year_t theYear;
     char *omerStr ;
     int omer, day_of_week, first_weekday, returnedMask;
-    int omer_today, sedra_today, candle_today, holidays_today, molad_today;
+    int omer_today, sedra_today, holidays_today, molad_today;
     molad_t moladNext;
     int monthNext;
     int today_zemanim, i_zman;
     int num_zmanim = sizeof (zemanim) / sizeof (struct _zman); 
-    char buffer[80];
     
 /* Used to decide whether a particular type of daily info should be
    included in the abbreviated view. In abbreviated mode things like
