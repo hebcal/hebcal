@@ -650,7 +650,7 @@ void handleArgs(int argc, char *argv[])
                            ZMAN_PLAG_HAMINCHA | ZMAN_SUNSET | ZMAN_TZAIT_42);
    }
 
-   if (!TZ_INFO && (zemanim_sw || candleLighting_sw)) {
+   if (!TZ_INFO && (zemanim_sw || candleLighting_sw || printSunriseSunset_sw)) {
       set_default_city();
    }
 
