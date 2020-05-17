@@ -63,7 +63,7 @@ print OUT <<EOF;
 
 #define HEBCAL_LANG_LIST "$locale_list"
 
-const char *hebcal_langs[$locale_list_len];
+extern const char *hebcal_langs[$locale_list_len];
 
 struct event_title { char *name; char *dest; };
 

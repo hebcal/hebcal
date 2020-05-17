@@ -1,5 +1,5 @@
-/* C code produced by gperf version 3.0.3 */
-/* Command-line: /Library/Developer/CommandLineTools/usr/bin/gperf strings_ashkenazi_litvish.gperf  */
+/* ANSI-C code produced by gperf version 3.1 */
+/* Command-line: gperf strings_ashkenazi_litvish.gperf  */
 /* Computed positions: -k'1,3,5,8-9,11' */
 
 #if !((' ' == 32) && ('!' == 33) && ('"' == 34) && ('#' == 35) \
@@ -26,7 +26,7 @@
       && ('w' == 119) && ('x' == 120) && ('y' == 121) && ('z' == 122) \
       && ('{' == 123) && ('|' == 124) && ('}' == 125) && ('~' == 126))
 /* The character set is not based on ISO-646.  */
-error "gperf generated tables don't work with this execution character set. Please report a bug to <bug-gnu-gperf@gnu.org>."
+#error "gperf generated tables don't work with this execution character set. Please report a bug to <bug-gperf@gnu.org>."
 #endif
 
 #line 4 "strings_ashkenazi_litvish.gperf"
@@ -35,7 +35,7 @@ error "gperf generated tables don't work with this execution character set. Plea
 #line 7 "strings_ashkenazi_litvish.gperf"
 struct event_title { char *name; char *dest; };
 
-#define TOTAL_KEYWORDS 189
+#define TOTAL_KEYWORDS 190
 #define MIN_WORD_LENGTH 2
 #define MAX_WORD_LENGTH 25
 #define MIN_HASH_VALUE 4
@@ -50,9 +50,7 @@ inline
 #endif
 #endif
 static unsigned int
-hash (str, len)
-     register const char *str;
-     register unsigned int len;
+hash (register const char *str, register size_t len)
 {
   static unsigned short asso_values[] =
     {
@@ -62,9 +60,9 @@ hash (str, len)
       511, 511,   0,   0, 511, 511, 511,   0, 511,  70,
         0, 511, 511, 511, 511, 511,  80, 511, 511,   0,
        35,  25,  20,  15,  10,   0,   5, 511, 511,   5,
-      511, 511, 511, 511, 511, 115,  55, 155, 135,  15,
+      511, 511, 511, 511, 511, 115,  55, 155, 150,  15,
         0,  80,   0,   0,   0,  95,   0,  40, 180,   0,
-        5,  75,  65,   0,   0,   0,  10, 140, 511,  50,
+        5,  75,  65,   0,   0,   0,  10, 145, 511,  50,
        30,   0, 511, 511, 511, 511, 511,  30,  10,  15,
         0,  35,  10,   0,  55,  25,  35,   0, 125,  90,
        35, 115,   0,   0,  40,   0,  15,   5,   0, 105,
@@ -115,73 +113,71 @@ hash (str, len)
 }
 
 struct event_title *
-hebcal_lookup_ashkenazi_litvish (str, len)
-     register const char *str;
-     register unsigned int len;
+hebcal_lookup_ashkenazi_litvish (register const char *str, register size_t len)
 {
   static struct event_title wordlist[] =
     {
       {""}, {""}, {""}, {""},
-#line 173 "strings_ashkenazi_litvish.gperf"
+#line 174 "strings_ashkenazi_litvish.gperf"
       {"Sigd","Sigd"},
       {""},
-#line 175 "strings_ashkenazi_litvish.gperf"
-      {"Sukkot","Sukkos"},
-#line 187 "strings_ashkenazi_litvish.gperf"
-      {"Tu B'Av","Tu B'ov"},
 #line 176 "strings_ashkenazi_litvish.gperf"
-      {"Sukkot I","Sukkos I"},
+      {"Sukkot","Sukkos"},
+#line 188 "strings_ashkenazi_litvish.gperf"
+      {"Tu B'Av","Tu B'ov"},
 #line 177 "strings_ashkenazi_litvish.gperf"
+      {"Sukkot I","Sukkos I"},
+#line 178 "strings_ashkenazi_litvish.gperf"
       {"Sukkot II","Sukkos II"},
-#line 154 "strings_ashkenazi_litvish.gperf"
+#line 155 "strings_ashkenazi_litvish.gperf"
       {"Tevet","Teyves"},
-#line 128 "strings_ashkenazi_litvish.gperf"
+#line 129 "strings_ashkenazi_litvish.gperf"
       {"Pesach","Peisach"},
       {""},
-#line 129 "strings_ashkenazi_litvish.gperf"
-      {"Pesach I","Peisach I"},
 #line 130 "strings_ashkenazi_litvish.gperf"
+      {"Pesach I","Peisach I"},
+#line 131 "strings_ashkenazi_litvish.gperf"
       {"Pesach II","Peisach II"},
       {""},
 #line 15 "strings_ashkenazi_litvish.gperf"
       {"Sukkah","Sukko"},
-#line 178 "strings_ashkenazi_litvish.gperf"
-      {"Sukkot II (CH''M)","Sukkos II (CH''M)"},
 #line 179 "strings_ashkenazi_litvish.gperf"
+      {"Sukkot II (CH''M)","Sukkos II (CH''M)"},
+#line 180 "strings_ashkenazi_litvish.gperf"
       {"Sukkot III (CH''M)","Sukkos III (CH''M)"},
       {""},
-#line 189 "strings_ashkenazi_litvish.gperf"
+#line 190 "strings_ashkenazi_litvish.gperf"
       {"Tu B'Shvat","Tu BiShvat"},
       {""},
-#line 131 "strings_ashkenazi_litvish.gperf"
-      {"Pesach II (CH''M)","Peisach II (CH''M)"},
 #line 132 "strings_ashkenazi_litvish.gperf"
+      {"Pesach II (CH''M)","Peisach II (CH''M)"},
+#line 133 "strings_ashkenazi_litvish.gperf"
       {"Pesach III (CH''M)","Peisach III (CH''M)"},
-#line 147 "strings_ashkenazi_litvish.gperf"
+#line 148 "strings_ashkenazi_litvish.gperf"
       {"Elul","Elul"},
-#line 137 "strings_ashkenazi_litvish.gperf"
-      {"Pesach VII","Peisach VII"},
 #line 138 "strings_ashkenazi_litvish.gperf"
+      {"Pesach VII","Peisach VII"},
+#line 139 "strings_ashkenazi_litvish.gperf"
       {"Pesach VIII","Peisach VIII"},
-#line 182 "strings_ashkenazi_litvish.gperf"
+#line 183 "strings_ashkenazi_litvish.gperf"
       {"Sukkot VI (CH''M)","Sukkos VI (CH''M)"},
       {""}, {""}, {""}, {""},
-#line 136 "strings_ashkenazi_litvish.gperf"
+#line 137 "strings_ashkenazi_litvish.gperf"
       {"Pesach VI (CH''M)","Peisach VI (CH''M)"},
       {""},
-#line 90 "strings_ashkenazi_litvish.gperf"
+#line 91 "strings_ashkenazi_litvish.gperf"
       {"Tzav","Tzav"},
-#line 183 "strings_ashkenazi_litvish.gperf"
+#line 184 "strings_ashkenazi_litvish.gperf"
       {"Sukkot VII (Hoshana Raba)","Sukkos VII (Heishano Rabo)"},
       {""},
-#line 168 "strings_ashkenazi_litvish.gperf"
+#line 169 "strings_ashkenazi_litvish.gperf"
       {"Shavuot","Shvuos"},
       {""},
-#line 169 "strings_ashkenazi_litvish.gperf"
-      {"Shavuot I","Shvuos I"},
 #line 170 "strings_ashkenazi_litvish.gperf"
+      {"Shavuot I","Shvuos I"},
+#line 171 "strings_ashkenazi_litvish.gperf"
       {"Shavuot II","Shvuos II"},
-#line 83 "strings_ashkenazi_litvish.gperf"
+#line 84 "strings_ashkenazi_litvish.gperf"
       {"Shemot","Shmeis"},
 #line 33 "strings_ashkenazi_litvish.gperf"
       {"Shevuot","Shvuos"},
@@ -190,236 +186,237 @@ hebcal_lookup_ashkenazi_litvish (str, len)
       {"Sotah","Seito"},
 #line 32 "strings_ashkenazi_litvish.gperf"
       {"Makkot","Makkos"},
-#line 79 "strings_ashkenazi_litvish.gperf"
+#line 80 "strings_ashkenazi_litvish.gperf"
       {"Pekudei","Pkudey"},
       {""}, {""},
 #line 46 "strings_ashkenazi_litvish.gperf"
       {"Midot","Midos"},
-#line 74 "strings_ashkenazi_litvish.gperf"
+#line 75 "strings_ashkenazi_litvish.gperf"
       {"Miketz","Mikeitz"},
 #line 10 "strings_ashkenazi_litvish.gperf"
       {"Shabbat","Shabbos"},
       {""}, {""},
-#line 188 "strings_ashkenazi_litvish.gperf"
+#line 189 "strings_ashkenazi_litvish.gperf"
       {"Tu BiShvat","Tu BiShvat"},
       {""},
-#line 58 "strings_ashkenazi_litvish.gperf"
+#line 59 "strings_ashkenazi_litvish.gperf"
       {"Bo","Bei"},
       {""}, {""},
-#line 91 "strings_ashkenazi_litvish.gperf"
+#line 92 "strings_ashkenazi_litvish.gperf"
       {"Vaera","Voeiro"},
 #line 11 "strings_ashkenazi_litvish.gperf"
       {"Eruvin","Eiruvin"},
-#line 73 "strings_ashkenazi_litvish.gperf"
+#line 74 "strings_ashkenazi_litvish.gperf"
       {"Metzora","Metzeiro"},
-#line 166 "strings_ashkenazi_litvish.gperf"
+#line 167 "strings_ashkenazi_litvish.gperf"
       {"Shabbat Shuva","Shabbos Shuvo"},
       {""},
-#line 72 "strings_ashkenazi_litvish.gperf"
+#line 73 "strings_ashkenazi_litvish.gperf"
       {"Matot","Matos"},
-#line 186 "strings_ashkenazi_litvish.gperf"
+#line 187 "strings_ashkenazi_litvish.gperf"
       {"Tish'a B'Av","Tisho B'ov"},
       {""}, {""}, {""},
-#line 103 "strings_ashkenazi_litvish.gperf"
+#line 104 "strings_ashkenazi_litvish.gperf"
       {"Yitro","Yisro"},
 #line 17 "strings_ashkenazi_litvish.gperf"
       {"Taanit","Taanis"},
-#line 80 "strings_ashkenazi_litvish.gperf"
+#line 81 "strings_ashkenazi_litvish.gperf"
       {"Pinchas","Pinchos"},
-#line 125 "strings_ashkenazi_litvish.gperf"
+#line 126 "strings_ashkenazi_litvish.gperf"
       {"Havdalah","Havdolo"},
-#line 167 "strings_ashkenazi_litvish.gperf"
+#line 168 "strings_ashkenazi_litvish.gperf"
       {"Shabbat Zachor","Shabbos Zochor"},
-#line 162 "strings_ashkenazi_litvish.gperf"
+#line 163 "strings_ashkenazi_litvish.gperf"
       {"Shabbat Nachamu","Shabbos Nachamu"},
       {""},
-#line 134 "strings_ashkenazi_litvish.gperf"
+#line 135 "strings_ashkenazi_litvish.gperf"
       {"Pesach Sheni","Peisach Sheini"},
       {""}, {""},
-#line 71 "strings_ashkenazi_litvish.gperf"
+#line 72 "strings_ashkenazi_litvish.gperf"
       {"Masei","Masei"},
 #line 43 "strings_ashkenazi_litvish.gperf"
       {"Meilah","Meilo"},
-#line 87 "strings_ashkenazi_litvish.gperf"
+#line 88 "strings_ashkenazi_litvish.gperf"
       {"Terumah","Trumo"},
-#line 49 "strings_ashkenazi_litvish.gperf"
+#line 50 "strings_ashkenazi_litvish.gperf"
       {"Parashat","Parshas"},
       {""},
-#line 139 "strings_ashkenazi_litvish.gperf"
+#line 140 "strings_ashkenazi_litvish.gperf"
       {"Purim","Purim"},
-#line 151 "strings_ashkenazi_litvish.gperf"
+#line 152 "strings_ashkenazi_litvish.gperf"
       {"Sh'vat","Shvat"},
-#line 82 "strings_ashkenazi_litvish.gperf"
+#line 83 "strings_ashkenazi_litvish.gperf"
       {"Sh'lach","Shlach"},
-#line 88 "strings_ashkenazi_litvish.gperf"
+#line 89 "strings_ashkenazi_litvish.gperf"
       {"Tetzaveh","Tetzave"},
       {""},
 #line 30 "strings_ashkenazi_litvish.gperf"
       {"Baba Batra","Bovo Basro"},
-#line 164 "strings_ashkenazi_litvish.gperf"
+#line 165 "strings_ashkenazi_litvish.gperf"
       {"Shabbat Reish Chodesh","Shabbos Reish Cheidesh"},
 #line 21 "strings_ashkenazi_litvish.gperf"
       {"Yevamot","Yevomos"},
 #line 39 "strings_ashkenazi_litvish.gperf"
       {"Bechorot","Bcheiros"},
       {""},
-#line 148 "strings_ashkenazi_litvish.gperf"
+#line 149 "strings_ashkenazi_litvish.gperf"
       {"Iyyar","Iyyor"},
-#line 165 "strings_ashkenazi_litvish.gperf"
+#line 166 "strings_ashkenazi_litvish.gperf"
       {"Shabbat Shekalim","Shabbos Shkolim"},
 #line 41 "strings_ashkenazi_litvish.gperf"
       {"Temurah","Tmuro"},
 #line 37 "strings_ashkenazi_litvish.gperf"
       {"Menachot","Menochos"},
       {""},
-#line 92 "strings_ashkenazi_litvish.gperf"
+#line 93 "strings_ashkenazi_litvish.gperf"
       {"Vaetchanan","Voeschanan"},
       {""}, {""},
 #line 12 "strings_ashkenazi_litvish.gperf"
       {"Pesachim","Psochim"},
       {""},
-#line 53 "strings_ashkenazi_litvish.gperf"
+#line 54 "strings_ashkenazi_litvish.gperf"
       {"Bechukotai","Bechukeisai"},
-#line 96 "strings_ashkenazi_litvish.gperf"
+#line 97 "strings_ashkenazi_litvish.gperf"
       {"Vayera","Vayeiro"},
-#line 94 "strings_ashkenazi_litvish.gperf"
+#line 95 "strings_ashkenazi_litvish.gperf"
       {"Vayechi","Vayechi"},
-#line 119 "strings_ashkenazi_litvish.gperf"
+#line 120 "strings_ashkenazi_litvish.gperf"
       {"Erev Reish Hashana","Erev Reish-Hashono"},
-#line 75 "strings_ashkenazi_litvish.gperf"
+#line 76 "strings_ashkenazi_litvish.gperf"
       {"Mishpatim","Mishpotim"},
 #line 19 "strings_ashkenazi_litvish.gperf"
       {"Moed Katan","Meyed Koton"},
-#line 149 "strings_ashkenazi_litvish.gperf"
+#line 150 "strings_ashkenazi_litvish.gperf"
       {"Kislev","Kislev"},
-#line 66 "strings_ashkenazi_litvish.gperf"
+#line 67 "strings_ashkenazi_litvish.gperf"
       {"Ki Tavo","Ki-Sovo"},
       {""},
-#line 57 "strings_ashkenazi_litvish.gperf"
+#line 58 "strings_ashkenazi_litvish.gperf"
       {"Beshalach","Beshalach"},
-#line 55 "strings_ashkenazi_litvish.gperf"
+#line 56 "strings_ashkenazi_litvish.gperf"
       {"Behar","Behar"},
       {""},
-#line 145 "strings_ashkenazi_litvish.gperf"
+#line 146 "strings_ashkenazi_litvish.gperf"
       {"Av","Ov"},
 #line 9 "strings_ashkenazi_litvish.gperf"
       {"Berachot","Brochos"},
       {""},
-#line 152 "strings_ashkenazi_litvish.gperf"
+#line 153 "strings_ashkenazi_litvish.gperf"
       {"Sivan","Sivon"},
-#line 123 "strings_ashkenazi_litvish.gperf"
+#line 124 "strings_ashkenazi_litvish.gperf"
       {"Erev Tish'a B'Av","Erev Tisho Bov"},
       {""},
-#line 97 "strings_ashkenazi_litvish.gperf"
+#line 98 "strings_ashkenazi_litvish.gperf"
       {"Vayeshev","Vayeishev"},
       {""},
-#line 62 "strings_ashkenazi_litvish.gperf"
+#line 63 "strings_ashkenazi_litvish.gperf"
       {"Eikev","Eikev"},
-#line 117 "strings_ashkenazi_litvish.gperf"
+#line 118 "strings_ashkenazi_litvish.gperf"
       {"Erev Pesach","Erev Peisach"},
-#line 85 "strings_ashkenazi_litvish.gperf"
+#line 86 "strings_ashkenazi_litvish.gperf"
       {"Shoftim","Shoftim"},
 #line 36 "strings_ashkenazi_litvish.gperf"
       {"Zevachim","Zvochim"},
       {""},
 #line 45 "strings_ashkenazi_litvish.gperf"
       {"Tamid","Tomid"},
-#line 89 "strings_ashkenazi_litvish.gperf"
+#line 90 "strings_ashkenazi_litvish.gperf"
       {"Toldot","Toldos"},
 #line 22 "strings_ashkenazi_litvish.gperf"
       {"Ketubot","Ksubos"},
-#line 56 "strings_ashkenazi_litvish.gperf"
+#line 57 "strings_ashkenazi_litvish.gperf"
       {"Bereshit","Breishis"},
-#line 63 "strings_ashkenazi_litvish.gperf"
+#line 64 "strings_ashkenazi_litvish.gperf"
       {"Emor","Emor"},
-#line 118 "strings_ashkenazi_litvish.gperf"
+#line 119 "strings_ashkenazi_litvish.gperf"
       {"Erev Purim","Erev Purim"},
       {""},
-#line 68 "strings_ashkenazi_litvish.gperf"
+#line 69 "strings_ashkenazi_litvish.gperf"
       {"Ki Tisa","Ki-Siso"},
-#line 98 "strings_ashkenazi_litvish.gperf"
+#line 99 "strings_ashkenazi_litvish.gperf"
       {"Vayetzei","Vayeitzei"},
       {""},
-#line 160 "strings_ashkenazi_litvish.gperf"
+#line 161 "strings_ashkenazi_litvish.gperf"
       {"Shabbat HaGadol","Shabbos HaGodol"},
-#line 69 "strings_ashkenazi_litvish.gperf"
+#line 70 "strings_ashkenazi_litvish.gperf"
       {"Korach","Keirach"},
-#line 61 "strings_ashkenazi_litvish.gperf"
-      {"Devarim","Dvorim"},
+      {""},
 #line 13 "strings_ashkenazi_litvish.gperf"
       {"Shekalim","Shkolim"},
 #line 14 "strings_ashkenazi_litvish.gperf"
       {"Yoma","Yumo"},
-#line 70 "strings_ashkenazi_litvish.gperf"
+#line 71 "strings_ashkenazi_litvish.gperf"
       {"Lech-Lecha","Lech-Lecho"},
       {""},
 #line 42 "strings_ashkenazi_litvish.gperf"
       {"Keritot","Krisos"},
       {""},
-#line 142 "strings_ashkenazi_litvish.gperf"
-      {"Adar","Odor"},
-#line 195 "strings_ashkenazi_litvish.gperf"
-      {"Yom Kippur","Yom Kippur"},
 #line 143 "strings_ashkenazi_litvish.gperf"
-      {"Adar I","Odor Aleph"},
+      {"Adar","Odor"},
+#line 196 "strings_ashkenazi_litvish.gperf"
+      {"Yom Kippur","Yom Kippur"},
 #line 144 "strings_ashkenazi_litvish.gperf"
+      {"Adar I","Odor Aleph"},
+#line 145 "strings_ashkenazi_litvish.gperf"
       {"Adar II","Odor Beis"},
       {""}, {""},
-#line 101 "strings_ashkenazi_litvish.gperf"
+#line 102 "strings_ashkenazi_litvish.gperf"
       {"Vayishlach","Vayishlach"},
       {""},
-#line 180 "strings_ashkenazi_litvish.gperf"
-      {"Sukkot IV (CH''M)","Sukkos IV (CH''M)"},
-#line 172 "strings_ashkenazi_litvish.gperf"
+#line 62 "strings_ashkenazi_litvish.gperf"
+      {"Devarim","Dvorim"},
+#line 173 "strings_ashkenazi_litvish.gperf"
       {"Shushan Purim","Shushon Purim"},
       {""}, {""},
-#line 140 "strings_ashkenazi_litvish.gperf"
+#line 141 "strings_ashkenazi_litvish.gperf"
       {"Purim Katan","Purim Koton"},
-#line 133 "strings_ashkenazi_litvish.gperf"
-      {"Pesach IV (CH''M)","Peisach IV (CH''M)"},
-#line 190 "strings_ashkenazi_litvish.gperf"
+#line 181 "strings_ashkenazi_litvish.gperf"
+      {"Sukkot IV (CH''M)","Sukkos IV (CH''M)"},
+#line 191 "strings_ashkenazi_litvish.gperf"
       {"Tzom Gedaliah","Tzom Gdalyo"},
       {""},
-#line 81 "strings_ashkenazi_litvish.gperf"
+#line 82 "strings_ashkenazi_litvish.gperf"
       {"Re'eh","Reei"},
-      {""}, {""},
-#line 174 "strings_ashkenazi_litvish.gperf"
+      {""},
+#line 134 "strings_ashkenazi_litvish.gperf"
+      {"Pesach IV (CH''M)","Peisach IV (CH''M)"},
+#line 175 "strings_ashkenazi_litvish.gperf"
       {"Simchat Torah","Simchas Teiro"},
       {""}, {""},
 #line 44 "strings_ashkenazi_litvish.gperf"
       {"Kinnim","Kinnim"},
       {""},
-#line 163 "strings_ashkenazi_litvish.gperf"
+#line 164 "strings_ashkenazi_litvish.gperf"
       {"Shabbat Parah","Shabbos Poro"},
       {""}, {""},
-#line 60 "strings_ashkenazi_litvish.gperf"
+#line 61 "strings_ashkenazi_litvish.gperf"
       {"Chukat","Chukas"},
 #line 40 "strings_ashkenazi_litvish.gperf"
       {"Arachin","Arochin"},
-#line 64 "strings_ashkenazi_litvish.gperf"
+#line 65 "strings_ashkenazi_litvish.gperf"
       {"Ha'Azinu","Haazinu"},
       {""},
-#line 124 "strings_ashkenazi_litvish.gperf"
+#line 125 "strings_ashkenazi_litvish.gperf"
       {"Erev Yom Kippur","Erev Yom Kippur"},
-#line 181 "strings_ashkenazi_litvish.gperf"
+#line 182 "strings_ashkenazi_litvish.gperf"
       {"Sukkot V (CH''M)","Sukkos V (CH''M)"},
 #line 16 "strings_ashkenazi_litvish.gperf"
       {"Beitzah","Beitzo"},
       {""},
-#line 95 "strings_ashkenazi_litvish.gperf"
+#line 96 "strings_ashkenazi_litvish.gperf"
       {"Vayeilech","Vayeilech"},
-#line 76 "strings_ashkenazi_litvish.gperf"
+#line 77 "strings_ashkenazi_litvish.gperf"
       {"Nasso","Nosso"},
-#line 135 "strings_ashkenazi_litvish.gperf"
+#line 136 "strings_ashkenazi_litvish.gperf"
       {"Pesach V (CH''M)","Peisach V (CH''M)"},
 #line 23 "strings_ashkenazi_litvish.gperf"
       {"Nedarim","Nedorim"},
-#line 121 "strings_ashkenazi_litvish.gperf"
+#line 122 "strings_ashkenazi_litvish.gperf"
       {"Erev Simchat Torah","Erev Simchas Teiro"},
       {""},
-#line 153 "strings_ashkenazi_litvish.gperf"
+#line 154 "strings_ashkenazi_litvish.gperf"
       {"Tamuz","Tamuz"},
-#line 86 "strings_ashkenazi_litvish.gperf"
+#line 87 "strings_ashkenazi_litvish.gperf"
       {"Tazria","Tazria"},
       {""},
 #line 18 "strings_ashkenazi_litvish.gperf"
@@ -434,132 +431,132 @@ hebcal_lookup_ashkenazi_litvish (str, len)
       {""}, {""},
 #line 28 "strings_ashkenazi_litvish.gperf"
       {"Baba Kamma","Bovo Kamo"},
-#line 122 "strings_ashkenazi_litvish.gperf"
+#line 123 "strings_ashkenazi_litvish.gperf"
       {"Erev Sukkot","Erev Sukkos"},
       {""},
-#line 155 "strings_ashkenazi_litvish.gperf"
+#line 156 "strings_ashkenazi_litvish.gperf"
       {"Reish Hashana","Reish Hashono"},
       {""},
-#line 156 "strings_ashkenazi_litvish.gperf"
-      {"Reish Hashana I","Reish Hashono I"},
 #line 157 "strings_ashkenazi_litvish.gperf"
+      {"Reish Hashana I","Reish Hashono I"},
+#line 158 "strings_ashkenazi_litvish.gperf"
       {"Reish Hashana II","Reish Hashono II"},
       {""},
-#line 65 "strings_ashkenazi_litvish.gperf"
+#line 66 "strings_ashkenazi_litvish.gperf"
       {"Kedoshim","Kdeishim"},
       {""}, {""},
-#line 84 "strings_ashkenazi_litvish.gperf"
+#line 85 "strings_ashkenazi_litvish.gperf"
       {"Shmini","Shmini"},
       {""}, {""},
-#line 185 "strings_ashkenazi_litvish.gperf"
+#line 186 "strings_ashkenazi_litvish.gperf"
       {"Ta'anit Esther","Taanis Ester"},
 #line 26 "strings_ashkenazi_litvish.gperf"
       {"Gitin","Gitin"},
 #line 29 "strings_ashkenazi_litvish.gperf"
       {"Baba Metzia","Bovo Metzio"},
-#line 159 "strings_ashkenazi_litvish.gperf"
+#line 160 "strings_ashkenazi_litvish.gperf"
       {"Shabbat HaChodesh","Shabbos HaCheidesh"},
-#line 99 "strings_ashkenazi_litvish.gperf"
+#line 100 "strings_ashkenazi_litvish.gperf"
       {"Vayigash","Vayigash"},
-      {""},
-#line 48 "strings_ashkenazi_litvish.gperf"
-      {"Daf Yomi: %s %d","Daf Yeimi: %s %d"},
-#line 141 "strings_ashkenazi_litvish.gperf"
-      {"Reish Chodesh %s","Reish Cheidesh %s"},
       {""}, {""},
-#line 158 "strings_ashkenazi_litvish.gperf"
-      {"Shabbat Chazon","Shabbos Chazon"},
-      {""}, {""}, {""},
-#line 52 "strings_ashkenazi_litvish.gperf"
+#line 142 "strings_ashkenazi_litvish.gperf"
+      {"Reish Chodesh %s","Reish Cheidesh %s"},
+      {""},
+#line 49 "strings_ashkenazi_litvish.gperf"
+      {"Daf Yomi","Daf Yeimi"},
+      {""}, {""}, {""}, {""},
+#line 53 "strings_ashkenazi_litvish.gperf"
       {"Bamidbar","Bamidbor"},
       {""},
-#line 50 "strings_ashkenazi_litvish.gperf"
+#line 51 "strings_ashkenazi_litvish.gperf"
       {"Achrei Mot","Achrei"},
       {""},
-#line 100 "strings_ashkenazi_litvish.gperf"
+#line 101 "strings_ashkenazi_litvish.gperf"
       {"Vayikra","Vayikro"},
-      {""}, {""}, {""},
-#line 196 "strings_ashkenazi_litvish.gperf"
+      {""}, {""},
+#line 48 "strings_ashkenazi_litvish.gperf"
+      {"Daf Yomi: %s %d","Daf Yeimi: %s %d"},
+#line 197 "strings_ashkenazi_litvish.gperf"
       {"Yom Yerushalayim","Yom Yerusholayim"},
       {""},
-#line 104 "strings_ashkenazi_litvish.gperf"
+#line 105 "strings_ashkenazi_litvish.gperf"
       {"Asara B'Tevet","Asoro Beteyves"},
-      {""},
-#line 78 "strings_ashkenazi_litvish.gperf"
+#line 159 "strings_ashkenazi_litvish.gperf"
+      {"Shabbat Chazon","Shabbos Chazon"},
+#line 79 "strings_ashkenazi_litvish.gperf"
       {"Noach","Neiach"},
       {""}, {""}, {""},
 #line 27 "strings_ashkenazi_litvish.gperf"
       {"Kiddushin","Kiddushin"},
       {""},
-#line 59 "strings_ashkenazi_litvish.gperf"
+#line 60 "strings_ashkenazi_litvish.gperf"
       {"Chayei Sara","Chayei Soro"},
       {""},
-#line 106 "strings_ashkenazi_litvish.gperf"
+#line 107 "strings_ashkenazi_litvish.gperf"
       {"Chanukah","Chanukko"},
       {""}, {""}, {""}, {""},
-#line 127 "strings_ashkenazi_litvish.gperf"
+#line 128 "strings_ashkenazi_litvish.gperf"
       {"Leil Selichot","Slichos"},
       {""}, {""}, {""},
 #line 38 "strings_ashkenazi_litvish.gperf"
       {"Chullin","Chullin"},
-#line 146 "strings_ashkenazi_litvish.gperf"
+#line 147 "strings_ashkenazi_litvish.gperf"
       {"Cheshvan","Cheshvon"},
       {""}, {""},
-#line 193 "strings_ashkenazi_litvish.gperf"
+#line 194 "strings_ashkenazi_litvish.gperf"
       {"Yom HaShoah","Yom HaShoah"},
-#line 161 "strings_ashkenazi_litvish.gperf"
+#line 162 "strings_ashkenazi_litvish.gperf"
       {"Shabbat Machar Chodesh","Shabbos Mochor Cheidesh"},
-#line 107 "strings_ashkenazi_litvish.gperf"
+#line 108 "strings_ashkenazi_litvish.gperf"
       {"Chanukah: 1 Candle","Chanukko: 1 Candle"},
-#line 113 "strings_ashkenazi_litvish.gperf"
+#line 114 "strings_ashkenazi_litvish.gperf"
       {"Chanukah: 7 Candles","Chanukko: 7 Candles"},
-#line 126 "strings_ashkenazi_litvish.gperf"
+#line 127 "strings_ashkenazi_litvish.gperf"
       {"Lag BaOmer","Lag Beimer"},
-#line 102 "strings_ashkenazi_litvish.gperf"
+#line 103 "strings_ashkenazi_litvish.gperf"
       {"Vezot Haberakhah","Zeis Habrocho"},
-#line 115 "strings_ashkenazi_litvish.gperf"
+#line 116 "strings_ashkenazi_litvish.gperf"
       {"Chanukah: 8th Day","Chanukko: 8th Day"},
       {""},
-#line 114 "strings_ashkenazi_litvish.gperf"
+#line 115 "strings_ashkenazi_litvish.gperf"
       {"Chanukah: 8 Candles","Chanukko: 8 Candles"},
       {""}, {""}, {""}, {""},
-#line 112 "strings_ashkenazi_litvish.gperf"
+#line 113 "strings_ashkenazi_litvish.gperf"
       {"Chanukah: 6 Candles","Chanukko: 6 Candles"},
-#line 67 "strings_ashkenazi_litvish.gperf"
+#line 68 "strings_ashkenazi_litvish.gperf"
       {"Ki Teitzei","Ki-Seitzei"},
       {""}, {""}, {""},
-#line 111 "strings_ashkenazi_litvish.gperf"
+#line 112 "strings_ashkenazi_litvish.gperf"
       {"Chanukah: 5 Candles","Chanukko: 5 Candles"},
-      {""},
-#line 116 "strings_ashkenazi_litvish.gperf"
-      {"Days of the Omer","Eimer"},
-      {""},
+      {""}, {""}, {""},
 #line 20 "strings_ashkenazi_litvish.gperf"
       {"Chagigah","Chagigo"},
-#line 110 "strings_ashkenazi_litvish.gperf"
+#line 111 "strings_ashkenazi_litvish.gperf"
       {"Chanukah: 4 Candles","Chanukko: 4 Candles"},
       {""}, {""}, {""}, {""},
-#line 109 "strings_ashkenazi_litvish.gperf"
+#line 110 "strings_ashkenazi_litvish.gperf"
       {"Chanukah: 3 Candles","Chanukko: 3 Candles"},
       {""}, {""}, {""}, {""},
-#line 192 "strings_ashkenazi_litvish.gperf"
+#line 193 "strings_ashkenazi_litvish.gperf"
       {"Yom HaAtzma'ut","Yom HaAtzma'ut"},
-      {""}, {""},
-#line 54 "strings_ashkenazi_litvish.gperf"
+      {""},
+#line 117 "strings_ashkenazi_litvish.gperf"
+      {"Days of the Omer","Eimer"},
+#line 55 "strings_ashkenazi_litvish.gperf"
       {"Beha'alotcha","Bahaaloscho"},
       {""},
-#line 108 "strings_ashkenazi_litvish.gperf"
+#line 109 "strings_ashkenazi_litvish.gperf"
       {"Chanukah: 2 Candles","Chanukko: 2 Candles"},
-#line 150 "strings_ashkenazi_litvish.gperf"
+#line 151 "strings_ashkenazi_litvish.gperf"
       {"Nisan","Nison"},
       {""}, {""},
-#line 77 "strings_ashkenazi_litvish.gperf"
+#line 78 "strings_ashkenazi_litvish.gperf"
       {"Nitzavim","Nitzovim"},
       {""}, {""}, {""}, {""}, {""}, {""},
-#line 51 "strings_ashkenazi_litvish.gperf"
+#line 52 "strings_ashkenazi_litvish.gperf"
       {"Balak","Bolok"},
       {""},
-#line 120 "strings_ashkenazi_litvish.gperf"
+#line 121 "strings_ashkenazi_litvish.gperf"
       {"Erev Shavuot","Erev Shvuos"},
       {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
 #line 34 "strings_ashkenazi_litvish.gperf"
@@ -569,25 +566,25 @@ hebcal_lookup_ashkenazi_litvish (str, len)
 #line 24 "strings_ashkenazi_litvish.gperf"
       {"Nazir","Nozir"},
       {""}, {""}, {""}, {""}, {""}, {""},
-#line 197 "strings_ashkenazi_litvish.gperf"
+#line 198 "strings_ashkenazi_litvish.gperf"
       {"Yom HaAliyah","Yom HaAliyah"},
-#line 194 "strings_ashkenazi_litvish.gperf"
+#line 195 "strings_ashkenazi_litvish.gperf"
       {"Yom HaZikaron","Yom HaZikaron"},
       {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
       {""}, {""}, {""}, {""}, {""},
-#line 93 "strings_ashkenazi_litvish.gperf"
+#line 94 "strings_ashkenazi_litvish.gperf"
       {"Vayakhel","Vayakhel"},
       {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
       {""}, {""}, {""},
-#line 184 "strings_ashkenazi_litvish.gperf"
+#line 185 "strings_ashkenazi_litvish.gperf"
       {"Ta'anit Bechorot","Taanis Bchoros"},
       {""}, {""},
-#line 171 "strings_ashkenazi_litvish.gperf"
+#line 172 "strings_ashkenazi_litvish.gperf"
       {"Shmini Atzeret","Shmini Atzeres"},
       {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
       {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
       {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
-#line 191 "strings_ashkenazi_litvish.gperf"
+#line 192 "strings_ashkenazi_litvish.gperf"
       {"Tzom Tammuz","Tzom Tammuz"},
       {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
       {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
@@ -601,13 +598,13 @@ hebcal_lookup_ashkenazi_litvish (str, len)
       {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
       {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
       {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
-#line 105 "strings_ashkenazi_litvish.gperf"
+#line 106 "strings_ashkenazi_litvish.gperf"
       {"Candle lighting","Hadlokas neyros"}
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
     {
-      unsigned int key = hash (str, len);
+      register unsigned int key = hash (str, len);
 
       if (key <= MAX_HASH_VALUE)
         {

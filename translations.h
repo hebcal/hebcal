@@ -7,7 +7,7 @@
 
 #define HEBCAL_LANG_LIST "ashkenazi, ashkenazi_litvish, ashkenazi_poylish, ashkenazi_standard, fi, fr, he, hu, pl, ru"
 
-const char *hebcal_langs[11];
+extern const char *hebcal_langs[11];
 
 struct event_title { char *name; char *dest; };
 
