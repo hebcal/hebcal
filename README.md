@@ -95,7 +95,7 @@ Option | Description
 
 ## Candle-lighting times
 
-Hebcal’s candlelighting times are only approximations. If you ever have any doubts about it’s times, consult your local halachic authority. If you enter geographic coordinates above the artic circle or antarctic circle, the times are guaranteed to be wrong.
+Hebcal’s candlelighting times are only approximations. If you ever have any doubts about its times, consult your local halachic authority. If you enter geographic coordinates above the artic circle or antarctic circle, the times are guaranteed to be wrong.
 
 Hebcal contains a small database of cities with their associated geographic information and time-zone information. The geographic and time information necessary to calculate sundown times can come to hebcal any of three ways:
 
