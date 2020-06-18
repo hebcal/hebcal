@@ -556,6 +556,9 @@ msgstr "תָּמוּז"
 msgid "Tevet"
 msgstr "טֵבֵת"
 
+msgid "Tishrei"
+msgstr "תִשְׁרֵי"
+
 msgid "Rosh Hashana"
 msgstr "רֹאשׁ הַשָּׁנָה"
 
