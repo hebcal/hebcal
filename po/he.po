@@ -467,7 +467,7 @@ msgid "Havdalah"
 msgstr "הַבדָלָה"
 
 msgid "Lag BaOmer"
-msgstr "ל״ג בְּעוֹמֶר"
+msgstr "ל״ג בָּעוֹמֶר"
 
 msgid "Leil Selichot"
 msgstr "סליחות"
