@@ -240,7 +240,7 @@ int timelib_astro_rise_set_altitude(timelib_time *t_loc, double lon, double lat,
 	timelib_update_ts(t_utc, NULL);
 
 	/* Compute d of 12h local mean solar time */
-	timestamp = t_loc->sse;
+	timestamp = t_utc->sse;
 	d = timelib_ts_to_j2000(timestamp) + 2 - lon/360.0;
 
 	/* Compute local sidereal time of this moment */

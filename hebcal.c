@@ -231,7 +231,7 @@ static int get_rise_set(date_t todayGreg, double *h_rise, double *h_set, double 
     t->y = todayGreg.yy;
     t->m = todayGreg.mm;
     t->d = todayGreg.dd;
-    t->h = 17;			/* assume 5pm */
+    t->h = 12;			/* assume 12pm */
 
     timelib_set_timezone(t, TZ_INFO);
     /* t->tz_info = TZ_INFO; */
