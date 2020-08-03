@@ -1,5 +1,5 @@
-/* C code produced by gperf version 3.0.3 */
-/* Command-line: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/gperf strings_he.gperf  */
+/* ANSI-C code produced by gperf version 3.1 */
+/* Command-line: gperf strings_he.gperf  */
 /* Computed positions: -k'1,3,5,8-9,11' */
 
 #if !((' ' == 32) && ('!' == 33) && ('"' == 34) && ('#' == 35) \
@@ -26,7 +26,7 @@
       && ('w' == 119) && ('x' == 120) && ('y' == 121) && ('z' == 122) \
       && ('{' == 123) && ('|' == 124) && ('}' == 125) && ('~' == 126))
 /* The character set is not based on ISO-646.  */
-error "gperf generated tables don't work with this execution character set. Please report a bug to <bug-gnu-gperf@gnu.org>."
+#error "gperf generated tables don't work with this execution character set. Please report a bug to <bug-gperf@gnu.org>."
 #endif
 
 #line 4 "strings_he.gperf"
@@ -50,9 +50,7 @@ inline
 #endif
 #endif
 static unsigned int
-hash (str, len)
-     register const char *str;
-     register unsigned int len;
+hash (register const char *str, register size_t len)
 {
   static unsigned short asso_values[] =
     {
@@ -115,9 +113,7 @@ hash (str, len)
 }
 
 struct event_title *
-hebcal_lookup_he (str, len)
-     register const char *str;
-     register unsigned int len;
+hebcal_lookup_he (register const char *str, register size_t len)
 {
   static struct event_title wordlist[] =
     {
@@ -596,7 +592,7 @@ hebcal_lookup_he (str, len)
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
     {
-      unsigned int key = hash (str, len);
+      register unsigned int key = hash (str, len);
 
       if (key <= MAX_HASH_VALUE)
         {

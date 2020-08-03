@@ -1,3 +1,16 @@
+Changes in 4.21
+* This relase improves accuracy of candle-lighting and havdalah times.
+  - Havdalah times are now rounded up to the nearest minute if the number
+    of seconds within the minute is >= 30. The idea here is that it's better
+    for the user to wait an additional 1-30 seconds to end Shabbat/yontiff
+    than to display a time that could be too early.
+    For example, previously Hebcal would display 21:17 for Havdalah even if
+    the internal calculation returned 21:17:59. Now Hebcal displays 21:18
+    in this case.
+  - Merged changes from `timelib`'s `timelib_astro_rise_set_altitude()`.
+    This calculates sunset on the correct day, which improves accuaracy
+    but shifts candle-lighting and Havdalah times by a minute here and there.
+
 Changes in 4.20
 * Update timezone database to version 2020.1
 * Fix bug in `--hebrew-date --today` CLI args (#191)
