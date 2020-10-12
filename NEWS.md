@@ -1,3 +1,6 @@
+Changes in 4.22
+* Update timezonedb to version 2020.2 (2020b)
+
 Changes in 4.21
 * This relase improves accuracy of candle-lighting and havdalah times.
   - Havdalah times are now rounded up to the nearest minute if the number
