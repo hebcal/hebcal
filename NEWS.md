@@ -1,3 +1,8 @@
+Changes in 4.23
+* Add Spanish translations (`--lang=es`), courtesy Iosef Kebesh and
+  Sebastian Thierer. (#189, #205)
+* Update timezonedb to version 2020.3 (2020d)
+
 Changes in 4.22
 * Update timezonedb to version 2020.2 (2020b)
 

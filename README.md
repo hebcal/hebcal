@@ -68,7 +68,7 @@ Option | Description
    -g, --iso-8601 | Output ISO 8601 dates -- YYYY-MM-DD (this overrides -y)
    -h, --no-holidays | Suppress default holidays.
    -i, --israeli | Use Israeli sedra scheme.
-   --lang LANG | Use ISO 639-1 LANG code (one of `ashkenazi`, `ashkenazi_litvish`, `ashkenazi_poylish`, `ashkenazi_standard`, `fi`, `fr`, `he`, `hu`, `pl`, `ru`)
+   --lang LANG | Use ISO 639-1 LANG code (one of `ashkenazi`, `ashkenazi_litvish`, `ashkenazi_poylish`, `ashkenazi_standard`, `es`, `fi`, `fr`, `he`, `hu`, `pl`, `ru`)
    -M, --molad | Print the molad on shabbat mevorchim.
    -o, --omer | Add days of the omer.
    -O, --sunrise-and-sunset | Output sunrise and sunset times every day.
