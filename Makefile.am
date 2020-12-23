@@ -28,6 +28,7 @@ hebcal_c_files = common.c danlib.c error.c greg.c hebcal.c \
          timelib.c astro.c tm2unixtime.c unixtime2tm.c dow.c parse_tz.c \
          holidays.c sedra.c start.c gnu.c dafyomi.c \
          strings_ashkenazi.c strings_he.c strings_pl.c strings_ru.c \
+         strings_es.c \
          strings_fi.c \
          strings_fr.c \
          strings_hu.c \
