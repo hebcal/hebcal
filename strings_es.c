@@ -35,12 +35,12 @@ error "gperf generated tables don't work with this execution character set. Plea
 #line 7 "strings_es.gperf"
 struct event_title { char *name; char *dest; };
 
-#define TOTAL_KEYWORDS 237
+#define TOTAL_KEYWORDS 239
 #define MIN_WORD_LENGTH 2
 #define MAX_WORD_LENGTH 58
 #define MIN_HASH_VALUE 7
-#define MAX_HASH_VALUE 518
-/* maximum key range = 512, duplicates = 0 */
+#define MAX_HASH_VALUE 548
+/* maximum key range = 542, duplicates = 0 */
 
 #ifdef __GNUC__
 __inline
@@ -56,32 +56,32 @@ hash (str, len)
 {
   static unsigned short asso_values[] =
     {
-      519, 519, 519, 519, 519, 519, 519, 519, 519, 519,
-      519, 519, 519, 519, 519, 519, 519, 519, 519, 519,
-      519, 519, 519, 519, 519, 519, 519, 519, 519, 519,
-      519, 519,   5,   5, 519, 519, 519,  10, 519,  25,
-       65, 110, 519, 519, 519, 519, 140, 519, 519,  35,
-       25,  15,   5,  45,  40,  35,   0, 519, 519,   0,
-      519, 519, 519, 519, 519,   0,  35, 140, 145,  40,
-        5,   0, 105,   0, 185, 100,  15, 180,  90,   5,
-        0,  80,   5,  15,  45,  50,   5,   0, 519, 170,
-       70,  20, 519, 519, 519, 519, 519,  10,  20,  70,
-       15,   0,  75,  25,  25,   0,  50,   5,  60,   5,
-        0,   0,  75,   0,   0,   0,  10,  35,  55, 115,
-      519,  40,  95, 100, 519, 519, 519, 519, 519, 519,
-      519, 519, 519, 519, 519, 519, 519, 519, 519, 519,
-      519, 519, 519, 519, 519, 519, 519, 519, 519, 519,
-      519, 519, 519, 519, 519, 519, 519, 519, 519, 519,
-      519, 519, 519, 519, 519, 519, 519, 519, 519, 519,
-      519, 519, 519, 519, 519, 519, 519, 519, 519, 519,
-      519, 519, 519, 519, 519, 519, 519, 519, 519, 519,
-      519, 519, 519, 519, 519, 519, 519, 519, 519, 519,
-      519, 519, 519, 519, 519, 519, 519, 519, 519, 519,
-      519, 519, 519, 519, 519, 519, 519, 519, 519, 519,
-      519, 519, 519, 519, 519, 519, 519, 519, 519, 519,
-      519, 519, 519, 519, 519, 519, 519, 519, 519, 519,
-      519, 519, 519, 519, 519, 519, 519, 519, 519, 519,
-      519, 519, 519, 519, 519, 519, 519
+      549, 549, 549, 549, 549, 549, 549, 549, 549, 549,
+      549, 549, 549, 549, 549, 549, 549, 549, 549, 549,
+      549, 549, 549, 549, 549, 549, 549, 549, 549, 549,
+      549, 549,   5,   5, 549, 549, 549,  75, 549,  25,
+       65, 110, 549, 549, 549, 549, 145, 549, 549,  20,
+       35,  15,   5,  40,  25,  10,   0, 549, 549,   0,
+      549, 549, 549, 549, 549,   0,  35, 140,  70,  40,
+       20,   0, 135,   0, 185, 100,  15, 180,  90,   5,
+        0, 155,   5,  15,  45,  50,   5,   5, 549, 170,
+      130,  30, 549, 549, 549, 549, 549,  10,  20,  70,
+       15,   0,  75,  30,  25,   0,  50,   5,  60,   5,
+        0,   0,  75,  10,   0,   0,  10,  35,  55, 115,
+      549,  40,  95, 100, 549, 549, 549, 549, 549, 549,
+      549, 549, 549, 549, 549, 549, 549, 549, 549, 549,
+      549, 549, 549, 549, 549, 549, 549, 549, 549, 549,
+      549, 549, 549, 549, 549, 549, 549, 549, 549, 549,
+      549, 549, 549, 549, 549, 549, 549, 549, 549, 549,
+      549, 549, 549, 549, 549, 549, 549, 549, 549, 549,
+      549, 549, 549, 549, 549, 549, 549, 549, 549, 549,
+      549, 549, 549, 549, 549, 549, 549, 549, 549, 549,
+      549, 549, 549, 549, 549, 549, 549, 549, 549, 549,
+      549, 549, 549, 549, 549, 549, 549, 549, 549, 549,
+      549, 549, 549, 549, 549, 549, 549, 549, 549, 549,
+      549, 549, 549, 549, 549, 549, 549, 549, 549, 549,
+      549, 549, 549, 549, 549, 549, 549, 549, 549, 549,
+      549, 549, 549, 549, 549, 549, 549
     };
   register unsigned int hval = len;
 
@@ -145,7 +145,7 @@ hebcal_lookup_es (str, len)
       {"Gitin","Gitin"},
       {""},
 #line 40 "strings_es.gperf"
-      {"Arachin","Arakhin"},
+      {"Arachin","Arajin"},
       {""}, {""}, {""},
 #line 158 "strings_es.gperf"
       {"Adar I","Adar I"},
@@ -172,10 +172,7 @@ hebcal_lookup_es (str, len)
       {"Rosh Hashana","Rosh Hashana"},
 #line 12 "strings_es.gperf"
       {"Pesachim","Pesahim"},
-      {""},
-#line 155 "strings_es.gperf"
-      {"Rosh Chodesh %s","Rosh Jodesh %s"},
-      {""},
+      {""}, {""}, {""},
 #line 70 "strings_es.gperf"
       {"Bo","Bo"},
 #line 61 "strings_es.gperf"
@@ -215,15 +212,17 @@ hebcal_lookup_es (str, len)
 #line 160 "strings_es.gperf"
       {"Av","Av"},
       {""},
-#line 189 "strings_es.gperf"
-      {"Sigd","Sigd"},
+#line 247 "strings_es.gperf"
+      {"Fast ends","El ayuno finaliza"},
 #line 93 "strings_es.gperf"
       {"Re'eh","Re´e"},
 #line 108 "strings_es.gperf"
       {"Vayera","Vayera"},
 #line 97 "strings_es.gperf"
       {"Shoftim","Shoftim"},
-      {""}, {""},
+      {""},
+#line 189 "strings_es.gperf"
+      {"Sigd","Sigd"},
 #line 67 "strings_es.gperf"
       {"Behar","Bejar"},
       {""},
@@ -280,13 +279,14 @@ hebcal_lookup_es (str, len)
       {""},
 #line 31 "strings_es.gperf"
       {"Sanhedrin","Sanedrín"},
-      {""}, {""},
+#line 155 "strings_es.gperf"
+      {"Rosh Chodesh %s","Rosh Jodesh %s"},
+      {""},
 #line 219 "strings_es.gperf"
       {"Pesach Shabbat Chol ha-Moed","Pésaj Shabat Jol ha-Moed"},
 #line 192 "strings_es.gperf"
       {"Sukkot I","Sukot I"},
-#line 201 "strings_es.gperf"
-      {"Ta'anit Esther","Ta'anit Ester"},
+      {""},
 #line 138 "strings_es.gperf"
       {"Erev Yom Kippur","Erev Yom Kippur"},
 #line 95 "strings_es.gperf"
@@ -301,23 +301,26 @@ hebcal_lookup_es (str, len)
 #line 10 "strings_es.gperf"
       {"Shabbat","Shabat"},
 #line 190 "strings_es.gperf"
-      {"Simchat Torah","Simjá Torá"},
+      {"Simchat Torah","Simját Torá"},
 #line 102 "strings_es.gperf"
       {"Tzav","Tzav"},
 #line 113 "strings_es.gperf"
       {"Vayishlach","Vaishlaj"},
-      {""},
+#line 246 "strings_es.gperf"
+      {"Fast begins","El ayuno comienza"},
 #line 23 "strings_es.gperf"
       {"Nedarim","Nedarim"},
 #line 240 "strings_es.gperf"
       {"Rosh Chodesh Nisan","Rosh Jodesh Nisan"},
-      {""}, {""},
+#line 201 "strings_es.gperf"
+      {"Ta'anit Esther","Ta'anit Ester"},
+      {""},
 #line 17 "strings_es.gperf"
       {"Taanit","Tanit"},
 #line 112 "strings_es.gperf"
       {"Vayikra","Vayikra"},
 #line 206 "strings_es.gperf"
-      {"Tzom Gedaliah","Tzom Gedaliaj"},
+      {"Tzom Gedaliah","Tzom Gedaliah"},
       {""}, {""},
 #line 131 "strings_es.gperf"
       {"Erev Pesach","Erev Pesaj"},
@@ -334,7 +337,9 @@ hebcal_lookup_es (str, len)
       {"Ki Tavo","Ki Tavo"},
 #line 100 "strings_es.gperf"
       {"Tetzaveh","Tetzaveh"},
-      {""}, {""}, {""}, {""},
+      {""}, {""}, {""},
+#line 73 "strings_es.gperf"
+      {"Devarim","Devarim"},
 #line 89 "strings_es.gperf"
       {"Nitzavim","Nitzavim"},
 #line 162 "strings_es.gperf"
@@ -359,15 +364,10 @@ hebcal_lookup_es (str, len)
       {"Erev Tish'a B'Av","Erev Tish'a B'Av"},
 #line 42 "strings_es.gperf"
       {"Keritot","Keritot"},
-#line 188 "strings_es.gperf"
-      {"Shushan Purim","Shushan Purim"},
-      {""}, {""},
+      {""}, {""}, {""},
 #line 47 "strings_es.gperf"
       {"Niddah","Nidá"},
-#line 34 "strings_es.gperf"
-      {"Avodah Zarah","Avodah Zarah"},
-#line 36 "strings_es.gperf"
-      {"Zevachim","Zevahim"},
+      {""}, {""},
 #line 69 "strings_es.gperf"
       {"Beshalach","Beshalaj"},
 #line 130 "strings_es.gperf"
@@ -399,7 +399,8 @@ hebcal_lookup_es (str, len)
       {""},
 #line 176 "strings_es.gperf"
       {"Shabbat HaGadol","Shabat HaGadol"},
-      {""},
+#line 128 "strings_es.gperf"
+      {"Days of the Omer","Los días del Omer"},
 #line 203 "strings_es.gperf"
       {"Tu B'Av","Tu B'Av"},
 #line 141 "strings_es.gperf"
@@ -415,7 +416,7 @@ hebcal_lookup_es (str, len)
       {"Rosh Chodesh Kislev","Rosh Jodesh Kislev"},
       {""}, {""},
 #line 38 "strings_es.gperf"
-      {"Chullin","Hulín"},
+      {"Chullin","Julín"},
       {""},
 #line 14 "strings_es.gperf"
       {"Yoma","Yoma"},
@@ -425,8 +426,8 @@ hebcal_lookup_es (str, len)
 #line 134 "strings_es.gperf"
       {"Erev Shavuot","Erev Shavuot"},
       {""},
-#line 87 "strings_es.gperf"
-      {"Mishpatim","Mishpatim"},
+#line 174 "strings_es.gperf"
+      {"Shabbat Chazon","Shabbat Jazon"},
 #line 204 "strings_es.gperf"
       {"Tu BiShvat","Tu BiShvat"},
 #line 101 "strings_es.gperf"
@@ -441,38 +442,37 @@ hebcal_lookup_es (str, len)
       {"Bechukotai","Bejukotai"},
 #line 29 "strings_es.gperf"
       {"Baba Metzia","Baba Metzia"},
-#line 133 "strings_es.gperf"
-      {"Erev Rosh Hashana","Erev Rosh Hashana"},
+      {""},
 #line 182 "strings_es.gperf"
       {"Shabbat Shuva","Shabbat Shuva"},
-#line 183 "strings_es.gperf"
-      {"Shabbat Zachor","Shabat Zajor"},
+#line 87 "strings_es.gperf"
+      {"Mishpatim","Mishpatim"},
       {""},
 #line 98 "strings_es.gperf"
       {"Tazria","Tazria"},
 #line 66 "strings_es.gperf"
       {"Beha'alotcha","Behaaloteja"},
 #line 39 "strings_es.gperf"
-      {"Bechorot","Behorot"},
+      {"Bechorot","Bejorot"},
 #line 144 "strings_es.gperf"
       {"Pesach II","Pésaj II"},
 #line 205 "strings_es.gperf"
       {"Tu B'Shvat","Tu BiShvat"},
 #line 72 "strings_es.gperf"
       {"Chukat","Jukat"},
-#line 73 "strings_es.gperf"
-      {"Devarim","Devarim"},
+      {""},
 #line 58 "strings_es.gperf"
       {"Non-numeric month in yahrtzeit file. Skipping line %s","Mes no numérico en el archivo yahrtzeit. Saltando la línea %s"},
-      {""},
+#line 183 "strings_es.gperf"
+      {"Shabbat Zachor","Shabat Zajor"},
 #line 151 "strings_es.gperf"
       {"Pesach VII","Pésaj VII"},
 #line 152 "strings_es.gperf"
       {"Pesach VIII","Pésaj VIII"},
-#line 35 "strings_es.gperf"
-      {"Horayot","Horayot"},
-#line 179 "strings_es.gperf"
-      {"Shabbat Parah","Shabat Parah"},
+#line 34 "strings_es.gperf"
+      {"Avodah Zarah","Avodah Zarah"},
+#line 36 "strings_es.gperf"
+      {"Zevachim","Zevahim"},
       {""},
 #line 74 "strings_es.gperf"
       {"Eikev","Eikev"},
@@ -484,23 +484,28 @@ hebcal_lookup_es (str, len)
       {"Moed Katan","Moed Katan"},
 #line 181 "strings_es.gperf"
       {"Shabbat Shekalim","Shabat Shekalim"},
-      {""}, {""}, {""},
+      {""},
+#line 188 "strings_es.gperf"
+      {"Shushan Purim","Shushan Purim"},
+      {""},
 #line 178 "strings_es.gperf"
       {"Shabbat Nachamu","Shabat Najamu"},
 #line 43 "strings_es.gperf"
       {"Meilah","Meilá"},
-#line 147 "strings_es.gperf"
-      {"Pesach IV (CH''M)","Pésaj IV CJ''M)"},
+#line 133 "strings_es.gperf"
+      {"Erev Rosh Hashana","Erev Rosh Hashana"},
 #line 105 "strings_es.gperf"
       {"Vayakhel","Vaiakel"},
-      {""},
+#line 55 "strings_es.gperf"
+      {"Date out of range in input file. Skipping line %s","Fecha fuera de rango en el archivo de entrada. Saltando la línea %s"},
 #line 83 "strings_es.gperf"
       {"Masei","Masei"},
 #line 164 "strings_es.gperf"
       {"Kislev","Kislev"},
-      {""},
-#line 139 "strings_es.gperf"
-      {"Havdalah","Havdalah"},
+#line 147 "strings_es.gperf"
+      {"Pesach IV (CH''M)","Pésaj IV (J''M)"},
+#line 59 "strings_es.gperf"
+      {"Date out of range in yahrtzeit file. Skipping line %s","Fecha fuera de rango en el archivo yahrtzeit. Saltando la línea %s"},
       {""},
 #line 84 "strings_es.gperf"
       {"Matot","Matot"},
@@ -512,15 +517,14 @@ hebcal_lookup_es (str, len)
       {"Midot","Midot"},
 #line 225 "strings_es.gperf"
       {"Sukkot I (on Shabbat)","Sucot I (en Shabat)"},
-      {""},
+#line 35 "strings_es.gperf"
+      {"Horayot","Horayot"},
 #line 210 "strings_es.gperf"
       {"Yom HaZikaron","Yom HaZikaron"},
       {""},
 #line 168 "strings_es.gperf"
       {"Tamuz","Tamuz"},
-#line 128 "strings_es.gperf"
-      {"Days of the Omer","Los días del Omer"},
-      {""},
+      {""}, {""},
 #line 56 "strings_es.gperf"
       {"yahrtzeit file read error. Skipping line %s","error de lectura del archivo yahrtzeit. Saltando la línea %s"},
       {""},
@@ -543,20 +547,24 @@ hebcal_lookup_es (str, len)
 #line 217 "strings_es.gperf"
       {"Pesach Chol ha-Moed Day 3","Pésaj Jol ha-Moed Día 3"},
       {""}, {""},
+#line 139 "strings_es.gperf"
+      {"Havdalah","Havdalah"},
+#line 125 "strings_es.gperf"
+      {"Chanukah: 7 Candles","Janucá: 7 velas"},
+#line 215 "strings_es.gperf"
+      {"Pesach Chol ha-Moed Day 1","Pésaj Jol ha-Moed Día 1"},
+      {""}, {""},
 #line 18 "strings_es.gperf"
-      {"Megillah","Megillaj"},
-#line 174 "strings_es.gperf"
-      {"Shabbat Chazon","Shabbat Jazon"},
-#line 140 "strings_es.gperf"
-      {"Lag BaOmer","Lag BaOmer"},
-      {""}, {""}, {""},
+      {"Megillah","Megillah"},
 #line 121 "strings_es.gperf"
       {"Chanukah: 3 Candles","Janucá: 3 velas"},
-#line 216 "strings_es.gperf"
-      {"Pesach Chol ha-Moed Day 2","Pésaj Jol ha-Moed Día 2"},
+#line 140 "strings_es.gperf"
+      {"Lag BaOmer","Lag BaOmer"},
 #line 32 "strings_es.gperf"
       {"Makkot","Makot"},
-      {""}, {""},
+      {""},
+#line 119 "strings_es.gperf"
+      {"Chanukah: 1 Candle","Janucá: 1 vela"},
 #line 185 "strings_es.gperf"
       {"Shavuot I","Shavuot I"},
 #line 186 "strings_es.gperf"
@@ -565,11 +573,12 @@ hebcal_lookup_es (str, len)
       {"Vezot Haberakhah","Vezot Haberaja"},
 #line 85 "strings_es.gperf"
       {"Metzora","Metzora"},
-      {""},
-#line 120 "strings_es.gperf"
-      {"Chanukah: 2 Candles","Janucá: 2 velas"},
-#line 215 "strings_es.gperf"
-      {"Pesach Chol ha-Moed Day 1","Pésaj Jol ha-Moed Día 1"},
+#line 49 "strings_es.gperf"
+      {"Daf Yomi","Daf Yomi"},
+#line 124 "strings_es.gperf"
+      {"Chanukah: 6 Candles","Janucá: 6 velas"},
+#line 216 "strings_es.gperf"
+      {"Pesach Chol ha-Moed Day 2","Pésaj Jol ha-Moed Día 2"},
       {""}, {""},
 #line 53 "strings_es.gperf"
       {"Numeric hebrew month in input file.  Skipping line %s","El mes hebreo numérico en el archivo de entrada. Saltando la línea %s"},
@@ -580,47 +589,38 @@ hebcal_lookup_es (str, len)
       {"Chayei Sara","Jayei Sara"},
 #line 127 "strings_es.gperf"
       {"Chanukah: 8th Day","Janucá: 8º día"},
-#line 119 "strings_es.gperf"
-      {"Chanukah: 1 Candle","Janucá: 1 vela"},
-#line 125 "strings_es.gperf"
-      {"Chanukah: 7 Candles","Janucá: 7 velas"},
+#line 179 "strings_es.gperf"
+      {"Shabbat Parah","Shabat Parah"},
+#line 120 "strings_es.gperf"
+      {"Chanukah: 2 Candles","Janucá: 2 velas"},
       {""}, {""},
 #line 175 "strings_es.gperf"
       {"Shabbat HaChodesh","Shabat HaJodesh"},
-#line 49 "strings_es.gperf"
-      {"Daf Yomi","Daf Yomi"},
-#line 124 "strings_es.gperf"
-      {"Chanukah: 6 Candles","Janucá: 6 velas"},
-#line 180 "strings_es.gperf"
-      {"Shabbat Rosh Chodesh","Shabat Rosh Jodesh"},
-      {""}, {""}, {""},
+      {""},
 #line 123 "strings_es.gperf"
       {"Chanukah: 5 Candles","Janucá: 5 velas"},
-      {""}, {""},
+#line 180 "strings_es.gperf"
+      {"Shabbat Rosh Chodesh","Shabat Rosh Jodesh"},
+      {""}, {""}, {""}, {""}, {""}, {""},
 #line 177 "strings_es.gperf"
       {"Shabbat Machar Chodesh","Shabbat Majar Jodesh"},
-#line 76 "strings_es.gperf"
-      {"Ha'Azinu","HaAzinu"},
-#line 55 "strings_es.gperf"
-      {"Date out of range in input file. Skipping line %s","Fecha fuera de rango en el archivo de entrada. Saltando la línea %s"},
-      {""},
+      {""}, {""}, {""},
 #line 200 "strings_es.gperf"
       {"Ta'anit Bechorot","Ta'anit Bejorot"},
+      {""}, {""}, {""}, {""},
+#line 149 "strings_es.gperf"
+      {"Pesach V (CH''M)","Pésaj V (J''M)"},
 #line 196 "strings_es.gperf"
-      {"Sukkot IV (CH''M)","Sukot IV (C''M)"},
-#line 59 "strings_es.gperf"
-      {"Date out of range in yahrtzeit file. Skipping line %s","Fecha fuera de rango en el archivo yahrtzeit. Saltando la línea %s"},
-      {""},
+      {"Sukkot IV (CH''M)","Sukot IV (J''M)"},
+      {""}, {""},
 #line 82 "strings_es.gperf"
       {"Lech-Lecha","Lej Leja"},
-#line 149 "strings_es.gperf"
-      {"Pesach V (CH''M)","Pésaj V (C''M)"},
+#line 86 "strings_es.gperf"
+      {"Miketz","Miketz"},
       {""}, {""}, {""},
 #line 117 "strings_es.gperf"
       {"Candle lighting","Iluminación de velas"},
-#line 86 "strings_es.gperf"
-      {"Miketz","Miketz"},
-      {""}, {""}, {""}, {""}, {""}, {""}, {""},
+      {""}, {""}, {""},
 #line 208 "strings_es.gperf"
       {"Yom HaAtzma'ut","Yom HaAtzma'ut"},
 #line 211 "strings_es.gperf"
@@ -635,56 +635,56 @@ hebcal_lookup_es (str, len)
 #line 209 "strings_es.gperf"
       {"Yom HaShoah","Yom HaShoah"},
       {""},
+#line 76 "strings_es.gperf"
+      {"Ha'Azinu","HaAzinu"},
+      {""}, {""}, {""}, {""},
 #line 50 "strings_es.gperf"
       {"Unable to allocate memory for holiday.","No se puede asignar memoria para las vacaciones."},
       {""},
-#line 48 "strings_es.gperf"
-      {"Daf Yomi: %s %d","Daf Yomi: %s %d"},
-#line 60 "strings_es.gperf"
-      {"improper sedra year type calculated.","tipo de año de sedra inapropiado calculado."},
-      {""}, {""}, {""},
 #line 228 "strings_es.gperf"
       {"Sukkot Chol ha-Moed Day 3","Sukot Jol ha-Moed Día 3"},
-      {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
-#line 227 "strings_es.gperf"
-      {"Sukkot Chol ha-Moed Day 2","Sukot Jol ha-Moed Día 2"},
-      {""}, {""}, {""}, {""},
-#line 79 "strings_es.gperf"
-      {"Ki Teitzei","Ki Teitzei"},
-#line 212 "strings_es.gperf"
-      {"Yom Yerushalayim","Yom Yerushalayim"},
+#line 60 "strings_es.gperf"
+      {"improper sedra year type calculated.","tipo de año de sedra inapropiado calculado."},
       {""}, {""}, {""},
 #line 226 "strings_es.gperf"
       {"Sukkot Chol ha-Moed Day 1","Sukot Jol ha-Moed Día 1"},
       {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
+#line 79 "strings_es.gperf"
+      {"Ki Teitzei","Ki Teitzei"},
+      {""}, {""}, {""}, {""},
+#line 227 "strings_es.gperf"
+      {"Sukkot Chol ha-Moed Day 2","Sukot Jol ha-Moed Día 2"},
+      {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
 #line 62 "strings_es.gperf"
       {"Achrei Mot","Ajarei Mot"},
       {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
+      {""},
+#line 231 "strings_es.gperf"
+      {"Sukkot Final Day (Hoshana Raba)","Día final de Sukot (Hoshana Raba)"},
       {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
-      {""}, {""},
 #line 197 "strings_es.gperf"
-      {"Sukkot V (CH''M)","Sukot V (C''M)"},
+      {"Sukkot V (CH''M)","Sukot V (J''M)"},
       {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
       {""}, {""},
 #line 220 "strings_es.gperf"
       {"Shavuot II (on Shabbat)","Shavuot II (en Shabat)"},
       {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
 #line 145 "strings_es.gperf"
-      {"Pesach II (CH''M)","Pesaj II (C''M)"},
-      {""}, {""}, {""}, {""},
+      {"Pesach II (CH''M)","Pesaj II (J''M)"},
+      {""}, {""}, {""},
+#line 212 "strings_es.gperf"
+      {"Yom Yerushalayim","Yom Yerushalayim"},
 #line 150 "strings_es.gperf"
-      {"Pesach VI (CH''M)","Pésaj VI (C''M)"},
+      {"Pesach VI (CH''M)","Pésaj VI (J''M)"},
       {""}, {""},
 #line 199 "strings_es.gperf"
       {"Sukkot VII (Hoshana Raba)","Sukot VII (Hoshana Raba)"},
       {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
-      {""}, {""}, {""},
-#line 146 "strings_es.gperf"
-      {"Pesach III (CH''M)","Pésaj III (C''M)"},
-      {""}, {""}, {""}, {""}, {""}, {""}, {""},
-#line 231 "strings_es.gperf"
-      {"Sukkot Final Day (Hoshana Raba)","Día final de Sukot (Hoshana Raba)"},
       {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
+      {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
+      {""}, {""},
+#line 48 "strings_es.gperf"
+      {"Daf Yomi: %s %d","Daf Yomi: %s %d"},
       {""}, {""},
 #line 222 "strings_es.gperf"
       {"Yom Kippur (on Shabbat)","Yom Kipur (en Shabat)"},
@@ -694,19 +694,24 @@ hebcal_lookup_es (str, len)
       {""},
 #line 223 "strings_es.gperf"
       {"Yom Kippur (Mincha, Traditional)","Yom Kipur (Minja, Tradicional)"},
+#line 146 "strings_es.gperf"
+      {"Pesach III (CH''M)","Pésaj III (J''M)"},
       {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
       {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
       {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
-      {""}, {""},
+      {""},
 #line 194 "strings_es.gperf"
-      {"Sukkot II (CH''M)","Sukot II (C''M)"},
+      {"Sukkot II (CH''M)","Sukot II (J''M)"},
       {""}, {""}, {""}, {""},
 #line 198 "strings_es.gperf"
-      {"Sukkot VI (CH''M)","Sukot VI (C''M)"},
+      {"Sukkot VI (CH''M)","Sukot VI (J''M)"},
       {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
-      {""}, {""}, {""}, {""}, {""}, {""},
+      {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
+      {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
+      {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
+      {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""}, {""},
 #line 195 "strings_es.gperf"
-      {"Sukkot III (CH''M)","Sukot III (C''M)"}
+      {"Sukkot III (CH''M)","Sukot III (J''M)"}
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)

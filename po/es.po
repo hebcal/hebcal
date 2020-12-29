@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: hebcal 4.23\n"
 "Report-Msgid-Bugs-To: hebcal-bugs@sadinoff.com\n"
 "POT-Creation-Date: 2015-12-30 14:54-0500\n"
-"PO-Revision-Date: 2020-12-15 18:18-0500\n"
+"PO-Revision-Date: 2020-12-29 08:02-0800\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -57,7 +57,7 @@ msgstr "Tanit"
 
 #: ../dafyomi.c:36
 msgid "Megillah"
-msgstr "Megillaj"
+msgstr "Megillah"
 
 #: ../dafyomi.c:37
 msgid "Moed Katan"
@@ -137,15 +137,15 @@ msgstr "Menajot"
 
 #: ../dafyomi.c:56
 msgid "Chullin"
-msgstr "Hulín"
+msgstr "Julín"
 
 #: ../dafyomi.c:57
 msgid "Bechorot"
-msgstr "Behorot"
+msgstr "Bejorot"
 
 #: ../dafyomi.c:58
 msgid "Arachin"
-msgstr "Arakhin"
+msgstr "Arajin"
 
 #: ../dafyomi.c:59
 msgid "Temurah"
@@ -489,22 +489,22 @@ msgid "Pesach II"
 msgstr "Pésaj II"
 
 msgid "Pesach II (CH''M)"
-msgstr "Pesaj II (C''M)"
+msgstr "Pesaj II (J''M)"
 
 msgid "Pesach III (CH''M)"
-msgstr "Pésaj III (C''M)"
+msgstr "Pésaj III (J''M)"
 
 msgid "Pesach IV (CH''M)"
-msgstr "Pésaj IV CJ''M)"
+msgstr "Pésaj IV (J''M)"
 
 msgid "Pesach Sheni"
 msgstr "Pésaj Sheni"
 
 msgid "Pesach V (CH''M)"
-msgstr "Pésaj V (C''M)"
+msgstr "Pésaj V (J''M)"
 
 msgid "Pesach VI (CH''M)"
-msgstr "Pésaj VI (C''M)"
+msgstr "Pésaj VI (J''M)"
 
 msgid "Pesach VII"
 msgstr "Pésaj VII"
@@ -624,7 +624,7 @@ msgid "Sigd"
 msgstr "Sigd"
 
 msgid "Simchat Torah"
-msgstr "Simjá Torá"
+msgstr "Simját Torá"
 
 msgid "Sukkot"
 msgstr "Sukot"
@@ -636,19 +636,19 @@ msgid "Sukkot II"
 msgstr "Sukot II"
 
 msgid "Sukkot II (CH''M)"
-msgstr "Sukot II (C''M)"
+msgstr "Sukot II (J''M)"
 
 msgid "Sukkot III (CH''M)"
-msgstr "Sukot III (C''M)"
+msgstr "Sukot III (J''M)"
 
 msgid "Sukkot IV (CH''M)"
-msgstr "Sukot IV (C''M)"
+msgstr "Sukot IV (J''M)"
 
 msgid "Sukkot V (CH''M)"
-msgstr "Sukot V (C''M)"
+msgstr "Sukot V (J''M)"
 
 msgid "Sukkot VI (CH''M)"
-msgstr "Sukot VI (C''M)"
+msgstr "Sukot VI (J''M)"
 
 msgid "Sukkot VII (Hoshana Raba)"
 msgstr "Sukot VII (Hoshana Raba)"
@@ -672,7 +672,7 @@ msgid "Tu B'Shvat"
 msgstr "Tu BiShvat"
 
 msgid "Tzom Gedaliah"
-msgstr "Tzom Gedaliaj"
+msgstr "Tzom Gedaliah"
 
 msgid "Tzom Tammuz"
 msgstr "Tzom Tammuz"
@@ -790,3 +790,9 @@ msgstr "Rosh Jodesh Tevet"
 
 msgid "min"
 msgstr "min"
+
+msgid "Fast begins"
+msgstr "El ayuno comienza"
+
+msgid "Fast ends"
+msgstr "El ayuno finaliza"
