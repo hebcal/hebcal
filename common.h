@@ -46,4 +46,5 @@ int long_cheshvan(int);
 int short_kislev(int);
 int max_days_in_heb_month(int,int);
 int lookup_hebrew_month(const char *);
+char *hebnum_to_string(char *buffer, int num);
 #endif

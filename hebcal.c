@@ -49,6 +49,7 @@ int
   sunsetAlways_sw, sunriseAlways_sw, default_zemanim,  
   abbrev_sw, first_weekday, this_weekday,
   dafYomi_sw,
+  utf8_hebrew_sw,
   yearDigits_sw, yahrtzeitFile_sw;
 timelib_tzinfo *TZ_INFO = NULL;
 int latdeg, latmin, longdeg, longmin;
@@ -488,11 +489,20 @@ void main_calendar( long todayAbs, long endAbs) /* the range of the desired prin
             (today_zemanim & (ZMAN_CANDLES_BEFORE|ZMAN_CANDLES_AFTER|ZMAN_HAVDALAH)))))
       {
           PrintGregDate (todayGreg);
-          printf ("%d%s of %s, %d\n",
-                  todayHeb.dd,       /* print the hebrew date */
-                  numSuffix( todayHeb.dd ),
-                  _(hMonths[LEAP_YR_HEB( todayHeb.yy )][todayHeb.mm].name),
-                  todayHeb.yy);
+          /* print the hebrew date */
+          if (utf8_hebrew_sw) {
+            char dayBuf[16], yearBuf[64];
+            printf ("%s %s %s\n",
+                hebnum_to_string(dayBuf, todayHeb.dd),
+                _(hMonths[LEAP_YR_HEB( todayHeb.yy )][todayHeb.mm].name),
+                hebnum_to_string(yearBuf, todayHeb.yy));
+          } else {
+            printf ("%d%s of %s, %d\n",
+                todayHeb.dd,
+                numSuffix( todayHeb.dd ),
+                _(hMonths[LEAP_YR_HEB( todayHeb.yy )][todayHeb.mm].name),
+                todayHeb.yy);
+          }
       }
       
       if (printSunriseSunset_sw)

@@ -1,3 +1,7 @@
+Changes in 4.24
+* Display Hebrew Date in Hebrew numerals for `--lang=he` or `-8` (#206)
+  (e.g. displays `1/3/2021 י״ט טֵבֵת תשפ״א` instead of `1/3/2021 19th of Tevet, 5781`)
+
 Changes in 4.23
 * Add Spanish translations (`--lang=es`), courtesy Iosef Kebesh and
   Sebastian Thierer. (#189, #205)

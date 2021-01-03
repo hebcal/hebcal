@@ -354,7 +354,6 @@ void handleArgs(int argc, char *argv[])
    int zemanim_sw = 0;
    int help_sw = 0;
    int version_sw = 0;
-   int utf8_hebrew_sw = 0;
    char *latitudeStr = NULL;
    char *longitudeStr = NULL;
    char *langStr = NULL;
@@ -541,6 +540,9 @@ void handleArgs(int argc, char *argv[])
        warn("Unknown lang '%s'; using default", langStr);
      } else {
        hebcal_set_language(lang);
+       if (lang == HEBCAL_LANG_HE) {
+           utf8_hebrew_sw = 1;
+       }
      }
      free(langStr);
    } else if (ashkenazis_sw) {

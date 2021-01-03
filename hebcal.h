@@ -53,6 +53,7 @@ extern FILE *inFile, *yFile;
 extern int
     ashkenazis_sw, 
     dafYomi_sw,
+    utf8_hebrew_sw,
     candleLighting_sw, 
     gregDateOutputFormatCode_sw,
     hebrewDates_sw,

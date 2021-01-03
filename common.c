@@ -26,6 +26,7 @@
 
 #include <stdlib.h>
 #include <ctype.h>
+#include <string.h>
 #include "common.h"
 #include "greg.h"
 #include "hebcal.h"
@@ -336,4 +337,71 @@ int long_cheshvan( int year )
 int short_kislev( int year ) 
 {
     return ((days_in_heb_year (year) % 10) == 3);
+}
+
+const char *num2heb(int num) {
+    switch(num) {
+    case 1: return "א";
+    case 2: return "ב";
+    case 3: return "ג";
+    case 4: return "ד";
+    case 5: return "ה";
+    case 6: return "ו";
+    case 7: return "ז";
+    case 8: return "ח";
+    case 9: return "ט";
+    case 10: return "י";
+    case 20: return "כ";
+    case 30: return "ל";
+    case 40: return "מ";
+    case 50: return "נ";
+    case 60: return "ס";
+    case 70: return "ע";
+    case 80: return "פ";
+    case 90: return "צ";
+    case 100: return "ק";
+    case 200: return "ר";
+    case 300: return "ש";
+    case 400: return "ת";
+    default: return "*INVALID*";
+    }
+}
+
+#define GERESH "׳"
+#define GERSHAYIM "״"
+
+char *hebnum_to_string(char *buffer, int num) {
+    int nums[10];
+    int digits = 0;
+    num = num % 1000;
+    while (num > 0) {
+        int i, incr = 100;
+        if (num == 15 || num == 16) {
+            nums[digits++] = 9;
+            nums[digits++] = num - 9;
+            break;
+        }
+        for (i = 400; i > num; i -= incr) {
+            if (i == incr) {
+                incr = incr / 10;
+            }
+        }
+        nums[digits++] = i;
+        num -= i;
+    }
+    buffer[0] = '\0';
+    if (digits == 1) {
+        const char *s = num2heb(nums[0]);
+        strcat(buffer, s);
+        strcat(buffer, GERESH);
+        return buffer;
+    }
+    for (int i = 0; i < digits; i++) {
+        const char *s = num2heb(nums[i]);
+        if (i + 1 == digits) {
+            strcat(buffer, GERSHAYIM);
+        }
+        strcat(buffer, s);
+    }
+    return buffer;
 }
