@@ -341,6 +341,7 @@ holinput_t inp_holidays[] =
 #define HOLIDAY_LEIL_SELICHOT      LANGUAGE2(var_hol_names[26].name)
 #define HOLIDAY_SIGD      LANGUAGE2(var_hol_names[27].name)
 #define HOLIDAY_YOM_HAALIYAH      LANGUAGE2(var_hol_names[28].name)
+#define HOLIDAY_TISH_A_B_AV_OBSERVED     LANGUAGE2(var_hol_names[29].name)
 
 struct variable_holiday_names {
    const char *name;
@@ -374,6 +375,7 @@ struct variable_holiday_names {
     {"Leil Selichot"},
     {"Sigd"},
     {"Yom HaAliyah"},
+    {"Tish'a B'Av (observed)"},
 };
 
 /*-------------------------------------------------------------------------*/
@@ -637,7 +639,7 @@ static void load_variable_holidays( int hYear )
                  [tishaBav % 7L == SAT ? 9 : 8]);
 
     tmpholp = getHolstorep ();
-    tmpholp->name = HOLIDAY_TISH_A_B_AV;
+    tmpholp->name = tishaBav % 7L == SAT ? HOLIDAY_TISH_A_B_AV_OBSERVED : HOLIDAY_TISH_A_B_AV;
     PushHoliday (tmpholp, &var_holidays[AV]
                  [tishaBav % 7L == SAT ? 10 : 9]);
 
