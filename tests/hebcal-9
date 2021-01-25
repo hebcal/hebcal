@@ -14,7 +14,7 @@ okfile="$filebase.ok"
 
 : ${HEBCAL=../hebcal}
 args="-C Jerusalem -c -i -s"
-years=`awk 'BEGIN{for(i=0;i<20;i++){print 1983+i}}'`
+years=`awk 'BEGIN{for(i=0;i<20;i++){print 2007+i}}'`
 cp /dev/null $outfile
 for year in $years; do
 	${HEBCAL} $args $year >> $outfile
