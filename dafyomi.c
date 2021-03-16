@@ -91,7 +91,7 @@ void hebcal_dafyomi( date_t *greg_day  )
    else
    {
       cno = 1 + ( (cday - osday) / 2702 );
-      dno = (cday - osday) / 2702;
+      dno = (cday - osday) % 2702;
    }
 
 /* Find the daf taking note that the cycle changed slightly after cycle 7. */
