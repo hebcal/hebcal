@@ -528,7 +528,7 @@ Michael J. Radwin
 calendar(1), emacs(1), hcal(1), hdate(1), omer(1), remind(1), rise(1)
 .PP
 The latest version of the code will be available from 
-https://github.com/hebcal/hebcal
+@PACKAGE_URL@
 .PP
 The original motivation for the algorithms in this
 program was the \c

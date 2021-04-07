@@ -7,10 +7,10 @@ outfile="$filebase.out"
 okfile="$filebase.ok"
 
 : ${HEBCAL=../hebcal}
-${HEBCAL} -h -x -D --years 25 -Y yahrzeit.txt 2018 > $outfile
+: ${srcdir=.}
+${HEBCAL} -h -x -D --years 25 -Y ${srcdir}/yahrzeit.txt 2018 > $outfile
 
 : ${DIFF=diff}
-: ${srcdir=.}
 ${DIFF} ${srcdir}/$okfile $outfile
 result=$?
 

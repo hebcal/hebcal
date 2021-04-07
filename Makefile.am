@@ -1,5 +1,4 @@
 ## Process this file with automake to produce Makefile.in
-#$Header$
 
 # Copyright(c) 1994-2004  Danny Sadinoff
 # Portions Copyright (c) 2002 Michael J. Radwin. All Rights Reserved.
@@ -9,50 +8,37 @@
 # groff -T html -man man/man1/hebcal.1 >hebcal-manpage.html
 #-----------------------------------------------------------------
 
-#AM_CPPFLAGS += -DHEBCAL_OPTS='"$(HEBCAL_OPTS)"'
-AM_CPPFLAGS = -DVERSION='"$(PACKAGE_VERSION)"' -DHAVE_STDLIB_H -DHAVE_STRING_H -DHAVE_INTTYPES_H
-
-# AM_CFLAGS = -Wall
-# AM_LDFLAGS = $(LIBINTL)
-
-#DEFS = -DLOCALEDIR=\"@localedir@\" \
-#	   @DEFS@
-
 SUBDIRS = tests
 
 bin_PROGRAMS = hebcal
 
-#sanity_check_SOURCES = common.c danlib.c error.c greg.c sanity-check.c
+BUILT_SOURCES = translations.c translations.h strings_ashkenazi.c	\
+         strings_he.c strings_pl.c strings_ru.c strings_es.c		\
+         strings_fi.c strings_fr.c strings_hu.c				\
+         strings_ashkenazi_litvish.c strings_ashkenazi_poylish.c	\
+         strings_ashkenazi_standard.c
 
-hebcal_c_files = common.c danlib.c error.c greg.c hebcal.c \
-         timelib.c astro.c tm2unixtime.c unixtime2tm.c dow.c parse_tz.c \
-         holidays.c sedra.c start.c gnu.c dafyomi.c \
-         strings_ashkenazi.c strings_he.c strings_pl.c strings_ru.c \
-         strings_es.c \
-         strings_fi.c \
-         strings_fr.c \
-         strings_hu.c \
-         strings_ashkenazi_litvish.c \
-         strings_ashkenazi_poylish.c \
-         strings_ashkenazi_standard.c \
-         translations.c
+$(BUILT_SOURCES):
+	$(top_srcdir)/po2gperf.pl $(top_srcdir)/po/*.po
 
-hebcal_h_files = common.h  danlib.h greg.h hebcal.h \
-          myerror.h translations.h \
-          timezonedb.h timelib.h astro.h timelib_structs.h \
-          sedra.h cities.h
-
-hebcal_SOURCES = $(hebcal_c_files) $(hebcal_h_files)
+hebcal_SOURCES = common.c danlib.c error.c greg.c hebcal.c timelib.c	\
+         astro.c tm2unixtime.c unixtime2tm.c dow.c parse_tz.c		\
+         holidays.c sedra.c start.c gnu.c dafyomi.c $(BUILT_SOURCES)	\
+         common.h dafyomi.h danlib.h greg.h hebcal.h myerror.h		\
+         timezonedb.h timelib.h astro.h timelib_private.h		\
+         timelib_structs.h sedra.h cities.h
 
 man1_MANS = hebcal.1
-EXTRA_DIST = $(man1_MANS)
 
-BUILT_SOURCES =$(srcdir)/package.m4
+EXTRA_DIST = NEWS.md README.md hebcal.dsp hebcal.dsw po2gperf.pl	\
+ po/ashkenazi_litvish.po po/ashkenazi.po po/ashkenazi_poylish.po	\
+ po/ashkenazi_standard.po po/es.po po/fi.po po/fr.po po/he.po		\
+ po/hu.po po/pl.po po/ru.po
 
 
-VOLUME_NAME = @PACKAGE_NAME@-@PACKAGE_VERSION@
+VOLUME_NAME = $(PACKAGE_NAME)-$(PACKAGE_VERSION)
 BINARY_DIR = $(VOLUME_NAME).bin
-DISK_IMAGE_NAME = @PACKAGE_NAME@-osx-ppc-@PACKAGE_VERSION@.dmg
+DISK_IMAGE_NAME = $(PACKAGE_NAME)-osx-ppc-$(PACKAGE_VERSION).dmg
 HDIUTIL = /usr/bin/hdiutil
 binary-osx: hebcal hebcal.1 README.md NEWS
 	rm -fr $(BINARY_DIR)
@@ -61,21 +47,7 @@ binary-osx: hebcal hebcal.1 README.md NEWS
 	cp hebcal.1 $(BINARY_DIR)/man/man1
 	cp NEWS $(BINARY_DIR)/NEWS.txt
 	cp README.md $(BINARY_DIR)/README.md
-	echo "The source for hebcal is available for free at https://github.com/hebcal/hebcal" > $(BINARY_DIR)/SOURCE
+	echo "The source for hebcal is available for free at $(PACKAGE_URL)" > $(BINARY_DIR)/SOURCE
 	$(HDIUTIL) create -ov -volname $(VOLUME_NAME) -fs HFS+ -srcfolder $(BINARY_DIR) $(DISK_IMAGE_NAME)
 
-
-
-$(srcdir)/package.m4: $(top_srcdir)/configure.ac
-	{                                      \
-	echo '# Signature of the current package.'; \
-	echo 'm4_define([AT_PACKAGE_NAME],      [@PACKAGE_NAME@])'; \
-	echo 'm4_define([AT_PACKAGE_TARNAME],   [@PACKAGE_TARNAME@])'; \
-	echo 'm4_define([AT_PACKAGE_VERSION],   [@PACKAGE_VERSION@])'; \
-	echo 'm4_define([AT_PACKAGE_STRING],    [@PACKAGE_STRING@])'; \
-	echo 'm4_define([AT_PACKAGE_BUGREPORT], [@PACKAGE_BUGREPORT@])'; \
-	} >$(srcdir)/package.m4
-
 check-recursive:  all
-
-#ACLOCAL_AMFLAGS = --install -I m4
