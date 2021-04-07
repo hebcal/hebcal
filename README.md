@@ -181,11 +181,12 @@ To build hebcal from the source repository, you'll need a few more tools than ar
 * GNU m4 version 1.4.3 or later
 * GNU make v3.79 or later
 * Perl v5.0 or later
+* gperf
 
 Once you have those, you can prepare the build environment as follows:
 
 ```
-aclocal && autoconf && automake --foreign --add-missing && ./configure && make
+autoreconf --install && ./configure && make
 ```
 
 If you would like customize the program for your city, pass additional options to `configure` above.
