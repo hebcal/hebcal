@@ -1,24 +1,25 @@
+.deps/
+/aclocal.m4
+/autom4te.cache
+/compile
+/config.h
+/config.h.in
+/config.log
+/config.status
+/configure
+/depcomp
+/hebcal
+/hebcal.1
+/install-sh
+/missing
+/stamp-h1
+/strings_*.c
+/strings_*.gperf
+/test-driver
+/translations.c
+/translations.h
 Makefile
-.deps
-.*~
-aclocal.m4
-autom4te.cache
-config.h
-config.h.in.orig
-config.log
-config.status
-doc/hebcal.info
-doc/stamp-vti
-doc/version.texi
-doc/version.texi.orig
-hebcal
-hebcal.1
-package.m4
-stamp-h1
-
-# Editor files
-*.sublime*
-
+Makefile.in
 
 # Object files
 *.o
