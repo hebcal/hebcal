@@ -2,12 +2,16 @@ language: c
 compiler:
   - gcc
   - clang
+addons:
+  apt:
+    packages:
+      - gperf
 os:
   - linux
   - osx
 arch:
  - amd64
- - ppc64le  
+ - ppc64le
 sudo: false
 # Change this to your needs
-script: aclocal && autoconf && automake --foreign --add-missing && ./configure && make all check
+script: autoreconf --install && ./configure && make check
