@@ -2,9 +2,8 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([hebcal],[4.24],[hebcal-bugs@sadinoff.com])
-AM_MAINTAINER_MODE([disable])
-AM_INIT_AUTOMAKE([foreign no-dependencies no-installinfo -Wall])
+AC_INIT([hebcal],[4.24],[hebcal-bugs@sadinoff.com],[],[https://github.com/hebcal/hebcal])
+AM_INIT_AUTOMAKE([foreign no-installinfo -Wall])
 AC_CONFIG_SRCDIR([hebcal.c])
 AC_CONFIG_HEADERS([config.h])
 

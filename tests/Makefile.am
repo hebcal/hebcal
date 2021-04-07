@@ -25,7 +25,7 @@ check_PROGRAMS = sanity-check
 
 sanity_check_SOURCES = sanity-check.c
 
-sanity_check_LDADD  = ../common.o ../danlib.o ../error.o ../greg.o 
+sanity_check_LDADD  = $(top_builddir)/common.o $(top_builddir)/danlib.o $(top_builddir)/error.o $(top_builddir)/greg.o
 AM_CPPFLAGS  = -I $(top_srcdir)
 
 TESTS = hebcal-1 hebcal-2 hebcal-3 \
@@ -36,11 +36,11 @@ TESTS = hebcal-1 hebcal-2 hebcal-3 \
 TESTS_okayfiles = hebcal-test1.ok hebcal-test2.ok hebcal-test3.ok \
 	hebcal-test4.ok hebcal-test5.ok hebcal-test6.ok hebcal-test7.ok \
 	hebcal-test8.ok hebcal-test9.ok \
-	hebcal-10.ok hebcal-11.ok
+	hebcal-test10.ok hebcal-test11.ok
 TESTS_outputfiles = hebcal-test1.out hebcal-test2.out hebcal-test3.out \
 	hebcal-test4.out hebcal-test5.out hebcal-test6.out hebcal-test7.out \
 	hebcal-test8.out hebcal-test9.out \
 	hebcal-test10.out hebcal-test11.out
 MOSTLYCLEANFILES = $(TESTS_outputfiles)
 
-EXTRA_DIST = $(TESTS) $(TESTS_okayfiles)
+EXTRA_DIST = $(TESTS) $(TESTS_okayfiles) yahrzeit.txt
