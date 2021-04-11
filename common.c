@@ -19,7 +19,7 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-   Danny Sadinoff can be reached at 
+   Danny Sadinoff can be reached at
 
    danny@sadinoff.com
  */
@@ -71,9 +71,9 @@ hmonths_t hMonths =
 int max_days_in_heb_month (int month, int year)
 {
     if ( month == IYYAR ||
-         month == TAMUZ || 
+         month == TAMUZ ||
          month == ELUL ||
-         month == TEVET || 
+         month == TEVET ||
          month == ADAR_II ||
          (month == ADAR_I && !LEAP_YR_HEB( year )) ||
          (month == CHESHVAN && !long_cheshvan( year )) ||
@@ -92,7 +92,7 @@ int lookup_hebrew_month( const char *s )
      C        Cheshvan
      K        Kislev
      1        1Adar
-     2        2Adar   
+     2        2Adar
      Si Sh     sivan, Shvat
      Ta Ti Te Tamuz, Tishrei, Tevet
      Av Ad    Av, Adar
@@ -156,19 +156,19 @@ int lookup_hebrew_month( const char *s )
 
 
 
-/* 
+/*
    returns day of week, hours and chalakim of specified molad.
  */
 molad_t get_molad( int year, int month)
 {
     molad_t retMolad;
-    
+
     long yearl, m_elapsed, p_elapsed, h_elapsed, parts, m_adj;
 
     m_adj = (long) month;
     m_adj -= 7;
     if (m_adj < 0) m_adj += MONTHS_IN_HEB(year);
-    
+
     yearl = (long) year;
     m_elapsed = m_adj +
         235L * ((yearl - 1L) / 19L) +
@@ -181,13 +181,13 @@ molad_t get_molad( int year, int month)
         793L * (m_elapsed / 1080L) +
         p_elapsed / 1080L -
         6L;
-    
+
     parts = (p_elapsed % 1080) + 1080 * (h_elapsed % 24);
 
     retMolad.day = 1L + 29L * m_elapsed + h_elapsed / 24L;
     retMolad.hour = (int) (h_elapsed % 24L);
     retMolad.chalakim = (int) (parts % 1080L);
-    
+
     return retMolad;
 
 }
@@ -197,8 +197,8 @@ date_t abs2hebrew( long d )
 {
     static int mmap[] =
         {
-            KISLEV, TEVET, SHVAT, ADAR_I, NISAN, 
-            IYYAR, SIVAN, TAMUZ, 
+            KISLEV, TEVET, SHVAT, ADAR_I, NISAN,
+            IYYAR, SIVAN, TAMUZ,
             TISHREI, TISHREI, TISHREI, CHESHVAN
         };
     date_t hebdate, gregdate;
@@ -206,16 +206,16 @@ date_t abs2hebrew( long d )
 
     if( d >= 10555144L )
     {
-        fprintf(stderr, "parameter to abs2hebrew  %ld out of range\n", 
+        fprintf(stderr, "parameter to abs2hebrew  %ld out of range\n",
                 d );
         exit(1);
     }
-    
+
     gregdate = abs2greg (d);
     hebdate.dd = 1;
     hebdate.mm = 7;
     year = 3760 + gregdate.yy;
-    
+
     while (hebdate.yy = year + 1,
            d >= hebrew2abs (hebdate))
         year++;
@@ -238,50 +238,50 @@ date_t abs2hebrew( long d )
         month = (month % MONTHS_IN_HEB (year)) + 1;
 
     hebdate.dd = 1;
-    
+
     day = (int) (d - hebrew2abs (hebdate) + 1L);
     if( day < 0)
     {
-        fprintf(stderr, "assertion failure d < hebrew2abs(m,d,y) => %ld < %ld!\n", 
+        fprintf(stderr, "assertion failure d < hebrew2abs(m,d,y) => %ld < %ld!\n",
                 d, hebrew2abs(hebdate));
         exit(1);
     }
 
     hebdate.dd = day;
-    
+
     return hebdate;
 }
 
 
 /* Days from sunday prior to start of hebrew calendar to mean
-   conjunction of tishrei in hebrew YEAR 
+   conjunction of tishrei in hebrew YEAR
  */
 static long int hebrew_elapsed_days (int year)
 {
     long int yearl, m_elapsed, p_elapsed, h_elapsed, parts, day, alt_day;
-    
+
     yearl = (long) year;
     m_elapsed = 235L * ((yearl - 1L) / 19L) +
         12L * ((yearl - 1L) % 19L) +
         ((((yearl - 1L) % 19L) * 7L) + 1L) / 19L;
-    
+
     p_elapsed = 204L + (793L * (m_elapsed % 1080L));
-  
+
     h_elapsed = 5L + (12L * m_elapsed) +
         793L * (m_elapsed / 1080L) +
         p_elapsed / 1080L;
-    
+
     parts = (p_elapsed % 1080L) + 1080L * (h_elapsed % 24L);
-    
+
     day = 1L + 29L * m_elapsed + h_elapsed / 24L;
-    
+
     if ((parts >= 19440L) ||
         ((2L == (day % 7L)) && (parts >= 9924L) && !(LEAP_YR_HEB (year))) ||
         ((1L == (day % 7L)) && (parts >= 16789L) && LEAP_YR_HEB (year - 1)))
         alt_day = day + 1L;
     else
         alt_day = day;
-    
+
     if ((alt_day % 7L) == 0L ||
         (alt_day % 7L) == 3L ||
         (alt_day % 7L) == 5L)
@@ -301,7 +301,7 @@ long hebrew2abs (date_t d)
     int m;
     long tempabs = (long) d.dd;
     long ret;
-    
+
     if (d.mm < TISHREI)
     {
         for (m = TISHREI; m <= MONTHS_IN_HEB (d.yy); m++)
@@ -315,8 +315,8 @@ long hebrew2abs (date_t d)
         for (m = TISHREI; m < d.mm; m++)
             tempabs += (long) max_days_in_heb_month (m, d.yy);
     }
-    
-    
+
+
     ret = hebrew_elapsed_days (d.yy) - 1373429L + tempabs;
     return ret;
 }
@@ -328,13 +328,13 @@ int days_in_heb_year( int year )
 }
 
 /* true if Cheshvan is long in hebrew YEAR */
-int long_cheshvan( int year ) 
+int long_cheshvan( int year )
 {
     return ((days_in_heb_year (year) % 10) == 5);
 }
 
 /* true if Kislev is short in hebrew YEAR */
-int short_kislev( int year ) 
+int short_kislev( int year )
 {
     return ((days_in_heb_year (year) % 10) == 3);
 }

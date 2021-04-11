@@ -56,7 +56,7 @@ Changes in 4.14
 * FIXED missing range check on MonthLengths array, courtesy ynonp  (#157)
 
 Changes in 4.13
-* Correct candle-lighting times for for fractional timezones such as 
+* Correct candle-lighting times for for fractional timezones such as
   Asia/Kolkata, America/St_Johns, Asia/Kathmandu (#136)
 * Update timezone database to 2017.2 (2017b)
 * Updated Finnish translations

@@ -92,7 +92,7 @@ static char *helpArray[] =
    "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  ",
    "Type \"hebcal warranty\" for more details.",
    "  ",
-   "\"Free\" above means freely distributed.  To donate money to support hebcal,", 
+   "\"Free\" above means freely distributed.  To donate money to support hebcal,",
    " see the paypal link at http://www.sadinoff.com/hebcal/ "
    "",
    "WWW:",
@@ -143,7 +143,7 @@ static char* optionsHelpArray[] = {
 "    -F, --daf-yomi                     Output the Daf Yomi for the entire",
 "                                        date range",
 "    -g, --iso-8601                     Output ISO 8601 dates -- YYYY-MM-DD",
-"                                            this overrides -y", 
+"                                            this overrides -y",
 "    -h, --no-holidays                  Suppress default holidays",
 "    -i, --israeli                      Israeli holiday and sedra schedule",
 "    --lang LANG                        Use LANG titles (" HEBCAL_LANG_LIST ")",
@@ -401,7 +401,7 @@ void handleArgs(int argc, char *argv[])
    int c;
    int option_index = 0;
 
-   
+
    setDate(&greg_today);        /* keep the current greg. date here */
 
    while ((c = getopt_long(argc, argv, "ab:cC:dDeEFghHI:il:L:m:MoOrsStTwWxyY:z:Z8",
@@ -660,7 +660,7 @@ void handleArgs(int argc, char *argv[])
        cityName = "User Defined City";
    if (latp ^ longp)
        die("You must enter BOTH the latitude and the longitude", "");
-   
+
    if(cityName && !strcmp(cityName, "Jerusalem"))
        light_offset = -40;	/* does everyone hold by this? */
 
@@ -676,7 +676,7 @@ void handleArgs(int argc, char *argv[])
        else
 	   theYear = greg_today.yy;
        break;
-       
+
    case 1:
        if (isAllNums(remain[0]))
        {
@@ -715,16 +715,16 @@ void handleArgs(int argc, char *argv[])
            exit(1);
        }
        break;
-       
+
    case 2:
        if (!isAllNums(remain[1])) {
            shortUsage();
            exit(1);
        }
        theYear = atoi(remain[1]);		/* print theMonth of theYear */
-       
+
        theMonth = lookup_hebrew_month(remain[0]);
-       
+
        if (theMonth) {
 	   hebrewDates_sw = 1;	/* automagically turn it on */
 	   if (theMonth == ADAR_II && !LEAP_YR_HEB(theYear)) {
@@ -741,11 +741,11 @@ void handleArgs(int argc, char *argv[])
        } else {
             die("bad gregorian month: %s", remain[0]);
        }
-       
+
        yearDirty = 1;
        rangeType = MONTH;
 	break;
-        
+
    case 3:
        if (!(isAllNums(remain[1]) && isAllNums(remain[2]))) {
            shortUsage();
@@ -753,9 +753,9 @@ void handleArgs(int argc, char *argv[])
        }
        theDay = atoi(remain[1]);	/* print theDay of theMonth */
        theYear = atoi(remain[2]);		/* print theMonth of theYear */
-       
+
        theMonth = lookup_hebrew_month(remain[0]);
-       
+
        if (theMonth) {
 	   hebrewDates_sw = 1;	/* automagically turn it on */
 	   if (theMonth == ADAR_II && !LEAP_YR_HEB(theYear)) {
@@ -777,7 +777,7 @@ void handleArgs(int argc, char *argv[])
 	   die("The day of the month must be greater than 0", "");
        if (theMonth < 1)
 	   die("The month must be greater than 0", "");
-       
+
        if (hebrewDates_sw)
        {
 	   if (theDay > max_days_in_heb_month(theMonth, theYear))
@@ -792,8 +792,8 @@ void handleArgs(int argc, char *argv[])
                die("Sorry, there aren't that many days in %s (then)",
                    eMonths[theMonth]);
 	}
-       
-       
+
+
        rangeType = DAY;
        yearDirty = 1;
        break;
@@ -812,7 +812,7 @@ int tokenize(char *str, int *pargc, char* argv[])
 {
 /*     char *strtok(), *strdup(); */
     char *s;
-    
+
     argv[0] = progname;
     s = strtok(str, "\t ");
     *pargc = 1;
@@ -820,8 +820,8 @@ int tokenize(char *str, int *pargc, char* argv[])
     {
         argv[(*pargc)++] = strdup(s);
     } while ((s = strtok(NULL, "\t ")));
-    
-    
+
+
     return *pargc > 1;
 }
 
@@ -917,7 +917,7 @@ int main(int argc, char* argv[])
 
     default:
         die("Oh, NO! internal error #17q!", "");
-        /* this is dead code, but it silences some uninitialized variable 
+        /* this is dead code, but it silences some uninitialized variable
            warnings in gcc   */
         startAbs = endAbs =0;
     }

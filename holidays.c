@@ -973,7 +973,7 @@ int getHebHolidays( date_t dth, holstorep_t *holiList )
                 tmpholip = getHolstorep();
                 initStr (&tmpholip->name, NM_LEN);
                 sprintf (tmpholip->name, _("Rosh Chodesh %s"),
-                         LANGUAGE2(hMonths[LEAP_YR_HEB (dth.yy)][dth.mm].name)); 
+                         LANGUAGE2(hMonths[LEAP_YR_HEB (dth.yy)][dth.mm].name));
                 tmpMask |= PushHoliday (tmpholip, holiList);
             }
         }
@@ -985,7 +985,7 @@ int getHebHolidays( date_t dth, holstorep_t *holiList )
         tmpholip = getHolstorep ();
         initStr (&tmpholip->name, NM_LEN);
         sprintf (tmpholip->name, _("Rosh Chodesh %s"),
-                 LANGUAGE2(hMonths[LEAP_YR_HEB (dth.yy)][dth.mm + 1].name)); 
+                 LANGUAGE2(hMonths[LEAP_YR_HEB (dth.yy)][dth.mm + 1].name));
         tmpMask |= PushHoliday (tmpholip, holiList);
     }
 

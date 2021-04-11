@@ -24,7 +24,7 @@
 #define ADAR_I 12
 #define ADAR_II 13
 
-typedef struct hmonth 
+typedef struct hmonth
 {
     const char *name;
 } hmonth_t;

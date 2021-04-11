@@ -16,7 +16,7 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-   Danny Sadinoff can be reached at 
+   Danny Sadinoff can be reached at
    danny@sadinoff.com
 
  */
@@ -32,7 +32,7 @@
 extern char *progname;
 
 /* print error message and die */
-void die( const char *s1, const char *s2)			
+void die( const char *s1, const char *s2)
 {
     if (errno)
         perror (progname);
@@ -44,7 +44,7 @@ void die( const char *s1, const char *s2)
 }
 
 /* print error message but don't die */
-void warn( const char *s1, const char *s2)			
+void warn( const char *s1, const char *s2)
 {
     if (errno)
         perror (progname);

@@ -52,7 +52,7 @@ city_t cities[] =
     {"Ottawa", 45, 42, 75, 71, "America/Toronto"},
     {"Panama City", 8, 58, 79, 32, "America/Panama"},
     {"Paris", 48, 52, -2, -20, "Europe/Paris"},
-    {"Pawtucket",  41, 52, 71, 23, "America/New_York"}, 
+    {"Pawtucket",  41, 52, 71, 23, "America/New_York"},
     {"Petach Tikvah", 32, 5, -34, -53, "Asia/Jerusalem"},
     {"Philadelphia", 39, 57, 75, 10, "America/New_York"},
     {"Phoenix", 33, 27, 112, 4, "America/Phoenix"},
