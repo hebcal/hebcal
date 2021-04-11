@@ -16,7 +16,7 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-   Danny Sadinoff can be reached at 
+   Danny Sadinoff can be reached at
    danny@sadinoff.com
  */
 
@@ -56,13 +56,13 @@ int istrncasecmp( size_t n, const char *s1, const char *s2 )
 
 /* find the first element of arr which is a superstring of str, to len
    places.
-   Return the index of the element.  If there is no such element, 
-   Return size.  size is the size of arr. 
+   Return the index of the element.  If there is no such element,
+   Return size.  size is the size of arr.
  */
 int lookup_string (const char *str, const char *arr[], int size, int len)
 {
     int i;
-    
+
     for (i = 0; i < size; i++)
         if (!(istrncasecmp (len, str, arr[i])))
             return i;

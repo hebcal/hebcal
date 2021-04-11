@@ -14,39 +14,39 @@ hebcal - a Jewish calendar generator
 .sp 0.5v
 .SH SYNOPSIS
 .B hebcal
-[ 
+[
 .B \-8acdDehHiorsStTwy
 ]
 .if n .ti +5
 .br
-	[ 
+	[
 .B \-I
 .I input_file
 ]
 .if n .ti +5
 .br
-	[ 
+	[
 .B \-Y
 .I yahrtzeit_file
 ]
 .if n .ti +5
 .br
 	[
-.B \-C 
+.B \-C
 .I city
 ]
 .if n .ti +5
 .br
 	[
-.B \-l 
-.I latitude 
-.B \-L 
+.B \-l
+.I latitude
+.B \-L
 .I longitude
 ]
 .if n .ti +5
 .br
 	[
-.B \-z 
+.B \-z
 .I timezone
 ]
 .if n .ti +5
@@ -70,18 +70,18 @@ hebcal - a Jewish calendar generator
 .B hebcal warranty
 .sp 0.5v
 .SH DESCRIPTION
-With no arguments, 
+With no arguments,
 .B hebcal
-will print to stdout the 
+will print to stdout the
 dates of the Jewish holidays in the current
 secular year.
 Each line is prefixed with a Gregorian date of the form
-mm/dd/yyyy.  
+mm/dd/yyyy.
 .PP
-By specifying 
+By specifying
 .I month,
 .I day,
-or 
+or
 .I year,
 output can be limited to a particular month or date
 in a particular year.  Note that
@@ -93,7 +93,7 @@ If the Hebrew dates option is turned on,
 this number represents the Jewish calendar year.
 .I month
 is a number from 1..12, or the name of a Jewish calendar month.
-.I day 
+.I day
 is a number from 1..31.
 .PP
 For example, the command
@@ -113,18 +113,18 @@ will print dates of interest in the month of Tishrei in Jewish
 calendar year 5752.
 .PP
 Note:
-hebcal 92 is 
+hebcal 92 is
 .I not
 the same as hebcal 1992.  The year is assumed to be complete, so the
 former calendar precedes the latter by nineteen centuries.
 .PP
-A few other bells and whistles include the weekly 
+A few other bells and whistles include the weekly
 .I sedra
-as well as the day of the week, the count of the 
+as well as the day of the week, the count of the
 .I omer,
 and the Hebrew date.
 .PP
-Output from hebcal can be used to drive calendar(1).  
+Output from hebcal can be used to drive calendar(1).
 Day-to-day use for hebcal is provided for in the
 .B \-T
 and \c
@@ -132,7 +132,7 @@ and \c
 switches, which print out Jewish calendar entries for the current
 date.
 .PP
-To get a quick-reference online help, type 
+To get a quick-reference online help, type
 .nf
 .sp 0.6v
 	hebcal help
@@ -203,7 +203,7 @@ want a Hebrew date range, so you could type
 The \fB\-H\fP switch would be superfluous in this case.
 Invoking hebcal with
 just the \fB\-H\fP switch by itself will print data for the current Hebrew
-year, starting in Tishrei.  
+year, starting in Tishrei.
 .TP
 .B "\-i"
 Use the Israeli sedra scheme when used in conjunction with \c
@@ -223,7 +223,7 @@ These events are printed regardless of the \c
 .B \-h \c
 suppress holidays switch.
 .sp 0.6v
-There is one holiday per line in 
+There is one holiday per line in
 .BI file,
 each with the format
 .sp 0.6v
@@ -236,7 +236,7 @@ is a string identifying the Jewish month in question \c
 is a number from 1 to 30, and \c
 .I description
 is a newline-terminated string describing the holiday.
-An example might be 
+An example might be
 .sp 0.6v
 \	Adar 1 Start cleaning kitchen for Passover.
 .br
@@ -255,7 +255,7 @@ Set the longitude for solar calculations to \c
 .I deg \c
 degrees and \c
 .I min \c
-minutes.  
+minutes.
 Note:
 Negative values are
 .B east.
@@ -277,7 +277,7 @@ minutes after sundown
 Print the molad on shabbat mevorchim
 .TP
 .B "\-o"
-Add the count of the 
+Add the count of the
 .I omer
 to the output.
 .TP
@@ -287,14 +287,14 @@ strings.  Instead of saying \&\|\(lq\ 13th day of the omer \&\|\(rq
 hebcal will say \&\|\(lq\ Omer: 13 \&\|\(rq
 .TP
 .B "\-s"
-Add the weekly 
-.I sedra 
+Add the weekly
+.I sedra
 to the output on Saturdays.  See \c
 .B \-i.
 .TP
 .B "\-S"
-Add the weekly 
-.I sedra 
+Add the weekly
+.I sedra
 to the output every day.  When this option is invoked, every time a
 day is printed, the torah reading for the Saturday on or immediately
 following that date is printed.  If there is no reading for the next
@@ -302,11 +302,11 @@ Saturday, then nothing is printed.  See
 .B \-i.
 .TP
 .B "\-t"
-Print calendar information for today's date only.  
-.B \-d 
+Print calendar information for today's date only.
+.B \-d
 and
 .B \-o
-are asserted with this option. 
+are asserted with this option.
 .TP
 .B "\-T"
 Same as \fB\-t\fP,
@@ -356,7 +356,7 @@ date of death.
 .I description
 is a newline-terminated string to be printed on the \c
 .I yahrtzeit.
-An example might be 
+An example might be
 .br
 .sp 0.6v
 \	12 29 1957 Menachem Mendel's yahrtzeit.
@@ -406,7 +406,7 @@ The default: the system manager sets a default city
 when the program is compiled.
 .br
 .IP \n+[step])
-Hebcal looks in the environment variable 
+Hebcal looks in the environment variable
 .B HEBCAL_CITY
 for the name of a city in hebcal's database, and if it
 finds one, hebcal will make that the new default city.
@@ -433,7 +433,7 @@ can directly control hebcal's geographic information with the \c
 switches.  Note that changing the geographic coordinates
 causes the timezone to default to UTC.
 .PP
-For a status report on customizations, type 
+For a status report on customizations, type
 type
 .nf
 .sp 0.6v
@@ -484,7 +484,7 @@ example% hebcal -hs Nisan 5770
 4/10/2010 Parashat Shmini
 .sp 0.6v
 .RE
-.LP 
+.LP
 To find out what's happening in the Jewish calendar today, use
 .RS
 .nf
@@ -505,7 +505,7 @@ Pesach V (CH"M)
 .SH ENVIRONMENT
 .BI Hebcal
 uses two environment variables:
-.TP 
+.TP
 .B HEBCAL_CITY
 .BI "Hebcal " \c
 uses this value as the default city for sunset calculations.  A list
@@ -548,7 +548,7 @@ calendar for the layman can be found in \c
 by Rabbi Nathan Bushwick.  A more complete bibliography on the topic
 can be found there, as well as in the \c
 .I Encyclopedia Judaica \c
-entry on the calendar.  
+entry on the calendar.
 .sp 0.5v
 .SH DIAGNOSTICS
 .TP
@@ -556,7 +556,7 @@ entry on the calendar.
 Prints a shorter version of this manpage, with comments on each option.
 .TP
 .B hebcal info
-Prints the version number and default values of the program. 
+Prints the version number and default values of the program.
 .TP
 .B hebcal cities
 Prints a list of cities which hebcal knows about, suitable as
@@ -588,13 +588,13 @@ Negative longitudes are
 .I east
 of Greenwich.
 .PP
-Some combinations of options produce weird results, e.g. ,
+Some combinations of options produce weird results, e.g.,
 .sp 0.6v
 \	hebcal -dH nisan 5744
 .br
 \	hebcal -dH 5744
 .sp 0.6v
-This comes into play when you use the 
+This comes into play when you use the
 .B HEBCAL_OPTS
 environment variable.
 .PP
@@ -606,10 +606,10 @@ times are guaranteed to be wrong.
 Hebcal only translates between the Gregorian calendar
 and the Jewish calendar. This means that the results
 will be at least partly useless where and when the
-Gregorian calendar was not used, e.g. before
-1752 in Britain and before circa 1918 in Russia.  
+Gregorian calendar was not used, e.g., before
+1752 in Britain and before circa 1918 in Russia.
 See the Wikipedia entry for \(lqDaylight saving time\(rq for
-a splendid chart depicting when the changeover from 
+a splendid chart depicting when the changeover from
 the Julian to the Gregorian calendars occurred in various places.
 .PP
 Hebcal cannot handle date computations before 2 C.E.
@@ -638,12 +638,12 @@ versions, except that this permission notice may be included in
 translations approved by the Free Software Foundation instead of in
 the original English.
 .PP
-For a full text of the copyright and lack of warranty information, 
-type 
+For a full text of the copyright and lack of warranty information,
+type
 .sp 0.6v
 \	hebcal copying
 .sp 0.6v
-or 
+or
 .sp 0.6v
 \	hebcal warranty
 .sp 0.6v
