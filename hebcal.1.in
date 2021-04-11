@@ -527,8 +527,10 @@ Michael J. Radwin
 .SH SEE ALSO
 calendar(1), emacs(1), hcal(1), hdate(1), omer(1), remind(1), rise(1)
 .PP
-The latest version of the code will be available from 
-@PACKAGE_URL@
+The latest version of the code is available on the
+.UR @PACKAGE_URL@
+hebcal project homepage
+.UE .
 .PP
 The original motivation for the algorithms in this
 program was the \c
@@ -614,9 +616,7 @@ Hebcal cannot handle date computations before 2 C.E.
 Sorry.
 .sp 0.5v
 .SH BUG REPORTS TO
-Danny Sadinoff
-.br
-danny@sadinoff.com
+@PACKAGE_BUGREPORT@
 .sp 0.5v
 .SH COPYING
 Copyright \(co 1994\-2006 Danny Sadinoff
