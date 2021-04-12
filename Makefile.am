@@ -30,7 +30,9 @@ hebcal_SOURCES = common.c danlib.c error.c greg.c hebcal.c timelib.c	\
 
 man1_MANS = hebcal.1
 
-EXTRA_DIST = NEWS.md README.md hebcal.dsp hebcal.dsw po2gperf.pl	\
+dist_doc_DATA = NEWS.md README.md
+
+EXTRA_DIST = hebcal.dsp hebcal.dsw po2gperf.pl				\
  po/ashkenazi_litvish.po po/ashkenazi.po po/ashkenazi_poylish.po	\
  po/ashkenazi_standard.po po/es.po po/fi.po po/fr.po po/he.po		\
  po/hu.po po/pl.po po/ru.po
