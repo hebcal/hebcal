@@ -44,7 +44,7 @@ man1_MANS = hebcal.1
 
 dist_doc_DATA = NEWS.md README.md
 
-EXTRA_DIST = po2gperf.pl $(pofiles) hebcal.dsp hebcal.dsw
+EXTRA_DIST = po2gperf.pl $(pofiles)
 
 VOLUME_NAME = $(PACKAGE_NAME)-$(PACKAGE_VERSION)
 BINARY_DIR = $(VOLUME_NAME).bin
