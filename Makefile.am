@@ -12,14 +12,26 @@ SUBDIRS = tests
 
 bin_PROGRAMS = hebcal
 
-BUILT_SOURCES = translations.c translations.h strings_ashkenazi.c	\
-         strings_he.c strings_pl.c strings_ru.c strings_es.c		\
-         strings_fi.c strings_fr.c strings_hu.c				\
-         strings_ashkenazi_litvish.c strings_ashkenazi_poylish.c	\
-         strings_ashkenazi_standard.c
+# ls po/*.po
 
-$(BUILT_SOURCES):
-	$(top_srcdir)/po2gperf.pl $(top_srcdir)/po/*.po
+pofiles = po/ashkenazi_litvish.po po/ashkenazi.po			\
+	 po/ashkenazi_poylish.po po/ashkenazi_standard.po po/es.po	\
+	 po/fi.po po/fr.po po/he.po po/hu.po po/pl.po po/ru.po
+
+# ls po/*.po | sed 's:^po/:strings_:' | sed 's:[.]po$:.c:'
+
+BUILT_SOURCES = strings_ashkenazi_litvish.c strings_ashkenazi.c		\
+         strings_ashkenazi_poylish.c strings_ashkenazi_standard.c	\
+         strings_es.c strings_fi.c strings_fr.c strings_he.c		\
+         strings_hu.c strings_pl.c strings_ru.c
+
+BUILT_SOURCES += translations.c translations.h
+
+$(BUILT_SOURCES): stamp-gperf
+
+stamp-gperf:
+	$(top_srcdir)/po2gperf.pl $$(echo $(pofiles) | sed 's:po/:$(top_srcdir)/po/:g')
+	touch $@
 
 hebcal_SOURCES = common.c danlib.c error.c greg.c hebcal.c timelib.c	\
          astro.c tm2unixtime.c unixtime2tm.c dow.c parse_tz.c		\
@@ -32,11 +44,7 @@ man1_MANS = hebcal.1
 
 dist_doc_DATA = NEWS.md README.md
 
-EXTRA_DIST = hebcal.dsp hebcal.dsw po2gperf.pl				\
- po/ashkenazi_litvish.po po/ashkenazi.po po/ashkenazi_poylish.po	\
- po/ashkenazi_standard.po po/es.po po/fi.po po/fr.po po/he.po		\
- po/hu.po po/pl.po po/ru.po
-
+EXTRA_DIST = po2gperf.pl $(pofiles) hebcal.dsp hebcal.dsw
 
 VOLUME_NAME = $(PACKAGE_NAME)-$(PACKAGE_VERSION)
 BINARY_DIR = $(VOLUME_NAME).bin
