@@ -1,7 +1,5 @@
-Changes in 4.##
-* Add German translations (`--lang=de`), courtesy Oliver Maor
-
 Changes in 4.25
+* Add German translations (`--lang=de`), courtesy Oliver Maor (#217, #218)
 * Updated timezonedb to version 2021.1 (2021a)
 
 Changes in 4.24
