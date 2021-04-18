@@ -15,14 +15,14 @@ bin_PROGRAMS = hebcal
 # ls po/*.po
 
 pofiles = po/ashkenazi_litvish.po po/ashkenazi.po			\
-	 po/ashkenazi_poylish.po po/ashkenazi_standard.po po/es.po	\
+	 po/ashkenazi_poylish.po po/ashkenazi_standard.po po/de.po po/es.po	\
 	 po/fi.po po/fr.po po/he.po po/hu.po po/pl.po po/ru.po
 
 # ls po/*.po | sed 's:^po/:strings_:' | sed 's:[.]po$:.c:'
 
 BUILT_SOURCES = strings_ashkenazi_litvish.c strings_ashkenazi.c		\
          strings_ashkenazi_poylish.c strings_ashkenazi_standard.c	\
-         strings_es.c strings_fi.c strings_fr.c strings_he.c		\
+         strings_de.c strings_es.c strings_fi.c strings_fr.c strings_he.c		\
          strings_hu.c strings_pl.c strings_ru.c
 
 BUILT_SOURCES += translations.c translations.h
