@@ -1,6 +1,8 @@
 Changes in 4.25
-* Add German translations (`--lang=de`), courtesy Oliver Maor (#217, #218)
 * Updated timezonedb to version 2021.1 (2021a)
+* Add German translations (`--lang=de`), courtesy Oliver Maor (#217, #218)
+* Add 10 German/Austrian cities: Düsseldorf, Frankfurt, Munich, Vienna, ... (#220)
+* Daf Yomi: display correct daf for dates prior to 6/24/1975 (#214)
 
 Changes in 4.24
 * Display Hebrew Date in Hebrew numerals for `--lang=he` or `-8` (#206)
