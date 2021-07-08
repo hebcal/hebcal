@@ -1,4 +1,4 @@
-hebcal [![Build Status](https://travis-ci.org/hebcal/hebcal.svg?branch=master)](https://travis-ci.org/hebcal/hebcal)
+hebcal [![Build Status](https://travis-ci.com/hebcal/hebcal.svg?branch=master)](https://travis-ci.com/hebcal/hebcal)
 ======
 
 A perpetual Jewish Calendar
