@@ -103,18 +103,33 @@ int dayOfYear( date_t d )
 }
 
 
+
 /*
- * The number of days elapsed between the Gregorian date 12/31/1 BC and DATE.
- * The Gregorian date Sunday, December 31, 1 BC is imaginary.
+ * The number of days elapsed between the Julian equivlent of the imaginary gregorian date 12/31/1 BC (Julian 1/2/1) and the Gregorian DATE.
  */
-long int greg2abs( date_t d )			/* "absolute date" */
+long int greg2abs( date_t d )			/* "absolute date" */ 
 {
-    return ((long) dayOfYear (d)	/* days this year */
-            + 365L * (long) (d.yy - 1)	/* + days in prior years */
-            + (long) ((d.yy - 1) / 4	/* + Julian Leap years */
-                      - (d.yy - 1) / 100	/* - century years */
-                      + (d.yy - 1) / 400));	/* + Gregorian leap years */
+    
+    long int abs=(long)dayOfYear(d);   // start with days this year
+    
+    abs+= 365L * (long) (d.yy - 1); // add days in prior years
+    
+    abs+= (long) (d.yy - 1) / 4; // add Julian leap years
+    
+    // if we are after Sep 2 1752, use the gregorian calendar
+    
+    if (((d.yy > 1752))||((d.yy==1752) && (dayOfYear(d)>246))) {
+        
+        abs-= (d.yy - 1) / 100; // subtract century leap years
+        abs+= (d.yy - 1) / 400; // add Gregorian leap years
+    }
+    else abs-=2;     // absolute dates obtained from Julian dates need to be adjusted because the Julian date 1/2/1 is the equivlent of Gregorian 12/31/1 BC
+                    //  So the number of days since Julian 12/31/1 BC is 2 greater than since Gregorian 12/31/1 BC
+        
+        
+    return abs;
 }
+
 
 /*
  * See the footnote on page 384 of ``Calendrical Calculations, Part II:
@@ -126,41 +141,87 @@ date_t abs2greg( long theDate )
 {
   int day, year, month, mlen;
   date_t d;
-  long int d0, n400, d1, n100, d2, n4, d3, n1;
+  
+  if (theDate > 639796)     // if we are after Sep. 2, 1752, use the gregorian calendar
+  {
+      
+    long int d0, n400, d1, n100, d2, n4, d3, n1;
 
-  d0 = theDate - 1L;
-  n400 = d0 / 146097L;
-  d1 = d0 % 146097L;
-  n100 = d1 / 36524L;
-  d2 = d1 % 36524L;
-  n4 = d2 / 1461L;
-  d3 = d2 % 1461L;
-  n1 = d3 / 365L;
+    d0 = theDate - 1L;    // we want to temporarily go down one day and then go back up so we don't end up with 0th day of the year
+    n400 = d0 / 146097L;  // number of 400 year cycles
+    d1 = d0 % 146097L;    // number of days remaining
+    n100 = d1 / 36524L;   // number of 100 year cycles (in remaining days)
+    d2 = d1 % 36524L;     // number of days remaining
+    n4 = d2 / 1461L;      // number of 4 year cycles  (in remaining days)
+    d3 = d2 % 1461L;      // number of days remaining
+    n1 = d3 / 365L;       // number of years
 
-  day = (int) ((d3 % 365L) + 1L);
-  year = (int) (400L * n400 + 100L * n100 + 4L * n4 + n1);
+    day = (int) ((d3 % 365L) + 1L);       // the day of the year is whatever remains + 1 because we started at theDate - 1 (so as not to have day 0 after mod 365)
+    year = (int) (400L * n400 + 100L * n100 + 4L * n4 + n1);    // the year is 400 * number of 400 year cycles etc.
 
-  if (4L == n100 || 4L == n1)
-    {
-      d.mm = 12;
-      d.dd = 31;
-      d.yy = year;
-      return d;
+    // if we have 4 100 year cycles or 4 1-year cycles, this means that we had enough days to almost complete a 400 year cycle except the leap day
+    // so it must be the last day of the year
+    if (4L == n100 || 4L == n1)
+        {
+        d.mm = 12;
+        d.dd = 31;
+        d.yy = year;
+        return d;
+        }
+    else
+        {
+        year++;
+        month = 1;
+        while ((mlen = MonthLengths[LEAP (year)][month]) < day)
+        {
+        day -= mlen;
+        month++;
+        }
+        d.yy = year;
+        d.mm = month;
+        d.dd = day;
+        return d;
+        }
+  }
+  else          // otherwise use the Julian calendar
+  {
+      theDate+=2;           // add 2 days because the Gregorian 12/31/1 BC is 2 days before the Julian 12/31/1 BC. We add 2 so we can proceed to convert using the Julian calendar
+      
+    long int d0, n4, d1, n1, d2;
+    
+    d0 = theDate - 1L;
+    n4 = d0 / 1461L;
+    d1 = d0 % 1461L;
+    n1 = d1 / 365;
+    
+    day = (int) ((d1%365)+1L);
+    year = (int) (4* n4 +n1);
+    
+    if (n1==4) {
+        d.mm = 12;
+        d.dd = 31;
+        d.yy = year;
+        return d;
     }
-  else
+    else
     {
-      year++;
-      month = 1;
-      while ((mlen = MonthLengths[LEAP (year)][month]) < day)
-	{
-	  day -= mlen;
-	  month++;
-	}
-      d.yy = year;
-      d.mm = month;
-      d.dd = day;
-      return d;
-    }
+        year++;
+        month=1;
+        while ((mlen = MonthLengths[LEAP (year)][month]) < day)
+        {
+        day -= mlen;
+        month++;
+        }
+        
+        d.yy = year;
+        d.mm = month;
+        d.dd = day;
+        
+        return d;
+        }
+  }
+  
+  
 }
 
 void incDate (date_t *dt, long n)			/* increments dt by n days */
