@@ -4,9 +4,6 @@
 #ifndef __GREG__
 #define __GREG__
 
-#define LEAP(x) (!((x) % 4) && ( ((x) % 100) || !((x) % 400)))
-#define DAYS_IN(x) (LEAP((x))?366:365)
-
 #define JAN 1
 #define FEB 2
 #define MAR 3
@@ -38,6 +35,9 @@ typedef struct dateStruct {
     int dd;	/* day of month 1,31 */
     int yy;	/* years since year 1 BCE i.e. -1 = 2 BCE */
 } date_t;
+
+bool LEAP(int x);
+int DAYS_IN(int x);
 
 int getMonthLength(int year, int month);
 int dayOfYear( date_t );
