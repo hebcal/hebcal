@@ -64,6 +64,24 @@ const char *ShortDayNames[] =
     "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"
 };
 
+bool LEAP(int x){
+        
+    if (x%400==0) return true;
+    
+    if (x>1752)
+        if (x%100==0) return false;
+        
+    if (x%4==0) return true;
+    
+    return false;
+    
+}
+        
+int DAYS_IN(int x){
+    
+    return (LEAP(x))? 366:365;
+}
+
 
 /*
  *Return the day number within the year of the date DATE.
