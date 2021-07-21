@@ -1,6 +1,11 @@
 /* Copyright(c) 1994  Danny Sadinoff
   See section COPYING for conditions for redistribution
 */
+
+#include <stdbool.h>
+
+#pragma once
+
 #ifndef __GREG__
 #define __GREG__
 
