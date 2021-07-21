@@ -791,6 +791,8 @@ void handleArgs(int argc, char *argv[])
 	   if (theDay > getMonthLength(theYear, theMonth))
                die("Sorry, there aren't that many days in %s (then)",
                    eMonths[theMonth]);
+	       else if ((theYear == 1752) && (theMonth == 9) && (theDay>2 && theDay<14))
+            die("In 1752, the British empire switched to the Gregorian calendar skipping Sep. 2-14. As a result this date doesn't exist.", "");
 	}
 
 
