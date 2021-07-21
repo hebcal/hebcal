@@ -19,7 +19,7 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-   Danny Sadinoff can be reached at 
+   Danny Sadinoff can be reached at
    danny@sadinoff.com
  */
 
@@ -125,7 +125,7 @@ static int Sat_long[] = {
     17, 18, 19, 20, D(21), 23, 24, -1, 25, D(26), D(28), 30, D(31), 33, 34, 35, 36, 37, 38, 39, 40, D(41), 43, 44, 45, 46, 47,
     48, 49, D(50) };
 
-static int Mon_short[] = { 
+static int Mon_short[] = {
     51, 52, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
     18, 19, 20, D(21), 23, 24, -1, 25, D(26), D(28), 30, D(31), 33, 34, 35, 36, 37, 38, 39, 40, D(41), 43, 44, 45, 46, 47, 48,
     49, D(50) };
@@ -198,17 +198,17 @@ void reset_sedra( int hebYr ) /* the hebrew year */
     int long_c, short_k, rosh_hashana_day, type;
     long int rosh_hashana;
     size_t theSedraArraySize = 0; /* avoid warning */;
-    
+
     long_c = long_cheshvan (hebYr);
     short_k = short_kislev (hebYr);
-    
+
     if (long_c && !short_k)
         type = COMPLETE;
     else if (!long_c && short_k)
         type = INCOMPLETE;
     else
         type = REGULAR;
-    
+
     tempDt.dd = 1;
     tempDt.mm = TISHREI;
     tempDt.yy = hebYr;
@@ -296,7 +296,7 @@ void reset_sedra( int hebYr ) /* the hebrew year */
 	    die ("improper sedra year type calculated.", "");
 	}
     }
-    
+
     sedraNumWeeks = theSedraArraySize / sizeof(int);
 }
 
@@ -307,13 +307,13 @@ void reset_sedra( int hebYr ) /* the hebrew year */
  */
 int sedra( long absDate, char *buf, int buf_len )
 {
-    
+
     int index;
     int weekNum;
-    
+
     /* find the first saturday on or after today's date */
     absDate = day_on_or_before (6, absDate + 6L);
-    
+
     weekNum = (absDate - first_saturday) / 7;
     if (weekNum >= sedraNumWeeks) {
 	int indexLast = theSedraArray[sedraNumWeeks - 1];
@@ -326,9 +326,9 @@ int sedra( long absDate, char *buf, int buf_len )
     } else {
 	index = theSedraArray[weekNum];
     }
-    
+
     *buf = '\0';                        /* reset the return buffer */
-    
+
     if (index >= 0)
         strncpy (buf, LANGUAGE2(sedrot[index]), buf_len);
     else if (-1 == index)

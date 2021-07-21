@@ -14,7 +14,7 @@ char * progname = "sanity-check.c";
 int reportIt(long d , date_t hebrew)
 {
     date_t gregdate = abs2greg (d);
-    
+
     printf ("%ld : [hm=%d hd=%d hy=%d], [gm=%d gd=%d gy=%d]\n",
 	    d,
 	    hebrew.mm,hebrew.dd,hebrew.yy,
@@ -27,15 +27,15 @@ int main(int argc, char*argv[])
 {
     long interval = 100000;
     long intervalCount = 0;
-    
+
     long start = 0L;        	/* 1 CE */
     long finish = 2595363L;	/* ~7060 CE */
-    
+
     int retVal =0;
     long d;
-    
+
     setlinebuf(stdout);
-    
+
     if( argc > 1 )
     {
 	if( 3 != argc )
@@ -46,7 +46,7 @@ int main(int argc, char*argv[])
 	sscanf(argv[1],"%ld",&start);
 	sscanf(argv[2],"%ld",&finish);
     }
-    
+
     for (d =start ; d < finish; d++)
     {
 	if( 0 == intervalCount-- )
@@ -57,8 +57,8 @@ int main(int argc, char*argv[])
 
         {                       /* reduce scope for hebrew */
             date_t hebrew = abs2hebrew(d);
-            if( hebrew.dd < 0 
-                || hebrew.mm < 0 
+            if( hebrew.dd < 0
+                || hebrew.mm < 0
                 || hebrew.yy < 0  )
                 retVal += reportIt(d,hebrew);
         }

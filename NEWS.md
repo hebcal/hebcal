@@ -1,5 +1,8 @@
 Changes in 4.25
 * Updated timezonedb to version 2021.1 (2021a)
+* Add German translations (`--lang=de`), courtesy Oliver Maor (#217, #218)
+* Add 10 German/Austrian cities: Düsseldorf, Frankfurt, Munich, Vienna, ... (#220)
+* Daf Yomi: display correct daf for dates prior to 6/24/1975 (#214)
 
 Changes in 4.24
 * Display Hebrew Date in Hebrew numerals for `--lang=he` or `-8` (#206)
@@ -56,7 +59,7 @@ Changes in 4.14
 * FIXED missing range check on MonthLengths array, courtesy ynonp  (#157)
 
 Changes in 4.13
-* Correct candle-lighting times for for fractional timezones such as 
+* Correct candle-lighting times for for fractional timezones such as
   Asia/Kolkata, America/St_Johns, Asia/Kathmandu (#136)
 * Update timezone database to 2017.2 (2017b)
 * Updated Finnish translations

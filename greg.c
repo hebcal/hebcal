@@ -19,7 +19,7 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-   Danny Sadinoff can be reached at 
+   Danny Sadinoff can be reached at
    danny@sadinoff.com
  */
 
@@ -89,7 +89,7 @@ int dayOfYear( date_t d )
  * The number of days elapsed between the Gregorian date 12/31/1 BC and DATE.
  * The Gregorian date Sunday, December 31, 1 BC is imaginary.
  */
-long int greg2abs( date_t d )			/* "absolute date" */ 
+long int greg2abs( date_t d )			/* "absolute date" */
 {
     return ((long) dayOfYear (d)	/* days this year */
             + 365L * (long) (d.yy - 1)	/* + days in prior years */
@@ -166,15 +166,15 @@ void setDate ( date_t *d )
    pointer to the string.
  */
 
-/*    
+/*
 FIX: removing these decls, but need to start doing compilation platofrm checks to ensure that these aren't necessary.
 time_t time ();
     char *ctime( const time_t * );
-*/  
+*/
     time_t secs = time (NULL);
     char *timestr = ctime (&secs);
 
-/* portability has driven me to truly shameful code.  
+/* portability has driven me to truly shameful code.
    please forgive this.
  */
     sscanf (timestr + 20, "%d", &d->yy);

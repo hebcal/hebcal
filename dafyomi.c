@@ -79,7 +79,7 @@ void hebcal_dafyomi( date_t *greg_day  )
    tmp_date.yy = 1975;
    nsday = greg2abs(tmp_date);
    cday = greg2abs(*greg_day);
-   
+
    /*  No cycle, new cycle, old cycle */
    if (cday < osday)
       return; /* daf yomi hadn't started yet */

@@ -1,4 +1,4 @@
-hebcal [![Build Status](https://travis-ci.org/hebcal/hebcal.svg?branch=master)](https://travis-ci.org/hebcal/hebcal)
+hebcal [![Build Status](https://travis-ci.com/hebcal/hebcal.svg?branch=master)](https://travis-ci.com/hebcal/hebcal)
 ======
 
 A perpetual Jewish Calendar
@@ -68,7 +68,7 @@ Option | Description
    -g, --iso-8601 | Output ISO 8601 dates -- YYYY-MM-DD (this overrides -y)
    -h, --no-holidays | Suppress default holidays.
    -i, --israeli | Use Israeli sedra scheme.
-   --lang LANG | Use ISO 639-1 LANG code (one of `ashkenazi`, `ashkenazi_litvish`, `ashkenazi_poylish`, `ashkenazi_standard`, `es`, `fi`, `fr`, `he`, `hu`, `pl`, `ru`)
+   --lang LANG | Use ISO 639-1 LANG code (one of `ashkenazi`, `ashkenazi_litvish`, `ashkenazi_poylish`, `ashkenazi_standard`, `de`, `es`, `fi`, `fr`, `he`, `hu`, `pl`, `ru`)
    -M, --molad | Print the molad on shabbat mevorchim.
    -o, --omer | Add days of the omer.
    -O, --sunrise-and-sunset | Output sunrise and sunset times every day.
@@ -95,7 +95,7 @@ Option | Description
 
 ## Candle-lighting times
 
-Hebcal’s candlelighting times are only approximations. If you ever have any doubts about its times, consult your local halachic authority. If you enter geographic coordinates above the artic circle or antarctic circle, the times are guaranteed to be wrong.
+Hebcal’s candlelighting times are only approximations. If you ever have any doubts about its times, consult your local halachic authority. If you enter geographic coordinates above the arctic circle or antarctic circle, the times are guaranteed to be wrong.
 
 Hebcal contains a small database of cities with their associated geographic information and time-zone information. The geographic and time information necessary to calculate sundown times can come to hebcal any of three ways:
 
@@ -166,7 +166,7 @@ Some combinations of options produce weird results, e.g.
   `hebcal -dH 5744`
 This comes into play when you use the *HEBCAL_OPTS* environment variable.
 
-The sunup/sundown routines aren’t accurate enough. If you enter geographic coordinates above the artic circle or antarctic circle, the times are guaranteed to be wrong.
+The sunup/sundown routines aren’t accurate enough. If you enter geographic coordinates above the arctic circle or antarctic circle, the times are guaranteed to be wrong.
 
 Hebcal only translates between the Gregorian calendar and the Jewish calendar. This means that the results will be at least partly useless where and when the Gregorian calendar was not used, e.g. before the 1752 in Britain and before circa 1918 in Russia. See ["Daylight saving time" on Wikipedia](https://en.wikipedia.org/wiki/Daylight_saving_time) for a splendid chart depicting when the changeover from the Julian to the Gregorian calendars occurred in various places.
 
@@ -181,11 +181,12 @@ To build hebcal from the source repository, you'll need a few more tools than ar
 * GNU m4 version 1.4.3 or later
 * GNU make v3.79 or later
 * Perl v5.0 or later
+* gperf
 
 Once you have those, you can prepare the build environment as follows:
 
 ```
-aclocal && autoconf && automake --foreign --add-missing && ./configure && make
+autoreconf --install && ./configure && make
 ```
 
 If you would like customize the program for your city, pass additional options to `configure` above.

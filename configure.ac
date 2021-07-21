@@ -2,9 +2,8 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([hebcal],[4.24],[hebcal-bugs@sadinoff.com])
-AM_MAINTAINER_MODE([disable])
-AM_INIT_AUTOMAKE([foreign no-dependencies no-installinfo -Wall])
+AC_INIT([hebcal],[4.25],[https://github.com/hebcal/hebcal/issues],[],[https://github.com/hebcal/hebcal])
+AM_INIT_AUTOMAKE([foreign no-installinfo -Wall])
 AC_CONFIG_SRCDIR([hebcal.c])
 AC_CONFIG_HEADERS([config.h])
 
@@ -25,7 +24,6 @@ AC_SEARCH_LIBS([acos], [m])
 AC_SEARCH_LIBS([fabs], [m])
 
 # Checks for header files.
-AC_HEADER_STDC
 AC_CHECK_HEADERS([stdlib.h string.h sys/time.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
