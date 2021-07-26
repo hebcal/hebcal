@@ -220,7 +220,8 @@ date_t abs2hebrew( long d )
            d >= hebrew2abs (hebdate))
         year++;
 
-    if( year >= 4635 && year < 10666  )
+     if( year > GREG_ADJUSTMENT_YEAR+3761 && year < 10666)       // if we are after the gregorian adjustment year, optimize the search by starting at a month later in the year. We map to this month from a gregorian month
+                                                                // that occurs around the same time of the year. This works so long as the hebrew month always comes before or contemporaneous with the gregorian one (so we won't be // too late in the hebrew year)
     {
         /* optimize search */
         month = mmap[gregdate.mm - 1];
