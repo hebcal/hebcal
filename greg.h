@@ -30,6 +30,11 @@
 #define FRI 5
 #define SAT 6
 
+#define GREG_ADJUSTMENT_YEAR  1752              // we are setting the year of the gregorian adjustment to 1752
+#define GREG_ADJUSTMENT_DAY_OF_YEAR  246        // September 2, 1752 was the 246th day of that year
+#define GREG_ADJUSTMENT_ABSOLUTE_DATE   639796  // Sep 2, 1752 was day 639796th day when counting the number of days since the imaginary gregorian
+                                                // date 12/31/1 (that day itself being 0) or the actual Julian date 1/2/1 (which are equivalent)
+
 extern const char * eMonths[];
 extern int MonthLengths[][13] ;
 extern const char * DayNames[] ;
