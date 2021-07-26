@@ -68,7 +68,7 @@ bool LEAP(int x){
         
     if (x%400==0) return true;
     
-    if (x>1752)
+   if (x > GREG_ADJUSTMENT_YEAR)
         if (x%100==0) return false;
         
     if (x%4==0) return true;
@@ -116,9 +116,9 @@ long int greg2abs( date_t d )			/* "absolute date" */
     
     abs+= (long) (d.yy - 1) / 4; // add Julian leap years
     
-    // if we are after Sep 2 1752, use the gregorian calendar
+  // if we are after GREG_ADJUSMENT_YEAR or in GREG_ADJUSMENT_YEAR but after GREG_ADJUSTMENT_DAY_OF_YEAR, use the gregorian calendar
     
-    if (((d.yy > 1752))||((d.yy==1752) && (dayOfYear(d)>246))) {
+    if (((d.yy > GREG_ADJUSTMENT_YEAR))||((d.yy == GREG_ADJUSTMENT_YEAR) && (dayOfYear(d) > GREG_ADJUSTMENT_DAY_OF_YEAR))) {
         
         abs-= (d.yy - 1) / 100; // subtract century leap years
         abs+= (d.yy - 1) / 400; // add Gregorian leap years
@@ -142,7 +142,7 @@ date_t abs2greg( long theDate )
   int day, year, month, mlen;
   date_t d;
   
-  if (theDate > 639796)     // if we are after Sep. 2, 1752, use the gregorian calendar
+  if (theDate > GREG_ADJUSTMENT_ABSOLUTE_DATE)     // if we are after the gregorian adjusment date, use the gregorian calendar
   {
       
     long int d0, n400, d1, n100, d2, n4, d3, n1;
