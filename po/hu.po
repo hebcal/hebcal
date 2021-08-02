@@ -648,6 +648,9 @@ msgstr "Táánit Eszter"
 msgid "Tish'a B'Av"
 msgstr "Tisá böÁv"
 
+msgid "Tish'a B'Av (observed)"
+msgstr "Tisá böÁv (megfigyelt)"
+
 msgid "Tu B'Av"
 msgstr "Tu böÁv"
 
@@ -680,3 +683,12 @@ msgstr "Jom Jerusáláim"
 
 msgid "Yom HaAliyah"
 msgstr "Jom háAlija"
+
+msgid "min"
+msgstr "perc"
+
+msgid "Fast begins"
+msgstr "A böjt kezdődik"
+
+msgid "Fast ends"
+msgstr "A böjt végét"
