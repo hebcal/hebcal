@@ -305,6 +305,12 @@ holinput_t inp_holidays[] =
       NULL
    },
    {
+      {ELUL, 1, IGNORE_YEAR},
+      "Rosh Hashana LaBehemot",
+      0,
+      NULL
+   },
+   {
       {ELUL, 29, IGNORE_YEAR},
       "Erev Rosh Hashana",
       LIGHT_CANDLES,
