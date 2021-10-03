@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Danny Sadinoff
+# Copyright (C) 2016 Danny Sadinoff
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -8,12 +8,12 @@ msgstr ""
 "Project-Id-Version: hebcal 4.2\n"
 "Report-Msgid-Bugs-To: hebcal-bugs@sadinoff.com\n"
 "POT-Creation-Date: 2015-12-30 14:54-0500\n"
-"PO-Revision-Date: 2020-05-03 11:18-0800\n"
-"Language: en_CA@ashkenazi\n"
+"PO-Revision-Date: 2021-10-03 13:52-0700\n"
+"Language: en_US@ashkenazi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Last-Translator: \n"
+"Last-Translator: Chaim Leib Halbert <chaim.leib.halbert@gmail.com>\n"
 "Language-Team: \n"
 "X-Generator: Poedit 1.8.6\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -26,9 +26,45 @@ msgstr "Berachos"
 msgid "Shabbat"
 msgstr "Shabbos"
 
+#: ../dafyomi.c:28
+msgid "Eruvin"
+msgstr "Eiruvin"
+
+#: ../dafyomi.c:29
+msgid "Pesachim"
+msgstr "Pesachim"
+
+#: ../dafyomi.c:30
+msgid "Shekalim"
+msgstr "Shekalim"
+
+#: ../dafyomi.c:31
+msgid "Yoma"
+msgstr "Yoma"
+
+#: ../dafyomi.c:32
+msgid "Sukkah"
+msgstr "Sukkah"
+
+#: ../dafyomi.c:33
+msgid "Beitzah"
+msgstr "Beitzah"
+
 #: ../dafyomi.c:35
 msgid "Taanit"
-msgstr "Taanis"
+msgstr "Ta'anis"
+
+#: ../dafyomi.c:36
+msgid "Megillah"
+msgstr "Megillah"
+
+#: ../dafyomi.c:37
+msgid "Moed Katan"
+msgstr "Moed Katan"
+
+#: ../dafyomi.c:38
+msgid "Chagigah"
+msgstr "Chagigah"
 
 #: ../dafyomi.c:39
 msgid "Yevamot"
@@ -38,9 +74,41 @@ msgstr "Yevamos"
 msgid "Ketubot"
 msgstr "Kesubos"
 
+#: ../dafyomi.c:41
+msgid "Nedarim"
+msgstr "Nedarim"
+
+#: ../dafyomi.c:42
+msgid "Nazir"
+msgstr "Nazir"
+
+#: ../dafyomi.c:43
+msgid "Sotah"
+msgstr "Sotah"
+
+#: ../dafyomi.c:44
+msgid "Gitin"
+msgstr "Gittin"
+
+#: ../dafyomi.c:45
+msgid "Kiddushin"
+msgstr "Kiddushin"
+
+#: ../dafyomi.c:46
+msgid "Baba Kamma"
+msgstr "Bava Kama"
+
+#: ../dafyomi.c:47
+msgid "Baba Metzia"
+msgstr "Bava Metzia"
+
 #: ../dafyomi.c:48
 msgid "Baba Batra"
-msgstr "Baba Basra"
+msgstr "Bava Basra"
+
+#: ../dafyomi.c:49
+msgid "Sanhedrin"
+msgstr "Sanhedrin"
 
 #: ../dafyomi.c:50
 msgid "Makkot"
@@ -50,47 +118,120 @@ msgstr "Makkos"
 msgid "Shevuot"
 msgstr "Shevuos"
 
+#: ../dafyomi.c:52
+msgid "Avodah Zarah"
+msgstr "Avodah Zarah"
+
 #: ../dafyomi.c:53
 msgid "Horayot"
 msgstr "Horayos"
+
+#: ../dafyomi.c:54
+msgid "Zevachim"
+msgstr "Zevachim"
 
 #: ../dafyomi.c:55
 msgid "Menachot"
 msgstr "Menachos"
 
+#: ../dafyomi.c:56
+msgid "Chullin"
+msgstr "Chullin"
+
 #: ../dafyomi.c:57
 msgid "Bechorot"
 msgstr "Bechoros"
+
+#: ../dafyomi.c:58
+msgid "Arachin"
+msgstr "Arachin"
+
+#: ../dafyomi.c:59
+msgid "Temurah"
+msgstr "Temurah"
 
 #: ../dafyomi.c:60
 msgid "Keritot"
 msgstr "Kerisos"
 
+#: ../dafyomi.c:61
+msgid "Meilah"
+msgstr "Meilah"
+
+#: ../dafyomi.c:62
+msgid "Kinnim"
+msgstr "Kinnim"
+
+#: ../dafyomi.c:63
+msgid "Tamid"
+msgstr "Tamid"
+
 #: ../dafyomi.c:64
 msgid "Midot"
-msgstr "Midos"
+msgstr "Middos"
 
+#: ../dafyomi.c:65
+msgid "Niddah"
+msgstr "Niddah"
+
+#: ../dafyomi.c:141
+#, c-format
+msgid "Daf Yomi: %s %d"
+msgstr "Daf Yomi: %s %d"
+
+msgid "Daf Yomi"
+msgstr "Daf Yomi"
+
+msgid "Parashat"
+msgstr "Parshas"
 
 msgid "Achrei Mot"
-msgstr "Achrei Mos"
+msgstr "Acharei Mos"
+
+msgid "Balak"
+msgstr "Balak"
+
+msgid "Bamidbar"
+msgstr "Bamidbar"
 
 msgid "Bechukotai"
 msgstr "Bechukosai"
 
 msgid "Beha'alotcha"
-msgstr "Beha'aloscha"
+msgstr "Beha'alosecha"
+
+msgid "Behar"
+msgstr "Behar"
 
 msgid "Bereshit"
-msgstr "Bereshis"
+msgstr "Bereishis"
+
+msgid "Beshalach"
+msgstr "Beshalach"
+
+msgid "Bo"
+msgstr "Bo"
+
+msgid "Chayei Sara"
+msgstr "Chayei Sarah"
 
 msgid "Chukat"
 msgstr "Chukas"
 
-msgid "Erev Shavuot"
-msgstr "Erev Shavuos"
+msgid "Devarim"
+msgstr "Devarim"
 
-msgid "Erev Sukkot"
-msgstr "Erev Sukkos"
+msgid "Eikev"
+msgstr "Eikev"
+
+msgid "Emor"
+msgstr "Emor"
+
+msgid "Ha'Azinu"
+msgstr "Ha'azinu"
+
+msgid "Kedoshim"
+msgstr "Kedoshim"
 
 msgid "Ki Tavo"
 msgstr "Ki Savo"
@@ -101,14 +242,275 @@ msgstr "Ki Seitzei"
 msgid "Ki Tisa"
 msgstr "Ki Sisa"
 
+msgid "Korach"
+msgstr "Korach"
+
+msgid "Lech-Lecha"
+msgstr "Lech Lecha"
+
+msgid "Masei"
+msgstr "Masei"
+
 msgid "Matot"
 msgstr "Matos"
 
-msgid "Purim Katan"
-msgstr "Purim Koton"
+msgid "Metzora"
+msgstr "Metzora"
+
+msgid "Miketz"
+msgstr "Mikeitz"
+
+msgid "Mishpatim"
+msgstr "Mishpatim"
+
+msgid "Nasso"
+msgstr "Nasso"
+
+msgid "Nitzavim"
+msgstr "Nitzavim"
+
+msgid "Noach"
+msgstr "Noach"
+
+msgid "Pekudei"
+msgstr "Pekudei"
+
+msgid "Pinchas"
+msgstr "Pinchas"
+
+msgid "Re'eh"
+msgstr "Re'eh"
+
+msgid "Sh'lach"
+msgstr "Shelach"
+
+msgid "Shemot"
+msgstr "Shemos"
+
+msgid "Shmini"
+msgstr "Shemini"
+
+msgid "Shoftim"
+msgstr "Shoftim"
 
 msgid "Tazria"
-msgstr "Sazria"
+msgstr "Tazria"
+
+msgid "Terumah"
+msgstr "Terumah"
+
+msgid "Tetzaveh"
+msgstr "Tetzaveh"
+
+msgid "Toldot"
+msgstr "Toldos"
+
+msgid "Tzav"
+msgstr "Tzav"
+
+msgid "Vaera"
+msgstr "Vaeira"
+
+msgid "Vaetchanan"
+msgstr "Va'eschanan"
+
+msgid "Vayakhel"
+msgstr "Vayakhel"
+
+msgid "Vayechi"
+msgstr "Vayechi"
+
+msgid "Vayeilech"
+msgstr "Vayeilech"
+
+msgid "Vayera"
+msgstr "Vayeira"
+
+msgid "Vayeshev"
+msgstr "Vayeishev"
+
+msgid "Vayetzei"
+msgstr "Vayeitzei"
+
+msgid "Vayigash"
+msgstr "Vayigash"
+
+msgid "Vayikra"
+msgstr "Vayikra"
+
+msgid "Vayishlach"
+msgstr "Vayishlach"
+
+msgid "Vezot Haberakhah"
+msgstr "Vezos Habrachah"
+
+msgid "Yitro"
+msgstr "Yisro"
+
+msgid "Asara B'Tevet"
+msgstr "Asara B'Teives"
+
+msgid "Candle lighting"
+msgstr "Licht bentshen"
+
+msgid "Chanukah"
+msgstr "Chanukah"
+
+msgid "Chanukah: 1 Candle"
+msgstr "Chanukah: 1 Candle"
+
+msgid "Chanukah: 2 Candles"
+msgstr "Chanukah: 2 Candles"
+
+msgid "Chanukah: 3 Candles"
+msgstr "Chanukah: 3 Candles"
+
+msgid "Chanukah: 4 Candles"
+msgstr "Chanukah: 4 Candles"
+
+msgid "Chanukah: 5 Candles"
+msgstr "Chanukah: 5 Candles"
+
+msgid "Chanukah: 6 Candles"
+msgstr "Chanukah: 6 Candles"
+
+msgid "Chanukah: 7 Candles"
+msgstr "Chanukah: 7 Candles"
+
+msgid "Chanukah: 8 Candles"
+msgstr "Chanukah: 8 Candles"
+
+msgid "Chanukah: 8th Day"
+msgstr "Chanukah: 8th Day"
+
+msgid "Days of the Omer"
+msgstr "Omer"
+
+msgid "Erev Pesach"
+msgstr "Erev Pesach"
+
+msgid "Erev Purim"
+msgstr "Erev Purim"
+
+msgid "Erev Rosh Hashana"
+msgstr "Erev Rosh Hashanah"
+
+msgid "Erev Shavuot"
+msgstr "Erev Shavuos"
+
+msgid "Erev Simchat Torah"
+msgstr "Erev Simchas Torah"
+
+msgid "Erev Sukkot"
+msgstr "Erev Sukkos"
+
+msgid "Erev Tish'a B'Av"
+msgstr "Erev Tisha B'Av"
+
+msgid "Erev Yom Kippur"
+msgstr "Erev Yom Kippur"
+
+msgid "Havdalah"
+msgstr "Havdalah"
+
+msgid "Lag BaOmer"
+msgstr "Lag BaOmer"
+
+msgid "Leil Selichot"
+msgstr "Leil Selichos"
+
+msgid "Pesach"
+msgstr "Pesach"
+
+msgid "Pesach I"
+msgstr "Pesach I"
+
+msgid "Pesach II"
+msgstr "Pesach II"
+
+msgid "Pesach II (CH''M)"
+msgstr "Pesach II (CH\"M)"
+
+msgid "Pesach III (CH''M)"
+msgstr "Pesach III (CH\"M)"
+
+msgid "Pesach IV (CH''M)"
+msgstr "Pesach IV (CH\"M)"
+
+msgid "Pesach Sheni"
+msgstr "Pesach Sheini"
+
+msgid "Pesach V (CH''M)"
+msgstr "Pesach V (CH\"M)"
+
+msgid "Pesach VI (CH''M)"
+msgstr "Pesach VI (CH\"M)"
+
+msgid "Pesach VII"
+msgstr "Pesach VII"
+
+msgid "Pesach VIII"
+msgstr "Pesach VIII"
+
+msgid "Purim"
+msgstr "Purim"
+
+msgid "Purim Katan"
+msgstr "Purim Katan"
+
+msgid "Rosh Chodesh %s"
+msgstr "Rosh Chodesh %s"
+
+msgid "Rosh Chodesh"
+msgstr "Rosh Chodesh"
+
+msgid "Adar"
+msgstr "Adar"
+
+msgid "Adar I"
+msgstr "Adar I"
+
+msgid "Adar II"
+msgstr "Adar II"
+
+msgid "Av"
+msgstr "Av"
+
+msgid "Cheshvan"
+msgstr "Cheshvan"
+
+msgid "Elul"
+msgstr "Elul"
+
+msgid "Iyyar"
+msgstr "Iyar"
+
+msgid "Kislev"
+msgstr "Kislev"
+
+msgid "Nisan"
+msgstr "Nisan"
+
+msgid "Sh'vat"
+msgstr "Shevat"
+
+msgid "Sivan"
+msgstr "Sivan"
+
+msgid "Tamuz"
+msgstr "Tammuz"
+
+msgid "Tevet"
+msgstr "Teves"
+
+msgid "Rosh Hashana"
+msgstr "Rosh Hashanah"
+
+msgid "Rosh Hashana I"
+msgstr "Rosh Hashanah I"
+
+msgid "Rosh Hashana II"
+msgstr "Rosh Hashanah II"
 
 msgid "Shabbat Chazon"
 msgstr "Shabbos Chazon"
@@ -119,14 +521,26 @@ msgstr "Shabbos HaChodesh"
 msgid "Shabbat HaGadol"
 msgstr "Shabbos HaGadol"
 
+msgid "Shabbat Machar Chodesh"
+msgstr "Shabbos Machor Chodesh"
+
+msgid "Shabbat Mevarchim Chodesh"
+msgstr "Shabbos Mevarchim Chodesh"
+
 msgid "Shabbat Nachamu"
 msgstr "Shabbos Nachamu"
 
 msgid "Shabbat Parah"
 msgstr "Shabbos Parah"
 
+msgid "Shabbat Rosh Chodesh"
+msgstr "Shabbos Rosh Chodesh"
+
 msgid "Shabbat Shekalim"
 msgstr "Shabbos Shekalim"
+
+msgid "Shabbat Shirah"
+msgstr "Shabbos Shirah"
 
 msgid "Shabbat Shuva"
 msgstr "Shabbos Shuvah"
@@ -143,11 +557,14 @@ msgstr "Shavuos I"
 msgid "Shavuot II"
 msgstr "Shavuos II"
 
-msgid "Shemot"
-msgstr "Shemos"
-
 msgid "Shmini Atzeret"
-msgstr "Shmini Atzeres"
+msgstr "Shemini Atzeres"
+
+msgid "Shushan Purim"
+msgstr "Shushan Purim"
+
+msgid "Sigd"
+msgstr "Sigd"
 
 msgid "Simchat Torah"
 msgstr "Simchas Torah"
@@ -162,22 +579,22 @@ msgid "Sukkot II"
 msgstr "Sukkos II"
 
 msgid "Sukkot II (CH''M)"
-msgstr "Sukkos II (CH''M)"
+msgstr "Sukkos II (CH\"M)"
 
 msgid "Sukkot III (CH''M)"
-msgstr "Sukkos III (CH''M)"
+msgstr "Sukkos III (CH\"M)"
 
 msgid "Sukkot IV (CH''M)"
-msgstr "Sukkos IV (CH''M)"
+msgstr "Sukkos IV (CH\"M)"
 
 msgid "Sukkot V (CH''M)"
-msgstr "Sukkos V (CH''M)"
+msgstr "Sukkos V (CH\"M)"
 
 msgid "Sukkot VI (CH''M)"
-msgstr "Sukkos VI (CH''M)"
+msgstr "Sukkos VI (CH\"M)"
 
 msgid "Sukkot VII (Hoshana Raba)"
-msgstr "Sukkos VII (Hoshana Raba)"
+msgstr "Sukkos VII (Hoshanah Rabbah)"
 
 msgid "Ta'anit Bechorot"
 msgstr "Ta'anis Bechoros"
@@ -185,23 +602,41 @@ msgstr "Ta'anis Bechoros"
 msgid "Ta'anit Esther"
 msgstr "Ta'anis Esther"
 
-msgid "Toldot"
-msgstr "Toldos"
+msgid "Tish'a B'Av"
+msgstr "Tisha B'Av"
 
-msgid "Vaetchanan"
-msgstr "Vaeschanan"
+msgid "Tish'a B'Av (observed)"
+msgstr "Tisha B'Av (observed)"
 
-msgid "Yitro"
-msgstr "Yisro"
+msgid "Tu B'Av"
+msgstr "Tu B'Av"
 
-msgid "Parashat"
-msgstr "Parshas"
+msgid "Tu BiShvat"
+msgstr "Tu B'Shevat"
 
-msgid "Leil Selichot"
-msgstr "Leil Selichos"
+msgid "Tu B'Shvat"
+msgstr "Tu B'Shevat"
 
-msgid "Shabbat Mevarchim Chodesh"
-msgstr "Shabbos Mevorchim Chodesh"
+msgid "Tzom Gedaliah"
+msgstr "Tzom Gedaliah"
 
-msgid "Shabbat Shirah"
-msgstr "Shabbos Shirah"
+msgid "Tzom Tammuz"
+msgstr "Tzom Tammuz"
+
+msgid "Yom HaAtzma'ut"
+msgstr "Yom HaAtzma'ut"
+
+msgid "Yom HaShoah"
+msgstr "Yom HaShoah"
+
+msgid "Yom HaZikaron"
+msgstr "Yom HaZikaron"
+
+msgid "Yom Kippur"
+msgstr "Yom Kippur"
+
+msgid "Yom Yerushalayim"
+msgstr "Yom Yerushalayim"
+
+msgid "Yom HaAliyah"
+msgstr "Yom HaAliyah"
