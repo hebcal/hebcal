@@ -12,6 +12,32 @@ typedef struct city
  *      while read -r f; do
  *        [ -f "/usr/share/zoneinfo/$f" ] || echo "$f"
  *      done
+ *
+ * Display coords not matching sign with:
+ *    grep -o '{".*,\r\?$' cities.h |
+ *      gawk -F', ' '{ if (($4 * $5 < 0) || ($2 * $3 < 0)) { print $0 } }'
+ *
+ * Manually verify names matching coords (rarely wrong):
+ *    sed -n -e 's/^.*{"\(.*\)},.*$/\1/' -e 's/"//g' -e '/^[A-Z]/p' cities.h |
+ *      gawk -F', ' '{
+ *        lat=$2 + ($3 / 60.0)
+ *        lon=-$4 - ($5 / 60.0)
+ *        printf("\n%s\t%0.2f,%0.2f\n", $1, lat, lon)
+ *        system(sprintf("curl -Ls https://www.google.com/maps/place/%0.2f,%0.2f | \
+ *          sed -E -n '\''s/^.*<meta content=\"([^\"]*)\" itemprop=\"description\">.*$/\\1/p'\''",
+ *          lat, lon))
+ *        }'
+ *
+ * Manually check coord name and time zone (frequently wrong):
+ *    sed -n -e 's/^.*{"\(.*\)},.*$/\1/' -e 's/"//g' -e '/^[A-Z]/p' cities.h |
+ *      awk '{
+ *        FS=", "
+ *        printf "\n"
+ *        print $0
+ *        system(sprintf("curl -s \"https://api.teleport.org/api/locations/%0.2d,%0.2d/?embed=location:nearest-cities/location:nearest-city/city:timezone\" | \
+ *          jq -r \".. | (.full_name? // .iana_name?) | select (. != null)\"",
+ *          $2 + ($3 / 60.0), -$4 - ($5 / 60.0)))
+ *      }'
  */
 city_t cities[] =
 {
@@ -29,7 +55,7 @@ city_t cities[] =
     {"Antwerp", 51, 13, -4, -24, "Europe/Brussels"},
     {"Arad", 31, 15, -35, -13, "Asia/Jerusalem"},
     {"Arlington", 32, 42, 97, 7, "America/Chicago"},
-    {"Ashdod", 31, 48, -34, -38, "Asia/Jerusalem"},
+    {"Ashdod", 31, 48, -34, -39, "Asia/Jerusalem"},
     {"Ashkelon", 31, 40, -34, -34, "Asia/Jerusalem"},
     {"Athens", 37, 59, -23, -43, "Europe/Athens"},
     {"Atlanta", 33, 45, 84, 23, "America/New_York"},
@@ -42,13 +68,14 @@ city_t cities[] =
     {"Baltimore", 39, 17, 76, 36, "America/New_York"},
     {"Bangkok", 13, 45, -100, -30, "Asia/Bangkok"},
     {"Barcelona", 41, 23, -2, -10, "Europe/Madrid"},
-    {"Basle", 47, 34, -7, -35, "Europe/Zurich"},
+    {"Basel", 47, 34, -7, -35, "Europe/Zurich"},
     {"Bat Yam", 32, 1, -34, -45, "Asia/Jerusalem"},
     {"Baton Rouge", 30, 27, 91, 11, "America/Chicago"},
+    {"Be'er Sheva", 31, 15, -34, -47, "Asia/Jerusalem"},
     {"Beer Sheva", 31, 15, -34, -47, "Asia/Jerusalem"},
     {"Beersheba", 31, 15, -34, -47, "Asia/Jerusalem"},
     {"Beijing", 39, 54, -116, -24, "Asia/Shanghai"},
-    {"Beit She'an", 32, 30, -35, 30, "Asia/Jerusalem"},
+    {"Beit She'an", 32, 30, -35, -30, "Asia/Jerusalem"},
     {"Berlin", 52, 31, -13, -24, "Europe/Berlin"},
     {"Birmingham AL", 33, 31, 86, 48, "America/Chicago"},
     {"Birmingham", 52, 29, 1, 54, "Europe/London"},
@@ -56,12 +83,13 @@ city_t cities[] =
     {"Bnei Brak", 32, 5, -34, -50, "Asia/Jerusalem"},
     {"Bogota", 4, 36, 74, 5, "America/Bogota"},
     {"Boise", 43, 37, 116, 12, "America/Boise"},
+    {"Bolzano", 46, 30, -11, -21, "Europe/Rome"},
     {"Boston", 42, 20, 71, 4, "America/New_York"},
     {"Bozen", 46, 30, -11, -21, "Europe/Rome"},
     {"Brisbane", -27, -28, -153, -2, "Australia/Brisbane"},
     {"Brussels", 50, 51, -4, -21, "Europe/Brussels"},
     {"Bucharest", 44, 26, -26, -6, "Europe/Bucharest"},
-    {"Budapest", 47, 30, -19, -23, "Europe/Budapest"},
+    {"Budapest", 47, 30, -19, -3, "Europe/Budapest"},
     {"Buenos Aires", -34, -37, 58, 24, "America/Argentina/Buenos_Aires"},
     {"Buffalo", 42, 53, 78, 52, "America/New_York"},
     {"Burlington", 44, 29, 73, 13, "America/New_York"},
@@ -89,8 +117,8 @@ city_t cities[] =
     {"Dallas", 32, 47, 96, 48, "America/Chicago"},
     {"Delhi", 28, 37, -77, -14, "Asia/Kolkata"},
     {"Denver", 39, 44, 104, 59, "America/Denver"},
-    {"Des Moines", 41,35, 93, 37, "America/Chicago"},
-    {"Detroit", 42, 20, 83, 2, "America/New_York"},
+    {"Des Moines", 41, 35, 93, 37, "America/Chicago"},
+    {"Detroit", 42, 20, 83, 3, "America/New_York"},
     {"Dhaka", 23, 46, -90, -23, "Asia/Dhaka"},
     {"Dimona", 31, 4, -35, -2, "Asia/Jerusalem"},
     {"Dnipro", 48, 27, -35, -2, "Europe/Kiev"},
@@ -102,7 +130,7 @@ city_t cities[] =
     {"Dundee", 56, 28, 2, 58, "Europe/London"},
     {"Durban", -29, -51, -31, -2, "Africa/Johannesburg"},
     {"Durham", 35, 59, 78, 54, "America/New_York"},
-    {"Dusseldorf", 51, 14, -6, -46, "Europe/Berlin"},
+    {"Dusseldorf", 51, 14, -6, -47, "Europe/Berlin"},
     {"Edmonton", 53, 33, 113, 28, "America/Edmonton"},
     {"Eilat", 29, 33, -34, -57, "Asia/Jerusalem"},
     {"El Paso", 31, 46, 106, 29, "America/Denver"},
@@ -173,7 +201,7 @@ city_t cities[] =
     {"Lexington", 38, 2, 84, 30, "America/New_York"},
     {"Lima", -12, -3, 77, 2, "America/Lima"},
     {"Lincoln", 40, 49, 96, 41, "America/Chicago"},
-    {"Livingston", 40, 17, 74, 18, "America/New_York"},
+    {"Livingston", 40, 47, 74, 20, "America/New_York"},
     {"Llandudno", 53, 20, 3, 50, "Europe/London"},
     {"Lod", 31, 57, -34, -53, "Asia/Jerusalem"},
     {"London ON", 42, 58, 81, 14, "America/Toronto"},
@@ -206,13 +234,13 @@ city_t cities[] =
     {"Montreal", 45, 30, 73, 36, "America/Montreal"},
     {"Moscow", 55, 45, -37, -42, "Europe/Moscow"},
     {"Mumbai", 19, 4, -72, -53, "Asia/Kolkata"},
-    {"Munich", 48, 14, -11, -35, "Europe/Berlin"},
+    {"Munich", 48, 8, -11, -34, "Europe/Berlin"},
     {"Nahariya", 33, 0, -35, -6, "Asia/Jerusalem"},
     {"Nashville", 36, 10, 86, 47, "America/Chicago"},
     {"Netanya", 32, 20, -34, -52, "Asia/Jerusalem"},
     {"New Haven", 41, 18, 72, 56, "America/New_York"},
     {"New Orleans", 29, 57, 90, 5, "America/Chicago"},
-    {"New York", 40, 43, 74, 1, "America/New_York"},
+    {"New York", 40, 43, 74, 0, "America/New_York"},
     {"Newark", 40, 43, 74, 10, "America/New_York"},
     {"Newton", 42, 20, 71, 13, "America/New_York"},
     {"Nice", 43, 42, -7, -16, "Europe/Paris"},
@@ -237,7 +265,7 @@ city_t cities[] =
     {"Phoenix", 33, 27, 112, 4, "America/Phoenix"},
     {"Pittsburgh", 40, 26, 80, 0, "America/New_York"},
     {"Plano", 33, 1, 96, 42, "America/Chicago"},
-    {"Portland", 45, 31, 122, 40, "America/Los_Angeles"},
+    {"Portland", 45, 31, 122, 41, "America/Los_Angeles"},
     {"Porto Alegre", -30, -2, 51, 14, "America/Sao_Paulo"},
     {"Poway", 32, 58, 117, 2, "America/Los_Angeles"},
     {"Prague", 50, 5, -14, -25, "Europe/Prague"},
@@ -277,7 +305,7 @@ city_t cities[] =
     {"Santa Ana", 33, 44, 117, 53, "America/Los_Angeles"},
     {"Santiago", -33, -27, 70, 40, "America/Santiago"},
     {"Sao Paulo", -23, -33, 46, 39, "America/Sao_Paulo"},
-    {"Saskatoon", 52,8, 106, 41, "America/Regina"},
+    {"Saskatoon", 52, 8, 106, 41, "America/Regina"},
     {"Scottsdale", 33, 30, 111, 56, "America/Phoenix"},
     {"Sderot", 31, 31, -34, -36, "Asia/Jerusalem"},
     {"Seattle", 47, 36, 122, 20, "America/Los_Angeles"},
@@ -289,10 +317,10 @@ city_t cities[] =
     {"Stanford", 37, 25, 122, 10, "America/Los_Angeles"},
     {"Stockholm", 59, 20, -18, -4, "Europe/Stockholm"},
     {"Stockton", 37, 59, 121, 18, "America/Los_Angeles"},
-    {"Strasbourg", 48, 35, 7, 45, "Europe/Paris"},
+    {"Strasbourg", 48, 35, -7, -45, "Europe/Paris"},
     {"Stuttgart", 48, 47, -9, -11, "Europe/Berlin"},
     {"Sudbury", 42, 23, 71, 25, "America/New_York"},
-    {"Sydney", -33, -55, -151, -17, "Australia/Sydney"},
+    {"Sydney", -33, -52, -151, -13, "Australia/Sydney"},
     {"Tacoma", 47, 14, 122, 28, "America/Los_Angeles"},
     {"Tampa", 27, 57, 82, 28, "America/New_York"},
     {"Tashkent", 41, 18, -69, -16, "Asia/Tashkent"},
@@ -301,7 +329,7 @@ city_t cities[] =
     {"Tel Aviv", 32, 5, -34, -46, "Asia/Jerusalem"},
     {"The Hague", 52, 5, -4, -19, "Europe/Amsterdam"},
     {"Tianjin", 39, 8, -117, -12, "Asia/Shanghai"},
-    {"Tiberias", 32, 58, -35, -32, "Asia/Jerusalem"},
+    {"Tiberias", 32, 48, -35, -32, "Asia/Jerusalem"},
     {"Tijuana", 32, 32, 117, 2, "America/Tijuana"},
     {"Tokyo", 35, 41, -139, -42, "Asia/Tokyo"},
     {"Toledo", 41, 40, 83, 35, "America/New_York"},
@@ -331,6 +359,6 @@ city_t cities[] =
     {"Winston Salem", 36, 7, 80, 16, "America/New_York"},
     {"Woodmere", 40, 38, 73, 43, "America/New_York"},
     {"Worcester",  42, 16, 71, 52, "America/New_York"},
-    {"Zurich", 47, 22, -8, -32, "Europe/Zurich"},
+    {"Zurich", 47, 22, -8, -33, "Europe/Zurich"},
     {0, 0, 0, 0, 0, 0}
 };
