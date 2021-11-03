@@ -1,3 +1,6 @@
+Changes in 4.27
+* Updated timezonedb to version 2021.5 (2021e)
+
 Changes in 4.26
 * Added Rosh Hashana LaBehemot (#202)
 
