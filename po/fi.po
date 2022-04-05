@@ -236,7 +236,7 @@ msgid "improper sedra year type calculated."
 msgstr ""
 
 msgid "Parashat"
-msgstr "Parshat "
+msgstr "Parshat"
 
 msgid "Achrei Mot"
 msgstr "Achrei mot"
@@ -296,7 +296,7 @@ msgid "Ki Tisa"
 msgstr "Ki Tisa"
 
 msgid "Korach"
-msgstr "Korach "
+msgstr "Korach"
 
 msgid "Lech-Lecha"
 msgstr "Lech lecha"
@@ -335,7 +335,7 @@ msgid "Re'eh"
 msgstr "Re'e"
 
 msgid "Sh'lach"
-msgstr "Shlach "
+msgstr "Shlach"
 
 msgid "Shemot"
 msgstr "Shmot"
@@ -452,13 +452,13 @@ msgid "Erev Shavuot"
 msgstr "Shavuot aatto"
 
 msgid "Erev Simchat Torah"
-msgstr "Simchat toora  -aatto"
+msgstr "Simchat toora -aatto"
 
 msgid "Erev Sukkot"
 msgstr "Sukot-aatto"
 
 msgid "Erev Tish'a B'Av"
-msgstr "Tisha  beav -aatto "
+msgstr "Tisha beav -aatto"
 
 msgid "Erev Yom Kippur"
 msgstr "Jom kipur -aatto"
@@ -470,7 +470,7 @@ msgid "Lag BaOmer"
 msgstr "Lag baomer"
 
 msgid "Leil Selichot"
-msgstr "Slichot-ilta (aatto) "
+msgstr "Slichot-ilta (aatto)"
 
 msgid "Pesach"
 msgstr "Pesach"
@@ -652,6 +652,9 @@ msgstr "Ta'anit Ester"
 msgid "Tish'a B'Av"
 msgstr "Tisha beav"
 
+msgid "Tish'a B'Av (observed)"
+msgstr "Tisha beav (vietetään)"
+
 msgid "Tu B'Av"
 msgstr "Tu beav"
 
@@ -684,3 +687,12 @@ msgstr "Jom Jerushalaim"
 
 msgid "Yom HaAliyah"
 msgstr "Jom ha'alija"
+
+msgid "min"
+msgstr "minuuttia"
+
+msgid "Fast begins"
+msgstr "Paasto alkaa"
+
+msgid "Fast ends"
+msgstr "Paasto päättyy"

@@ -9,7 +9,6 @@
 /depcomp
 /hebcal
 /hebcal.1
-/install-sh
 /missing
 /stamp-gperf
 /stamp-h1
@@ -19,7 +18,6 @@
 /translations.c
 /translations.h
 Makefile
-Makefile.in
 
 # Object files
 *.o

@@ -1,3 +1,9 @@
+Changes in 4.27
+* Updated timezonedb to version 2021.5 (2021e)
+
+Changes in 4.26
+* Added Rosh Hashana LaBehemot (#202)
+
 Changes in 4.25
 * Updated timezonedb to version 2021.1 (2021a)
 * Add German translations (`--lang=de`), courtesy Oliver Maor (#217, #218)

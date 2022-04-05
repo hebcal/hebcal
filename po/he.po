@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: hebcal 4.2\n"
+"Project-Id-Version: hebcal 4.25\n"
 "Report-Msgid-Bugs-To: hebcal-bugs@sadinoff.com\n"
 "POT-Creation-Date: 2015-12-30 14:54-0500\n"
-"PO-Revision-Date: 2016-01-03 11:18-0800\n"
+"PO-Revision-Date: 2021-06-04 07:57-0800\n"
 "Language: he_IL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -181,59 +181,6 @@ msgstr "דף יומי: %s %d"
 
 msgid "Daf Yomi"
 msgstr "דף יומי"
-
-#: ../holidays.c:380
-msgid "Unable to allocate memory for holiday."
-msgstr ""
-
-#: ../holidays.c:679
-#, c-format
-msgid "input file read error. Skipping line %s"
-msgstr ""
-
-#: ../holidays.c:686
-#, c-format
-msgid "Error in input file.  Skipping line %s"
-msgstr ""
-
-#: ../holidays.c:691
-#, c-format
-msgid "Numeric hebrew month in input file.  Skipping line %s"
-msgstr ""
-
-#: ../holidays.c:697
-#, c-format
-msgid "Unrecognized hebrew month in input file.  Skipping line %s"
-msgstr ""
-
-#: ../holidays.c:703
-#, c-format
-msgid "Date out of range in input file. Skipping line %s"
-msgstr ""
-
-#: ../holidays.c:749
-#, c-format
-msgid "yahrtzeit file read error. Skipping line %s"
-msgstr ""
-
-#: ../holidays.c:756
-#, c-format
-msgid "Error in yahrtzeit file.  Skipping line %s"
-msgstr ""
-
-#: ../holidays.c:761
-#, c-format
-msgid "Non-numeric month in yahrtzeit file. Skipping line %s"
-msgstr ""
-
-#: ../holidays.c:771
-#, c-format
-msgid "Date out of range in yahrtzeit file. Skipping line %s"
-msgstr ""
-
-#: ../sedra.c:257 ../sedra.c:296
-msgid "improper sedra year type calculated."
-msgstr ""
 
 msgid "Parashat"
 msgstr "פרשת"
@@ -794,13 +741,102 @@ msgid "min"
 msgstr "דקות"
 
 msgid "Fast begins"
-msgstr "תחילת הצום"
+msgstr "תחילת הַצוֹם"
 
 msgid "Fast ends"
-msgstr "סיום הצום"
+msgstr "סִיּוּם הַצוֹם"
 
-msgid "Rosh Hashanah LaBehemot"
-msgstr "ראש השנה למעשר בהמה"
+msgid "Rosh Hashana LaBehemot"
+msgstr "רֹאשׁ הַשָּׁנָה לְמַעְשַׂר בְּהֵמָה"
 
 msgid "Tish'a B'Av (observed)"
 msgstr "תִּשְׁעָה בְּאָב נִדחֶה"
+
+msgid "Shabbat Mevarchim Chodesh"
+msgstr "שַׁבָּת מברכים חוֹדֶשׁ"
+
+msgid "Shabbat Shirah"
+msgstr "שַׁבָּת שִׁירָה"
+
+# midnight (sunset + six halachic hours)
+msgid "chatzotNight"
+msgstr "חֲצוֹת הַלַיְלָה"
+
+# Dawn
+msgid "alotHaShachar"
+msgstr "עֲלוֹת הַשַּׁחַר"
+
+# Earliest talis & tefillin 11.5 degrees
+msgid "misheyakir"
+msgstr "משיכיר - זמן ציצית ותפילין"
+
+# Earliest talis & tefillin 10.2 degrees
+msgid "misheyakirMachmir"
+msgstr "משיכיר - זמן ציצית ותפילין"
+
+# sunrise
+msgid "neitzHaChama"
+msgstr "הַנֵץ הַחַמָּה"
+
+# Latest shema Gra
+msgid "sofZmanShma"
+msgstr "סוֹף זְמַן קְרִיאַת שְׁמַע גר״א"
+
+# Latest shachris Gra
+msgid "sofZmanTfilla"
+msgstr "סוֹף זְמַן תְּפִלָּה גר״א"
+
+# Midday (sunrise + six halachic hours)
+msgid "chatzot"
+msgstr "חֲצוֹת הַיּוֹם"
+
+# Earliest mincha
+msgid "minchaGedola"
+msgstr "מִנְחָה גְּדוֹלָה"
+
+# Preferable earliest time to recite Minchah
+msgid "minchaKetana"
+msgstr "מִנְחָה קְטַנָּה"
+
+msgid "plagHaMincha"
+msgstr "פְּלַג הַמִּנְחָה"
+
+# sunset
+msgid "shkiah"
+msgstr "שְׁקִיעָה"
+
+# Nightfall - End of ordained fasts
+msgid ""
+msgstr "לַיְלָה - גמר תעניות דרבנן"
+
+# Nightfall - 3 stars emerge
+msgid "tzeit"
+msgstr "צֵאת כוכבים"
+
+# Chesed
+msgid "Lovingkindness"
+msgstr "חֶֽסֶד"
+
+# Gevurah
+msgid "Might"
+msgstr "גְבוּרָה"
+
+# Tiferet
+msgid "Beauty"
+msgstr "תִּפאֶרֶת"
+
+# Netzach
+msgid "Eternity"
+msgstr "נֶּֽצַח"
+
+# Hod
+msgid "Splendor"
+msgstr "הוֹד"
+
+# Yesod
+msgid "Foundation"
+msgstr "יְּסוֹד"
+
+# Malkhut
+msgid "Majesty"
+msgstr "מַּלְכוּת"

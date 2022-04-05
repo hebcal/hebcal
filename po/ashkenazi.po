@@ -152,6 +152,9 @@ msgstr "Shmini Atzeres"
 msgid "Simchat Torah"
 msgstr "Simchas Torah"
 
+msgid "Sukkot"
+msgstr "Sukkos"
+
 msgid "Sukkot I"
 msgstr "Sukkos I"
 
@@ -196,3 +199,9 @@ msgstr "Parshas"
 
 msgid "Leil Selichot"
 msgstr "Leil Selichos"
+
+msgid "Shabbat Mevarchim Chodesh"
+msgstr "Shabbos Mevorchim Chodesh"
+
+msgid "Shabbat Shirah"
+msgstr "Shabbos Shirah"

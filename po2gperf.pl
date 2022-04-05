@@ -34,7 +34,9 @@ struct event_title { char *name; char *dest; };
             $msgid = $1;
         } elsif (/^msgstr\s+"(.+)"\s*$/) {
             my $msgstr = $1;
-            print OUT qq{$msgid|"$msgstr"\n};
+            if (length($msgid)) {
+                print OUT qq{$msgid|"$msgstr"\n};
+            }
         }
     }
     close(IN);

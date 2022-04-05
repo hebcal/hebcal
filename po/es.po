@@ -662,6 +662,9 @@ msgstr "Ta'anit Ester"
 msgid "Tish'a B'Av"
 msgstr "Tish'a B'Av"
 
+msgid "Tish'a B'Av (observed)"
+msgstr "Tish'a B'Av (observado)"
+
 msgid "Tu B'Av"
 msgstr "Tu B'Av"
 

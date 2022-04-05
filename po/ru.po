@@ -648,6 +648,9 @@ msgstr "Пост Эстер"
 msgid "Tish'a B'Av"
 msgstr "Девятое Ава"
 
+msgid "Tish'a B'Av (observed)"
+msgstr "Девятое Ава (отмечается)"
+
 msgid "Tu B'Av"
 msgstr "Пятнадцатое Ава"
 
@@ -677,3 +680,18 @@ msgstr "День Раскаяния"
 
 msgid "Yom Yerushalayim"
 msgstr "День Иерусалима"
+
+msgid "min"
+msgstr "мин."
+
+msgid "Tishrei"
+msgstr "Тишрей"
+
+msgid "Fast begins"
+msgstr "Пост начинается"
+
+msgid "Fast ends"
+msgstr "Пост завершается"
+
+msgid "Shabbat Mevarchim Chodesh"
+msgstr "Шаббат Mevarchim Новомесячьем"
