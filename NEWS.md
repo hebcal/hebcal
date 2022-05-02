@@ -1,5 +1,5 @@
 Changes in 4.28
-* Add Romanian tranlsations (`--lang=ro` and `--lang=ashkenazi_romanian`), courtesy Florin-Ciprian Bodin (@orynider) (#229, #230)
+* Add Romanian translations (`--lang=ro` and `--lang=ashkenazi_romanian`), courtesy Florin-Ciprian Bodin (@orynider) (#229, #230)
 * Updated timezonedb to version 2022.1 (2022a)
 
 Changes in 4.27
