@@ -119,8 +119,10 @@ am__objects_1 = strings_ashkenazi_litvish.$(OBJEXT) \
 	strings_ashkenazi_poylish.$(OBJEXT) \
 	strings_ashkenazi_standard.$(OBJEXT) strings_de.$(OBJEXT) \
 	strings_es.$(OBJEXT) strings_fi.$(OBJEXT) strings_fr.$(OBJEXT) \
-	strings_he.$(OBJEXT) strings_hu.$(OBJEXT) strings_pl.$(OBJEXT) \
-	strings_ru.$(OBJEXT) translations.$(OBJEXT)
+	strings_he.$(OBJEXT) strings_ro.$(OBJEXT) \
+	strings_ashkenazi_romanian.$(OBJEXT) strings_hu.$(OBJEXT) \
+	strings_pl.$(OBJEXT) strings_ru.$(OBJEXT) \
+	translations.$(OBJEXT)
 am_hebcal_OBJECTS = common.$(OBJEXT) danlib.$(OBJEXT) error.$(OBJEXT) \
 	greg.$(OBJEXT) hebcal.$(OBJEXT) timelib.$(OBJEXT) \
 	astro.$(OBJEXT) tm2unixtime.$(OBJEXT) unixtime2tm.$(OBJEXT) \
@@ -153,13 +155,15 @@ am__depfiles_remade = ./$(DEPDIR)/astro.Po ./$(DEPDIR)/common.Po \
 	./$(DEPDIR)/strings_ashkenazi.Po \
 	./$(DEPDIR)/strings_ashkenazi_litvish.Po \
 	./$(DEPDIR)/strings_ashkenazi_poylish.Po \
+	./$(DEPDIR)/strings_ashkenazi_romanian.Po \
 	./$(DEPDIR)/strings_ashkenazi_standard.Po \
 	./$(DEPDIR)/strings_de.Po ./$(DEPDIR)/strings_es.Po \
 	./$(DEPDIR)/strings_fi.Po ./$(DEPDIR)/strings_fr.Po \
 	./$(DEPDIR)/strings_he.Po ./$(DEPDIR)/strings_hu.Po \
-	./$(DEPDIR)/strings_pl.Po ./$(DEPDIR)/strings_ru.Po \
-	./$(DEPDIR)/timelib.Po ./$(DEPDIR)/tm2unixtime.Po \
-	./$(DEPDIR)/translations.Po ./$(DEPDIR)/unixtime2tm.Po
+	./$(DEPDIR)/strings_pl.Po ./$(DEPDIR)/strings_ro.Po \
+	./$(DEPDIR)/strings_ru.Po ./$(DEPDIR)/timelib.Po \
+	./$(DEPDIR)/tm2unixtime.Po ./$(DEPDIR)/translations.Po \
+	./$(DEPDIR)/unixtime2tm.Po
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
@@ -394,6 +398,7 @@ SUBDIRS = tests
 # ls po/*.po
 pofiles = po/ashkenazi_litvish.po po/ashkenazi.po			\
 	 po/ashkenazi_poylish.po po/ashkenazi_standard.po po/de.po po/es.po	\
+	 po/ro.po po/ashkenazi_romanian.po \
 	 po/fi.po po/fr.po po/he.po po/hu.po po/pl.po po/ru.po
 
 
@@ -401,8 +406,9 @@ pofiles = po/ashkenazi_litvish.po po/ashkenazi.po			\
 BUILT_SOURCES = strings_ashkenazi_litvish.c strings_ashkenazi.c \
 	strings_ashkenazi_poylish.c strings_ashkenazi_standard.c \
 	strings_de.c strings_es.c strings_fi.c strings_fr.c \
-	strings_he.c strings_hu.c strings_pl.c strings_ru.c \
-	translations.c translations.h
+	strings_he.c strings_ro.c strings_ashkenazi_romanian.c \
+	strings_hu.c strings_pl.c strings_ru.c translations.c \
+	translations.h
 hebcal_SOURCES = common.c danlib.c error.c greg.c hebcal.c timelib.c	\
          astro.c tm2unixtime.c unixtime2tm.c dow.c parse_tz.c		\
          holidays.c sedra.c start.c gnu.c dafyomi.c $(BUILT_SOURCES)	\
@@ -541,6 +547,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/strings_ashkenazi.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/strings_ashkenazi_litvish.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/strings_ashkenazi_poylish.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/strings_ashkenazi_romanian.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/strings_ashkenazi_standard.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/strings_de.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/strings_es.Po@am__quote@ # am--include-marker
@@ -549,6 +556,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/strings_he.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/strings_hu.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/strings_pl.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/strings_ro.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/strings_ru.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/timelib.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tm2unixtime.Po@am__quote@ # am--include-marker
@@ -1003,6 +1011,7 @@ distclean: distclean-recursive
 	-rm -f ./$(DEPDIR)/strings_ashkenazi.Po
 	-rm -f ./$(DEPDIR)/strings_ashkenazi_litvish.Po
 	-rm -f ./$(DEPDIR)/strings_ashkenazi_poylish.Po
+	-rm -f ./$(DEPDIR)/strings_ashkenazi_romanian.Po
 	-rm -f ./$(DEPDIR)/strings_ashkenazi_standard.Po
 	-rm -f ./$(DEPDIR)/strings_de.Po
 	-rm -f ./$(DEPDIR)/strings_es.Po
@@ -1011,6 +1020,7 @@ distclean: distclean-recursive
 	-rm -f ./$(DEPDIR)/strings_he.Po
 	-rm -f ./$(DEPDIR)/strings_hu.Po
 	-rm -f ./$(DEPDIR)/strings_pl.Po
+	-rm -f ./$(DEPDIR)/strings_ro.Po
 	-rm -f ./$(DEPDIR)/strings_ru.Po
 	-rm -f ./$(DEPDIR)/timelib.Po
 	-rm -f ./$(DEPDIR)/tm2unixtime.Po
@@ -1079,6 +1089,7 @@ maintainer-clean: maintainer-clean-recursive
 	-rm -f ./$(DEPDIR)/strings_ashkenazi.Po
 	-rm -f ./$(DEPDIR)/strings_ashkenazi_litvish.Po
 	-rm -f ./$(DEPDIR)/strings_ashkenazi_poylish.Po
+	-rm -f ./$(DEPDIR)/strings_ashkenazi_romanian.Po
 	-rm -f ./$(DEPDIR)/strings_ashkenazi_standard.Po
 	-rm -f ./$(DEPDIR)/strings_de.Po
 	-rm -f ./$(DEPDIR)/strings_es.Po
@@ -1087,6 +1098,7 @@ maintainer-clean: maintainer-clean-recursive
 	-rm -f ./$(DEPDIR)/strings_he.Po
 	-rm -f ./$(DEPDIR)/strings_hu.Po
 	-rm -f ./$(DEPDIR)/strings_pl.Po
+	-rm -f ./$(DEPDIR)/strings_ro.Po
 	-rm -f ./$(DEPDIR)/strings_ru.Po
 	-rm -f ./$(DEPDIR)/timelib.Po
 	-rm -f ./$(DEPDIR)/tm2unixtime.Po
