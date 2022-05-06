@@ -58,8 +58,8 @@ static struct mesechta shas[] = {
   { "Keritot",        28      },
   { "Meilah",         22      },
   { "Kinnim",         4       },
-  { "Tamid",          10      },
-  { "Midot",          4       },
+  { "Tamid",          9       },
+  { "Midot",          5       },
   { "Niddah",         73      }
 };
 
@@ -124,7 +124,7 @@ void hebcal_dafyomi( date_t *greg_day  )
             blatt = blatt + 24;
             break;
          case 38:
-            blatt = blatt + 33;
+            blatt = blatt + 32;
             break;
          default:
             break;
