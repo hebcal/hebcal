@@ -376,12 +376,12 @@ void print_candlelighting_times( int mask, int weekday, date_t todayGreg)
        PrintGregDate (todayGreg);
        zman_name = _(zemanim[i_zman].name_sfrd);
        if (zemanim[i_zman].flags == ZMAN_HAVDALAH) {
-            printf("%s (%d min): %2d:%02d\n",
+            printf("%s (%d min): %d:%02d\n",
                 _(zman_name),
                 havdalah_minutes,
                 hour, minute);
        } else {
-            printf("%s: %2d:%02d\n", _(zman_name), hour, minute);
+            printf("%s: %d:%02d\n", _(zman_name), hour, minute);
        }
     }
 }
