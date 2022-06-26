@@ -350,9 +350,6 @@ msgstr "Yisro"
 msgid "Asara B'Tevet"
 msgstr "Asara B'Teives"
 
-msgid "Candle lighting"
-msgstr "Licht bentshen"
-
 msgid "Chanukah"
 msgstr "Chanukah"
 
@@ -409,9 +406,6 @@ msgstr "Erev Tisha B'Av"
 
 msgid "Erev Yom Kippur"
 msgstr "Erev Yom Kippur"
-
-msgid "Havdalah"
-msgstr "Havdalah"
 
 msgid "Lag BaOmer"
 msgstr "Lag BaOmer"
@@ -640,3 +634,42 @@ msgstr "Yom Yerushalayim"
 
 msgid "Yom HaAliyah"
 msgstr "Yom HaAliyah"
+
+msgid "Alot HaShachar"
+msgstr "Alos HaShachar"
+
+msgid "Misheyakir"
+msgstr "Misheyakir"
+
+msgid "Sunrise"
+msgstr "Netz HaChamah"
+
+msgid "Kriat Shema, sof zeman"
+msgstr "Krias Shema, sof zman"
+
+msgid "Tefilah, sof zeman"
+msgstr "Tefilah, sof zman"
+
+msgid "Chatzot hayom"
+msgstr "Chatzos"
+
+msgid "Mincha Gedolah"
+msgstr "Mincha Gedolah"
+
+msgid "Mincha Ketanah"
+msgstr "Mincha Ketanah"
+
+msgid "Plag HaMincha"
+msgstr "Plag HaMincha"
+
+msgid "Candle lighting"
+msgstr "Licht bentshen"
+
+msgid "Sunset"
+msgstr "Shkiah"
+
+msgid "Tzait HaKochavim"
+msgstr "Tzeis HaKochavim"
+
+msgid "Havdalah"
+msgstr "Havdalah"
