@@ -1,3 +1,6 @@
+Changes in 4.30
+* Improve some Ashkenazi transliterations (e.g. Teves), courtesy Chaim Halbert (@chaimleib), (#234)
+
 Changes in 4.29
 * fix for Daf Yomi: Midot 34 (#232)
 

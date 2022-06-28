@@ -194,6 +194,9 @@ msgstr "Vaeschanan"
 msgid "Yitro"
 msgstr "Yisro"
 
+msgid "Vezot Haberakhah"
+msgstr "Vezos Haberakhah"
+
 msgid "Parashat"
 msgstr "Parshas"
 
@@ -205,3 +208,72 @@ msgstr "Shabbos Mevorchim Chodesh"
 
 msgid "Shabbat Shirah"
 msgstr "Shabbos Shirah"
+
+msgid "Tevet"
+msgstr "Teves"
+
+msgid "Asara B'Tevet"
+msgstr "Asara B'Teves"
+
+# Mishna Berachot
+msgid "Berakhot"
+msgstr "Berakhos"
+
+# Mishna Sheviit
+msgid "Sheviit"
+msgstr "Sheviis"
+
+# Mishna Terumot
+msgid "Terumot"
+msgstr "Terumos"
+
+# Mishna Maasrot
+msgid "Maasrot"
+msgstr "Maasros"
+
+# Mishna Eduyot
+msgid "Eduyot"
+msgstr "Eduyos"
+
+# Mishna Avot
+msgid "Avot"
+msgstr "Avos"
+
+# Mishna Bekhorot
+msgid "Bekhorot"
+msgstr "Bekhoros"
+
+# Mishna Middot
+msgid "Middot"
+msgstr "Middos"
+
+# Mishna Oholot
+msgid "Oholot"
+msgstr "Oholos"
+
+# Mishna Tahorot
+msgid "Tahorot"
+msgstr "Tahoros"
+
+# Mishna Mikvaot
+msgid "Mikvaot"
+msgstr "Mikvaos"
+
+# hebcal/hebcal zmanim (unused by hebcal/hebcal-es6)
+msgid "Alot HaShachar"
+msgstr "Alos HaShachar"
+
+msgid "Misheyakir"
+msgstr "Misheyakir"
+
+msgid "Kriat Shema, sof zeman"
+msgstr "Krias Shema, sof zman"
+
+msgid "Tefilah, sof zeman"
+msgstr "Tefilah, sof zman"
+
+msgid "Chatzot hayom"
+msgstr "Chatzos"
+
+msgid "Tzait HaKochavim"
+msgstr "Tzeis HaKochavim"
