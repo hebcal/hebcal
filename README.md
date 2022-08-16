@@ -1,10 +1,10 @@
-hebcal [![Build Status](https://travis-ci.com/hebcal/hebcal.svg?branch=master)](https://travis-ci.com/hebcal/hebcal)
+hebcal [![Build Status](https://app.travis-ci.com/hebcal/hebcal.svg?branch=main)](https://app.travis-ci.com/hebcal/hebcal)
 ======
 
 A perpetual Jewish Calendar
 
 by Danny Sadinoff
-portions by Michael J. Radwin
+(portions by Michael J. Radwin)
 
 ## Description
 Hebcal is a program which prints out the days in the Jewish calendar
@@ -245,7 +245,8 @@ at the command line.
 
 ## DISTRIBUTION
    Copyright (C) 1994-2011  Danny Sadinoff
-   Portions Copyright (c) 2011 Michael J. Radwin. All Rights Reserved.
+   
+   Portions Copyright (c) 2011-2022 Michael J. Radwin. All Rights Reserved.
 
    Hebcal is distributed under the GNU Public License.  The program
    and its source code may be freely distributed.  For details, see
