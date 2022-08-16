@@ -1,3 +1,6 @@
+Changes in 4.31
+* Updated timezonedb to version 2022.3 (2022c)
+
 Changes in 4.30
 * Improve some Ashkenazi transliterations (e.g. Teves), courtesy Chaim Halbert (@chaimleib), (#234)
 
