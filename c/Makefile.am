@@ -44,7 +44,7 @@ hebcal_SOURCES = common.c danlib.c error.c greg.c hebcal.c timelib.c	\
 
 man1_MANS = hebcal.1
 
-dist_doc_DATA = NEWS.md README.md
+dist_doc_DATA = ../NEWS.md ../README.md
 
 EXTRA_DIST = po2gperf.pl $(pofiles)
 

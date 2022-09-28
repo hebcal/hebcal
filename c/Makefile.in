@@ -251,8 +251,8 @@ am__define_uniq_tagged_files = \
   done | $(am__uniquify_input)`
 DIST_SUBDIRS = $(SUBDIRS)
 am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/config.h.in \
-	$(srcdir)/hebcal.1.in AUTHORS COPYING NEWS.md README.md \
-	compile config.guess config.sub depcomp install-sh missing
+	$(srcdir)/hebcal.1.in compile config.guess config.sub depcomp \
+	install-sh missing
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -417,7 +417,7 @@ hebcal_SOURCES = common.c danlib.c error.c greg.c hebcal.c timelib.c	\
          timelib_structs.h sedra.h cities.h
 
 man1_MANS = hebcal.1
-dist_doc_DATA = NEWS.md README.md
+dist_doc_DATA = ../NEWS.md ../README.md
 EXTRA_DIST = po2gperf.pl $(pofiles)
 VOLUME_NAME = $(PACKAGE_NAME)-$(PACKAGE_VERSION)
 BINARY_DIR = $(VOLUME_NAME).bin

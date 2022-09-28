@@ -14,4 +14,4 @@ arch:
  - ppc64le
 sudo: false
 # Change this to your needs
-script: autoreconf --install && ./configure && make check
+script: cd ./c && autoreconf --install && ./configure && make check
