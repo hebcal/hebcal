@@ -1,3 +1,8 @@
+Changes in 5.0.2
+* CLI support for legacy `HEBCAL_OPTS` environment variable
+* Re-added many cities for candle-lighting times that were recently added
+  to Hebcal but missed during Golang port (#220, #233)
+
 Changes in 5.0.1
 * Hebcal command-line interface has been rewritten in the Go Programming Language
 * Default holidays now include 5 additional modern Israeli holidays when `-i` flag is enabled (can be suppressed with `--no-modern`)

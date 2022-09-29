@@ -144,6 +144,20 @@ Description is a newline-terminated string to be printed on the yahrtzeit.`, "FI
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 		os.Exit(1)
 	}
+
+	envOpts := os.Getenv("HEBCAL_OPTS")
+	if envOpts != "" {
+		spaceOrTab := func(c rune) bool {
+			return c == ' ' || c == '\t'
+		}
+		args := strings.FieldsFunc(envOpts, spaceOrTab)
+		args = append([]string{"hebcal"}, args...)
+		if err := opt.Getopt(args, nil); err != nil {
+			fmt.Fprintf(os.Stderr, "%v\n", err)
+			os.Exit(1)
+		}
+	}
+
 	if *help {
 		displayHelp(opt)
 		os.Exit(0)
@@ -306,6 +320,7 @@ Description is a newline-terminated string to be printed on the yahrtzeit.`, "FI
 			case "info":
 				fmt.Printf("hebcal version %s\n\n", Version)
 				fmt.Println("Environment variable for default city: HEBCAL_CITY")
+				fmt.Println("\nEnvironment variable for default options: HEBCAL_OPTS")
 				os.Exit(0)
 			case "cities":
 				for _, city := range zmanim.AllCities() {

@@ -1,5 +1,5 @@
 AC_PREREQ([2.69])
-AC_INIT([hebcal],[5.0.1],[https://github.com/hebcal/hebcal/issues],[],[https://github.com/hebcal/hebcal])
+AC_INIT([hebcal],[5.0.2],[https://github.com/hebcal/hebcal/issues],[],[https://github.com/hebcal/hebcal])
 AM_INIT_AUTOMAKE([foreign])
 AC_CONFIG_SRCDIR([main.go])
 AC_LANG([Go])
