@@ -1,0 +1,12 @@
+github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
+github.com/hebcal/gematriya v1.0.0 h1:zvWEXxUt75iVXBZNtcDacDl5v1p8IlPJ3o6Um36rnuY=
+github.com/hebcal/gematriya v1.0.0/go.mod h1:6Gf3X96FyOGFZJbksOKSaL2mTVMcwwkeo0BzyL/sI2s=
+github.com/hebcal/hebcal-go v0.9.1 h1:w5zU+y5NYW9ugDmdvuFKimPqjaVVNO5RJvhHsnKI74I=
+github.com/hebcal/hebcal-go v0.9.1/go.mod h1:/JYh9iZxjjz9dk8w7OS7Kdayob+5L7tQeI7JczC1yzU=
+github.com/nathan-osman/go-sunrise v1.1.0 h1:ZqZmtmtzs8Os/DGQYi0YMHpuUqR/iRoJK+wDO0wTCw8=
+github.com/nathan-osman/go-sunrise v1.1.0/go.mod h1:RcWqhT+5ShCZDev79GuWLayetpJp78RSjSWxiDowmlM=
+github.com/pborman/getopt/v2 v2.1.0 h1:eNfR+r+dWLdWmV8g5OlpyrTYHkhVNxHBdN2cCrJmOEA=
+github.com/pborman/getopt/v2 v2.1.0/go.mod h1:4NtW75ny4eBw9fO1bhtNdYTlZKYX5/tBLtsOpwKIKd0=
+github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
+github.com/stretchr/testify v1.8.0 h1:pSgiaMZlXftHpm5L7V1+rVB+AZJydKsMxsQBIJw4PKk=
+gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=
