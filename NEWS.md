@@ -1,3 +1,12 @@
+Changes in 5.0.1
+* Hebcal command-line interface has been rewritten in the Go Programming Language
+* Default holidays now include 5 additional modern Israeli holidays when `-i` flag is enabled (can be suppressed with `--no-modern`)
+  * Family Day
+  * Yitzhak Rabin Memorial Day
+  * Jabotinsky Day
+  * Herzl Day
+  * Ben-Gurion Day
+
 Changes in 4.31
 * Updated timezonedb to version 2022.3 (2022c)
 

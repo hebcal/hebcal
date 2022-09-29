@@ -3,6 +3,8 @@ github.com/hebcal/gematriya v1.0.0 h1:zvWEXxUt75iVXBZNtcDacDl5v1p8IlPJ3o6Um36rnu
 github.com/hebcal/gematriya v1.0.0/go.mod h1:6Gf3X96FyOGFZJbksOKSaL2mTVMcwwkeo0BzyL/sI2s=
 github.com/hebcal/hebcal-go v0.9.1 h1:w5zU+y5NYW9ugDmdvuFKimPqjaVVNO5RJvhHsnKI74I=
 github.com/hebcal/hebcal-go v0.9.1/go.mod h1:/JYh9iZxjjz9dk8w7OS7Kdayob+5L7tQeI7JczC1yzU=
+github.com/hebcal/hebcal-go v0.9.2 h1:LJZqnsK73V/3K1Der3Dsh71W6gTmpKQtPl6uEU+H1F4=
+github.com/hebcal/hebcal-go v0.9.2/go.mod h1:/JYh9iZxjjz9dk8w7OS7Kdayob+5L7tQeI7JczC1yzU=
 github.com/nathan-osman/go-sunrise v1.1.0 h1:ZqZmtmtzs8Os/DGQYi0YMHpuUqR/iRoJK+wDO0wTCw8=
 github.com/nathan-osman/go-sunrise v1.1.0/go.mod h1:RcWqhT+5ShCZDev79GuWLayetpJp78RSjSWxiDowmlM=
 github.com/pborman/getopt/v2 v2.1.0 h1:eNfR+r+dWLdWmV8g5OlpyrTYHkhVNxHBdN2cCrJmOEA=
