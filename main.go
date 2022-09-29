@@ -149,7 +149,7 @@ Description is a newline-terminated string to be printed on the yahrtzeit.`, "FI
 		os.Exit(0)
 	}
 	if *version_sw {
-		fmt.Println("foo")
+		fmt.Printf("Hebcal version %s\n", Version)
 		os.Exit(0)
 	}
 
@@ -304,7 +304,8 @@ Description is a newline-terminated string to be printed on the yahrtzeit.`, "FI
 				displayHelp(opt)
 				os.Exit(0)
 			case "info":
-				fmt.Println("hebcal version x.yz")
+				fmt.Printf("hebcal version %s\n\n", Version)
+				fmt.Println("Environment variable for default city: HEBCAL_CITY")
 				os.Exit(0)
 			case "cities":
 				for _, city := range zmanim.AllCities() {

@@ -1,11 +1,6 @@
-language: c
-compiler:
-  - gcc
-  - clang
-addons:
-  apt:
-    packages:
-      - gperf
+language: go
+go:
+  - stable
 os:
   - linux
   - osx
@@ -14,4 +9,4 @@ arch:
  - ppc64le
 sudo: false
 # Change this to your needs
-script: cd ./c && autoreconf --install && ./configure && make check
+script: autoreconf --install && ./configure && make clean all
