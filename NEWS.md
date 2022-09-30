@@ -1,3 +1,10 @@
+Changes in 5.0.3
+* If `-l` (latitude) is specified, require `-L` (longitude), and vice-versa.
+* Clarify in CLI help text that negative values are EAST for longitudes
+  specified on the command-line. This is the opposite of most modern
+  systems that use lat/long coordinates but is preserved for
+  backwards compatibility.
+
 Changes in 5.0.2
 * CLI support for legacy `HEBCAL_OPTS` environment variable
 * Re-added many cities for candle-lighting times that were recently added

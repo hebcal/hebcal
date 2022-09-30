@@ -63,8 +63,10 @@ func handleArgs() hebcal.CalOptions {
 	)
 
 	var latitudeStr, longitudeStr, tzid string
-	opt.FlagLong(&latitudeStr, "latitude", 'l', "Set the latitude for solar calculations", "LATITUDE")
-	opt.FlagLong(&longitudeStr, "longitude", 'L', "Set the longitude for solar calculations", "LONGITUDE")
+	opt.FlagLong(&latitudeStr,
+		"latitude", 'l', "Set the latitude for solar calculations to XX degrees and YY minutes. Negative values are south.", "XX,YY")
+	opt.FlagLong(&longitudeStr,
+		"longitude", 'L', "Set the longitude for solar calculations to XX degrees and YY minutes. Negative values are EAST. The -l and -L switches must both be used, or not at all.", "XX,YY")
 	opt.FlagLong(&tzid, "timezone", 'z', "Use specified timezone, overriding the -C (localize to city) switch", "TIMEZONE")
 
 	opt.FlagLong(&today_sw, "today", 't', "Only output for today's date")
@@ -127,18 +129,21 @@ func handleArgs() hebcal.CalOptions {
 	opt.FlagLong(&calOptions.NumYears,
 		"years", 0, "Generate events for N years (default 1)", "N")
 
-	inFileName := opt.StringLong("infile", 'I', "", `Read extra events from file.
-These events are printed regardless of the -h suppress holidays switch.
-There is one holiday per line in file, each with the format
+	inFileName := opt.StringLong("infile", 'I', "", `Read extra events from FILENAME.
+Each line specifies one holiday, with the format:
     MMMM DD Description
-where MMMM is a string identifying the Hebrew month and DD is a number from 1 to 30.
-Description is a newline-terminated string describing the event.`, "FILENAME")
-	yahrzeitFileName := opt.StringLong("yahrtzeit", 'Y', "", `Read a table of yahrtzeit dates from file.
-These events are printed regardless of the -h suppress holidays switch.
-There is one death-date per line in file, each with the format
+where MMMM is a string identifying the Hebrew month,
+and DD is a number from 1 to 30.
+Description is a newline-terminated string describing
+the event. Events are printed regardless of the
+-h (suppress holidays) switch.`, "FILENAME")
+	yahrzeitFileName := opt.StringLong("yahrtzeit", 'Y', "", `Read yahrtzeit dates from FILENAME.
+Each line specifies one death-date, with the format:
     MM DD YYYY Description
 where MM, DD and YYYY are the Gregorian date of death.
-Description is a newline-terminated string to be printed on the yahrtzeit.`, "FILENAME")
+Description is a newline-terminated string to be printed
+on the yahrtzeit. Events are printed regardless of the
+-h (suppress holidays) switch.`, "FILENAME")
 
 	if err := opt.Getopt(os.Args, nil); err != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", err)
@@ -249,6 +254,11 @@ Description is a newline-terminated string to be printed on the yahrtzeit.`, "FI
 		}
 		longitude = float64(-1*longdeg) + (float64(longmin) / -60.0)
 		hasLong = true
+	}
+
+	if (hasLat && !hasLong) || (hasLong && !hasLat) {
+		fmt.Fprintf(os.Stderr, "Error, you must enter BOTH the latitude and the longitude\n")
+		os.Exit(1)
 	}
 
 	if hasLat && hasLong {
