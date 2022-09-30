@@ -1,3 +1,13 @@
+Changes in 5.0.4
+* Add additional halachic times when `-Z` (zemanim) is specifed:
+  - Alot haShachar
+  - Misheyakir
+  - Misheyakir Machmir
+  - Dawn (#134)
+  - Kriat Shema, sof zeman (MGA)
+  - Tefilah, sof zeman (MGA)
+  - Dusk
+
 Changes in 5.0.3
 * If `-l` (latitude) is specified, require `-L` (longitude), and vice-versa.
 * Clarify in CLI help text that negative values are EAST for longitudes

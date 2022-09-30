@@ -9,6 +9,8 @@ github.com/hebcal/hebcal-go v0.9.3 h1:CjsfVivJIR8ZNpkW9s+0G4BO/lEV/c2EcXYDOLwhrI
 github.com/hebcal/hebcal-go v0.9.3/go.mod h1:/JYh9iZxjjz9dk8w7OS7Kdayob+5L7tQeI7JczC1yzU=
 github.com/hebcal/hebcal-go v0.9.4 h1:1C8HDpyUu8UrfjUztzyUdGfdy0NMelfbajyB/10AjhY=
 github.com/hebcal/hebcal-go v0.9.4/go.mod h1:/JYh9iZxjjz9dk8w7OS7Kdayob+5L7tQeI7JczC1yzU=
+github.com/hebcal/hebcal-go v0.9.5 h1:fQzWhHDeW+IDlYe5NuQu7Soso+F5mmR8KNzseBTxerA=
+github.com/hebcal/hebcal-go v0.9.5/go.mod h1:/JYh9iZxjjz9dk8w7OS7Kdayob+5L7tQeI7JczC1yzU=
 github.com/nathan-osman/go-sunrise v1.1.0 h1:ZqZmtmtzs8Os/DGQYi0YMHpuUqR/iRoJK+wDO0wTCw8=
 github.com/nathan-osman/go-sunrise v1.1.0/go.mod h1:RcWqhT+5ShCZDev79GuWLayetpJp78RSjSWxiDowmlM=
 github.com/pborman/getopt/v2 v2.1.0 h1:eNfR+r+dWLdWmV8g5OlpyrTYHkhVNxHBdN2cCrJmOEA=
