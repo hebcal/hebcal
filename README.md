@@ -69,7 +69,12 @@ Option | Description
    -h, --no-holidays | Suppress default holidays.
    -i, --israeli | Use Israeli sedra scheme.
    --lang LANG | Use ISO 639-1 LANG code (one of `ashkenazi`, `ashkenazi_litvish`, `ashkenazi_poylish`, `ashkenazi_standard`, `de`, `es`, `fi`, `fr`, `he`, `hu`, `pl`, `ru`)
+   --mevarchim | Include Shabbat Mevarchim HaChodesh.
+   --mishna-yomi | Output the Mishna Yomi for the entire date range.
    -M, --molad | Print the molad on shabbat mevorchim.
+   --no-mf | Suppress minor fast days.
+   --no-modern | Suppress modern Israeli holidays.
+   --no-special | Suppress Special Shabbatot.
    -o, --omer | Add days of the omer.
    -O, --sunrise-and-sunset | Output sunrise and sunset times every day.
    -r, --tabs | Tab delineated format.
@@ -80,28 +85,44 @@ Option | Description
    -x, --no-rosh-chodesh | Suppress Rosh Chodesh.
    -y, --year-abbrev | Print only last two digits of year.
    --years N | Generate events for `N` years (default `1`)
+   --ykk | Include Yom Kippur Katan, minor day of atonement occurring monthly on the day preceding each Rosh Chodesh
 
 #### Options related to candle-lighting times
 Option | Description
 --- | ---
-   -b, --candle-mins mins | Set candle-lighting to occur this many minutes before sundown
+   -b, --candle-mins mins | Set candle-lighting to occur this many minutes before sundown (default 18 [40 in Jerusalem])
    -c, --candlelighting | Print candlelighting times.
    -C, --city city | Set latitude, longitude, and timezone according to specified city. This option implies the -c option.
-   -l, --latitude xx,yy | Set the latitude for solar calculations to `xx` degrees and `yy` minutes.  Negative values are south.
-   -L, --longitude xx,yy | Set the longitude for solar calculations to `xx` degrees and `yy` minutes.  *Negative values are EAST*. The `-l` and `-L` switches must both be used, or not at all. These switches override the `-C` (localize to city) switch.
-   -m, --havdalah-mins mins | Set havdalah to occur this many minutes after sundown
+   --havdalah-deg DEGREES | Set Havdalah to occur this many degrees below the horizon
+   -l, --latitude XX,YY | Set the latitude for solar calculations to `XX` degrees and `YY` minutes. Negative values are south.
+   -L, --longitude XX,YY | Set the longitude for solar calculations to `XX` degrees and `YY` minutes. *Negative values are EAST*. The `-l` and `-L` switches must both be used, or not at all. These switches override the `-C` (localize to city) switch.
+   -m, --havdalah-mins MINS | Set havdalah to occur this many minutes after sundown
    -z, --timezone timezone | Use specified timezone, overriding the `-C` (localize to city) switch.
-   -Z, --zmanim | **EXPERIMENTAL** Add zemanim (Alot HaShachar; Misheyakir; Kriat Shema, sof zeman; Tefilah, sof zeman; Chatzot hayom; Mincha Gedolah; Mincha Ketanah; Plag HaMincha; Tzait HaKochavim)
+   -Z, --zmanim | Add zemanim (Alot HaShachar; Misheyakir; Kriat Shema, sof zeman; Tefilah, sof zeman; Chatzot hayom; Mincha Gedolah; Mincha Ketanah; Plag HaMincha; Tzait HaKochavim)
 
-## Candle-lighting times
+## Candle-lighting and fast start/end times
 
 Hebcal’s candlelighting times are only approximations. If you ever have any doubts about its times, consult your local halachic authority. If you enter geographic coordinates above the arctic circle or antarctic circle, the times are guaranteed to be wrong.
 
-Hebcal contains a small database of cities with their associated geographic information and time-zone information. The geographic and time information necessary to calculate sundown times can come to hebcal any of three ways:
+Hebcal contains a small database of cities with their associated geographic information and time-zone information. Run `hebcal cities` to print a list of cities supported by the `-C city` flag.
 
-1. The default: the system manager sets a default city when the program is compiled.
+If your city is NOT on the list, then in order to customize hebcal to your city, you will need to pass it the latitude, longitude, and timezone (see the manual).
+
+Suppose you live in Oshkosh, Wisconsin.
+Your lattitude is 44d1'29", and your longitude is 88d32'33".
+You are in timezone `America/Chicago`.
+We'll round the geographic coordinates to the nearest minute.
+
+In order to get candlelighting times for the current year, you would type
+  ```
+  hebcal -ch -l44,1 -L 88,33 -z America/Chicago
+  ```
+
+The geographic and time information necessary to calculate sundown times can come to hebcal any of three ways:
+
+1. The default: the system manager sets a default city ("New York") when the program is compiled.
 2. Hebcal looks in the environment variable `HEBCAL_CITY` for the name of a city in hebcal’s database, and if it finds one, hebcal will make that the new default city.
-3. 1 and 2 may be overridden by command line arguments, including those specified in the `HEBCAL_OPTS` environment variable. The most natural way to do this is to use the `−c city` command. This will localize hebcal to city. A list of the cities hebcal knows about can be obtained by typing `hebcal cities` at the command prompt. If the city you want isn’t on that list, you can directly control hebcal’s geographic information with the `−l`, `−L`, and `−z` switches. Note that changing the geographic coordinates causes the timezone to default to 'UTC'.
+3. 1 and 2 may be overridden by command line arguments, including those specified in the `HEBCAL_OPTS` environment variable. The most natural way to do this is to use the `−C city` command. This will localize hebcal to city. A list of the cities hebcal knows about can be obtained by typing `hebcal cities` at the command prompt. If the city you want isn’t on that list, you can directly control hebcal’s geographic information with the `−l`, `−L`, and `−z` switches.
 For a status report on customizations, type `hebcal info` at the command prompt.
 
 ## Environment
@@ -113,6 +134,26 @@ Hebcal uses two environment variables:
 <dt>HEBCAL_OPTS
 <dd>The value of this variable is automatically processed as if it were typed at the command line before any other actual command-line arguments.
 </dl>
+
+### HEBCAL_OPTS
+Every time hebcal is run, it checks this variable. If it is non-empty, the arguments in that variable are read as though they were typed at the command line before the ones you actually type.
+
+So you might set `HEBCAL_OPTS` to be
+   ```
+   -l44,1 -L 88,33 -z America/Chicago
+   ```
+and if you type
+    ```
+    hebcal -ch
+    ```
+hebcal will think you typed
+    ```
+    hebcal -l44,1 -L 88,33 -z America/Chicago -ch
+    ```
+
+REMEMBER: negative longitudes are EAST of Greenwich.
+
+For information on setting environment variables, consult your local guru.
 
 ## Author
 Danny Sadinoff
@@ -135,6 +176,8 @@ The original motivation for the algorithms in this program was the _Tur Shulchan
 For version 3, much of the program was rewritten using Emacs 19’s calendar routines by Edward M. Reingold and Nachum Dershowitz. Their program is extremely clear and provides many instructive examples of fine calendar code in emacs-LISP.
 
 For version 4, candle-lighting times were rewritting using Derick Rethans's [timelib](https://github.com/derickr/timelib).
+
+Version 5 was ported from C to Go.
 
 A well written treatment of the Jewish calendar for the layman can be found in _Understanding the Jewish Calendar_ by Rabbi Nathan Bushwick. A more complete bibliography on the topic can be found there, as well as in the _Encyclopedia Judaica_ entry on the calendar.
 
@@ -176,72 +219,17 @@ Hebcal cannot handle date computations before 2 C.E. sorry.
 
 To build hebcal from the source repository, you'll need a few more tools than are needed in order to build from distributions. In particular, you'll need
 
+* Go version 1.13 or higher
 * GNU autoconf version 2.59
 * GNU automake version 1.9.5  or later
 * GNU m4 version 1.4.3 or later
 * GNU make v3.79 or later
-* Perl v5.0 or later
-* gperf
 
 Once you have those, you can prepare the build environment as follows:
 
 ```
 autoreconf --install && ./configure && make
 ```
-
-If you would like customize the program for your city, pass additional options to `configure` above.
-
-Examine `cities.h`.  If your city is in there, run `configure` using the
-  `--with-default-city=CITYNAME` option as follows:
-   ```
-   ./configure --with-default-city=Chicago
-   ```
-you may have to quote spaces:
-   ```
-   ./configure --with-default-city="Los Angeles"
-   ```
-
-If your city is NOT on the list, then in order to customize hebcal to your city, you will need to pass it the latitude, longitude, and timezone (see the manual).
-
-Suppose you live in Oshkosh, Wisconsin.
-Your lattitude is 44d1'29", and your longitude is 88d32'33".
-You are in timezone `America/Chicago`.
-We'll round the geographic coordinates to the nearest minute.
-
-In order to get candlelighting times for the current year, you would type
-  ```
-  hebcal -ch -l44,1 -L 88,33 -z America/Chicago
-  ```
-
-Now this can get rough on the fingers if you do it a lot, so the `HEBCAL_OPTS` environment variable is available for you to use.  Every time hebcal is run, it checks this variable.  If it is non-empty, the arguments in that variable are read as though they were typed at the command line before the ones you actually type.
-
-So you might set `HEBCAL_OPTS` to be
-   ```
-   -l44,1 -L 88,33 -z America/Chicago
-   ```
-and if you type
-    ```
-    hebcal -ch
-    ```
-hebcal will think you typed
-    ```
-    hebcal -l44,1 -L 88,33 -z America/Chicago -ch
-    ```
-
-REMEMBER: negative longitudes are EAST of Greenwich.
-
-For information on setting environment variables, consult your local guru.
-
-Once an install is complete, there are three ways to change cities, or pick a city not on the list:
-
-1. change the `CITY` environment variable
-2. change the `HEBCAL_OPTS` variable to reflect the new city's coordinates.
-3. pass a `-C city` argument to hebcal.
-
-You can check where hebcal thinks it is by typing
-    `hebcal info`
-at the command line.
-
 
 ## DISTRIBUTION
    Copyright (C) 1994-2011  Danny Sadinoff

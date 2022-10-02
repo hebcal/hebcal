@@ -99,6 +99,9 @@ func handleArgs() hebcal.CalOptions {
 		"daf-yomi", 'F', "Output the Daf Yomi for the entire date range")
 	opt.FlagLong(&calOptions.MishnaYomi,
 		"mishna-yomi", 0, "Output the Mishna Yomi for the entire date range")
+	opt.FlagLong(&calOptions.YomKippurKatan,
+		"ykk", 0, "Include Yom Kippur Katan, minor day of atonement occurring monthly on the day preceding each Rosh Chodesh")
+	opt.FlagLong(&calOptions.ShabbatMevarchim, "mevarchim", 0, "Include Shabbat Mevarchim HaChodesh")
 
 	opt.FlagLong(&calOptions.NoHolidays,
 		"no-holidays", 'h', "Suppress default holidays")
@@ -109,6 +112,8 @@ func handleArgs() hebcal.CalOptions {
 		"israeli", 'i', "Israeli holiday and sedra schedule")
 	opt.FlagLong(&calOptions.NoModern,
 		"no-modern", 0, "Suppress modern holidays")
+	opt.FlagLong(&calOptions.NoMinorFast, "no-mf", 0, "Suppress minor fast days")
+	opt.FlagLong(&calOptions.NoSpecialShabbat, "no-special", 0, "Suppress Special Shabbatot")
 	opt.FlagLong(&calOptions.Omer,
 		"omer", 'o', "Add days of the Omer")
 	opt.FlagLong(&calOptions.Sedrot,

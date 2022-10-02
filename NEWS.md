@@ -1,3 +1,19 @@
+Changes in 5.1.0
+* Minimum required version of Go is 1.13 (#237)
+* Added Birkat HaChama once every 28 years
+* Added Shushan Purim Katan on leap years
+* Added Purim Meshulash variation for Shushan Purim (#212 and #20)
+* Added 6 new command-line flags to change output behavior.
+
+Option | Description
+--- | ---
+  --mevarchim | Include Shabbat Mevarchim HaChodesh.
+  --mishna-yomi | Output the Mishna Yomi for the entire date range.
+  --no-mf | Suppress minor fast days.
+  --no-modern | Suppress modern Israeli holidays.
+  --no-special | Suppress Special Shabbatot.
+  --ykk | Include Yom Kippur Katan, minor day of atonement occurring monthly on the day preceding each Rosh Chodesh
+
 Changes in 5.0.4
 * Add additional halachic times when `-Z` (zemanim) is specifed:
   - Alot haShachar
