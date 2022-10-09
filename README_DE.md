@@ -51,12 +51,13 @@ Option | Beschreibung
  -I, --infile INFILE | Holt hebräische Benutzerereignisse, die nicht Jahrzeiten sind, aus der angegebenen Datei. Das Format ist: `mmm tt string`, wobei `mmm` ein hebräischer Monatsname ist.
  -t, --today | Nur Ausgabe für das heutige Datum
  -T, --today-brief | Gibt die relevanten Informationen von heute aus, kein gregorianisches Datum.
+ -X, --exit-if-chag | Exit silently with non-zero status if today is Shabbat or Chag; exit with 0 status if today is chol.
  -Y, --yahrtzeit YAHRTZEIT | Holt Jahrzeitdaten aus der angegebenen Datei. Das Format ist: `mm tt jjjj string`. Die ersten drei Felder geben ein *Gregorianisches* Datum an.
 
 #### Ausgabeoptionen
 Option | Beschreibung
 --- | ---
-   -8 | 8-Bit-Hebräisch verwenden (ISO-8859-8-Logisch).
+   -8 | 8-Bit-Hebräisch verwenden (UTF-8).
    -a, --ashkenazi | Aschkenasisches Hebräisch verwenden.
    -d, --add-hebrew-dates | gibt das hebräische Datum für den gesamten Datumsbereich aus.
    -D, --add-hebrew-dates-for-events | gibt das hebräische Datum für Tage mit Ereignissen aus
@@ -66,7 +67,7 @@ Option | Beschreibung
    -g, --iso-8601 | ISO-8601-Datumsangaben ausgeben -- JJJJ-MM-TT (dies hat Vorrang vor -y)
    -h, --no-holidays | Standard-Feiertage unterdrücken.
    -i, --israeli | Israelisches Sedra-Schema verwenden.
-   --lang LANG | ISO 639-1 LANG-Code zur Sprachwahl verwenden (einen von `ashkenazi`, `ashkenazi_litvish`, `ashkenazi_poylish`, `ashkenazi_standard`, `de`, `es`, `fi`, `fr`, `he`, `hu`, `pl`, `ru`)
+   --lang LANG | ISO 639-1 LANG-Code zur Sprachwahl verwenden (einen von `ashkenazi`, `ashkenazi_litvish`, `ashkenazi_poylish`, `ashkenazi_romanian`, `ashkenazi_standard`, `de`, `es`, `fi`, `fr`, `he`, `hu`, `pl`, `ro`, `ru`, `uk`)
    -M, --molad | Druckt den Molad am Schabbat Meworchim.
    -o, --omer | Tage des Omers hinzufügen.
    -O, --sunrise-and-sunset | Sonnenaufgangs- und Sonnenuntergangszeiten zu jedem Tag ausgeben.

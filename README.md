@@ -53,13 +53,14 @@ Option | Description
  -I, --infile INFILE | Get non-yahrtzeit Hebrew user events from specified file. The format is: `mmm dd string`, Where `mmm` is a Hebrew month name.
  -t, --today | Only output for today's date
  -T, --today-brief | Print today's pertinent information, no Gregorian date.
+ -X, --exit-if-chag | Exit silently with non-zero status if today is Shabbat or Chag; exit with 0 status if today is chol.
  -Y, --yahrtzeit YAHRTZEIT | Get yahrtzeit dates from specified file. The format is: `mm dd yyyy string`. The first three fields specify a *Gregorian* date.
 
 #### Output Options
 Option | Description
 --- | ---
-   -8 | Use 8-bit Hebrew (ISO-8859-8-Logical).
-   -a, --ashkenazi | Use Ashkenazi Hebrew.
+   -8 | Use UTF-8 Hebrew (alias for --lang=he).
+   -a, --ashkenazi | Use Ashkenazi Hebrew transliterations (alias for --lang=ashkenazi).
    -d, --add-hebrew-dates | print the Hebrew date for the entire date range.
    -D, --add-hebrew-dates-for-events | print the Hebrew date for dates with some events
    -e, --euro-dates | Output "European" dates -- DD.MM.YYYY format.
@@ -68,7 +69,7 @@ Option | Description
    -g, --iso-8601 | Output ISO 8601 dates -- YYYY-MM-DD (this overrides -y)
    -h, --no-holidays | Suppress default holidays.
    -i, --israeli | Use Israeli sedra scheme.
-   --lang LANG | Use ISO 639-1 LANG code (one of `ashkenazi`, `ashkenazi_litvish`, `ashkenazi_poylish`, `ashkenazi_standard`, `de`, `es`, `fi`, `fr`, `he`, `hu`, `pl`, `ru`)
+   --lang LANG | Use ISO 639-1 LANG code (one of `ashkenazi`, `ashkenazi_litvish`, `ashkenazi_poylish`, `ashkenazi_romanian`, `ashkenazi_standard`, `de`, `es`, `fi`, `fr`, `he`, `hu`, `pl`, `ro`, `ru`, `uk`)
    --mevarchim | Include Shabbat Mevarchim HaChodesh.
    --mishna-yomi | Output the Mishna Yomi for the entire date range.
    -M, --molad | Print the molad on shabbat mevorchim.
@@ -83,7 +84,6 @@ Option | Description
    --verbose | Verbose mode, currently used only for --exit-if-chag
    -w, --weekday | Add day of the week.
    -W, --abbreviated | Weekly view. Omer, dafyomi, and non-date-specific zemanim are shown once a week, on the day which corresponds to the first day in the range.
-   -X, --exit-if-chag | Exit silently with non-zero status if today is Shabbat or Chag; exit with 0 status if today is chol.
    -x, --no-rosh-chodesh | Suppress Rosh Chodesh.
    -y, --year-abbrev | Print only last two digits of year.
    --years N | Generate events for `N` years (default `1`)
