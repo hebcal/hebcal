@@ -219,18 +219,15 @@ Hebcal cannot handle date computations before 2 C.E. sorry.
 
 ## Build & Install
 
-To build hebcal from the source repository, you'll need a few more tools than are needed in order to build from distributions. In particular, you'll need
+To build hebcal from the source repository, you'll need the following:
 
 * Go version 1.13 or higher
-* GNU autoconf version 2.59
-* GNU automake version 1.9.5  or later
-* GNU m4 version 1.4.3 or later
 * GNU make v3.79 or later
 
 Once you have those, you can prepare the build environment as follows:
 
 ```
-autoreconf --install && ./configure && make
+make clean all
 ```
 
 ## DISTRIBUTION

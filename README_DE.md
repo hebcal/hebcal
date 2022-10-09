@@ -174,30 +174,14 @@ Hebcal kann leider keine Datumsberechnungen vor dem Jahr 2 n. .d. Z. durchführe
 
 Um hebcal aus dem Quellcode-Repository zu bauen, benötigen Sie ein paar mehr Werkzeuge, als für das Bauen aus Distributionen sonst nötig sind. Insbesondere benötigen Sie
 
-* GNU autoconf Version 2.59
-* GNU automake Version 1.9.5 oder höher
-* GNU m4 Version 1.4.3 oder höher
+* Go version 1.13 oder höher
 * GNU make Version 3.79 oder höher
-* Perl v5.0 oder höher
-* gperf
 
 Sobald Sie diese haben, können Sie die Build-Umgebung wie folgt vorbereiten:
 
 ```
-autoreconf --install && ./configure && make
+make clean all
 ```
-
-Wenn Sie das Programm für Ihre Stadt anpassen möchten, übergeben Sie zusätzliche Optionen an `configure` oben.
-
-Untersuchen Sie `cities.h`.  Wenn Ihre Stadt dort enthalten ist, führen Sie `configure` mit der Option
-  `--mit-default-city=STÄDTENAME`-Option wie folgt aus:
-   ```
-   ./configure --with-default-city=Chicago
-   ```
-Sie müssen eventuell Leerzeichen angeben:
-   ```
-   ./configure --with-default-city="Los Angeles"
-   ```
 
 Wenn Ihre Stadt NICHT auf der Liste steht, müssen Sie hebcal den Breitengrad, den Längengrad und die Zeitzone übergeben, um es an Ihre Stadt anpassen zu können (siehe Handbuch).
 

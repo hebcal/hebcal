@@ -8,5 +8,3 @@ arch:
  - amd64
  - ppc64le
 sudo: false
-# Change this to your needs
-script: autoreconf --install && ./configure && make clean all
