@@ -2,10 +2,4 @@ language: go
 go:
   - "1.13"
   - stable
-os:
-  - linux
-  - osx
-arch:
- - amd64
- - ppc64le
 sudo: false
