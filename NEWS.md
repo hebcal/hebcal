@@ -1,3 +1,7 @@
+Changes in 5.2.0
+* New `-X`, `--exit-if-chag` feature to silently exit if it's a rest day (#102)
+* Replace autoconf with standard Makefile
+
 Changes in 5.1.0
 * Minimum required version of Go is 1.13 (#237)
 * Added Birkat HaChama once every 28 years

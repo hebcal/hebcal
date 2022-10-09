@@ -46,6 +46,8 @@ var gregDateOutputFormatCode_sw = AMERICAN
 var today_sw = false
 var noGreg_sw = false
 var yearDigits_sw = false
+var isTodayChag_sw = false
+var verbose_sw = false
 
 func handleArgs() hebcal.CalOptions {
 	calOptions := hebcal.CalOptions{}
@@ -54,12 +56,12 @@ func handleArgs() hebcal.CalOptions {
 	opt.SetParameters("[[ month [ day ]] year]")
 	var (
 		help            = opt.BoolLong("help", 0, "print this help text")
-		ashkenazi_sw    = opt.BoolLong("ashkenazi", 'a', "Use Ashkenazi Hebrew transliterations")
+		ashkenazi_sw    = opt.BoolLong("ashkenazi", 'a', "Use Ashkenazi Hebrew transliterations (alias for --lang=ashkenazi)")
 		euroDates_sw    = opt.BoolLong("euro-dates", 'e', "Output 'European' dates -- DD.MM.YYYY")
 		iso8601dates_sw = opt.BoolLong("iso-8601", 'g', "Output ISO 8601 dates -- YYYY-MM-DD")
 		version_sw      = opt.BoolLong("version", 0, "Show version number")
 		cityNameArg     = opt.StringLong("city", 'C', "", "City for candle-lighting", "CITY")
-		utf8_hebrew_sw  = opt.BoolLong("", '8', "Use UTF-8 Hebrew")
+		utf8_hebrew_sw  = opt.BoolLong("", '8', "Use UTF-8 Hebrew (alias for --lang=he)")
 	)
 
 	var latitudeStr, longitudeStr, tzid string
@@ -71,6 +73,11 @@ func handleArgs() hebcal.CalOptions {
 
 	opt.FlagLong(&today_sw, "today", 't', "Only output for today's date")
 	opt.FlagLong(&noGreg_sw, "today-brief", 'T', "Print today's pertinent information")
+	opt.FlagLong(&isTodayChag_sw, "exit-if-chag", 'X',
+		"Exit silently with non-zero status if today is Shabbat or Chag; exit with 0 status if today is chol")
+	opt.FlagLong(&verbose_sw, "verbose", 0,
+		"Verbose mode, currently used only for --exit-if-chag")
+
 	opt.FlagLong(&yearDigits_sw, "year-abbrev", 'y', "Print only last two digits of year")
 	opt.FlagLong(&tabs_sw, "tabs", 'r', "Tab delineated format")
 	opt.FlagLong(&weekday_sw, "weekday", 'w', "Add day of the week")
@@ -290,7 +297,7 @@ on the yahrtzeit. Events are printed regardless of the
 		calOptions.HavdalahMins = 72
 	}
 
-	if noGreg_sw {
+	if noGreg_sw || isTodayChag_sw {
 		today_sw = true
 	}
 
@@ -331,6 +338,9 @@ on the yahrtzeit. Events are printed regardless of the
 			switch args[0] {
 			case "help":
 				displayHelp(opt)
+				os.Exit(0)
+			case "version":
+				fmt.Printf("Hebcal version %s\n", Version)
 				os.Exit(0)
 			case "info":
 				fmt.Printf("hebcal version %s\n\n", Version)
@@ -386,7 +396,10 @@ on the yahrtzeit. Events are printed regardless of the
 	}
 
 	if calOptions.NumYears != 1 && rangeType != YEAR {
-		fmt.Fprintf(os.Stderr, "Sorry, --years option works only with entire-year calendars")
+		fmt.Fprintf(os.Stderr, "Sorry, --years option works only with entire-year calendars\n")
+		os.Exit(1)
+	} else if today_sw && rangeType != DAY && rangeType != TODAY {
+		fmt.Fprintf(os.Stderr, "Sorry, --today option works only with single-day calendars\n")
 		os.Exit(1)
 	}
 	return calOptions
@@ -469,11 +482,83 @@ func main() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
+
+	if isTodayChag_sw {
+		reason := isTodayChag(&calOptions, events)
+		if reason != nil {
+			if verbose_sw {
+				fmt.Println(reason.Render(lang))
+			}
+			os.Exit(1)
+		}
+		os.Exit(0)
+	}
+
 	for _, ev := range events {
 		gregDate := printGregDate(ev.GetDate())
 		desc := ev.Render(lang)
 		fmt.Printf("%s%s\n", gregDate, desc)
 	}
+}
+
+func isTodayChag(calOptions *hebcal.CalOptions, events []hebcal.CalEvent) hebcal.CalEvent {
+	if calOptions.Location == nil {
+		for _, ev := range events {
+			if (ev.GetFlags() & hebcal.CHAG) != 0 {
+				return ev
+			}
+		}
+		if calOptions.Start.Weekday() == time.Saturday {
+			return hebcal.HolidayEvent{
+				Date: calOptions.Start,
+				Desc: "Saturday",
+			}
+		}
+		return nil
+	}
+
+	var now int64
+	if rangeType == TODAY {
+		now = time.Now().Unix()
+	} else {
+		loc, err := time.LoadLocation(calOptions.Location.TimeZoneId)
+		if err != nil {
+			panic(err)
+		}
+		hour, min, sec := time.Now().Clock()
+		t := time.Date(theYear, theGregMonth, theDay, hour, min, sec, 0, loc)
+		now = t.Unix()
+	}
+
+	// first pass: find today's candle-lighting and Havdalah events (if any)
+	var candleLightingEv *hebcal.TimedEvent
+	var havdalahEv *hebcal.TimedEvent
+	for _, ev := range events {
+		timedEv, ok := ev.(hebcal.TimedEvent)
+		if ok {
+			if timedEv.Desc == "Candle lighting" {
+				candleLightingEv = &timedEv
+			} else if timedEv.Desc == "Havdalah" {
+				havdalahEv = &timedEv
+			}
+		}
+	}
+	// If there's a candle-lighting or Havdalah event today, ignore other
+	// events and check only if the current time is during the chag window
+	if candleLightingEv != nil && now >= candleLightingEv.EventTime.Unix() {
+		return candleLightingEv
+	} else if havdalahEv != nil && now <= havdalahEv.EventTime.Unix() {
+		return havdalahEv
+	} else {
+		// Today still might be chag (e.g. RH first day, or perhaps
+		// day 1 of a 2-day chag chutz l'aretz)
+		for _, ev := range events {
+			if (ev.GetFlags() & hebcal.CHAG) != 0 {
+				return ev
+			}
+		}
+	}
+	return nil
 }
 
 func printGregDate(hd hdate.HDate) string {

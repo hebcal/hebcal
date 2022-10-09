@@ -80,8 +80,10 @@ Option | Description
    -r, --tabs | Tab delineated format.
    -s, --sedrot | Add weekly sedrot on Saturday.
    -S, --daily-sedra | Print sedrah of the week on all calendar days.
+   --verbose | Verbose mode, currently used only for --exit-if-chag
    -w, --weekday | Add day of the week.
    -W, --abbreviated | Weekly view. Omer, dafyomi, and non-date-specific zemanim are shown once a week, on the day which corresponds to the first day in the range.
+   -X, --exit-if-chag | Exit silently with non-zero status if today is Shabbat or Chag; exit with 0 status if today is chol.
    -x, --no-rosh-chodesh | Suppress Rosh Chodesh.
    -y, --year-abbrev | Print only last two digits of year.
    --years N | Generate events for `N` years (default `1`)
