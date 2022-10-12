@@ -484,14 +484,11 @@ func main() {
 	}
 
 	if isTodayChag_sw {
-		reason := isTodayChag(&calOptions, events)
-		if reason != nil {
-			if verbose_sw {
-				fmt.Println(reason.Render(lang))
-			}
-			os.Exit(1)
+		status, reason := isTodayChag(&calOptions, events)
+		if reason != "" && verbose_sw {
+			fmt.Println(reason)
 		}
-		os.Exit(0)
+		os.Exit(status)
 	}
 
 	for _, ev := range events {
@@ -501,33 +498,32 @@ func main() {
 	}
 }
 
-func isTodayChag(calOptions *hebcal.CalOptions, events []hebcal.CalEvent) hebcal.CalEvent {
+func isTodayChag(calOptions *hebcal.CalOptions, events []hebcal.CalEvent) (int, string) {
 	if calOptions.Location == nil {
 		for _, ev := range events {
 			if (ev.GetFlags() & hebcal.CHAG) != 0 {
-				return ev
+				return 1, ev.Render(lang)
 			}
 		}
 		if calOptions.Start.Weekday() == time.Saturday {
-			return hebcal.HolidayEvent{
-				Date: calOptions.Start,
-				Desc: "Saturday",
-			}
+			reason, _ := locales.LookupTranslation("Shabbat", lang)
+			return 1, reason
 		}
-		return nil
+		return 0, ""
 	}
 
-	var now int64
-	if rangeType == TODAY {
-		now = time.Now().Unix()
-	} else {
-		loc, err := time.LoadLocation(calOptions.Location.TimeZoneId)
-		if err != nil {
-			panic(err)
-		}
-		hour, min, sec := time.Now().Clock()
-		t := time.Date(theYear, theGregMonth, theDay, hour, min, sec, 0, loc)
-		now = t.Unix()
+	loc, err := time.LoadLocation(calOptions.Location.TimeZoneId)
+	if err != nil {
+		panic(err)
+	}
+	calOptions.Hour24 = true
+
+	now := time.Now().In(loc)
+	nowSec := now.Unix()
+	if rangeType != TODAY {
+		hour, min, sec := now.Clock()
+		now = time.Date(theYear, theGregMonth, theDay, hour, min, sec, 0, loc)
+		nowSec = now.Unix()
 	}
 
 	// first pass: find today's candle-lighting and Havdalah events (if any)
@@ -545,20 +541,25 @@ func isTodayChag(calOptions *hebcal.CalOptions, events []hebcal.CalEvent) hebcal
 	}
 	// If there's a candle-lighting or Havdalah event today, ignore other
 	// events and check only if the current time is during the chag window
-	if candleLightingEv != nil && now >= candleLightingEv.EventTime.Unix() {
-		return candleLightingEv
-	} else if havdalahEv != nil && now <= havdalahEv.EventTime.Unix() {
-		return havdalahEv
+	if candleLightingEv != nil && nowSec >= candleLightingEv.EventTime.Unix() {
+		return 1, now.Format(time.RFC1123Z) + " >= " + candleLightingEv.Render(lang)
+	} else if calOptions.Start.Weekday() == time.Saturday && candleLightingEv != nil && nowSec < candleLightingEv.EventTime.Unix() {
+		reason, _ := locales.LookupTranslation("Shabbat", lang)
+		return 1, reason
+	} else if havdalahEv != nil && nowSec >= havdalahEv.EventTime.Unix() {
+		return 0, "" // Shabbat or Chag has already ended today
+	} else if havdalahEv != nil && nowSec < havdalahEv.EventTime.Unix() {
+		return 1, now.Format(time.RFC1123Z) + " < " + havdalahEv.Render(lang)
 	} else {
 		// Today still might be chag (e.g. RH first day, or perhaps
 		// day 1 of a 2-day chag chutz l'aretz)
 		for _, ev := range events {
 			if (ev.GetFlags() & hebcal.CHAG) != 0 {
-				return ev
+				return 1, ev.Render(lang)
 			}
 		}
 	}
-	return nil
+	return 0, ""
 }
 
 func printGregDate(hd hdate.HDate) string {
@@ -570,7 +571,7 @@ func printGregDate(hd hdate.HDate) string {
 			str += d.Format(time.RFC3339)[:10]
 		} else {
 			if gregDateOutputFormatCode_sw == EURO {
-				str += fmt.Sprintf("%d.%d.", day, month) /* dd/mm/yyyy */
+				str += fmt.Sprintf("%d.%d.", day, month) /* dd.mm.yyyy */
 			} else {
 				str += fmt.Sprintf("%d/%d/", month, day) /* mm/dd/yyyy */
 			}
