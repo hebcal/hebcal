@@ -1,3 +1,7 @@
+Changes in 5.2.1
+* Bug fix: `-X`, `--exit-if-chag` exits with nonzero status when Saturday
+  evening is Erev chag (#102)
+
 Changes in 5.2.0
 * New `-X`, `--exit-if-chag` feature to silently exit if it's a rest day (#102)
 * Replace autoconf with standard Makefile
