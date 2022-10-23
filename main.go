@@ -529,27 +529,38 @@ func isTodayChag(calOptions *hebcal.CalOptions, events []hebcal.CalEvent) (int, 
 	// first pass: find today's candle-lighting and Havdalah events (if any)
 	var candleLightingEv *hebcal.TimedEvent
 	var havdalahEv *hebcal.TimedEvent
+	var candlelightingSec, havdalahSec int64
 	for _, ev := range events {
 		timedEv, ok := ev.(hebcal.TimedEvent)
 		if ok {
 			if timedEv.Desc == "Candle lighting" {
 				candleLightingEv = &timedEv
+				candlelightingSec = candleLightingEv.EventTime.Unix()
 			} else if timedEv.Desc == "Havdalah" {
 				havdalahEv = &timedEv
+				havdalahSec = havdalahEv.EventTime.Unix()
 			}
 		}
 	}
 	// If there's a candle-lighting or Havdalah event today, ignore other
 	// events and check only if the current time is during the chag window
-	if candleLightingEv != nil && nowSec >= candleLightingEv.EventTime.Unix() {
-		return 1, now.Format(time.RFC1123Z) + " >= " + candleLightingEv.Render(lang)
-	} else if calOptions.Start.Weekday() == time.Saturday && candleLightingEv != nil && nowSec < candleLightingEv.EventTime.Unix() {
+	if candlelightingSec != 0 && nowSec >= candlelightingSec {
+		reason := now.Format(time.RFC1123Z) + " >= " + candleLightingEv.Render(lang)
+		if candleLightingEv.LinkedEvent != nil {
+			reason += " / " + candleLightingEv.LinkedEvent.Render(lang)
+		}
+		return 1, reason
+	} else if calOptions.Start.Weekday() == time.Saturday && candlelightingSec != 0 && nowSec < candlelightingSec {
 		reason, _ := locales.LookupTranslation("Shabbat", lang)
 		return 1, reason
-	} else if havdalahEv != nil && nowSec >= havdalahEv.EventTime.Unix() {
+	} else if havdalahSec != 0 && nowSec >= havdalahSec {
 		return 0, "" // Shabbat or Chag has already ended today
-	} else if havdalahEv != nil && nowSec < havdalahEv.EventTime.Unix() {
-		return 1, now.Format(time.RFC1123Z) + " < " + havdalahEv.Render(lang)
+	} else if havdalahSec != 0 && nowSec < havdalahSec {
+		reason := now.Format(time.RFC1123Z) + " < " + havdalahEv.Render(lang)
+		if havdalahEv.LinkedEvent != nil {
+			reason += " / " + havdalahEv.LinkedEvent.Render(lang)
+		}
+		return 1, reason
 	} else {
 		// Today still might be chag (e.g. RH first day, or perhaps
 		// day 1 of a 2-day chag chutz l'aretz)

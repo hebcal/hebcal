@@ -1,3 +1,6 @@
+Changes in 5.2.2
+* If Yitzhak Rabin Memorial Day falls either on Friday or Saturday, the memorial day will be held on the preceding Thursday
+
 Changes in 5.2.1
 * Bug fix: `-X`, `--exit-if-chag` exits with nonzero status when Saturday
   evening is Erev chag (#102)
