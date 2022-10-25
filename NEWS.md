@@ -1,3 +1,6 @@
+Changes in 5.3.0
+* New flag `--chag-only` to Output only Chag and Erev Chag events (when melakha/labor is prohibited) (#160)
+
 Changes in 5.2.2
 * If Yitzhak Rabin Memorial Day falls either on Friday or Saturday, the memorial day will be held on the preceding Thursday
 

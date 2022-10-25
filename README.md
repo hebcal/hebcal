@@ -61,6 +61,7 @@ Option | Description
 --- | ---
    -8 | Use UTF-8 Hebrew (alias for --lang=he).
    -a, --ashkenazi | Use Ashkenazi Hebrew transliterations (alias for --lang=ashkenazi).
+   --chag-only | Output only Chag and Erev Chag events (when melakha/labor is prohibited)
    -d, --add-hebrew-dates | print the Hebrew date for the entire date range.
    -D, --add-hebrew-dates-for-events | print the Hebrew date for dates with some events
    -e, --euro-dates | Output "European" dates -- DD.MM.YYYY format.

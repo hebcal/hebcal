@@ -1,16 +1,8 @@
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/hebcal/gematriya v1.0.0 h1:zvWEXxUt75iVXBZNtcDacDl5v1p8IlPJ3o6Um36rnuY=
-github.com/hebcal/gematriya v1.0.0/go.mod h1:6Gf3X96FyOGFZJbksOKSaL2mTVMcwwkeo0BzyL/sI2s=
 github.com/hebcal/gematriya v1.0.1 h1:lktI5tX4lxg2o2OIEQXGYiMWxL9VkbfOXa+/kamjrLQ=
 github.com/hebcal/gematriya v1.0.1/go.mod h1:hQJm5ggDgm45RsnaaSrYB387VIBDI0Kcq5wglx7KVpI=
-github.com/hebcal/hebcal-go v0.9.7 h1:fgm66XrBmHQLQm0u6Qac7BC9Mw/xonBd/p+MB/DNjag=
-github.com/hebcal/hebcal-go v0.9.7/go.mod h1:luMJOq2+beM8sjzAniTCjLPWRBDkBKa2wYpbpE2Uz74=
-github.com/hebcal/hebcal-go v0.9.8 h1:2nMtLCXZ/PHfo6vPfNogmkgmE0o3qLUttQ3AhzoZyCQ=
-github.com/hebcal/hebcal-go v0.9.8/go.mod h1:luMJOq2+beM8sjzAniTCjLPWRBDkBKa2wYpbpE2Uz74=
-github.com/hebcal/hebcal-go v0.9.9 h1:JfosexNYhg3/Ic0TLK4iIw8Mi9muqlMrxVLGwXhbrMQ=
-github.com/hebcal/hebcal-go v0.9.9/go.mod h1:Uvm7/sNOv3QcBWfpclhc9eH34DFP1nBRBeDeYt6IbC0=
 github.com/hebcal/hebcal-go v0.9.10 h1:lHEyIS6K49N6ytigifLqJN8hg7yfQaGukCK9QOtk00Q=
 github.com/hebcal/hebcal-go v0.9.10/go.mod h1:Uvm7/sNOv3QcBWfpclhc9eH34DFP1nBRBeDeYt6IbC0=
 github.com/nathan-osman/go-sunrise v1.1.0 h1:ZqZmtmtzs8Os/DGQYi0YMHpuUqR/iRoJK+wDO0wTCw8=

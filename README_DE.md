@@ -59,6 +59,7 @@ Option | Beschreibung
 --- | ---
    -8 | 8-Bit-Hebräisch verwenden (UTF-8).
    -a, --ashkenazi | Aschkenasisches Hebräisch verwenden.
+   --chag-only | ...
    -d, --add-hebrew-dates | gibt das hebräische Datum für den gesamten Datumsbereich aus.
    -D, --add-hebrew-dates-for-events | gibt das hebräische Datum für Tage mit Ereignissen aus
    -e, --euro-dates | "Europäische" Daten ausgeben - Format TT.MM.JJJJ.
