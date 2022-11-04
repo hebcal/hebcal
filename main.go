@@ -48,7 +48,6 @@ var noGreg_sw = false
 var yearDigits_sw = false
 var isTodayChag_sw = false
 var verbose_sw = false
-var chagOnly_sw = false
 
 func handleArgs() hebcal.CalOptions {
 	calOptions := hebcal.CalOptions{}
@@ -78,6 +77,7 @@ func handleArgs() hebcal.CalOptions {
 		"Exit silently with non-zero status if today is Shabbat or Chag; exit with 0 status if today is chol")
 	opt.FlagLong(&verbose_sw, "verbose", 0,
 		"Verbose mode, currently used only for --exit-if-chag")
+	var chagOnly_sw = false
 	opt.FlagLong(&chagOnly_sw, "chag-only", 0,
 		"Output only Chag and Erev Chag events (when melakha/labor is prohibited)")
 
@@ -315,6 +315,11 @@ on the yahrtzeit. Events are printed regardless of the
 		calOptions.IsHebrewYear = false
 	}
 
+	if chagOnly_sw {
+		calOptions.Mask = hebcal.CHAG | hebcal.LIGHT_CANDLES |
+			hebcal.LIGHT_CANDLES_TZEIS | hebcal.YOM_TOV_ENDS
+	}
+
 	if *yahrzeitFileName != "" {
 		calOptions.Yahrzeits = readYahrzeitFile(*yahrzeitFileName)
 	}
@@ -494,13 +499,7 @@ func main() {
 		os.Exit(status)
 	}
 
-	chagOnlyMask := hebcal.CHAG | hebcal.LIGHT_CANDLES |
-		hebcal.LIGHT_CANDLES_TZEIS | hebcal.YOM_TOV_ENDS
-
 	for _, ev := range events {
-		if chagOnly_sw && (ev.GetFlags()&chagOnlyMask) == 0 {
-			continue
-		}
 		gregDate := printGregDate(ev.GetDate())
 		desc := ev.Render(lang)
 		fmt.Printf("%s%s\n", gregDate, desc)
