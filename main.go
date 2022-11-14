@@ -334,7 +334,7 @@ on the yahrtzeit. Events are printed regardless of the
 	case 0:
 		if calOptions.IsHebrewYear {
 			hd := hdate.FromGregorian(gregTodayYY, gregTodayMM, gregTodayDD)
-			theYear = hd.Year
+			theYear = hd.Year()
 		} else {
 			theYear = gregTodayYY
 		}
