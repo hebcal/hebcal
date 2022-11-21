@@ -106,9 +106,11 @@ func handleArgs() hebcal.CalOptions {
 		"hebrew-date", 'H', "Use Hebrew date ranges - only needed when e.g. hebcal -H 5373")
 
 	opt.FlagLong(&calOptions.DafYomi,
-		"daf-yomi", 'F', "Output the Daf Yomi for the entire date range")
+		"daf-yomi", 'F', "Output the Daf Yomi (Bavli) for the entire date range")
 	opt.FlagLong(&calOptions.MishnaYomi,
 		"mishna-yomi", 0, "Output the Mishna Yomi for the entire date range")
+	opt.FlagLong(&calOptions.YerushalmiYomi,
+		"yerushalmi", 0, "Output the Yerushalmi Yomi for the entire date range")
 	opt.FlagLong(&calOptions.YomKippurKatan,
 		"ykk", 0, "Include Yom Kippur Katan, minor day of atonement occurring monthly on the day preceding each Rosh Chodesh")
 	opt.FlagLong(&calOptions.ShabbatMevarchim, "mevarchim", 0, "Include Shabbat Mevarchim HaChodesh")

@@ -1,3 +1,6 @@
+Changes in 5.4.0
+* Jerusalem Talmud (Yerushalmi Yomi) `--yerushalmi`
+
 Changes in 5.3.0
 * New flag `--chag-only` to Output only Chag and Erev Chag events (when melakha/labor is prohibited) (#160)
 

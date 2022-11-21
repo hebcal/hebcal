@@ -66,7 +66,7 @@ Option | Description
    -D, --add-hebrew-dates-for-events | print the Hebrew date for dates with some events
    -e, --euro-dates | Output "European" dates -- DD.MM.YYYY format.
    -E, --24hour | Output 24-hour times (e.g. 18:37 instead of 6:37).
-   -F, --daf-yomi | Output the Daf Yomi for the entire date range.
+   -F, --daf-yomi | Output the Daf Yomi (Bavli) for the entire date range.
    -g, --iso-8601 | Output ISO 8601 dates -- YYYY-MM-DD (this overrides -y)
    -h, --no-holidays | Suppress default holidays.
    -i, --israeli | Use Israeli sedra scheme.
@@ -88,6 +88,7 @@ Option | Description
    -x, --no-rosh-chodesh | Suppress Rosh Chodesh.
    -y, --year-abbrev | Print only last two digits of year.
    --years N | Generate events for `N` years (default `1`)
+   --yerushalmi | Output the Yerushalmi Yomi for the entire date range.
    --ykk | Include Yom Kippur Katan, minor day of atonement occurring monthly on the day preceding each Rosh Chodesh
 
 #### Options related to candle-lighting times
