@@ -1,4 +1,4 @@
-Changes in 5.4.0
+Changes in 5.4.1
 * Jerusalem Talmud (Yerushalmi Yomi) `--yerushalmi`
 
 Changes in 5.3.0
