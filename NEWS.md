@@ -1,3 +1,6 @@
+Changes in 5.4.2
+* New flag `--schottenstein` for the Schottenstein edition of Jerusalem Talmud (Yerushalmi Yomi)
+
 Changes in 5.4.1
 * Jerusalem Talmud (Yerushalmi Yomi) `--yerushalmi`
 

@@ -12,6 +12,7 @@ import (
 	"github.com/hebcal/hebcal-go/hdate"
 	"github.com/hebcal/hebcal-go/hebcal"
 	"github.com/hebcal/hebcal-go/locales"
+	"github.com/hebcal/hebcal-go/yerushalmi"
 	"github.com/hebcal/hebcal-go/zmanim"
 	getopt "github.com/pborman/getopt/v2"
 )
@@ -62,6 +63,7 @@ func handleArgs() hebcal.CalOptions {
 		version_sw      = opt.BoolLong("version", 0, "Show version number")
 		cityNameArg     = opt.StringLong("city", 'C', "", "City for candle-lighting", "CITY")
 		utf8_hebrew_sw  = opt.BoolLong("", '8', "Use UTF-8 Hebrew (alias for --lang=he)")
+		schottenstein   = opt.BoolLong("schottenstein", 0, "Use Schottenstein edition of Yerushalmi Yomi")
 	)
 
 	var latitudeStr, longitudeStr, tzid string
@@ -194,6 +196,10 @@ on the yahrtzeit. Events are printed regardless of the
 	}
 	if *iso8601dates_sw {
 		gregDateOutputFormatCode_sw = ISO
+	}
+	if *schottenstein {
+		calOptions.YerushalmiYomi = true
+		calOptions.YerushalmiEdition = yerushalmi.Schottenstein
 	}
 
 	if *ashkenazi_sw && *utf8_hebrew_sw {

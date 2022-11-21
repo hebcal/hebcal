@@ -81,6 +81,7 @@ Option | Description
    -O, --sunrise-and-sunset | Output sunrise and sunset times every day.
    -r, --tabs | Tab delineated format.
    -s, --sedrot | Add weekly sedrot on Saturday.
+   --schottenstein | Use Schottenstein edition of Yerushalmi Yomi
    -S, --daily-sedra | Print sedrah of the week on all calendar days.
    --verbose | Verbose mode, currently used only for --exit-if-chag
    -w, --weekday | Add day of the week.
