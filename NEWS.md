@@ -1,3 +1,6 @@
+Changes in 5.4.3
+* Fix Hebrew translations of Zmanim דִּימְדּוּמֵי בּוֹקֵר / "Dawn" and  דִּימְדּוּמֵי עֶרֶב / "Dusk" (#241)
+
 Changes in 5.4.2
 * New flag `--schottenstein` for the Schottenstein edition of Jerusalem Talmud (Yerushalmi Yomi)
 
