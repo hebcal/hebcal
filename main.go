@@ -8,6 +8,7 @@ import (
 
 	"os"
 
+	"github.com/hebcal/hebcal-go/event"
 	"github.com/hebcal/hebcal-go/greg"
 	"github.com/hebcal/hebcal-go/hdate"
 	"github.com/hebcal/hebcal-go/hebcal"
@@ -324,8 +325,8 @@ on the yahrtzeit. Events are printed regardless of the
 	}
 
 	if chagOnly_sw {
-		calOptions.Mask = hebcal.CHAG | hebcal.LIGHT_CANDLES |
-			hebcal.LIGHT_CANDLES_TZEIS | hebcal.YOM_TOV_ENDS
+		calOptions.Mask = event.CHAG | event.LIGHT_CANDLES |
+			event.LIGHT_CANDLES_TZEIS | event.YOM_TOV_ENDS
 	}
 
 	if *yahrzeitFileName != "" {
@@ -462,10 +463,6 @@ func parseGregOrHebMonth(calOptions *hebcal.CalOptions, theYear int, arg string,
 
 func main() {
 	calOptions := handleArgs()
-	if theYear < 1 || (calOptions.IsHebrewYear && theYear < 3761) {
-		fmt.Fprintf(os.Stderr, "Sorry, hebcal can only handle dates in the common era.\n")
-		os.Exit(1)
-	}
 	switch rangeType {
 	case TODAY:
 		calOptions.AddHebrewDates = true
@@ -514,10 +511,10 @@ func main() {
 	}
 }
 
-func isTodayChag(calOptions *hebcal.CalOptions, events []hebcal.CalEvent) (int, string) {
+func isTodayChag(calOptions *hebcal.CalOptions, events []event.CalEvent) (int, string) {
 	if calOptions.Location == nil {
 		for _, ev := range events {
-			if (ev.GetFlags() & hebcal.CHAG) != 0 {
+			if (ev.GetFlags() & event.CHAG) != 0 {
 				return 1, ev.Render(lang)
 			}
 		}
@@ -581,7 +578,7 @@ func isTodayChag(calOptions *hebcal.CalOptions, events []hebcal.CalEvent) (int, 
 		// Today still might be chag (e.g. RH first day, or perhaps
 		// day 1 of a 2-day chag chutz l'aretz)
 		for _, ev := range events {
-			if (ev.GetFlags() & hebcal.CHAG) != 0 {
+			if (ev.GetFlags() & event.CHAG) != 0 {
 				return 1, ev.Render(lang)
 			}
 		}
@@ -595,7 +592,9 @@ func printGregDate(hd hdate.HDate) string {
 		year, month, day := hd.Greg()
 		d := time.Date(year, month, day, 0, 0, 0, 0, time.UTC)
 		if gregDateOutputFormatCode_sw == ISO {
-			str += d.Format(time.RFC3339)[:10]
+			timeStr := d.Format(time.RFC3339)
+			idx := strings.IndexRune(timeStr, 'T')
+			str += timeStr[:idx]
 		} else {
 			if gregDateOutputFormatCode_sw == EURO {
 				str += fmt.Sprintf("%d.%d.", day, month) /* dd.mm.yyyy */

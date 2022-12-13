@@ -1,3 +1,6 @@
+Changes in 5.4.5
+* Experimental: support dates before common era (B.C.E.)
+
 Changes in 5.4.4
 * Fix Hebrew translations of Zmanim דִּימְדּוּמֵי בּוֹקֵר / "Dawn" and  דִּימְדּוּמֵי עֶרֶב / "Dusk" (#241)
 * Fix Hebrew translations of Misheyakir and Misheyakir Machmir (#241)

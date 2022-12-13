@@ -3,8 +3,8 @@ github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/hebcal/gematriya v1.0.1 h1:lktI5tX4lxg2o2OIEQXGYiMWxL9VkbfOXa+/kamjrLQ=
 github.com/hebcal/gematriya v1.0.1/go.mod h1:hQJm5ggDgm45RsnaaSrYB387VIBDI0Kcq5wglx7KVpI=
-github.com/hebcal/hebcal-go v0.9.16 h1:g0joOOBp7tsOjfbQ+Bub3L0HzCpRdF0TZr8nXz0bfXw=
-github.com/hebcal/hebcal-go v0.9.16/go.mod h1:Uvm7/sNOv3QcBWfpclhc9eH34DFP1nBRBeDeYt6IbC0=
+github.com/hebcal/hebcal-go v0.9.19 h1:AFce6VM9F2LruaWgCrK2fpbW+c3Svjo3kNv/w4GafT4=
+github.com/hebcal/hebcal-go v0.9.19/go.mod h1:Uvm7/sNOv3QcBWfpclhc9eH34DFP1nBRBeDeYt6IbC0=
 github.com/nathan-osman/go-sunrise v1.1.0 h1:ZqZmtmtzs8Os/DGQYi0YMHpuUqR/iRoJK+wDO0wTCw8=
 github.com/nathan-osman/go-sunrise v1.1.0/go.mod h1:RcWqhT+5ShCZDev79GuWLayetpJp78RSjSWxiDowmlM=
 github.com/pborman/getopt/v2 v2.1.0 h1:eNfR+r+dWLdWmV8g5OlpyrTYHkhVNxHBdN2cCrJmOEA=
