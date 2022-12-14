@@ -100,8 +100,8 @@ Option | Description
    -C, --city city | Set latitude, longitude, and timezone according to specified city. This option implies the -c option.
    --geo LATITUDE,LONGITUDE | Set location for solar calculations to decimal values LATITUDE and LONGITUDE. Negative longitudes are WEST of the Prime Meridian.
    --havdalah-deg DEGREES | Set Havdalah to occur this many degrees below the horizon
-   -l, --latitude XX,YY | Set the latitude for solar calculations to `XX` degrees and `YY` minutes. Negative values are south.
-   -L, --longitude XX,YY | Set the longitude for solar calculations to `XX` degrees and `YY` minutes. *Negative values are EAST*. The `-l` and `-L` switches must both be used, or not at all. These switches override the `-C` (localize to city) switch.
+   -l, --latitude XX,YY | Set the latitude for solar calculations to `XX` degrees and `YY` minutes. Negative values are south. **Deprecated**: use `--geo` instead.
+   -L, --longitude XX,YY | Set the longitude for solar calculations to `XX` degrees and `YY` minutes. *Negative values are EAST*. The `-l` and `-L` switches must both be used, or not at all. These switches override the `-C` (localize to city) switch. **Deprecated**: use `--geo` instead.
    -m, --havdalah-mins MINS | Set havdalah to occur this many minutes after sundown
    -z, --timezone timezone | Use specified timezone, overriding the `-C` (localize to city) switch.
    -Z, --zmanim | Add zemanim (Alot HaShachar; Misheyakir; Kriat Shema, sof zeman; Tefilah, sof zeman; Chatzot hayom; Mincha Gedolah; Mincha Ketanah; Plag HaMincha; Tzait HaKochavim)
@@ -165,8 +165,6 @@ hebcal will think you typed
     hebcal --geo 44.0181,-88.6353 -z America/Chicago -ch
     ```
 
-REMEMBER: negative longitudes are EAST of Greenwich.
-
 For information on setting environment variables, consult your local guru.
 
 ## Author
@@ -216,7 +214,7 @@ This is just a program I wrote during summer school and while avoiding my senior
 ## Bugs
 Hebrew dates are only valid before sundown on that secular date. An option to control this will be added in a later release.
 
-Negative longitudes are EAST of Greenwich.
+When using the legacy `-L` flag, negative longitudes are EAST of Greenwich.
 
 Some combinations of options produce weird results, e.g.
   `hebcal -dH nisan 5744`
@@ -226,8 +224,6 @@ This comes into play when you use the *HEBCAL_OPTS* environment variable.
 The sunup/sundown routines aren’t accurate enough. If you enter geographic coordinates above the arctic circle or antarctic circle, the times are guaranteed to be wrong.
 
 Hebcal only translates between the Gregorian calendar and the Jewish calendar. This means that the results will be at least partly useless where and when the Gregorian calendar was not used, e.g. before the 1752 in Britain and before circa 1918 in Russia. See ["Daylight saving time" on Wikipedia](https://en.wikipedia.org/wiki/Daylight_saving_time) for a splendid chart depicting when the changeover from the Julian to the Gregorian calendars occurred in various places.
-
-Hebcal cannot handle date computations before 2 C.E. sorry.
 
 ## Build & Install
 
