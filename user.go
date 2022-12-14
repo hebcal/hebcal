@@ -9,8 +9,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/hebcal/hebcal-go/greg"
-	"github.com/hebcal/hebcal-go/hdate"
+	"github.com/hebcal/greg"
+	"github.com/hebcal/hdate"
 	"github.com/hebcal/hebcal-go/hebcal"
 )
 
