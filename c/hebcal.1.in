@@ -15,19 +15,18 @@ hebcal - a Jewish calendar generator
 .SH SYNOPSIS
 .B hebcal
 [
-.B \-8acdDehHiorsStTwy
+.B \-8acdDEeFgHhiMoOrSstTWwXxyZ
 ]
 .if n .ti +5
 .br
 	[
-.B \-I
-.I input_file
+.B \-b
+.I minutes
 ]
 .if n .ti +5
 .br
 	[
-.B \-Y
-.I yahrtzeit_file
+.B \--chag-only
 ]
 .if n .ti +5
 .br
@@ -38,10 +37,107 @@ hebcal - a Jewish calendar generator
 .if n .ti +5
 .br
 	[
+.B \--geo
+.I latitude,longitude
+]
+.if n .ti +5
+.br
+	[
+.B \--havdalah-deg
+.I degrees
+]
+.if n .ti +5
+.br
+	[
+.B \--help
+]
+.if n .ti +5
+.br
+	[
+.B \-I
+.I input_file
+]
+.if n .ti +5
+.br
+	[
+.B \--lang
+.I language
+]
+.if n .ti +5
+.br
+	[
 .B \-l
 .I latitude
 .B \-L
 .I longitude
+]
+.if n .ti +5
+.br
+	[
+.B \-m
+.I minutes
+]
+.if n .ti +5
+.br
+	[
+.B \--mevarchim
+]
+.if n .ti +5
+.br
+	[
+.B \--mishna-yomi
+]
+.if n .ti +5
+.br
+	[
+.B \--no-mf
+]
+.if n .ti +5
+.br
+	[
+.B \--no-modern
+]
+.if n .ti +5
+.br
+	[
+.B \--no-special
+]
+.if n .ti +5
+.br
+	[
+.B \--schottenstein
+]
+.if n .ti +5
+.br
+	[
+.B \--verbose
+]
+.if n .ti +5
+.br
+	[
+.B \--version
+]
+.if n .ti +5
+.br
+	[
+.B \-Y
+.I yahrtzeit_file
+]
+.if n .ti +5
+.br
+	[
+.B \--years
+.I N
+]
+.if n .ti +5
+.br
+	[
+.B \--yerushalmi
+]
+.if n .ti +5
+.br
+	[
+.B \--ykk
 ]
 .if n .ti +5
 .br
