@@ -1,5 +1,6 @@
 Changes in 5.5.1
 * Added short `-G` alias for `--havdalah-deg` option.
+* Updated manpage (#242) and included in `make install` rule.
 
 Changes in 5.5.0
 * New flag `--geo` to specify geographic coodinates using a pair of

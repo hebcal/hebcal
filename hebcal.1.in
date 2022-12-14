@@ -2,7 +2,7 @@
 .\" Copyright(c) 1994-2006  Danny Sadinoff
 .\" Portions Copyright (c) 2010 Michael J. Radwin. All Rights Reserved.
 .\" See section COPYING for conditions for redistribution
-.TH HEBCAL 1 "Hebcal Version @VERSION@" "Danny Sadinoff"
+.TH HEBCAL 1 "Hebcal @VERSION@" "Sadinoff and Radwin"
 .\" "
 .de BP
 .sp
@@ -43,7 +43,7 @@ hebcal - a Jewish calendar generator
 .if n .ti +5
 .br
 	[
-.B \--havdalah-deg
+.B \-G
 .I degrees
 ]
 .if n .ti +5
@@ -185,7 +185,7 @@ in a particular year.  Note that
 is usually a four-digit integer,
 so 92 is during the Roman period,
 not the late twentieth century.
-If the Hebrew dates option is turned on,
+If the Hebrew dates option (\fB\-H\fP) is turned on,
 this number represents the Jewish calendar year.
 .I month
 is a number from 1..12, or the name of a Jewish calendar month.
@@ -228,7 +228,7 @@ and \c
 switches, which print out Jewish calendar entries for the current
 date.
 .PP
-To get a quick-reference online help, type
+To get a quick-reference online help, run
 .nf
 .sp 0.6v
 	hebcal help
@@ -239,20 +239,25 @@ at the command prompt.
 .SH OPTIONS
 .TP
 .B "\-8"
-Use 8-bit Hebrew (ISO-8859-8-Logical).
+Use UTF-8 Hebrew (alias for --lang=he).
 .TP
 .B "\-a"
-Use Ashkenazi Hebrew.
+Use Ashkenazi Hebrew transliterations.
 .TP
 .BI "\-b " mins
 Set candle-lighting to occur
 .I mins
-minutes before sundown
+minutes before sundown.
+Default 18 if unspecified (default 40 for Jerusalem, 30 for Haifa,
+30 for Zichron Ya'akov).
 .TP
 .B "\-c"
 Add \c
 .I approximate \c
 candle-lighting times.  See below.
+.TP
+.B "\--chag-only"
+Output only Chag and Erev Chag events (when melakha/labor is prohibited)
 .TP
 .BI "\-C " city
 Set latitude, longitude, and timezone according to
@@ -275,8 +280,26 @@ Output 24-hour times (e.g., 18:37 instead of 6:37)
 Output the Daf Yomi for the entire date range
 .TP
 .B "\-g"
-.B "\--iso-8601"
 Emit ISO-8601 dates, i.e. YYYY-MM-DD
+.TP
+.BI "\-G " "degrees"
+Set Havdalah to occur this many degrees below the horizon.
+Use 8.5 for three small stars or 7.0833 for three
+medium-sized stars.
+.TP
+.BI "\-\-geo " "latitude\fB,\^\fPlongitude"
+Set location for solar calculations to decimal values \c
+.I latitude \c
+and \c
+.I longitude.
+Requires
+.B -z
+.I timzeone
+switch. This switch is preferred over the
+legacy \fB\-l\fP and \fB\-L\fP switches as it offers more
+precision and follows the standard of negative longitudes being
+.I west
+of the Prime Meridian.
 .TP
 .B "\-h"
 Suppress holidays in output.
@@ -302,15 +325,8 @@ just the \fB\-H\fP switch by itself will print data for the current Hebrew
 year, starting in Tishrei.
 .TP
 .B "\-i"
-Use the Israeli sedra scheme when used in conjunction with \c
-.B \-S \c
-or \c
-.B \-s.
-This has no effect if the \c
-.B \-S \c
-or \c
-.B \-s \c
-switches are unused.
+Use Israeli holiday and sedra schedule.
+Defaults to Diaspora if unspecified.
 .TP
 .BI "\-I " "file"
 Read extra events from \c
@@ -323,20 +339,18 @@ There is one holiday per line in
 .BI file,
 each with the format
 .sp 0.6v
-\	\fImonth day description\fP
+\	\fIMMMM DD description\fP
 .sp 0.6v
 where \c
-.I month \c
+.I MMMM \c
 is a string identifying the Jewish month in question \c
-.I day \c
+.I DD \c
 is a number from 1 to 30, and \c
 .I description
 is a newline-terminated string describing the holiday.
 An example might be
 .sp 0.6v
-\	Adar 1 Start cleaning kitchen for Passover.
-.br
-\	Adar 1 Start cleaning kitchen for Passover.
+\	Adar 1 Start cleaning kitchen for Passover
 .TP
 .BI "\-l " "deg\fB,\^\fPmin"
 Set the latitude for solar calculations to \c
@@ -362,20 +376,40 @@ the
 .I lang
 language,
 which must be specified as one of the ISO 639-1 codes of
-\(lqashkenazi\(rq, \(lqashkenazi_litvish\(rq, \(lqashkenazi_poylish\(rq, \(lqashkenazi_standard\(rq, \(lqes\(rq, \(lqfi\(rq, \(lqfr\(rq, \(lqhe\(rq, \(lqhu\(rq, \(lqpl\(rq, \(lqru\(rq
+\(lqen\(rq, \(lqashkenazi\(rq, \(lqhe\(rq,
+\(lqashkenazi_litvish\(rq, \(lqashkenazi_poylish\(rq, \(lqashkenazi_romanian\(rq, \(lqashkenazi_standard\(rq,
+\(lqde\(rq, \(lqes\(rq, \(lqfi\(rq, \(lqfr\(rq, \(lqhu\(rq, \(lqpl\(rq, \(lqro\(rq, \(lqru\(rq, \(lquk\(rq
 .TP
 .BI "\-m " mins
 Set havdalah to occur
 .I mins
-minutes after sundown
+minutes after sundown (default 72).
+.TP
+.B "\-\-mevarchim"
+Include Shabbat Mevarchim HaChodesh.
+.TP
+.B "\-\-mishna\-yomi"
+Output the Mishna Yomi for the entire date range.
 .TP
 .B "\-M"
 Print the molad on shabbat mevorchim
+.TP
+.B "\-\-no\-mf"
+Suppress minor fast days.
+.TP
+.B "\-\-no\-modern"
+Suppress modern Israeli holidays.
+.TP
+.B "\-\-no\-special"
+Suppress Special Shabbatot.
 .TP
 .B "\-o"
 Add the count of the
 .I omer
 to the output.
+.TP
+.B "\-O"
+Output sunrise and sunset times every day.
 .TP
 .B "\-r"
 Use a tab-delineated format, and somewhat terser
@@ -396,6 +430,11 @@ day is printed, the torah reading for the Saturday on or immediately
 following that date is printed.  If there is no reading for the next
 Saturday, then nothing is printed.  See
 .B \-i.
+.TP
+.B "\-\-schottenstein"
+Use Schottenstein edition of Yerushalmi Yomi (default Vilna page
+numbers).
+This option implies the \fB\-\-yerushalmi\fP option.
 .TP
 .B "\-t"
 Print calendar information for today's date only.
@@ -420,6 +459,10 @@ Omer, dafyomi, and non-date-specific zemanim are shown once a week, on the day w
 .B "\-x"
 Suppress Rosh Chodesh
 .TP
+.B "\-X"
+Exit silently with non-zero status if today is Shabbat or
+Chag; exit with 0 status if today is chol.
+.TP
 .B "\-y"
 Print only the last two digits of the year.
 .TP
@@ -427,6 +470,13 @@ Print only the last two digits of the year.
 Generate events for
 .I n
 years (default 1)
+.TP
+.B "\-\-yerushalmi"
+Output the Yerushalmi Yomi for the entire date range.
+.TP
+.B "\-\-ykk"
+Include Yom Kippur Katan, a minor day of atonement occurring
+monthly on the day preceding each Rosh Chodesh.
 .TP
 .BI "\-Y " "file"
 Read a table of yahrtzeit dates from \c
@@ -439,13 +489,13 @@ There is one death-date per line in \c
 .I file,
 each with the format
 .sp 0.6v
-.I "\	month\ day\ year\ description"
+.I "\	MM\ DD\ YYYY\ description"
 .sp 0.6v
 where \c
-.IR month ,
-.I day
+.IR MM ,
+.I DD
 and \c
-.I year \c
+.I YYYY \c
 form the  \c
 .B Gregorian
 date of death.
@@ -465,7 +515,6 @@ Use the specified
 overriding the \-C (localize to city) switch
 .TP
 .B \-Z
-.B (Experimental)
 Add zemanim
 (Alot HaShachar;
 Misheyakir;
@@ -490,6 +539,33 @@ consult
 your local halachic authority.  If you enter geographic
 coordinates above the arctic circle or below the antarctic circle,
 the times are guaranteed to be wrong.
+.PP
+In addition to candle-lighting on Erev Shabbat and Chag, the
+\fB\-c\fP switch also generates Havdalah and fast start/end times.
+.PP
+By default, candle-lighting times are 18 minutes before sunset
+(see \fB\-b\fP option above for exceptions).
+.PP
+Chanukah candle-lighting times are at civil dusk (solar depression
+of 6 degrees) on weekdays. Chanukah candles are lit just before
+Shabbat candles on Friday, and immediately after Havdalah on
+Saturday night.
+.PP
+Havdalah time defaults to 72 minutes after sunset (Rabbeinu Tam).
+Adjust with the \fB\-m\fP (minutes) option or with \fB\-G\fP
+(havdalah degrees below horizon).
+.PP
+Minor fasts begin in the morning at
+.I alot haShachar
+(solar depression 16.1 degrees) and conclude at
+.I tzeit
+for 3 medium sized stars (solar depression 7.083 degrees).
+Major fasts (\c
+.I Yom Kippur
+and
+.I Tish'a B'Av\c
+) begin just before sunset (at regular candle-lighting
+time) and conclude at Havdalah time.
 .PP
 Hebcal contains a small database of cities with their
 associated geographic information and time-zone information.
@@ -525,9 +601,8 @@ by typing
 .fi
 at the command prompt.  If the city you want isn't on that list, you
 can directly control hebcal's geographic information with the \c
-.B \-l, \-L \-z \c
-switches.  Note that changing the geographic coordinates
-causes the timezone to default to UTC.
+\fB\-\-geo\fP and \fB\-z\fP
+switches.
 .PP
 For a status report on customizations, type
 type
@@ -624,19 +699,13 @@ Michael J. Radwin
 calendar(1), emacs(1), hcal(1), hdate(1), omer(1), remind(1), rise(1)
 .PP
 The latest version of the code is available on the
-.UR @PACKAGE_URL@
+.UR https://github.com/hebcal/hebcal
 hebcal project homepage
 .UE .
 .PP
 The original motivation for the algorithms in this
 program was the \c
 .I "Tur Shulchan Aruch.  "
-.PP
-For version 3, much of the program was rewritten using
-Emacs 19's calendar routines by Edward M. Reingold and
-Nachum Dershowitz.  Their program is extremely clear and
-provides many instructive examples of fine calendar code in
-emacs LISP.
 .PP
 A well written treatment of the Jewish
 calendar for the layman can be found in \c
@@ -675,12 +744,34 @@ This is just a program I wrote during summer school and
 while avoiding my senior project.  It should not be invested
 with any sort of halachic authority.
 .sp 0.5v
+.SH HISTORY
+.B hebcal
+first appeared in
+.I comp.sources.misc
+on November 4, 1992.
+.PP
+For version 3, much of the program was rewritten using
+Emacs 19's calendar routines by Edward M. Reingold and
+Nachum Dershowitz.  Their program is extremely clear and
+provides many instructive examples of fine calendar code in
+emacs LISP.
+.PP
+In version 4.x (released in 2015), the sunrise/sunset
+engine (used for candle-lighting times and zmanim) was
+rewritten using Derick Rethans's excellent
+.UR https://github.com/derickr/timelib
+timelib
+.UE .
+.PP
+Version 5.x (released 2022) was completely rewritten in Go.
+.sp 0.5v
 .SH BUGS
 Hebrew dates are only valid before sundown on that
 secular date.  An option to control this will be added
 in a later release.
 .PP
-Negative longitudes are
+When specifying geographic coordinates with the
+legacy \fB\-l\fP and \fB\-L\fP switches, negative longitudes are
 .I east
 of Greenwich.
 .PP
@@ -704,7 +795,10 @@ and the Jewish calendar. This means that the results
 will be at least partly useless where and when the
 Gregorian calendar was not used, e.g., before
 1752 in Britain and before circa 1918 in Russia.
-See the Wikipedia entry for \(lqDaylight saving time\(rq for
+See the Wikipedia page
+.UR https://en.wikipedia.org/wiki/Gregorian_calendar#Adoption_by_country
+.UE
+for
 a splendid chart depicting when the changeover from
 the Julian to the Gregorian calendars occurred in various places.
 .PP
@@ -712,35 +806,17 @@ Hebcal cannot handle date computations before 2 C.E.
 Sorry.
 .sp 0.5v
 .SH BUG REPORTS TO
-@PACKAGE_BUGREPORT@
+.UR https://github.com/hebcal/hebcal/issues
+.UE
 .sp 0.5v
 .SH COPYING
 Copyright \(co 1994\-2006 Danny Sadinoff
 .br
-Portions Copyright \(co 2010 Michael J. Radwin. All Rights Reserved.
-.PP
-Permission is granted to make and distribute verbatim copies of
-this manual provided the copyright notice and this permission notice
-are preserved on all copies.
-.PP
-Permission is granted to copy and distribute modified versions of this
-manual under the conditions for verbatim copying, provided that the
-entire resulting derived work is distributed under the terms of a
-permission notice identical to this one.
-.PP
-Permission is granted to copy and distribute translations of this
-manual into another language, under the above conditions for modified
-versions, except that this permission notice may be included in
-translations approved by the Free Software Foundation instead of in
-the original English.
+Portions Copyright \(co 2022 Michael J. Radwin. All Rights Reserved.
 .PP
 For a full text of the copyright and lack of warranty information,
-type
+run
 .sp 0.6v
 \	hebcal copying
-.sp 0.6v
-or
-.sp 0.6v
-\	hebcal warranty
 .sp 0.6v
 at the command line.
