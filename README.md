@@ -68,6 +68,7 @@ Option | Description
    -E, --24hour | Output 24-hour times (e.g. 18:37 instead of 6:37).
    -F, --daf-yomi | Output the Daf Yomi (Bavli) for the entire date range.
    -g, --iso-8601 | Output ISO 8601 dates -- YYYY-MM-DD (this overrides -y)
+   --geo LATITUDE,LONGITUDE | Set location for solar calculations to decimal values LATITUDE and LONGITUDE. Negative longitudes are WEST of the Prime Meridian.
    -h, --no-holidays | Suppress default holidays.
    -i, --israeli | Use Israeli sedra scheme.
    --lang LANG | Use ISO 639-1 LANG code (one of `ashkenazi`, `ashkenazi_litvish`, `ashkenazi_poylish`, `ashkenazi_romanian`, `ashkenazi_standard`, `de`, `es`, `fi`, `fr`, `he`, `hu`, `pl`, `ro`, `ru`, `uk`)
@@ -114,20 +115,28 @@ Hebcal contains a small database of cities with their associated geographic info
 If your city is NOT on the list, then in order to customize hebcal to your city, you will need to pass it the latitude, longitude, and timezone (see the manual).
 
 Suppose you live in Oshkosh, Wisconsin.
-Your lattitude is 44d1'29", and your longitude is 88d32'33".
+Your latitude is 44.0181, and your longitude is -88.6353.
 You are in timezone `America/Chicago`.
 We'll round the geographic coordinates to the nearest minute.
 
 In order to get candlelighting times for the current year, you would type
   ```
-  hebcal -ch -l44,1 -L 88,33 -z America/Chicago
+  hebcal -ch --geo 44.0181,-88.6353 -z America/Chicago
   ```
 
 The geographic and time information necessary to calculate sundown times can come to hebcal any of three ways:
 
 1. The default: the system manager sets a default city ("New York") when the program is compiled.
 2. Hebcal looks in the environment variable `HEBCAL_CITY` for the name of a city in hebcal’s database, and if it finds one, hebcal will make that the new default city.
-3. 1 and 2 may be overridden by command line arguments, including those specified in the `HEBCAL_OPTS` environment variable. The most natural way to do this is to use the `−C city` command. This will localize hebcal to city. A list of the cities hebcal knows about can be obtained by typing `hebcal cities` at the command prompt. If the city you want isn’t on that list, you can directly control hebcal’s geographic information with the `−l`, `−L`, and `−z` switches.
+3. 1 and 2 may be overridden by command line arguments, including
+those specified in the `HEBCAL_OPTS` environment variable. The most
+natural way to do this is to use the `−C city` command. This will
+localize hebcal to city. A list of the cities hebcal knows about can
+be obtained by typing `hebcal cities` at the command prompt. If the
+city you want isn’t on that list, you can directly control hebcal’s
+geographic information with the `--geo` (or `−l` and `−L`) and `−z`
+switches.
+
 For a status report on customizations, type `hebcal info` at the command prompt.
 
 ## Environment
@@ -145,7 +154,7 @@ Every time hebcal is run, it checks this variable. If it is non-empty, the argum
 
 So you might set `HEBCAL_OPTS` to be
    ```
-   -l44,1 -L 88,33 -z America/Chicago
+   --geo 44.0181,-88.6353 -z America/Chicago
    ```
 and if you type
     ```
@@ -153,7 +162,7 @@ and if you type
     ```
 hebcal will think you typed
     ```
-    hebcal -l44,1 -L 88,33 -z America/Chicago -ch
+    hebcal --geo 44.0181,-88.6353 -z America/Chicago -ch
     ```
 
 REMEMBER: negative longitudes are EAST of Greenwich.

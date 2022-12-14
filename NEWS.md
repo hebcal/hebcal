@@ -1,3 +1,10 @@
+Changes in 5.5.0
+* New flag `--geo` to specify geographic coodinates using a pair of
+  decimal numbers formatted as `latitude,longitude`.
+  For example, use `--geo 44.0181,-88.6353 -z America/Chicago`
+  for Oshkosh, Wisconsin, USA.
+  Negative longitudes are WEST of the Prime Meridian. (#63)
+
 Changes in 5.4.5
 * Experimental: support dates before common era (B.C.E.)
 

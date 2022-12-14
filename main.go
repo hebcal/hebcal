@@ -67,6 +67,11 @@ func handleArgs() hebcal.CalOptions {
 		schottenstein   = opt.BoolLong("schottenstein", 0, "Use Schottenstein edition of Yerushalmi Yomi")
 	)
 
+	var coordinates string
+	opt.FlagLong(&coordinates,
+		"geo", 0,
+		"Set location for solar calculations to decimal values LATITUDE and LONGITUDE.",
+		"LATITUDE,LONGITUDE")
 	var latitudeStr, longitudeStr, tzid string
 	opt.FlagLong(&latitudeStr,
 		"latitude", 'l', "Set the latitude for solar calculations to XX degrees and YY minutes. Negative values are south.", "XX,YY")
@@ -280,6 +285,17 @@ on the yahrtzeit. Events are printed regardless of the
 		hasLong = true
 	}
 
+	if coordinates != "" {
+		n, err := fmt.Sscanf(coordinates, "%f,%f", &latitude, &longitude)
+		if err != nil || n != 2 {
+			fmt.Fprintf(os.Stderr, "geo coordinates must be LATITUDE,LONGITUDE: %s\n", coordinates)
+			fmt.Fprintf(os.Stderr, "%v\n", err)
+			os.Exit(1)
+		}
+		hasLat = true
+		hasLong = true
+	}
+
 	if (hasLat && !hasLong) || (hasLong && !hasLat) {
 		fmt.Fprintf(os.Stderr, "Error, you must enter BOTH the latitude and the longitude\n")
 		os.Exit(1)
@@ -366,7 +382,7 @@ on the yahrtzeit. Events are printed regardless of the
 				os.Exit(0)
 			case "cities":
 				for _, city := range zmanim.AllCities() {
-					fmt.Printf("%s (%.5f lat, %.5f long, %s)\n",
+					fmt.Printf("%s (%.5f,%.5f  %s)\n",
 						city.Name, city.Latitude, city.Longitude, city.TimeZoneId)
 				}
 				os.Exit(0)
