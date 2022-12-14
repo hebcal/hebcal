@@ -68,7 +68,6 @@ Option | Description
    -E, --24hour | Output 24-hour times (e.g. 18:37 instead of 6:37).
    -F, --daf-yomi | Output the Daf Yomi (Bavli) for the entire date range.
    -g, --iso-8601 | Output ISO 8601 dates -- YYYY-MM-DD (this overrides -y)
-   --geo LATITUDE,LONGITUDE | Set location for solar calculations to decimal values LATITUDE and LONGITUDE. Negative longitudes are WEST of the Prime Meridian.
    -h, --no-holidays | Suppress default holidays.
    -i, --israeli | Use Israeli sedra scheme.
    --lang LANG | Use ISO 639-1 LANG code (one of `ashkenazi`, `ashkenazi_litvish`, `ashkenazi_poylish`, `ashkenazi_romanian`, `ashkenazi_standard`, `de`, `es`, `fi`, `fr`, `he`, `hu`, `pl`, `ro`, `ru`, `uk`)
@@ -99,6 +98,7 @@ Option | Description
    -b, --candle-mins mins | Set candle-lighting to occur this many minutes before sundown (default 18 [40 in Jerusalem])
    -c, --candlelighting | Print candlelighting times.
    -C, --city city | Set latitude, longitude, and timezone according to specified city. This option implies the -c option.
+   --geo LATITUDE,LONGITUDE | Set location for solar calculations to decimal values LATITUDE and LONGITUDE. Negative longitudes are WEST of the Prime Meridian.
    --havdalah-deg DEGREES | Set Havdalah to occur this many degrees below the horizon
    -l, --latitude XX,YY | Set the latitude for solar calculations to `XX` degrees and `YY` minutes. Negative values are south.
    -L, --longitude XX,YY | Set the longitude for solar calculations to `XX` degrees and `YY` minutes. *Negative values are EAST*. The `-l` and `-L` switches must both be used, or not at all. These switches override the `-C` (localize to city) switch.
