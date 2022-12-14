@@ -1,3 +1,6 @@
+Changes in 5.5.1
+* Added short `-G` alias for `--havdalah-deg` option.
+
 Changes in 5.5.0
 * New flag `--geo` to specify geographic coodinates using a pair of
   decimal numbers formatted as `latitude,longitude`.

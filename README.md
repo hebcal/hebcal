@@ -69,7 +69,7 @@ Option | Description
    -F, --daf-yomi | Output the Daf Yomi (Bavli) for the entire date range.
    -g, --iso-8601 | Output ISO 8601 dates -- YYYY-MM-DD (this overrides -y)
    -h, --no-holidays | Suppress default holidays.
-   -i, --israeli | Use Israeli sedra scheme.
+   -i, --israeli | Use Israeli holiday and sedra schedule.
    --lang LANG | Use ISO 639-1 LANG code (one of `ashkenazi`, `ashkenazi_litvish`, `ashkenazi_poylish`, `ashkenazi_romanian`, `ashkenazi_standard`, `de`, `es`, `fi`, `fr`, `he`, `hu`, `pl`, `ro`, `ru`, `uk`)
    --mevarchim | Include Shabbat Mevarchim HaChodesh.
    --mishna-yomi | Output the Mishna Yomi for the entire date range.
@@ -99,7 +99,7 @@ Option | Description
    -c, --candlelighting | Print candlelighting times.
    -C, --city city | Set latitude, longitude, and timezone according to specified city. This option implies the -c option.
    --geo LATITUDE,LONGITUDE | Set location for solar calculations to decimal values LATITUDE and LONGITUDE. Negative longitudes are WEST of the Prime Meridian.
-   --havdalah-deg DEGREES | Set Havdalah to occur this many degrees below the horizon
+   -G, --havdalah-deg DEGREES | Set Havdalah to occur this many degrees below the horizon
    -l, --latitude XX,YY | Set the latitude for solar calculations to `XX` degrees and `YY` minutes. Negative values are south. **Deprecated**: use `--geo` instead.
    -L, --longitude XX,YY | Set the longitude for solar calculations to `XX` degrees and `YY` minutes. *Negative values are EAST*. The `-l` and `-L` switches must both be used, or not at all. These switches override the `-C` (localize to city) switch. **Deprecated**: use `--geo` instead.
    -m, --havdalah-mins MINS | Set havdalah to occur this many minutes after sundown

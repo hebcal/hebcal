@@ -148,7 +148,7 @@ func handleArgs() hebcal.CalOptions {
 	opt.FlagLong(&calOptions.HavdalahMins,
 		"havdalah-mins", 'm', "Set Havdalah to occur this many minutes after sundown", "MINUTES")
 	opt.FlagLong(&calOptions.HavdalahDeg,
-		"havdalah-deg", 0, "Set Havdalah to occur this many degrees below the horizon", "DEGREES")
+		"havdalah-deg", 'G', "Set Havdalah to occur this many degrees below the horizon", "DEGREES")
 
 	calOptions.NumYears = 1
 	opt.FlagLong(&calOptions.NumYears,
