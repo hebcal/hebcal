@@ -223,7 +223,18 @@ This comes into play when you use the *HEBCAL_OPTS* environment variable.
 
 The sunup/sundown routines aren’t accurate enough. If you enter geographic coordinates above the arctic circle or antarctic circle, the times are guaranteed to be wrong.
 
-Hebcal only translates between the Gregorian calendar and the Jewish calendar. This means that the results will be at least partly useless where and when the Gregorian calendar was not used, e.g. before the 1752 in Britain and before circa 1918 in Russia. See ["Daylight saving time" on Wikipedia](https://en.wikipedia.org/wiki/Daylight_saving_time) for a splendid chart depicting when the changeover from the Julian to the Gregorian calendars occurred in various places.
+Hebcal only translates between the Gregorian calendar and the Jewish
+calendar. It does not take into account a correction of eleven days
+that was introduced by Pope Gregory XIII known as the Gregorian
+Reformation. Wednesday, 2 September 1752 was followed by Thursday, 14
+September 1752.
+
+This means that the results will be at least partly useless where and
+when the Gregorian calendar was not used, e.g. before the 1752 in
+Britain and before circa 1918 in Russia. 
+See ["Gregorian calendar" on Wikipedia](https://en.wikipedia.org/wiki/Gregorian_calendar#Adoption_by_country)
+for a splendid chart depicting when the changeover from the Julian to
+the Gregorian calendars occurred in various places.
 
 ## Build & Install
 
