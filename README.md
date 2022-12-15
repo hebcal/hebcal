@@ -110,6 +110,27 @@ Option | Description
 
 Hebcal’s candlelighting times are only approximations. If you ever have any doubts about its times, consult your local halachic authority. If you enter geographic coordinates above the arctic circle or antarctic circle, the times are guaranteed to be wrong.
 
+In addition to candle-lighting on Erev Shabbat and Chag, the
+`-c` switch also generates Havdalah and fast start/end times.
+
+By default, candle-lighting times are 18 minutes before sunset
+(see `-b` option above for exceptions).
+
+Chanukah candle-lighting times are at civil dusk (solar depression
+of 6 degrees) on weekdays. Chanukah candles are lit just before
+Shabbat candles on Friday, and immediately after Havdalah on
+Saturday night.
+
+Havdalah time defaults to 72 minutes after sunset (Rabbeinu Tam).
+Adjust with the `-m` (minutes) option or with `-G`
+(havdalah degrees below horizon).
+
+Minor fasts begin in the morning at *alot haShachar* (solar
+depression 16.1 degrees) and conclude at *tzeit*
+for 3 medium sized stars (solar depression 7.083 degrees).
+Major fasts (*Yom Kippur* and *Tish'a B'Av*) begin just before sunset
+(at regular candle-lighting time) and conclude at Havdalah time.
+
 Hebcal contains a small database of cities with their associated geographic information and time-zone information. Run `hebcal cities` to print a list of cities supported by the `-C city` flag.
 
 If your city is NOT on the list, then in order to customize hebcal to your city, you will need to pass it the latitude, longitude, and timezone (see the manual).
