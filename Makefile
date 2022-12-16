@@ -2,15 +2,16 @@ BINARY_NAME=hebcal
 MAN1_NAME=$(BINARY_NAME).1
 PREFIX=/usr/local
 
+all: $(BINARY_NAME) $(MAN1_NAME)
+
 $(BINARY_NAME): main.go gnu.go user.go version.go
 	go build -o $(BINARY_NAME)
-
-all: $(BINARY_NAME)
 
 .PHONY: clean
 clean:
 	go clean
 	rm -f $(BINARY_NAME)
+	rm -f $(MAN1_NAME)
 
 check test: all
 	go test ./...
