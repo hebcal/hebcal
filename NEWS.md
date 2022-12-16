@@ -1,3 +1,8 @@
+Changes in 5.6.0
+* Added [Chag HaBanot](https://en.wikipedia.org/wiki/Girls_Day_(Judaism)), a
+  North African Jewish women's holiday occurring on the 1st day
+  of Rosh Chodesh Tevet.
+
 Changes in 5.5.1
 * Added short `-G` alias for `--havdalah-deg` option.
 * Updated manpage (#242) and included in `make install` rule.
