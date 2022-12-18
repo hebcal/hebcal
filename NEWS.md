@@ -1,3 +1,7 @@
+Changes in 5.7.0
+* Added Nach Yomi, a daily regimen of learning the books of
+  Nevi'im (Prophets) and Ketuvim (Writings) (#111)
+
 Changes in 5.6.0
 * Added [Chag HaBanot](https://en.wikipedia.org/wiki/Girls_Day_(Judaism)), a
   North African Jewish women's holiday occurring on the 1st day

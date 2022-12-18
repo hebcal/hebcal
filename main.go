@@ -117,6 +117,8 @@ func handleArgs() hebcal.CalOptions {
 		"daf-yomi", 'F', "Output the Daf Yomi (Bavli) for the entire date range")
 	opt.FlagLong(&calOptions.MishnaYomi,
 		"mishna-yomi", 0, "Output the Mishna Yomi for the entire date range")
+	opt.FlagLong(&calOptions.NachYomi,
+		"nach-yomi", 0, "Output the Nach Yomi for the entire date range")
 	opt.FlagLong(&calOptions.YerushalmiYomi,
 		"yerushalmi", 0, "Output the Yerushalmi Yomi for the entire date range")
 	opt.FlagLong(&calOptions.YomKippurKatan,

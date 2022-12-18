@@ -74,6 +74,7 @@ Option | Description
    --mevarchim | Include Shabbat Mevarchim HaChodesh.
    --mishna-yomi | Output the Mishna Yomi for the entire date range.
    -M, --molad | Print the molad on shabbat mevorchim.
+   --nach-yomi | Output the Nach Yomi for the entire date range.
    --no-mf | Suppress minor fast days.
    --no-modern | Suppress modern Israeli holidays.
    --no-special | Suppress Special Shabbatot.

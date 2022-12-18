@@ -90,6 +90,11 @@ hebcal - a Jewish calendar generator
 .if n .ti +5
 .br
 	[
+.B \--nach-yomi
+]
+.if n .ti +5
+.br
+	[
 .B \--no-mf
 ]
 .if n .ti +5
@@ -393,6 +398,9 @@ Output the Mishna Yomi for the entire date range.
 .TP
 .B "\-M"
 Print the molad on shabbat mevorchim
+.TP
+.B "\-\-nach\-yomi"
+Output the Nach Yomi for the entire date range.
 .TP
 .B "\-\-no\-mf"
 Suppress minor fast days.
