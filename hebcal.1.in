@@ -520,7 +520,10 @@ An example might be
 .BI "\-z " timezone
 Use the specified
 .IR timezone ,
-overriding the \-C (localize to city) switch
+overriding the \-C (localize to city) switch.
+For correct DST rules, use a full timezone name (such as
+\(lqAmerica/New_York\(rq)
+instead of a timezone abbreviation (such as \(lqEST\(rq).
 .TP
 .B \-Z
 Add zemanim

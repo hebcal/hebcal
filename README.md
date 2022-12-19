@@ -104,7 +104,7 @@ Option | Description
    -l, --latitude XX,YY | Set the latitude for solar calculations to `XX` degrees and `YY` minutes. Negative values are south. **Deprecated**: use `--geo` instead.
    -L, --longitude XX,YY | Set the longitude for solar calculations to `XX` degrees and `YY` minutes. *Negative values are EAST*. The `-l` and `-L` switches must both be used, or not at all. These switches override the `-C` (localize to city) switch. **Deprecated**: use `--geo` instead.
    -m, --havdalah-mins MINS | Set havdalah to occur this many minutes after sundown
-   -z, --timezone timezone | Use specified timezone, overriding the `-C` (localize to city) switch.
+   -z, --timezone timezone | Use specified timezone, overriding the `-C` (localize to city) switch. For correct DST rules, use a full timezone name (such as `America/New_York`) instead of a timezone abbreviation (such as `EST`)
    -Z, --zmanim | Add zemanim (Alot HaShachar; Misheyakir; Kriat Shema, sof zeman; Tefilah, sof zeman; Chatzot hayom; Mincha Gedolah; Mincha Ketanah; Plag HaMincha; Tzait HaKochavim)
 
 ## Candle-lighting and fast start/end times
