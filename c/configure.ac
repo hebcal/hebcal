@@ -39,6 +39,7 @@ AC_ARG_WITH([default-city],
      [AC_DEFINE_UNQUOTED(CITY,"$withval",[The Default City])],
      [AC_DEFINE(CITY,"New_York",[The Default City])])
 
+AC_CONFIG_FILES([hebcal.1])
 AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([tests/Makefile])
 
