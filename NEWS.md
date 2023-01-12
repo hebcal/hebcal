@@ -1,3 +1,6 @@
+Changes in 5.7.1
+* Allow setting default city at build time with `DEFAULT_CITY` Makefile macro (#244)
+
 Changes in 5.7.0
 * Added Nach Yomi, a daily regimen of learning the books of
   Nevi'im (Prophets) and Ketuvim (Writings) (#111)

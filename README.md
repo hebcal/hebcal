@@ -96,7 +96,7 @@ Option | Description
 #### Options related to candle-lighting times
 Option | Description
 --- | ---
-   -b, --candle-mins mins | Set candle-lighting to occur this many minutes before sundown (default 18 [40 in Jerusalem])
+   -b, --candle-mins mins | Set candle-lighting to occur this many minutes before sundown. Default 18 if unspecified (default 40 for Jerusalem, 30 for Haifa, 30 for Zichron Ya'akov).
    -c, --candlelighting | Print candlelighting times.
    -C, --city city | Set latitude, longitude, and timezone according to specified city. This option implies the -c option.
    --geo LATITUDE,LONGITUDE | Set location for solar calculations to decimal values LATITUDE and LONGITUDE. Negative longitudes are WEST of the Prime Meridian.

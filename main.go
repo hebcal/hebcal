@@ -35,7 +35,6 @@ const (
 	ISO
 )
 
-var defaultCity = "New York"
 var lang = "en"
 var theYear = 0
 var theGregMonth time.Month = 0
@@ -379,8 +378,9 @@ on the yahrtzeit. Events are printed regardless of the
 				os.Exit(0)
 			case "info":
 				fmt.Printf("hebcal version %s\n\n", Version)
+				fmt.Printf("Default city: %s\n", defaultCity)
 				fmt.Println("Environment variable for default city: HEBCAL_CITY")
-				fmt.Println("\nEnvironment variable for default options: HEBCAL_OPTS")
+				fmt.Println("Environment variable for default options: HEBCAL_OPTS")
 				os.Exit(0)
 			case "cities":
 				for _, city := range zmanim.AllCities() {
