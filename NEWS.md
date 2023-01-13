@@ -1,4 +1,4 @@
-Changes in 5.7.1
+Changes in 5.7.2
 * Allow setting default city at build time with `DEFAULT_CITY` Makefile macro (#244)
 
 Changes in 5.7.0
