@@ -12,9 +12,7 @@ $(BINARY_NAME): main.go gnu.go user.go version.go dcity.go
 .PHONY: clean
 clean:
 	go clean
-	rm -f $(BINARY_NAME)
-	rm -f $(MAN1_NAME)
-	rm -f dcity.go
+	rm -f $(BINARY_NAME) $(MAN1_NAME) dcity.go
 
 .PHONY: check
 .PHONY: test
@@ -41,4 +39,4 @@ install: $(BINARY_NAME) $(MAN1_NAME)
 .PHONY: uninstall
 uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/$(BINARY_NAME)
-
+	rm -f $(DESTDIR)$(PREFIX)$(MANDIR)/man1/$(MAN1_NAME)
