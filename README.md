@@ -21,7 +21,7 @@ be individualy turned on or off:
 ## Synopsis
 
 ```
-usage: hebcal [options] [[ month [ day ]] year ]
+usage: hebcal [options] [[ month [ day ]] year | YYYY-MM-DD ]
        hebcal help
        hebcal info
        hebcal cities
@@ -30,14 +30,31 @@ usage: hebcal [options] [[ month [ day ]] year ]
 ```
 
 Hebcal prints out Hebrew calendars one solar year at a time.
-Given one argument, it will print out the calendar for that year.
-Given two numeric arguments `mm yyyy`, it prints out the calendar for
-month `mm` of year `yyyy`.
+By specifying *month*, *day*, or *year*, output can be limited to a
+particular month or date in a particular year.
+
+Note that *year* is
+usually a four-digit integer, so `92` is during the Roman period, not the
+late twentieth century. If the Hebrew dates option (`-H`) is turned on,
+this number represents the Jewish calendar year.
+
+*month* is a number
+from 1..12, or the name of a Jewish calendar month. *day* is a number
+from 1..31.
+
+A single day may also be specified as `YYYY-MM-DD` (ISO 8601 date
+format).
+
+For example, the command `hebcal 10 1992` will print out the holidays
+occurring in October of 1992 C.E., while the command `hebcal Tish 5752`
+will print dates of interest in the month of Tishrei in Jewish calendar
+year 5752.
+
+If no year is specified, hebcal will print to stdout the dates of the Jewish
+holidays in the current secular year.
 
 For example, `hebcal -ho`
 will just print out the days of the omer for the current year.
-Note: Use COMPLETE Years.  You probably aren't interested in
-hebcal 93, but rather hebcal 1993.
 
 ### Options
 #### General options
@@ -253,7 +270,7 @@ September 1752.
 
 This means that the results will be at least partly useless where and
 when the Gregorian calendar was not used, e.g. before the 1752 in
-Britain and before circa 1918 in Russia. 
+Britain and before circa 1918 in Russia.
 See ["Gregorian calendar" on Wikipedia](https://en.wikipedia.org/wiki/Gregorian_calendar#Adoption_by_country)
 for a splendid chart depicting when the changeover from the Julian to
 the Gregorian calendars occurred in various places.
@@ -273,7 +290,7 @@ make clean all
 
 ## DISTRIBUTION
    Copyright (C) 1994-2011  Danny Sadinoff
-   
+
    Portions Copyright (c) 2011-2022 Michael J. Radwin. All Rights Reserved.
 
    Hebcal is distributed under the GNU Public License.  The program

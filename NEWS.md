@@ -1,3 +1,7 @@
+Changes in 5.8.0
+* Accept ISO 8601 date format as a single CLI argument.
+  A single day may also be specified as `YYYY-MM-DD`. (#250)
+
 Changes in 5.7.2
 * Allow setting default city at build time with `DEFAULT_CITY` Makefile macro (#244)
 

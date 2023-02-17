@@ -157,7 +157,7 @@ hebcal - a Jewish calendar generator
 [
 .I day
 ]
-.I year
+.I year | YYYY-MM-DD
 ]
 .br
 .B hebcal help
@@ -196,6 +196,9 @@ this number represents the Jewish calendar year.
 is a number from 1..12, or the name of a Jewish calendar month.
 .I day
 is a number from 1..31.
+.PP
+A single day may also be specified as YYYY-MM-DD
+(ISO 8601 date format).
 .PP
 For example, the command
 .nf

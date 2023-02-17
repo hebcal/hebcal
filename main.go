@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -365,11 +366,12 @@ on the yahrtzeit. Events are printed regardless of the
 			theYear = gregTodayYY
 		}
 	case 1:
-		yy, err := strconv.Atoi(args[0])
+		arg0 := strings.TrimSpace(args[0])
+		yy, err := strconv.Atoi(arg0)
 		if err == nil {
 			theYear = yy /* just year specified */
 		} else {
-			switch args[0] {
+			switch arg0 {
 			case "help":
 				displayHelp(opt)
 				os.Exit(0)
@@ -396,9 +398,18 @@ on the yahrtzeit. Events are printed regardless of the
 				fmt.Print(warranty)
 				os.Exit(0)
 			default:
-				fmt.Fprintf(os.Stderr, "unrecognized command '%s'\n", args[0])
-				fmt.Fprintf(os.Stderr, "Usage: hebcal %s\n", opt.UsageLine())
-				os.Exit(1)
+				regex := regexp.MustCompile(`^\d\d\d\d-\d\d-\d\d$`)
+				if regex.MatchString(arg0) {
+					theYear, _ = strconv.Atoi(arg0[0:4])
+					gregMonth, _ := strconv.Atoi(arg0[5:7])
+					theGregMonth = time.Month(gregMonth)
+					theDay, _ = strconv.Atoi(arg0[8:10])
+					rangeType = DAY
+				} else {
+					fmt.Fprintf(os.Stderr, "unrecognized command '%s'\n", args[0])
+					fmt.Fprintf(os.Stderr, "Usage: hebcal %s\n", opt.UsageLine())
+					os.Exit(1)
+				}
 			}
 		}
 	case 2:
