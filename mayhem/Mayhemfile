@@ -7,6 +7,14 @@ target: hebcal
 # Base image to run the binary in.
 image: ghcr.io/whoistamir/hebcal:latest
 
+duration: 1200
+
+tasks:
+  - name: exploitability_factors
+  - name: behavior_testing
+  - name: regression_testing
+  - name: coverage_analysis
+
 # List of commands used to test the target
 cmds:
 
@@ -14,5 +22,5 @@ cmds:
   # (when "@@" is omitted Mayhem defaults to stdin inputs)
   - cmd: ./hebcal -d -b 40 -I @@
     env: { "MFUZZ_COMPAT_LEVEL": "2"}
-    filepath : ../sample_in.txt
+    filepath : sample_in.txt
 
