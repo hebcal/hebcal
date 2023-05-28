@@ -9,6 +9,8 @@ RUN apt-get update && \
 ADD . hebcal
 WORKDIR /hebcal/
 
+USER root
+
 ## Build Step
 RUN make install && \
     make all && \
