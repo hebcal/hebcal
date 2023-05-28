@@ -10,11 +10,11 @@ ADD . hebcal
 WORKDIR /hebcal/
 
 ## Build Step
-# RUN cd hebcal/ && \
-#     make install && \
-#     make all && \
-#     chmod u+r sample_in.txt && \
-#     chmod g+r sample_in.txt
+RUN cd hebcal/ && \
+    make install && \
+    make all && \
+    chmod u+r sample_in.txt && \
+    chmod g+r sample_in.txt
 
 
 # Package Stage
