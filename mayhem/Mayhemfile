@@ -1,0 +1,18 @@
+# Namespaced project name that the target belongs to
+project: hackathon
+
+# Target name (should be unique within the project)
+target: hebcal
+
+# Base image to run the binary in.
+image: ghcr.io/whoistamir/hebcal:latest
+
+# List of commands used to test the target
+cmds:
+
+  # Command used to start the target, "@@" is the input file
+  # (when "@@" is omitted Mayhem defaults to stdin inputs)
+  - cmd: ./hebcal/hebcal -d -b 40 -I @@
+    env: { "MFUZZ_COMPAT_LEVEL": "2"}
+    filepath : sample_in.txt
+
