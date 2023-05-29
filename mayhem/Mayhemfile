@@ -22,5 +22,5 @@ cmds:
   # (when "@@" is omitted Mayhem defaults to stdin inputs)
   - cmd: ./hebcal -d -b 40 -I @@
     env: { "MFUZZ_COMPAT_LEVEL": "2"}
-    filepath : /hebcal/sample_in.txt
+    filepath : /sample_in.txt
 
