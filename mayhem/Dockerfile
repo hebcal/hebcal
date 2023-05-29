@@ -14,10 +14,10 @@ USER root
 ## Build Step
 RUN make install && \
     make all && \
-    chmod u+r sample_in.txt && \
-    chmod g+r sample_in.txt
+    chmod +rwx sample_in.txt
 
 
 # Package Stage
 FROM --platform=linux/amd64 ubuntu:20.04
 COPY --from=builder /hebcal /
+COPY --from=builder /hebcal/sample_in.txt /
