@@ -19,5 +19,5 @@ RUN make install && \
 
 # Package Stage
 FROM --platform=linux/amd64 ubuntu:20.04
-COPY --from=builder /hebcal /
-COPY --from=builder /hebcal/sample_in.txt /
+COPY --from=builder /hebcal /hebcal
+COPY --from=builder /hebcal/sample_in.txt /hebcal
