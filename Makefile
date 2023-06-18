@@ -32,7 +32,7 @@ $(MAN1_NAME): $(MAN1_NAME).in version.go
 .PHONY: install
 install: $(BINARY_NAME) $(MAN1_NAME)
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
-	cp $(BINARY_NAME) $(DESTDIR)$(PREFIX)/bin/$(BINARY_NAME)
+	install -s $(BINARY_NAME) $(DESTDIR)$(PREFIX)/bin/$(BINARY_NAME)
 	mkdir -p $(DESTDIR)$(PREFIX)$(MANDIR)/man1
 	cp $(MAN1_NAME) $(DESTDIR)$(PREFIX)$(MANDIR)/man1/$(MAN1_NAME)
 
