@@ -1,0 +1,21 @@
+#!/bin/sh
+# This script takes no arguments
+
+LANGUAGE=
+LC_ALL=
+LC_MESSAGES=
+LANG=
+export LANGUAGE LC_ALL LC_MESSAGES LANG
+
+: ${SANITY_CHECK='./sanity-check'}
+${SANITY_CHECK} > hebcal-test2.out
+
+
+: ${DIFF=diff}
+: ${srcdir=.}
+${DIFF} -u ${srcdir}/hebcal-test2.ok hebcal-test2.out
+result=$?
+
+exit $result
+
+# hebcal ends here

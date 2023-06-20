@@ -1,0 +1,26 @@
+#!/bin/sh
+# This script takes no arguments.
+
+LANGUAGE=
+LC_ALL=
+LC_MESSAGES=
+LANG=
+export LANGUAGE LC_ALL LC_MESSAGES LANG
+
+testnum=5
+filebase="hebcal-test$testnum"
+outfile="$filebase.out"
+okfile="$filebase.ok"
+
+: ${HEBCAL=../hebcal}
+${HEBCAL} -x -h -o 1975 > $outfile
+
+
+: ${DIFF=diff}
+: ${srcdir=.}
+${DIFF} -u ${srcdir}/$okfile $outfile
+result=$?
+
+exit $result
+
+# hebcal ends here
