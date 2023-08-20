@@ -1,3 +1,6 @@
+Changes in 5.8.1
+* Use Tazria (not Sazria) for Ashkenazic transliteration of the parsha name
+
 Changes in 5.8.0
 * Accept ISO 8601 date format as a single CLI argument.
   A single day may also be specified as `YYYY-MM-DD`. (#250)
