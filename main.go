@@ -324,7 +324,7 @@ on the yahrtzeit. Events are printed regardless of the
 	}
 
 	if calOptions.CandleLighting && calOptions.HavdalahDeg == 0.0 && calOptions.HavdalahMins == 0 {
-		calOptions.HavdalahMins = 72
+		calOptions.HavdalahMins = 50
 	}
 
 	if noGreg_sw || isTodayChag_sw {
