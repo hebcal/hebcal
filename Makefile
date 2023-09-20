@@ -2,7 +2,7 @@ BINARY_NAME=hebcal
 MAN1_NAME=$(BINARY_NAME).1
 PREFIX=/usr/local
 MANDIR=/share/man
-DEFAULT_CITY="New York"
+DEFAULT_CITY?="New York"
 
 all: $(BINARY_NAME) $(MAN1_NAME)
 
