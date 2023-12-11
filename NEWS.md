@@ -1,7 +1,10 @@
+Changes in 5.8.3
+* Fix segfault when printing zmanim for northern cities (#263)
+* Render Molad in Hebrew when `--molad --lang=he` (https://github.com/hebcal/hebcal-es6/issues/342)
+
 Changes in 5.8.2
 * Use "Ha'azinu", not "Ha'Azinu" as the transliteration of parsha name.
-  The Ha is not a prefix so we lowercase the second A.
-  https://github.com/hebcal/hebcal/issues/259
+  The Ha is not a prefix so we lowercase the second A. (#259)
 
 Changes in 5.8.1
 * Use Tazria (not Sazria) for Ashkenazic transliteration of the parsha name
