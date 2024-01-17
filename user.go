@@ -11,7 +11,7 @@ import (
 
 	"github.com/hebcal/greg"
 	"github.com/hebcal/hdate"
-	"github.com/hebcal/hebcal-go/hebcal"
+	"github.com/MaxBGreenberg/hebcal-go/hebcal"
 )
 
 func readUserFile(filename string) []hebcal.UserEvent {
