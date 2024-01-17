@@ -11,11 +11,11 @@ import (
 
 	"github.com/hebcal/greg"
 	"github.com/hebcal/hdate"
-	"github.com/hebcal/hebcal-go/event"
-	"github.com/hebcal/hebcal-go/hebcal"
-	"github.com/hebcal/hebcal-go/locales"
-	"github.com/hebcal/hebcal-go/yerushalmi"
-	"github.com/hebcal/hebcal-go/zmanim"
+	"github.com/MaxBGreenberg/hebcal-go/event"
+	"github.com/MaxBGreenberg/hebcal-go/hebcal"
+	"github.com/MaxBGreenberg/hebcal-go/locales"
+	"github.com/MaxBGreenberg/hebcal-go/yerushalmi"
+	"github.com/MaxBGreenberg/hebcal-go/zmanim"
 	getopt "github.com/pborman/getopt/v2"
 )
 
