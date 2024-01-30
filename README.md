@@ -134,8 +134,7 @@ In addition to candle-lighting on Erev Shabbat and Chag, the
 By default, candle-lighting times are 18 minutes before sunset
 (see `-b` option above for exceptions).
 
-Chanukah candle-lighting times are at civil dusk (solar depression
-of 6 degrees) on weekdays. Chanukah candles are lit just before
+Chanukah candle-lighting times are at bein hashmashos (13.5 minutes before a solar depression of 7.083 degrees) on weekdays. Chanukah candles are lit just before
 Shabbat candles on Friday, and immediately after Havdalah on
 Saturday night.
 
