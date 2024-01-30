@@ -1,3 +1,6 @@
+Changes in 5.8.4
+* Fix ordering of zmanim (`-Z`) to printed earliest to latest (move MGA zmanim before GRA zmanim and explicitly label GRA zmanim), courtesy @MaxBGreenberg
+
 Changes in 5.8.3
 * Fix segfault when printing zmanim for northern cities (#263)
 * Render Molad in Hebrew when `--molad --lang=he` (https://github.com/hebcal/hebcal-es6/issues/342)
