@@ -1,3 +1,6 @@
+Changes in 5.8.5
+* Chanukah candle-lighting is at Bein HaShmashos (13.5 minutes before the sun is 7.083° below the horizon in the evening), courtesy @MaxBGreenberg
+
 Changes in 5.8.4
 * Fix ordering of zmanim (`-Z`) to printed earliest to latest (move MGA zmanim before GRA zmanim and explicitly label GRA zmanim), courtesy @MaxBGreenberg
 
