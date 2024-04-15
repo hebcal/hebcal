@@ -1,3 +1,6 @@
+Changes in 5.8.6
+* Add modern Israeli holiday Hebrew Language Day on 21 Tevet when `-i` flag is enabled (can be suppressed with `--no-modern`). Promotes the Hebrew language in Israel and around the world. Occurs on the birthday of Eliezer Ben Yehuda, the father of modern spoken Hebrew.
+
 Changes in 5.8.5
 * Chanukah candle-lighting is at Bein HaShmashos (13.5 minutes before the sun is 7.083° below the horizon in the evening), courtesy @MaxBGreenberg
 

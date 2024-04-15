@@ -1,4 +1,4 @@
-hebcal [![Build Status](https://app.travis-ci.com/hebcal/hebcal.svg?branch=main)](https://app.travis-ci.com/hebcal/hebcal)
+hebcal [![Build Status](https://github.com/hebcal/hebcal/actions/workflows/go.yml/badge.svg)](https://github.com/hebcal/hebcal/actions/workflows/go.yml)
 ======
 
 A perpetual Jewish Calendar
