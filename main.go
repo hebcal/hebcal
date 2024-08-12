@@ -452,9 +452,11 @@ on the yahrtzeit. Events are printed regardless of the
 }
 
 func checkLang() {
+	lang = strings.ToLower(lang)
 	if lang != "en" {
 		found := false
 		for _, a := range locales.AllLocales {
+			a = strings.ToLower(a)
 			if a == lang {
 				found = true
 				break

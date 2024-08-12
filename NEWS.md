@@ -1,3 +1,6 @@
+Changes in 5.8.7
+* Hebrew without nikud supported with `--lang=he-x-NoNikud` #275
+
 Changes in 5.8.6
 * Add modern Israeli holiday Hebrew Language Day on 21 Tevet when `-i` flag is enabled (can be suppressed with `--no-modern`). Promotes the Hebrew language in Israel and around the world. Occurs on the birthday of Eliezer Ben Yehuda, the father of modern spoken Hebrew.
 
