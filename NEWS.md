@@ -1,3 +1,7 @@
+Changes in 5.8.8
+* Sigd moves to Thursday if it would fall on Shabbat
+  https://github.com/hebcal/hebcal-es6/issues/518
+
 Changes in 5.8.7
 * Hebrew without nikud supported with `--lang=he-x-NoNikud` #275
 
