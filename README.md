@@ -8,7 +8,7 @@ by Danny Sadinoff
 
 ## Description
 Hebcal is a program which prints out the days in the Jewish calendar
-for a given Gregorian year.  Hebcal is fairly flexible in terms of which
+for a given secular year.  Hebcal is fairly flexible in terms of which
 events in the Jewish calendar it displays.  Each of the following can
 be individualy turned on or off:
 
@@ -175,6 +175,11 @@ city you want isn’t on that list, you can directly control hebcal’s
 geographic information with the `--geo` (or `−l` and `−L`) and `−z`
 switches.
 
+
+## Note on Julian calendar
+
+In 1582, Pope Gregory XIII introduced a correction into the calendar and advanced it by 10 days. The older calendar became known as the Julian calendar and the new one, post correction, as the Gregorian calendar. The Pope's change was adopted quickly by the Catholic world, but the rest of Christendom took much longer to swtich over and different countries did so at different times. See ["Gregorian Calendar" on Wikipedia](https://en.wikipedia.org/wiki/Gregorian_calendar#Adoption_by_country). It would take until September 2, 1752, for the British Empire to switch from the old calendar to the new one. For reasons of convention, hebcal defaults to using this as the date for the change.
+
 For a status report on customizations, type `hebcal info` at the command prompt.
 
 ## Environment
@@ -260,19 +265,6 @@ Some combinations of options produce weird results, e.g.
 This comes into play when you use the *HEBCAL_OPTS* environment variable.
 
 The sunup/sundown routines aren’t accurate enough. If you enter geographic coordinates above the arctic circle or antarctic circle, the times are guaranteed to be wrong.
-
-Hebcal only translates between the Gregorian calendar and the Jewish
-calendar. It does not take into account a correction of eleven days
-that was introduced by Pope Gregory XIII known as the Gregorian
-Reformation. Wednesday, 2 September 1752 was followed by Thursday, 14
-September 1752.
-
-This means that the results will be at least partly useless where and
-when the Gregorian calendar was not used, e.g. before the 1752 in
-Britain and before circa 1918 in Russia.
-See ["Gregorian calendar" on Wikipedia](https://en.wikipedia.org/wiki/Gregorian_calendar#Adoption_by_country)
-for a splendid chart depicting when the changeover from the Julian to
-the Gregorian calendars occurred in various places.
 
 ## Build & Install
 
