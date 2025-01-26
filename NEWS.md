@@ -1,3 +1,6 @@
+Changes in 5.9.0
+* Use Julian calendar for dates before September 14, 1752
+
 Changes in 5.8.8
 * Sigd moves to Thursday if it would fall on Shabbat
   https://github.com/hebcal/hebcal-es6/issues/518
