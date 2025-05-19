@@ -68,6 +68,7 @@ Option | Description
 --- | ---
  -H, --hebrew-date | Use Hebrew date ranges - only needed when e.g. `hebcal -H 5373`
  -I, --infile INFILE | Get non-yahrtzeit Hebrew user events from specified file. The format is: `mmm dd string`, Where `mmm` is a Hebrew month name.
+ --no-julian | disable Julian calendar for dates before September 14, 1752
  -t, --today | Only output for today's date
  -T, --today-brief | Print today's pertinent information, no Gregorian date.
  -X, --exit-if-chag | Exit silently with non-zero status if today is Shabbat or Chag; exit with 0 status if today is chol.
@@ -175,12 +176,13 @@ city you want isn’t on that list, you can directly control hebcal’s
 geographic information with the `--geo` (or `−l` and `−L`) and `−z`
 switches.
 
+For a status report on customizations, type `hebcal info` at the command prompt.
 
 ## Note on Julian calendar
 
 In 1582, Pope Gregory XIII introduced a correction into the calendar and advanced it by 10 days. The older calendar became known as the Julian calendar and the new one, post correction, as the Gregorian calendar. The Pope's change was adopted quickly by the Catholic world, but the rest of Christendom took much longer to swtich over and different countries did so at different times. See ["Gregorian Calendar" on Wikipedia](https://en.wikipedia.org/wiki/Gregorian_calendar#Adoption_by_country). It would take until September 2, 1752, for the British Empire to switch from the old calendar to the new one. For reasons of convention, hebcal defaults to using this as the date for the change.
 
-For a status report on customizations, type `hebcal info` at the command prompt.
+To disable Julian calendar transition and use the proleptic Gregorian calendar, specify option `--no-julian`
 
 ## Environment
 

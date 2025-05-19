@@ -1,3 +1,8 @@
+Changes in 5.9.1
+* Use `--no-julian` to disable Julian calendar transition for dates before September 14, 1752 (#285)
+* Add Portuguese translation, courtesy Zushe Ledovitch
+* Fix rendering of Yom Kippur Katan events #288
+
 Changes in 5.9.0
 * Use Julian calendar for dates before September 14, 1752
 

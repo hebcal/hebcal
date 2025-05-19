@@ -50,6 +50,7 @@ var noGreg_sw = false
 var yearDigits_sw = false
 var isTodayChag_sw = false
 var verbose_sw = false
+var noJulian_sw = false
 
 func handleArgs() hebcal.CalOptions {
 	calOptions := hebcal.CalOptions{}
@@ -88,6 +89,8 @@ func handleArgs() hebcal.CalOptions {
 	var chagOnly_sw = false
 	opt.FlagLong(&chagOnly_sw, "chag-only", 0,
 		"Output only Chag and Erev Chag events (when melakha/labor is prohibited)")
+	opt.FlagLong(&noJulian_sw, "no-julian", 0,
+		"Disable use of Julian calendar for dates before 1752")
 
 	opt.FlagLong(&yearDigits_sw, "year-abbrev", 'y', "Print only last two digits of year")
 	opt.FlagLong(&tabs_sw, "tabs", 'r', "Tab delineated format")
@@ -330,6 +333,9 @@ on the yahrtzeit. Events are printed regardless of the
 	if noGreg_sw || isTodayChag_sw {
 		today_sw = true
 	}
+	if noJulian_sw {
+		calOptions.NoJulian = true
+	}
 
 	gregTodayYY, gregTodayMM, gregTodayDD := time.Now().Date()
 
@@ -492,19 +498,27 @@ func parseGregOrHebMonth(calOptions *hebcal.CalOptions, theYear int, arg string,
 	}
 }
 
+func fromGregorian(year int, month time.Month, day int) hdate.HDate {
+	if noJulian_sw {
+		return hdate.FromProlepticGregorian(year, month, day)
+	} else {
+		return hdate.FromGregorian(year, month, day)
+	}
+}
+
 func main() {
 	calOptions := handleArgs()
 	switch rangeType {
 	case TODAY:
 		calOptions.AddHebrewDates = true
-		calOptions.Start = hdate.FromGregorian(theYear, theGregMonth, theDay)
+		calOptions.Start = fromGregorian(theYear, theGregMonth, theDay)
 		calOptions.End = calOptions.Start
 	case DAY:
 		calOptions.AddHebrewDates = true
 		if calOptions.IsHebrewYear {
 			calOptions.Start = hdate.New(theYear, theHebMonth, theDay)
 		} else {
-			calOptions.Start = hdate.FromGregorian(theYear, theGregMonth, theDay)
+			calOptions.Start = fromGregorian(theYear, theGregMonth, theDay)
 		}
 		calOptions.End = calOptions.Start
 	case MONTH:
@@ -512,8 +526,8 @@ func main() {
 			calOptions.Start = hdate.New(theYear, theHebMonth, 1)
 			calOptions.End = hdate.New(theYear, theHebMonth, calOptions.Start.DaysInMonth())
 		} else {
-			calOptions.Start = hdate.FromGregorian(theYear, theGregMonth, 1)
-			calOptions.End = hdate.FromGregorian(theYear, theGregMonth, greg.DaysIn(theGregMonth, theYear))
+			calOptions.Start = fromGregorian(theYear, theGregMonth, 1)
+			calOptions.End = fromGregorian(theYear, theGregMonth, greg.DaysIn(theGregMonth, theYear))
 		}
 	case YEAR:
 		calOptions.Year = theYear
@@ -620,7 +634,14 @@ func isTodayChag(calOptions *hebcal.CalOptions, events []event.CalEvent) (int, s
 func printGregDate(hd hdate.HDate) string {
 	str := ""
 	if !noGreg_sw {
-		year, month, day := hd.Greg()
+		var year int
+		var month time.Month
+		var day int
+		if noJulian_sw {
+			year, month, day = hd.ProlepticGreg()
+		} else {
+			year, month, day = hd.Greg()
+		}
 		d := time.Date(year, month, day, 0, 0, 0, 0, time.UTC)
 		if gregDateOutputFormatCode_sw == ISO {
 			timeStr := d.Format(time.RFC3339)
