@@ -1,3 +1,6 @@
+Changes in 5.9.2
+* Fix rendering of Rosh Hashana and Parashat Korach when `--lang=he` (#273)
+
 Changes in 5.9.1
 * Use `--no-julian` to disable Julian calendar transition for dates before September 14, 1752 (#285)
 * Add Portuguese translation, courtesy Zushe Ledovitch
