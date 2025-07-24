@@ -1,0 +1,24 @@
+# github.com/dustin/go-humanize v1.0.1
+github.com/dustin/go-humanize
+# github.com/hebcal/gematriya v1.0.1
+github.com/hebcal/gematriya
+# github.com/hebcal/greg v1.0.2
+github.com/hebcal/greg
+# github.com/hebcal/hdate v1.2.0
+github.com/hebcal/hdate
+# github.com/hebcal/hebcal-go v0.10.5
+github.com/hebcal/hebcal-go/dafyomi
+github.com/hebcal/hebcal-go/event
+github.com/hebcal/hebcal-go/hebcal
+github.com/hebcal/hebcal-go/locales
+github.com/hebcal/hebcal-go/mishnayomi
+github.com/hebcal/hebcal-go/molad
+github.com/hebcal/hebcal-go/nachyomi
+github.com/hebcal/hebcal-go/omer
+github.com/hebcal/hebcal-go/sedra
+github.com/hebcal/hebcal-go/yerushalmi
+github.com/hebcal/hebcal-go/zmanim
+# github.com/nathan-osman/go-sunrise v1.1.0
+github.com/nathan-osman/go-sunrise
+# github.com/pborman/getopt/v2 v2.1.0
+github.com/pborman/getopt/v2
