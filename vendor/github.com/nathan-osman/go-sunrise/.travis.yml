@@ -1,0 +1,10 @@
+language: go
+
+go:
+  - stable
+
+before_install:
+  - go install github.com/mattn/goveralls@latest
+
+script:
+  - $GOPATH/bin/goveralls -service=travis-ci
