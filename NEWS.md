@@ -1,3 +1,6 @@
+Changes in 5.9.3
+* include vendored dependencies for downstream package managers #289 and #290, courtesy Ryder Dain
+
 Changes in 5.9.2
 * Fix rendering of Rosh Hashana and Parashat Korach when `--lang=he` (#273)
 
