@@ -1,4 +1,4 @@
-Changes in 5.9.3
+Changes in 5.9.4
 * include vendored dependencies for downstream package managers #289 and #290, courtesy Ryder Dain
 
 Changes in 5.9.2
