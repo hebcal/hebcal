@@ -281,6 +281,8 @@ Once you have those, you can prepare the build environment as follows:
 make clean all
 ```
 
+Slackware users can use the slackbuild at `https://slackbuilds.org/repository/15.0/office/hebcal/?search=hebcal`. If you have `sbotools` installed, it's simply: `sboinstall hebcal`.
+
 ## DISTRIBUTION
    Copyright (C) 1994-2011  Danny Sadinoff
 
