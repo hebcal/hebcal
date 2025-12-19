@@ -1,6 +1,6 @@
 Changes in 5.9.5
 * fix Yahrzeit and UserEvents descriptions replaced with Rosh Hashanah
-
+* Added 'he-x-NoNikud' option to LANG code list
 
 Changes in 5.9.4
 * include vendored dependencies for downstream package managers #289 and #290, courtesy Ryder Dain
