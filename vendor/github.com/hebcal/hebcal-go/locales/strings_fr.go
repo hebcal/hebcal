@@ -44,7 +44,7 @@ var dict_fr = map[string]string{
 	"Error in input file.  Skipping line %s": "Erreur dans le fichier d'entrée. Ignore la ligne %s",
 	"Error in yahrtzeit file.  Skipping line %s": "Erreur dans le fichier des yahrzeit. Ignore la ligne %s",
 	"Eruvin": "Erouvin",
-	"Fast begins": "Jeûne commence",
+	"Fast begins": "Début du jeûne",
 	"Fast ends": "Fin du jeûne",
 	"Gitin": "Guitin",
 	"Ha'azinu": "Ha'Azinou",

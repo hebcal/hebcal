@@ -143,7 +143,7 @@ func HebrewCalendar(opts *CalOptions) ([]event.CalEvent, error) {
 		endOmer      int64
 		myIdx        mishnayomi.MishnaYomiIndex
 		nachIdx      nachyomi.NachYomiIndex
-		userEvents   []event.HolidayEvent
+		userEvents   []event.UserEvent
 	)
 	firstWeekday := time.Weekday(startAbs % 7)
 	events := make([]event.CalEvent, 0, 20)
@@ -162,25 +162,23 @@ func HebrewCalendar(opts *CalOptions) ([]event.CalEvent, error) {
 			}
 			numUserEvents := len(opts.Yahrzeits) + len(opts.UserEvents)
 			if numUserEvents != 0 {
-				userEvents = make([]event.HolidayEvent, 0, numUserEvents)
+				userEvents = make([]event.UserEvent, 0, numUserEvents)
 				for _, yahrzeit := range opts.Yahrzeits {
 					origDate := hdate.FromTime(yahrzeit.Date)
 					observedDate, err := hdate.GetYahrzeit(currentYear, origDate)
 					if err == nil {
-						userEvents = append(userEvents, event.HolidayEvent{
+						userEvents = append(userEvents, event.UserEvent{
 							Date:  observedDate,
 							Desc:  yahrzeit.Name,
-							Flags: event.USER_EVENT,
 						})
 					}
 				}
 				for _, userEv := range opts.UserEvents {
 					// Watch for ShortKislev and LongCheshvan
 					if userEv.Day <= hdate.DaysInMonth(userEv.Month, hyear) {
-						userEvents = append(userEvents, event.HolidayEvent{
+						userEvents = append(userEvents, event.UserEvent{
 							Date:  hdate.New(hyear, userEv.Month, userEv.Day),
 							Desc:  userEv.Desc,
-							Flags: event.USER_EVENT,
 						})
 					}
 				}

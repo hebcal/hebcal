@@ -45,7 +45,7 @@ const (
 	Iyyar
 	// Sivan / סיון
 	Sivan
-	// Tamuz (sometimes Tammuz) / תמוז
+	// Tammuz (sometimes Tamuz) / תמוז
 	Tamuz
 	// Av / אב
 	Av
@@ -72,7 +72,7 @@ var longMonthNames = []string{
 	"Nisan",
 	"Iyyar",
 	"Sivan",
-	"Tamuz",
+	"Tammuz",
 	"Av",
 	"Elul",
 	"Tishrei",
