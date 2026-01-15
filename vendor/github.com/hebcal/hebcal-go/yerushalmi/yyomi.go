@@ -157,7 +157,10 @@ func New(hd hdate.HDate, edition Edition) dafyomi.Daf {
 	for cday >= nextCycle {
 		prevCycle = nextCycle
 		nextCycle += int64(numDapim)
-		nextCycle += int64(numSpecialDays(edition, prevCycle, nextCycle))
+		n := numSpecialDays(edition, prevCycle, nextCycle)
+		// recalculate for any additional special days at the end
+		n2 := numSpecialDays(edition, nextCycle, nextCycle+int64(n))
+		nextCycle += int64(n + n2)
 	}
 
 	total := int(cday - prevCycle - int64(numSpecialDays(edition, prevCycle, cday)))

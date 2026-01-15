@@ -1,3 +1,6 @@
+Changes in 5.9.6
+* Fix Yerushalmi Yomi Niddah 13 on October 5 2082 - https://github.com/hebcal/hebcal/issues/302
+
 Changes in 5.9.5
 * fix Yahrzeit and UserEvents descriptions replaced with Rosh Hashanah
 * Added 'he-x-NoNikud' option to LANG code list

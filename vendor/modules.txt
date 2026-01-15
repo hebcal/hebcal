@@ -6,7 +6,7 @@ github.com/hebcal/gematriya
 github.com/hebcal/greg
 # github.com/hebcal/hdate v1.2.1
 github.com/hebcal/hdate
-# github.com/hebcal/hebcal-go v0.10.8
+# github.com/hebcal/hebcal-go v0.10.9
 github.com/hebcal/hebcal-go/dafyomi
 github.com/hebcal/hebcal-go/event
 github.com/hebcal/hebcal-go/hebcal
