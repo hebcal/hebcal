@@ -26,16 +26,7 @@ func (ev parshaEvent) GetDate() hdate.HDate {
 func (ev parshaEvent) Render(locale string) string {
 	locale = strings.ToLower(locale)
 	prefix, _ := locales.LookupTranslation("Parashat", locale)
-	name, _ := locales.LookupTranslation(ev.Parsha.Name[0], locale)
-	if len(ev.Parsha.Name) == 2 {
-		p2, _ := locales.LookupTranslation(ev.Parsha.Name[1], locale)
-		delim := "-"
-		if locale == "he" || locale == "he-x-nonikud" {
-			delim = "־"
-		}
-		name = name + delim + p2
-	}
-	return prefix + " " + name
+	return prefix + " " + ev.Parsha.Render(locale)
 }
 
 func (ev parshaEvent) GetFlags() HolidayFlags {

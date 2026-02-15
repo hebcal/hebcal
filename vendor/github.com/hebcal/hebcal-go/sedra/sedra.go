@@ -20,12 +20,14 @@ package sedra
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 import (
+	"bytes"
 	"errors"
 	"strconv"
 	"strings"
 	"time"
 
 	"github.com/hebcal/hdate"
+	"github.com/hebcal/hebcal-go/locales"
 )
 
 type yearType int
@@ -381,4 +383,23 @@ func (sedra *Sedra) FindParshaNum(num int) (hdate.HDate, error) {
 // Returns a string representation of the parsha
 func (parsha Parsha) String() string {
 	return "Parashat " + strings.Join(parsha.Name, "-")
+}
+
+// Render returns the localized string name of the parsha.
+func (parsha Parsha) Render(locale string) string {
+	locale = strings.ToLower(locale)
+	var buf bytes.Buffer
+	buf.Grow(32)
+	for i, enName := range parsha.Name {
+		if i != 0 {
+			if locale == "he" || locale == "he-x-nonikud" {
+				buf.WriteRune('־')
+			} else {
+				buf.WriteRune('-')
+			}
+		}
+		name, _ := locales.LookupTranslation(enName, locale)
+		buf.WriteString(name)
+	}
+	return buf.String()
 }

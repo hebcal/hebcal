@@ -1,3 +1,6 @@
+Changes in 5.9.7
+* Makes `--lang=ashkenazi_standard` transliterations more consistent regarding vowels (🎵Komatz Alef O🎵), Sof/Tof and the final Hei, courtesy Chaim Halbert @chaimleib
+
 Changes in 5.9.6
 * Fix Yerushalmi Yomi Niddah 13 on October 5 2082 - https://github.com/hebcal/hebcal/issues/302
 

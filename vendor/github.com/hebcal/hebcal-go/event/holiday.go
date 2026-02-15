@@ -29,6 +29,16 @@ func (ev HolidayEvent) Render(locale string) string {
 		rchStr, _ := locales.LookupTranslation("Rosh Chodesh", locale)
 		monthStr, _ := locales.LookupTranslation(ev.Desc[13:], locale)
 		return rchStr + " " + monthStr
+	} else if (ev.Flags & SHABBAT_MEVARCHIM) != 0 {
+		mevarchimStr, _ := locales.LookupTranslation(
+			"Shabbat Mevarchim Chodesh",
+			locale,
+		)
+		monthStr, _ := locales.LookupTranslation(
+			strings.TrimPrefix(ev.Desc, "Shabbat Mevarchim Chodesh "),
+			locale,
+		)
+		return mevarchimStr + " " + monthStr
 	} else if ev.Date.Month() == hdate.Tishrei && ev.Date.Day() == 1 {
 		s, _ := locales.LookupTranslation("Rosh Hashana", locale)
 		year := ev.Date.Year()
