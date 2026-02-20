@@ -42,6 +42,8 @@ var dict_pl = map[string]string{
 	"Fast ends":                 "Czczo końce",
 	"Ha'azinu":                  "Haazinu",
 	"Havdalah":                  "Hawdala",
+	"Israel":                    "Izrael",
+	"Jewish Calendar":           "Kalendarz żydowski",
 	"Kedoshim":                  "Kedoszim",
 	"Ki Tavo":                   "Ki Tawo",
 	"Ki Teitzei":                "Ki Tece",

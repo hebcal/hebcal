@@ -22,6 +22,7 @@ import (
 	"time"
 
 	"github.com/hebcal/hdate"
+
 	"github.com/hebcal/hebcal-go/event"
 	"github.com/hebcal/hebcal-go/locales"
 	"github.com/hebcal/hebcal-go/zmanim"
@@ -242,7 +243,7 @@ func dailyZemanim(date hdate.HDate, opts *CalOptions) []event.CalEvent {
 		desc string
 		t    time.Time
 	}{
-		{"Alot haShachar", z.AlotHaShachar()},
+		{"Alot HaShachar", z.AlotHaShachar()},
 		{"Misheyakir", z.Misheyakir()},
 		{"Misheyakir Machmir", z.MisheyakirMachmir()},
 		{"Sunrise", z.Sunrise()},
@@ -250,7 +251,7 @@ func dailyZemanim(date hdate.HDate, opts *CalOptions) []event.CalEvent {
 		{"Kriat Shema, sof zeman (GRA)", z.SofZmanShma()},
 		{"Tefilah, sof zeman (MGA)", z.SofZmanTfillaMGA()},
 		{"Tefilah, sof zeman (GRA)", z.SofZmanTfilla()},
-		{"Chatzot hayom", z.Chatzot()},
+		{"Chatzot HaYom", z.Chatzot()},
 		{"Mincha Gedolah", z.MinchaGedola()},
 		{"Mincha Ketanah", z.MinchaKetana()},
 		{"Plag HaMincha", z.PlagHaMincha()},
