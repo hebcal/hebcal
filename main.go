@@ -16,7 +16,7 @@ import (
 	"github.com/hebcal/hebcal-go/locales"
 	"github.com/hebcal/hebcal-go/yerushalmi"
 	"github.com/hebcal/hebcal-go/zmanim"
-	getopt "github.com/pborman/getopt/v2"
+	"github.com/spf13/pflag"
 )
 
 type RangeType int
@@ -54,147 +54,146 @@ var noJulian_sw = false
 
 func handleArgs() hebcal.CalOptions {
 	calOptions := hebcal.CalOptions{}
-	opt := getopt.New()
-	opt.SetProgram("hebcal")
-	opt.SetParameters("[[ month [ day ]] year]")
+	flags := pflag.NewFlagSet("hebcal", pflag.ContinueOnError)
+	flags.Usage = func() {
+		fmt.Fprintf(os.Stderr, "Usage: hebcal [options] [[ month [ day ]] year]\n")
+		flags.PrintDefaults()
+	}
+
+	langList := strings.Join(locales.AllLocales, ", ")
+
 	var (
-		help            = opt.BoolLong("help", 0, "print this help text")
-		ashkenazi_sw    = opt.BoolLong("ashkenazi", 'a', "Use Ashkenazi Hebrew transliterations (alias for --lang=ashkenazi)")
-		euroDates_sw    = opt.BoolLong("euro-dates", 'e', "Output 'European' dates -- DD.MM.YYYY")
-		iso8601dates_sw = opt.BoolLong("iso-8601", 'g', "Output ISO 8601 dates -- YYYY-MM-DD")
-		version_sw      = opt.BoolLong("version", 0, "Show version number")
-		cityNameArg     = opt.StringLong("city", 'C', "", "City for candle-lighting", "CITY")
-		utf8_hebrew_sw  = opt.BoolLong("", '8', "Use UTF-8 Hebrew (alias for --lang=he)")
-		schottenstein   = opt.BoolLong("schottenstein", 0, "Use Schottenstein edition of Yerushalmi Yomi")
+		help            = flags.Bool("help", false, "print this help text")
+		ashkenazi_sw    = flags.BoolP("ashkenazi", "a", false, "Use Ashkenazi Hebrew transliterations (alias for --lang=ashkenazi)")
+		euroDates_sw    = flags.BoolP("euro-dates", "e", false, "Output 'European' dates -- DD.MM.YYYY")
+		iso8601dates_sw = flags.BoolP("iso-8601", "g", false, "Output ISO 8601 dates -- YYYY-MM-DD")
+		version_sw      = flags.Bool("version", false, "Show version number")
+		cityNameArg     = flags.StringP("city", "C", "", "City for candle-lighting")
+		utf8_hebrew_sw  = flags.BoolP("utf8-hebrew", "8", false, "Use UTF-8 Hebrew (alias for --lang=he)")
+		schottenstein   = flags.Bool("schottenstein", false, "Use Schottenstein edition of Yerushalmi Yomi")
 	)
 
 	var coordinates string
-	opt.FlagLong(&coordinates,
-		"geo", 0,
-		"Set location for solar calculations to decimal values LATITUDE and LONGITUDE.",
-		"LATITUDE,LONGITUDE")
+	flags.StringVar(&coordinates, "geo", "",
+		"Set location for solar calculations to decimal values LATITUDE and LONGITUDE.")
 	var latitudeStr, longitudeStr, tzid string
-	opt.FlagLong(&latitudeStr,
-		"latitude", 'l', "Set the latitude for solar calculations to XX degrees and YY minutes. Negative values are south.", "XX,YY")
-	opt.FlagLong(&longitudeStr,
-		"longitude", 'L', "Set the longitude for solar calculations to XX degrees and YY minutes. Negative values are EAST. The -l and -L switches must both be used, or not at all.", "XX,YY")
-	opt.FlagLong(&tzid, "timezone", 'z', "Use specified timezone, overriding the -C (localize to city) switch", "TIMEZONE")
+	flags.StringVarP(&latitudeStr, "latitude", "l", "",
+		"Set the latitude for solar calculations to XX degrees and YY minutes. Negative values are south.")
+	flags.StringVarP(&longitudeStr, "longitude", "L", "",
+		"Set the longitude for solar calculations to XX degrees and YY minutes. Negative values are EAST. The -l and -L switches must both be used, or not at all.")
+	flags.StringVarP(&tzid, "timezone", "z", "",
+		"Use specified timezone, overriding the -C (localize to city) switch")
 
-	opt.FlagLong(&today_sw, "today", 't', "Only output for today's date")
-	opt.FlagLong(&noGreg_sw, "today-brief", 'T', "Print today's pertinent information")
-	opt.FlagLong(&isTodayChag_sw, "exit-if-chag", 'X',
+	flags.BoolVarP(&today_sw, "today", "t", false, "Only output for today's date")
+	flags.BoolVarP(&noGreg_sw, "today-brief", "T", false, "Print today's pertinent information")
+	flags.BoolVarP(&isTodayChag_sw, "exit-if-chag", "X", false,
 		"Exit silently with non-zero status if today is Shabbat or Chag; exit with 0 status if today is chol")
-	opt.FlagLong(&verbose_sw, "verbose", 0,
+	flags.BoolVar(&verbose_sw, "verbose", false,
 		"Verbose mode, currently used only for --exit-if-chag")
-	var chagOnly_sw = false
-	opt.FlagLong(&chagOnly_sw, "chag-only", 0,
+	var chagOnly_sw bool
+	flags.BoolVar(&chagOnly_sw, "chag-only", false,
 		"Output only Chag and Erev Chag events (when melakha/labor is prohibited)")
-	opt.FlagLong(&noJulian_sw, "no-julian", 0,
+	flags.BoolVar(&noJulian_sw, "no-julian", false,
 		"Disable use of Julian calendar for dates before 1752")
 
-	opt.FlagLong(&yearDigits_sw, "year-abbrev", 'y', "Print only last two digits of year")
-	opt.FlagLong(&tabs_sw, "tabs", 'r', "Tab delineated format")
-	opt.FlagLong(&weekday_sw, "weekday", 'w', "Add day of the week")
-	opt.FlagLong(&calOptions.Hour24,
-		"24hour", 'E', "Output 24-hour times (e.g. 18:37 instead of 6:37)")
-	opt.FlagLong(&calOptions.SunriseSunset,
-		"sunrise-and-sunset", 'O', "Output sunrise and sunset times every day")
-	opt.FlagLong(&calOptions.DailyZmanim, "zmanim", 'Z', "Output zemanim every day")
-	opt.FlagLong(&calOptions.Molad, "molad", 'M', "Print the molad on Shabbat Mevorchim")
-	opt.FlagLong(&calOptions.WeeklyAbbreviated,
-		"abbrev", 'W', "Weekly view. Omer, dafyomi, and non-date-specific zemanim are shown once a week, on the day which corresponds to the first day in the range.")
+	flags.BoolVarP(&yearDigits_sw, "year-abbrev", "y", false, "Print only last two digits of year")
+	flags.BoolVarP(&tabs_sw, "tabs", "r", false, "Tab delineated format")
+	flags.BoolVarP(&weekday_sw, "weekday", "w", false, "Add day of the week")
+	flags.BoolVarP(&calOptions.Hour24,
+		"24hour", "E", false, "Output 24-hour times (e.g. 18:37 instead of 6:37)")
+	flags.BoolVarP(&calOptions.SunriseSunset,
+		"sunrise-and-sunset", "O", false, "Output sunrise and sunset times every day")
+	flags.BoolVarP(&calOptions.DailyZmanim, "zmanim", "Z", false, "Output zemanim every day")
+	flags.BoolVarP(&calOptions.Molad, "molad", "M", false, "Print the molad on Shabbat Mevorchim")
+	flags.BoolVarP(&calOptions.WeeklyAbbreviated,
+		"abbrev", "W", false, "Weekly view. Omer, dafyomi, and non-date-specific zemanim are shown once a week, on the day which corresponds to the first day in the range.")
 
-	langList := strings.Join(locales.AllLocales, ", ")
-	opt.FlagLong(&lang, "lang", 0, "Use LANG titles ("+langList+")", "LANG")
+	flags.StringVar(&lang, "lang", "en", "Use LANG titles ("+langList+")")
 
-	opt.FlagLong(&calOptions.CandleLighting,
-		"candlelighting", 'c', "Print candlelighting times")
-	opt.FlagLong(&calOptions.AddHebrewDates,
-		"add-hebrew-dates", 'd', "Print the Hebrew date for the entire date range")
-	opt.FlagLong(&calOptions.AddHebrewDatesForEvents, "add-hebrew-dates-for-events", 'D', "Print the Hebrew date for dates with some event")
+	flags.BoolVarP(&calOptions.CandleLighting,
+		"candlelighting", "c", false, "Print candlelighting times")
+	flags.BoolVarP(&calOptions.AddHebrewDates,
+		"add-hebrew-dates", "d", false, "Print the Hebrew date for the entire date range")
+	flags.BoolVarP(&calOptions.AddHebrewDatesForEvents, "add-hebrew-dates-for-events", "D", false, "Print the Hebrew date for dates with some event")
 
-	opt.FlagLong(&calOptions.IsHebrewYear,
-		"hebrew-date", 'H', "Use Hebrew date ranges - only needed when e.g. hebcal -H 5373")
+	flags.BoolVarP(&calOptions.IsHebrewYear,
+		"hebrew-date", "H", false, "Use Hebrew date ranges - only needed when e.g. hebcal -H 5373")
 
-	opt.FlagLong(&calOptions.DafYomi,
-		"daf-yomi", 'F', "Output the Daf Yomi (Bavli) for the entire date range")
-	opt.FlagLong(&calOptions.MishnaYomi,
-		"mishna-yomi", 0, "Output the Mishna Yomi for the entire date range")
-	opt.FlagLong(&calOptions.NachYomi,
-		"nach-yomi", 0, "Output the Nach Yomi for the entire date range")
-	opt.FlagLong(&calOptions.YerushalmiYomi,
-		"yerushalmi", 0, "Output the Yerushalmi Yomi for the entire date range")
-	opt.FlagLong(&calOptions.YomKippurKatan,
-		"ykk", 0, "Include Yom Kippur Katan, minor day of atonement occurring monthly on the day preceding each Rosh Chodesh")
-	opt.FlagLong(&calOptions.ShabbatMevarchim, "mevarchim", 0, "Include Shabbat Mevarchim HaChodesh")
+	flags.BoolVarP(&calOptions.DafYomi,
+		"daf-yomi", "F", false, "Output the Daf Yomi (Bavli) for the entire date range")
+	flags.BoolVar(&calOptions.MishnaYomi,
+		"mishna-yomi", false, "Output the Mishna Yomi for the entire date range")
+	flags.BoolVar(&calOptions.NachYomi,
+		"nach-yomi", false, "Output the Nach Yomi for the entire date range")
+	flags.BoolVar(&calOptions.YerushalmiYomi,
+		"yerushalmi", false, "Output the Yerushalmi Yomi for the entire date range")
+	flags.BoolVar(&calOptions.YomKippurKatan,
+		"ykk", false, "Include Yom Kippur Katan, minor day of atonement occurring monthly on the day preceding each Rosh Chodesh")
+	flags.BoolVar(&calOptions.ShabbatMevarchim, "mevarchim", false, "Include Shabbat Mevarchim HaChodesh")
 
-	opt.FlagLong(&calOptions.NoHolidays,
-		"no-holidays", 'h', "Suppress default holidays")
-	opt.FlagLong(&calOptions.NoRoshChodesh,
-		"no-rosh-chodesh", 'x', "Suppress Rosh Chodesh")
+	flags.BoolVarP(&calOptions.NoHolidays,
+		"no-holidays", "h", false, "Suppress default holidays")
+	flags.BoolVarP(&calOptions.NoRoshChodesh,
+		"no-rosh-chodesh", "x", false, "Suppress Rosh Chodesh")
 
-	opt.FlagLong(&calOptions.IL,
-		"israeli", 'i', "Israeli holiday and sedra schedule")
-	opt.FlagLong(&calOptions.NoModern,
-		"no-modern", 0, "Suppress modern holidays")
-	opt.FlagLong(&calOptions.NoMinorFast, "no-mf", 0, "Suppress minor fast days")
-	opt.FlagLong(&calOptions.NoSpecialShabbat, "no-special", 0, "Suppress Special Shabbatot")
-	opt.FlagLong(&calOptions.Omer,
-		"omer", 'o', "Add days of the Omer")
-	opt.FlagLong(&calOptions.Sedrot,
-		"sedrot", 's', "Add the weekly sedra to the output on Saturdays")
-	opt.FlagLong(&calOptions.DailySedra,
-		"daily-sedra", 'S', "Add the weekly sedra to the output every day")
+	flags.BoolVarP(&calOptions.IL,
+		"israeli", "i", false, "Israeli holiday and sedra schedule")
+	flags.BoolVar(&calOptions.NoModern,
+		"no-modern", false, "Suppress modern holidays")
+	flags.BoolVar(&calOptions.NoMinorFast, "no-mf", false, "Suppress minor fast days")
+	flags.BoolVar(&calOptions.NoSpecialShabbat, "no-special", false, "Suppress Special Shabbatot")
+	flags.BoolVarP(&calOptions.Omer,
+		"omer", "o", false, "Add days of the Omer")
+	flags.BoolVarP(&calOptions.Sedrot,
+		"sedrot", "s", false, "Add the weekly sedra to the output on Saturdays")
+	flags.BoolVarP(&calOptions.DailySedra,
+		"daily-sedra", "S", false, "Add the weekly sedra to the output every day")
 
-	calOptions.CandleLightingMins = 18
-	opt.FlagLong(&calOptions.CandleLightingMins,
-		"candle-mins", 'b', "Set candle-lighting to occur this many minutes before sundown", "MINUTES")
+	flags.IntVarP(&calOptions.CandleLightingMins,
+		"candle-mins", "b", 18, "Set candle-lighting to occur this many minutes before sundown")
 
-	opt.FlagLong(&calOptions.HavdalahMins,
-		"havdalah-mins", 'm', "Set Havdalah to occur this many minutes after sundown", "MINUTES")
-	opt.FlagLong(&calOptions.HavdalahDeg,
-		"havdalah-deg", 'G', "Set Havdalah to occur this many degrees below the horizon", "DEGREES")
+	flags.IntVarP(&calOptions.HavdalahMins,
+		"havdalah-mins", "m", 0, "Set Havdalah to occur this many minutes after sundown")
+	flags.Float64VarP(&calOptions.HavdalahDeg,
+		"havdalah-deg", "G", 0, "Set Havdalah to occur this many degrees below the horizon")
 
-	calOptions.NumYears = 1
-	opt.FlagLong(&calOptions.NumYears,
-		"years", 0, "Generate events for N years (default 1)", "N")
+	flags.IntVar(&calOptions.NumYears,
+		"years", 1, "Generate events for N years (default 1)")
 
-	inFileName := opt.StringLong("infile", 'I', "", `Read extra events from FILENAME.
+	inFileName := flags.StringP("infile", "I", "", `Read extra events from FILENAME.
 Each line specifies one holiday, with the format:
     MMMM DD Description
 where MMMM is a string identifying the Hebrew month,
 and DD is a number from 1 to 30.
 Description is a newline-terminated string describing
 the event. Events are printed regardless of the
--h (suppress holidays) switch.`, "FILENAME")
-	yahrzeitFileName := opt.StringLong("yahrtzeit", 'Y', "", `Read yahrtzeit dates from FILENAME.
+-h (suppress holidays) switch.`)
+	yahrzeitFileName := flags.StringP("yahrtzeit", "Y", "", `Read yahrtzeit dates from FILENAME.
 Each line specifies one death-date, with the format:
     MM DD YYYY Description
 where MM, DD and YYYY are the Gregorian date of death.
 Description is a newline-terminated string to be printed
 on the yahrtzeit. Events are printed regardless of the
--h (suppress holidays) switch.`, "FILENAME")
+-h (suppress holidays) switch.`)
 
-	if err := opt.Getopt(os.Args, nil); err != nil {
-		fmt.Fprintf(os.Stderr, "%v\n", err)
-		os.Exit(1)
-	}
-
+	// Collect env opts and command-line args; env opts first so command-line overrides them
+	var allArgs []string
 	envOpts := os.Getenv("HEBCAL_OPTS")
 	if envOpts != "" {
 		spaceOrTab := func(c rune) bool {
 			return c == ' ' || c == '\t'
 		}
-		args := strings.FieldsFunc(envOpts, spaceOrTab)
-		args = append([]string{"hebcal"}, args...)
-		if err := opt.Getopt(args, nil); err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
-			os.Exit(1)
-		}
+		allArgs = strings.FieldsFunc(envOpts, spaceOrTab)
+	}
+	allArgs = append(allArgs, os.Args[1:]...)
+
+	if err := flags.Parse(allArgs); err != nil {
+		fmt.Fprintf(os.Stderr, "%v\n", err)
+		os.Exit(1)
 	}
 
 	if *help {
-		displayHelp(opt)
+		displayHelp(flags)
 		os.Exit(0)
 	}
 	if *version_sw {
@@ -361,7 +360,7 @@ on the yahrtzeit. Events are printed regardless of the
 	}
 
 	// Get the remaining positional parameters
-	args := opt.Args()
+	args := flags.Args()
 
 	switch len(args) {
 	case 0:
@@ -379,7 +378,7 @@ on the yahrtzeit. Events are printed regardless of the
 		} else {
 			switch arg0 {
 			case "help":
-				displayHelp(opt)
+				displayHelp(flags)
 				os.Exit(0)
 			case "version":
 				fmt.Printf("Hebcal version %s\n", Version)
@@ -413,7 +412,7 @@ on the yahrtzeit. Events are printed regardless of the
 					rangeType = DAY
 				} else {
 					fmt.Fprintf(os.Stderr, "unrecognized command '%s'\n", args[0])
-					fmt.Fprintf(os.Stderr, "Usage: hebcal %s\n", opt.UsageLine())
+					fmt.Fprintf(os.Stderr, "Usage: hebcal [options] [[ month [ day ]] year]\n")
 					os.Exit(1)
 				}
 			}
@@ -443,7 +442,7 @@ on the yahrtzeit. Events are printed regardless of the
 		parseGregOrHebMonth(&calOptions, theYear, args[0], &theGregMonth, &theHebMonth)
 		rangeType = DAY
 	default:
-		opt.PrintUsage(os.Stderr)
+		flags.Usage()
 		os.Exit(1)
 	}
 
@@ -679,8 +678,9 @@ func intAbs(x int) int {
 	return x
 }
 
-func displayHelp(opt *getopt.Set) {
-	opt.PrintUsage(os.Stdout)
+func displayHelp(flags *pflag.FlagSet) {
+	fmt.Printf("Usage: hebcal [options] [[ month [ day ]] year]\n")
+	flags.PrintDefaults()
 	fmt.Print(usageSummary)
 }
 

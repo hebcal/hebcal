@@ -6,5 +6,5 @@ require (
 	github.com/hebcal/greg v1.0.2
 	github.com/hebcal/hdate v1.2.1
 	github.com/hebcal/hebcal-go v0.11.1
-	github.com/pborman/getopt/v2 v2.1.0
+	github.com/spf13/pflag v1.0.10
 )
