@@ -1,3 +1,6 @@
+Changes in 5.9.8
+* skip non-existent year 0 when computing Gregorian end date (#310)
+
 Changes in 5.9.7
 * Makes `--lang=ashkenazi_standard` transliterations more consistent regarding vowels (🎵Komatz Alef O🎵), Sof/Tof and the final Hei, courtesy Chaim Halbert @chaimleib
 

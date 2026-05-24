@@ -325,7 +325,13 @@ func getStartAndEnd(opts *CalOptions) (int64, int64, error) {
 		if opts.NoJulian {
 			endAbs = greg.ProlepticToRD(year+numYears, time.January, 1)
 		} else {
-			endAbs = greg.ToRD(year+numYears, time.January, 1)
+			endYear := year + numYears
+			// historical Gregorian calendar has no year 0; 1 BC (-1) is
+			// followed directly by 1 AD (+1), so skip over 0
+			if year < 0 && endYear >= 0 {
+				endYear++
+			}
+			endAbs = greg.ToRD(endYear, time.January, 1)
 		}
 		return startAbs, endAbs - 1, nil
 	}
