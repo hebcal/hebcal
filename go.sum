@@ -7,8 +7,9 @@ github.com/hebcal/gematriya v1.0.1 h1:lktI5tX4lxg2o2OIEQXGYiMWxL9VkbfOXa+/kamjrL
 github.com/hebcal/gematriya v1.0.1/go.mod h1:hQJm5ggDgm45RsnaaSrYB387VIBDI0Kcq5wglx7KVpI=
 github.com/hebcal/greg v1.0.2 h1:HprF6W7xuB4FB8pacmqgIlCi6YTte+/WhDlzobgSMK4=
 github.com/hebcal/greg v1.0.2/go.mod h1:HhnDLPDm/dgcrANH5WYN9ol0tlkK/6mJVkWDIYhkKJM=
-github.com/hebcal/hdate v1.2.2 h1:PrMh6STh5w1DLcqV/SeiMzPqyQfV0XlHz8J3JDeJrcE=
 github.com/hebcal/hdate v1.2.2/go.mod h1:TgWO5XSsx/FytmKTme0JvDwxOSDZ96B3xrQ4PIBZYXw=
+github.com/hebcal/hdate v1.2.3 h1:M6DBwA2dUbS8P5kqc2wnZD7TYns85jTcXwvUzDh/KXI=
+github.com/hebcal/hdate v1.2.3/go.mod h1:TgWO5XSsx/FytmKTme0JvDwxOSDZ96B3xrQ4PIBZYXw=
 github.com/hebcal/hebcal-go v0.11.2 h1:7hsIwVFvNdqw2z/OfGv9MZqUSuzU9F7dhC8oLS+EoZU=
 github.com/hebcal/hebcal-go v0.11.2/go.mod h1:UYs4JeEQ9oZlnNlNx//Pvw3zmF1CC33Tq+gQAzwZngk=
 github.com/nathan-osman/go-sunrise v1.1.0 h1:ZqZmtmtzs8Os/DGQYi0YMHpuUqR/iRoJK+wDO0wTCw8=
