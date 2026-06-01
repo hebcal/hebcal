@@ -1,3 +1,6 @@
+Changes in 5.12.1
+* `--daily-learning` now exits with an error on an unknown schedule name instead of silently ignoring it
+
 Changes in 5.12.0
 * `--daily-learning` now supports five more schedules via github.com/hebcal/learning@v0.4.0: Daf-a-Week (`dafWeekly`, `dafWeeklySunday`), Perek Yomi (`perekYomi`), Daily Psalms (`psalms`), Pirkei Avot Summer (`pirkeiAvotSummer`), and Tanakh Yomi (`tanakhYomi`)
 

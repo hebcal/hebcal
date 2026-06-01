@@ -11,6 +11,7 @@ import (
 
 	"github.com/hebcal/greg"
 	"github.com/hebcal/hdate"
+	"github.com/hebcal/hebcal-go/dailylearning"
 	"github.com/hebcal/hebcal-go/event"
 	"github.com/hebcal/hebcal-go/hebcal"
 	"github.com/hebcal/hebcal-go/locales"
@@ -214,6 +215,12 @@ on the yahrtzeit. Events are printed regardless of the
 		calOptions.YerushalmiEdition = hebcal.Schottenstein
 	}
 	calOptions.DailyLearning = *dailyLearning
+	for _, name := range calOptions.DailyLearning {
+		if !dailylearning.Has(name) {
+			fmt.Fprintf(os.Stderr, "unknown --daily-learning calendar: %s\n", name)
+			os.Exit(1)
+		}
+	}
 
 	if *ashkenazi_sw && *utf8_hebrew_sw {
 		fmt.Fprintf(os.Stderr, "Cannot specify both options -a and -8\n")
