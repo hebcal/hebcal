@@ -111,6 +111,24 @@ var mishnayot = []struct {
 	{k: "Oktzin", v: []int{6, 10, 12}},
 }
 
+// Tractate is a tractate (masechet) of the Mishnah and its number of
+// chapters (perakim).
+type Tractate struct {
+	Name     string // Sephardic transliteration, e.g. "Berakhot", "Avot"
+	NumChaps int    // number of chapters in the tractate
+}
+
+// Tractates returns the 63 tractates of the Mishnah in order, with the
+// number of chapters in each. It is used by chapter-based schedules such
+// as Perek Yomi that share the Mishnah's tractate ordering.
+func Tractates() []Tractate {
+	out := make([]Tractate, len(mishnayot))
+	for i, t := range mishnayot {
+		out[i] = Tractate{Name: t.k, NumChaps: len(t.v)}
+	}
+	return out
+}
+
 // MishnaYomiStart is the R.D. number of the start of the Mishna Yomi cycle,
 // corresponding to 20 May 1947.
 const MishnaYomiStart = 710901

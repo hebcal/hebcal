@@ -1,3 +1,6 @@
+Changes in 5.12.0
+* `--daily-learning` now supports five more schedules via github.com/hebcal/learning@v0.4.0: Daf-a-Week (`dafWeekly`, `dafWeeklySunday`), Perek Yomi (`perekYomi`), Daily Psalms (`psalms`), Pirkei Avot Summer (`pirkeiAvotSummer`), and Tanakh Yomi (`tanakhYomi`)
+
 Changes in 5.11.0
 * Add `--daily-learning NAME` to output additional daily learning schedules by name; supports the 929 daily bible chapter project (`929`, https://github.com/hebcal/hebcal/issues/300) and Daily Rambam (`rambam1`, `rambam3`)
 * Update to github.com/hebcal/hebcal-go@v0.14.0 and github.com/hebcal/learning@v0.2.0

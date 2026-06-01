@@ -15,13 +15,18 @@ github.com/hebcal/hebcal-go/molad
 github.com/hebcal/hebcal-go/omer
 github.com/hebcal/hebcal-go/sedra
 github.com/hebcal/hebcal-go/zmanim
-# github.com/hebcal/learning v0.2.0
+# github.com/hebcal/learning v0.4.0
 github.com/hebcal/learning
+github.com/hebcal/learning/dafweekly
 github.com/hebcal/learning/dafyomi
 github.com/hebcal/learning/mishnayomi
 github.com/hebcal/learning/nachyomi
 github.com/hebcal/learning/nine29
+github.com/hebcal/learning/perekyomi
+github.com/hebcal/learning/pirkeiavot
+github.com/hebcal/learning/psalms
 github.com/hebcal/learning/rambam
+github.com/hebcal/learning/tanakhyomi
 github.com/hebcal/learning/yerushalmi
 # github.com/nathan-osman/go-sunrise v1.1.0
 github.com/nathan-osman/go-sunrise

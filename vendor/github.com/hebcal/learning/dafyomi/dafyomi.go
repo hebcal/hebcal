@@ -100,11 +100,6 @@ func New(hd hdate.HDate) (Daf, error) {
 	}
 
 	// Find the daf taking note that the cycle changed slightly after cycle 7.
-
-	var total = 0
-	var blatt = 0
-	var count = -1
-
 	var shas = shas0
 	// Fix Shekalim for old cycles
 	if cno <= 7 {
@@ -113,7 +108,15 @@ func New(hd hdate.HDate) (Daf, error) {
 		shas[4] = Daf{Name: "Shekalim", Blatt: 13}
 	}
 
-	// Find the daf
+	return findDaf(shas, dno), nil
+}
+
+// findDaf returns the daf at zero-based index dno within the given shas.
+func findDaf(shas []Daf, dno int) Daf {
+	var total = 0
+	var blatt = 0
+	var count = -1
+
 	var dafcnt = 40
 	for j := 0; j < dafcnt; j++ {
 		count++
@@ -135,7 +138,15 @@ func New(hd hdate.HDate) (Daf, error) {
 			j = 1 + dafcnt
 		}
 	}
-	return Daf{Name: shas[count].Name, Blatt: blatt}, nil
+	return Daf{Name: shas[count].Name, Blatt: blatt}
+}
+
+// FindDaf returns the daf at the given zero-based index within the
+// standard ("new" cycle) Babylonian Talmud shas. It is used by schedules
+// such as Daf-a-Week that walk the same tractate order as Daf Yomi at a
+// different pace.
+func FindDaf(idx int) Daf {
+	return findDaf(shas0, idx)
 }
 
 // Returns a string representation of the Daf Yomi.

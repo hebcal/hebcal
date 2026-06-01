@@ -1,5 +1,7 @@
 # hebcal/learning
 
+[![Build Status](https://github.com/hebcal/learning/actions/workflows/go.yml/badge.svg)](https://github.com/hebcal/learning/actions/workflows/go.yml)
+[![Go Report Card](https://goreportcard.com/badge/github.com/hebcal/learning)](https://goreportcard.com/report/github.com/hebcal/learning)
 [![GoDoc](https://pkg.go.dev/badge/github.com/hebcal/learning?status.svg)](https://pkg.go.dev/github.com/hebcal/learning)
 
 Daily learning schedules for the [Hebcal](https://www.hebcal.com/) Jewish
@@ -25,6 +27,16 @@ mirrors the relationship between `@hebcal/core` and `@hebcal/learning`:
     Bible, Sun–Thu, covering all 929 chapters in ~3.5 years.
   - **rambam** — Daily Rambam (Mishneh Torah), in both the 1-chapter-a-day
     and 3-chapters-a-day cycles.
+  - **dafweekly** — Daf-a-Week, the same page of the Babylonian Talmud
+    studied for an entire week (~52-year cycle).
+  - **perekyomi** — Perek Yomi, one chapter of the Mishnah per day
+    (~17-month cycle).
+  - **psalms** — Daily Psalms (Tehillim) in the traditional 30-day cycle,
+    completing the book of Psalms each Hebrew month.
+  - **pirkeiavot** — Pirkei Avot ("Ethics of the Fathers"), one chapter on
+    each Shabbat of the summer between Pesach and Rosh Hashana.
+  - **tanakhyomi** — Tanakh Yomi, completing the Tanakh annually by the
+    Masoretic division into sedarim (skips Shabbat and major festivals).
 
 ## Usage
 
@@ -39,10 +51,9 @@ import (
 )
 
 opts := &hebcal.CalOptions{
-	Start:    hdate.New(5783, hdate.Cheshvan, 18),
-	End:      hdate.New(5783, hdate.Cheshvan, 23),
-	DafYomi:  true,
-	NachYomi: true,
+	Start:         hdate.New(5783, hdate.Cheshvan, 18),
+	End:           hdate.New(5783, hdate.Cheshvan, 23),
+	DailyLearning: []string{"dafYomi", "rambam3"},
 }
 events, err := hebcal.HebrewCalendar(opts)
 ```
@@ -75,14 +86,19 @@ The schedules register the following case-insensitive names with the
   - `929`
   - `rambam1`
   - `rambam3`
+  - `dafWeekly`
+  - `dafWeeklySunday`
+  - `perekYomi`
+  - `psalms`
+  - `pirkeiAvotSummer`
+  - `tanakhYomi`
 
 ## Roadmap
 
 The goal is to eventually port all of the daily learning schedules from
 the TypeScript [@hebcal/learning](https://github.com/hebcal/hebcal-learning)
-package. Still to port: Daily Psalms, Arukh HaShulchan Yomi, Sefer
-HaMitzvot, Chofetz Chaim, Shemirat HaLashon, Pirkei Avot, Daf-a-Week,
-Tanakh Yomi, Perek Yomi, Kitzur Shulchan Aruch, Dirshu Amud Yomi, etc.
+package. Still to port: Arukh HaShulchan Yomi, Sefer HaMitzvot, Chofetz
+Chaim, Shemirat HaLashon, Kitzur Shulchan Aruch, Dirshu Amud Yomi, etc.
 
 ## License
 
