@@ -218,6 +218,7 @@ on the yahrtzeit. Events are printed regardless of the
 	for _, name := range calOptions.DailyLearning {
 		if !dailylearning.Has(name) {
 			fmt.Fprintf(os.Stderr, "unknown --daily-learning calendar: %s\n", name)
+			fmt.Fprintf(os.Stderr, "valid calendars are: %s\n", strings.Join(dailylearning.GetCalendars(), ", "))
 			os.Exit(1)
 		}
 	}

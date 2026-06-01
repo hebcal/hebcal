@@ -1,3 +1,6 @@
+Changes in 5.12.2
+* On an unknown `--daily-learning` schedule, also print the list of valid calendar names to stderr
+
 Changes in 5.12.1
 * `--daily-learning` now exits with an error on an unknown schedule name instead of silently ignoring it
 
