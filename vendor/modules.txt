@@ -4,20 +4,23 @@ github.com/dustin/go-humanize
 github.com/hebcal/gematriya
 # github.com/hebcal/greg v1.0.2
 github.com/hebcal/greg
-# github.com/hebcal/hdate v1.2.2
+# github.com/hebcal/hdate v1.2.3
 github.com/hebcal/hdate
-# github.com/hebcal/hebcal-go v0.11.2
-github.com/hebcal/hebcal-go/dafyomi
+# github.com/hebcal/hebcal-go v0.12.0
+github.com/hebcal/hebcal-go/dailylearning
 github.com/hebcal/hebcal-go/event
 github.com/hebcal/hebcal-go/hebcal
 github.com/hebcal/hebcal-go/locales
-github.com/hebcal/hebcal-go/mishnayomi
 github.com/hebcal/hebcal-go/molad
-github.com/hebcal/hebcal-go/nachyomi
 github.com/hebcal/hebcal-go/omer
 github.com/hebcal/hebcal-go/sedra
-github.com/hebcal/hebcal-go/yerushalmi
 github.com/hebcal/hebcal-go/zmanim
+# github.com/hebcal/learning v0.1.0
+github.com/hebcal/learning
+github.com/hebcal/learning/dafyomi
+github.com/hebcal/learning/mishnayomi
+github.com/hebcal/learning/nachyomi
+github.com/hebcal/learning/yerushalmi
 # github.com/nathan-osman/go-sunrise v1.1.0
 github.com/nathan-osman/go-sunrise
 # github.com/pborman/getopt/v2 v2.1.0

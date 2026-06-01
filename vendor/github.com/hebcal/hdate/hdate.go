@@ -30,6 +30,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"sync/atomic"
 	"time"
 
 	"github.com/hebcal/greg"
@@ -174,9 +175,33 @@ func DaysInMonth(month HMonth, year int) int {
 	return 30
 }
 
+// edCache memoizes elapsedDays for the practical Hebrew year range.
+// Each slot is written at most once with a deterministic value; atomic
+// access keeps it race-free at the same cost as a plain load on x86/arm.
+// Years outside [edCacheMin, edCacheMax] fall through to recompute.
+const (
+	edCacheMin = 5000
+	edCacheMax = 6999
+)
+
+var edCache [edCacheMax - edCacheMin + 1]int32
+
 // elapsedDays returns the number of days from the sunday prior to the start
 // of the Hebrew calendar to the mean conjunction of Tishrei in Hebrew year.
 func elapsedDays(year int) int64 {
+	if year >= edCacheMin && year <= edCacheMax {
+		idx := year - edCacheMin
+		if n := atomic.LoadInt32(&edCache[idx]); n != 0 {
+			return int64(n)
+		}
+		v := elapsedDays0(year)
+		atomic.StoreInt32(&edCache[idx], int32(v))
+		return v
+	}
+	return elapsedDays0(year)
+}
+
+func elapsedDays0(year int) int64 {
 	prevYear := int64(year) - 1
 	mElapsed := 235*(prevYear/19) + // Months in complete 19 year lunar (Metonic) cycles so far
 		12*(prevYear%19) + // Regular months in this cycle

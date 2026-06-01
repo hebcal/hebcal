@@ -109,6 +109,7 @@ var dict_ashkenazi = map[string]string{
 	"Sukkot VII (Hoshana Raba)":       "Sukkos VII (Hoshana Raba)",
 	"Ta'anit Bechorot":                "Ta’anis Bechoros",
 	"Ta'anit Bechorot (Mincha)":       "Ta’anis Bechoros (Mincha)",
+	"Ta'anit BeHaB":                   "Ta’anis BeHaB",
 	"Ta'anit Esther":                  "Ta’anis Esther",
 	"Ta'anit Esther (Mincha)":         "Ta’anis Esther (Mincha)",
 	"Taanit":                          "Taanis",

@@ -14,8 +14,8 @@ import (
 	"github.com/hebcal/hebcal-go/event"
 	"github.com/hebcal/hebcal-go/hebcal"
 	"github.com/hebcal/hebcal-go/locales"
-	"github.com/hebcal/hebcal-go/yerushalmi"
 	"github.com/hebcal/hebcal-go/zmanim"
+	_ "github.com/hebcal/learning"
 	getopt "github.com/pborman/getopt/v2"
 )
 
@@ -210,7 +210,7 @@ on the yahrtzeit. Events are printed regardless of the
 	}
 	if *schottenstein {
 		calOptions.YerushalmiYomi = true
-		calOptions.YerushalmiEdition = yerushalmi.Schottenstein
+		calOptions.YerushalmiEdition = hebcal.Schottenstein
 	}
 
 	if *ashkenazi_sw && *utf8_hebrew_sw {

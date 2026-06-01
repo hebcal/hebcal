@@ -26,7 +26,7 @@ import (
 
 	"github.com/hebcal/greg"
 	"github.com/hebcal/hdate"
-	"github.com/hebcal/hebcal-go/dafyomi"
+	"github.com/hebcal/learning/dafyomi"
 )
 
 // Nach Yomi takes slightly longer than two years,

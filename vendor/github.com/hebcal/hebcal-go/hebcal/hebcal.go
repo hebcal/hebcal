@@ -24,14 +24,11 @@ import (
 
 	"github.com/hebcal/greg"
 	"github.com/hebcal/hdate"
-	"github.com/hebcal/hebcal-go/dafyomi"
+	"github.com/hebcal/hebcal-go/dailylearning"
 	"github.com/hebcal/hebcal-go/event"
-	"github.com/hebcal/hebcal-go/mishnayomi"
 	"github.com/hebcal/hebcal-go/molad"
-	"github.com/hebcal/hebcal-go/nachyomi"
 	"github.com/hebcal/hebcal-go/omer"
 	"github.com/hebcal/hebcal-go/sedra"
-	"github.com/hebcal/hebcal-go/yerushalmi"
 	"github.com/hebcal/hebcal-go/zmanim"
 )
 
@@ -128,11 +125,11 @@ func HebrewCalendar(opts *CalOptions) ([]event.CalEvent, error) {
 	}
 	opts.Mask = getMaskFromOptions(opts)
 	if opts.YerushalmiYomi && opts.YerushalmiEdition == 0 {
-		opts.YerushalmiEdition = yerushalmi.Vilna
+		opts.YerushalmiEdition = Vilna
 	}
-	beginYerushalmi := yerushalmi.VilnaStartRD
-	if opts.YerushalmiEdition == yerushalmi.Schottenstein {
-		beginYerushalmi = yerushalmi.SchottensteinStartRD
+	yerushalmiCalendar := "yerushalmi-vilna"
+	if opts.YerushalmiEdition == Schottenstein {
+		yerushalmiCalendar = "yerushalmi-schottenstein"
 	}
 	var (
 		il           bool = opts.IL
@@ -141,8 +138,6 @@ func HebrewCalendar(opts *CalOptions) ([]event.CalEvent, error) {
 		sedraYear    sedra.Sedra
 		beginOmer    int64
 		endOmer      int64
-		myIdx        mishnayomi.MishnaYomiIndex
-		nachIdx      nachyomi.NachYomiIndex
 		userEvents   []event.UserEvent
 	)
 	firstWeekday := time.Weekday(startAbs % 7)
@@ -211,30 +206,30 @@ func HebrewCalendar(opts *CalOptions) ([]event.CalEvent, error) {
 				omerDay := int(abs - beginOmer + 1)
 				events = append(events, omer.NewOmerEvent(hd, omerDay))
 			}
-			if opts.DafYomi && hyear >= 5684 {
-				daf, _ := dafyomi.New(hd)
-				events = append(events, event.NewDafYomiEvent(hd, daf))
-			}
-			if opts.YerushalmiYomi && abs >= beginYerushalmi {
-				daf := yerushalmi.New(hd, opts.YerushalmiEdition)
-				// daf.Blatt will be 0 to signal no Yerushalmi Yomi on YK and 9Av
-				if daf.Blatt != 0 {
-					events = append(events, event.NewYerushalmiYomiEvent(hd, daf))
+			// Daily learning schedules (Daf Yomi, Mishna Yomi, Yerushalmi
+			// Yomi) are supplied by schedule providers that register
+			// themselves with the dailylearning package (e.g. by importing
+			// github.com/hebcal/learning). When no provider is registered,
+			// these lookups return nil and the events are simply omitted.
+			if opts.DafYomi {
+				if ev := dailylearning.Lookup("dafYomi", hd, il); ev != nil {
+					events = append(events, ev)
 				}
 			}
-			if opts.MishnaYomi && abs >= mishnayomi.MishnaYomiStart {
-				if len(myIdx) == 0 {
-					myIdx = mishnayomi.MakeIndex()
+			if opts.YerushalmiYomi {
+				if ev := dailylearning.Lookup(yerushalmiCalendar, hd, il); ev != nil {
+					events = append(events, ev)
 				}
-				mishna, _ := myIdx.Lookup(hd)
-				events = append(events, event.NewMishnaYomiEvent(hd, mishna))
 			}
-			if opts.NachYomi && abs >= nachyomi.NachYomiStart {
-				if len(nachIdx) == 0 {
-					nachIdx = nachyomi.MakeIndex()
+			if opts.MishnaYomi {
+				if ev := dailylearning.Lookup("mishnaYomi", hd, il); ev != nil {
+					events = append(events, ev)
 				}
-				chapter, _ := nachIdx.Lookup(hd)
-				events = append(events, event.NewNachYomiEvent(hd, chapter))
+			}
+			if opts.NachYomi {
+				if ev := dailylearning.Lookup("nachYomi", hd, il); ev != nil {
+					events = append(events, ev)
+				}
 			}
 			if opts.DailyZmanim {
 				zmanEvents := dailyZemanim(hd, opts)

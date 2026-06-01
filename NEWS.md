@@ -1,3 +1,7 @@
+Changes in 5.10.0
+* Daily learning schedules (Daf Yomi, Mishna Yomi, Nach Yomi, Yerushalmi Yomi) moved to the new github.com/hebcal/learning module
+* Update to github.com/hebcal/hebcal-go@v0.12.0 and github.com/hebcal/learning@v0.1.0
+
 Changes in 5.9.8
 * skip non-existent year 0 when computing Gregorian end date (#310)
 

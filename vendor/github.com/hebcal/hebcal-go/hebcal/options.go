@@ -21,8 +21,19 @@ import (
 
 	"github.com/hebcal/hdate"
 	"github.com/hebcal/hebcal-go/event"
-	"github.com/hebcal/hebcal-go/yerushalmi"
 	"github.com/hebcal/hebcal-go/zmanim"
+)
+
+// YerushalmiEdition selects which page numbering is used for Yerushalmi
+// Yomi (the Jerusalem Talmud daily learning schedule).
+type YerushalmiEdition int
+
+const (
+	// Vilna Edition. The classic Vilna cycle takes ~4.25 years and skips
+	// both Yom Kippur and Tisha B'Av.
+	Vilna YerushalmiEdition = 1 + iota
+	// Schottenstein Edition. Uses different page numbers and takes ~6 years.
+	Schottenstein
 )
 
 // UserEvent is used for generating a non-yahrtzeit user event.
@@ -94,7 +105,7 @@ type CalOptions struct {
 	/* include Nach Yomi */
 	NachYomi bool
 	/* Either the Vilna or Schottenstein edition of Yerushalmi Yomi */
-	YerushalmiEdition yerushalmi.Edition
+	YerushalmiEdition YerushalmiEdition
 	/* include Days of the Omer */
 	Omer bool
 	/* include event announcing the molad */

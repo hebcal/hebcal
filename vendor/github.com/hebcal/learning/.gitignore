@@ -1,0 +1,4 @@
+*.out
+*.cov
+*.html
+.DS_Store
