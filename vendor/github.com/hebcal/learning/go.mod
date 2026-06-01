@@ -6,7 +6,7 @@ require (
 	github.com/hebcal/gematriya v1.0.1
 	github.com/hebcal/greg v1.0.2
 	github.com/hebcal/hdate v1.2.3
-	github.com/hebcal/hebcal-go v0.12.0
+	github.com/hebcal/hebcal-go v0.14.0
 	github.com/stretchr/testify v1.11.1
 )
 

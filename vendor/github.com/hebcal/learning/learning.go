@@ -1,6 +1,6 @@
 // Package learning registers all of Hebcal's daily learning schedules
-// (Daf Yomi, Mishna Yomi, Nach Yomi, and Yerushalmi Yomi) with the
-// dailylearning registry in github.com/hebcal/hebcal-go.
+// (Daf Yomi, Mishna Yomi, Nach Yomi, Yerushalmi Yomi, 929, and Daily
+// Rambam) with the dailylearning registry in github.com/hebcal/hebcal-go.
 //
 // Import this package for its side effects to make every schedule
 // available to hebcal-go's calendar generation:
@@ -18,5 +18,7 @@ import (
 	_ "github.com/hebcal/learning/dafyomi"
 	_ "github.com/hebcal/learning/mishnayomi"
 	_ "github.com/hebcal/learning/nachyomi"
+	_ "github.com/hebcal/learning/nine29"
+	_ "github.com/hebcal/learning/rambam"
 	_ "github.com/hebcal/learning/yerushalmi"
 )

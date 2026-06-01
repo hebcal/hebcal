@@ -77,6 +77,9 @@ const (
 	YERUSHALMI_YOMI
 	// Daily page of Nach (Nevi'im + Ketuvim)
 	NACH_YOMI
+	// Daily learning schedule supplied by a plugin (e.g. 929, Daily Rambam)
+	// via the dailylearning registry, with no dedicated flag of its own.
+	DAILY_LEARNING
 )
 
 type CalEvent interface {

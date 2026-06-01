@@ -104,6 +104,12 @@ type CalOptions struct {
 	YerushalmiYomi bool
 	/* include Nach Yomi */
 	NachYomi bool
+	/* include additional daily learning schedules by registered name
+	   (e.g. "929", "rambam1", "rambam3"). Names are case-insensitive and
+	   resolved through the dailylearning registry; a schedule provider
+	   such as github.com/hebcal/learning must be imported to register
+	   them. Unknown or unregistered names are silently ignored. */
+	DailyLearning []string
 	/* Either the Vilna or Schottenstein edition of Yerushalmi Yomi */
 	YerushalmiEdition YerushalmiEdition
 	/* include Days of the Omer */

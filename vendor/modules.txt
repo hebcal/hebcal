@@ -6,7 +6,7 @@ github.com/hebcal/gematriya
 github.com/hebcal/greg
 # github.com/hebcal/hdate v1.2.3
 github.com/hebcal/hdate
-# github.com/hebcal/hebcal-go v0.12.0
+# github.com/hebcal/hebcal-go v0.14.0
 github.com/hebcal/hebcal-go/dailylearning
 github.com/hebcal/hebcal-go/event
 github.com/hebcal/hebcal-go/hebcal
@@ -15,11 +15,13 @@ github.com/hebcal/hebcal-go/molad
 github.com/hebcal/hebcal-go/omer
 github.com/hebcal/hebcal-go/sedra
 github.com/hebcal/hebcal-go/zmanim
-# github.com/hebcal/learning v0.1.0
+# github.com/hebcal/learning v0.2.0
 github.com/hebcal/learning
 github.com/hebcal/learning/dafyomi
 github.com/hebcal/learning/mishnayomi
 github.com/hebcal/learning/nachyomi
+github.com/hebcal/learning/nine29
+github.com/hebcal/learning/rambam
 github.com/hebcal/learning/yerushalmi
 # github.com/nathan-osman/go-sunrise v1.1.0
 github.com/nathan-osman/go-sunrise

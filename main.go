@@ -66,6 +66,7 @@ func handleArgs() hebcal.CalOptions {
 		cityNameArg     = opt.StringLong("city", 'C', "", "City for candle-lighting", "CITY")
 		utf8_hebrew_sw  = opt.BoolLong("", '8', "Use UTF-8 Hebrew (alias for --lang=he)")
 		schottenstein   = opt.BoolLong("schottenstein", 0, "Use Schottenstein edition of Yerushalmi Yomi")
+		dailyLearning   = opt.ListLong("daily-learning", 0, "Output a daily learning schedule by name (e.g. 929, rambam1, rambam3); may be repeated", "NAME")
 	)
 
 	var coordinates string
@@ -212,6 +213,7 @@ on the yahrtzeit. Events are printed regardless of the
 		calOptions.YerushalmiYomi = true
 		calOptions.YerushalmiEdition = hebcal.Schottenstein
 	}
+	calOptions.DailyLearning = *dailyLearning
 
 	if *ashkenazi_sw && *utf8_hebrew_sw {
 		fmt.Fprintf(os.Stderr, "Cannot specify both options -a and -8\n")

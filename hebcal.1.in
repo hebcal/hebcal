@@ -110,6 +110,12 @@ hebcal - a Jewish calendar generator
 .if n .ti +5
 .br
 	[
+.B \--daily-learning
+.I name
+]
+.if n .ti +5
+.br
+	[
 .B \--schottenstein
 ]
 .if n .ti +5
@@ -441,6 +447,16 @@ day is printed, the torah reading for the Saturday on or immediately
 following that date is printed.  If there is no reading for the next
 Saturday, then nothing is printed.  See
 .B \-i.
+.TP
+.B "\-\-daily-learning " name
+Output an additional daily learning schedule by name for the entire
+date range.  May be repeated.  Supported names include
+.I 929
+(the 929 daily bible chapter project),
+.I rambam1
+(Daily Rambam, one chapter a day), and
+.I rambam3
+(Daily Rambam, three chapters a day).
 .TP
 .B "\-\-schottenstein"
 Use Schottenstein edition of Yerushalmi Yomi (default Vilna page

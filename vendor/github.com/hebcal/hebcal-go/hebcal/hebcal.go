@@ -231,6 +231,14 @@ func HebrewCalendar(opts *CalOptions) ([]event.CalEvent, error) {
 					events = append(events, ev)
 				}
 			}
+			// Any additional daily learning schedules requested by name
+			// (e.g. "929", "rambam1"). Names are case-insensitive and
+			// resolved through the dailylearning registry.
+			for _, name := range opts.DailyLearning {
+				if ev := dailylearning.Lookup(name, hd, il); ev != nil {
+					events = append(events, ev)
+				}
+			}
 			if opts.DailyZmanim {
 				zmanEvents := dailyZemanim(hd, opts)
 				events = append(events, zmanEvents...)

@@ -21,6 +21,10 @@ mirrors the relationship between `@hebcal/core` and `@hebcal/learning`:
     Ketuvim (Writings).
   - **yerushalmi** — Yerushalmi Yomi, a daily page of the Jerusalem
     Talmud, in both the Vilna and Schottenstein editions.
+  - **nine29** — 929 (Tanakh B'Yachad), a daily chapter of the Hebrew
+    Bible, Sun–Thu, covering all 929 chapters in ~3.5 years.
+  - **rambam** — Daily Rambam (Mishneh Torah), in both the 1-chapter-a-day
+    and 3-chapters-a-day cycles.
 
 ## Usage
 
@@ -68,15 +72,17 @@ The schedules register the following case-insensitive names with the
   - `nachYomi`
   - `yerushalmi-vilna`
   - `yerushalmi-schottenstein`
+  - `929`
+  - `rambam1`
+  - `rambam3`
 
 ## Roadmap
 
-This module starts with the four schedules ported from `hebcal-go`. The
-goal is to eventually port all of the daily learning schedules from the
-TypeScript [@hebcal/learning](https://github.com/hebcal/hebcal-learning)
-package (e.g. Daily Psalms, Daily Rambam, Arukh HaShulchan Yomi, Sefer
+The goal is to eventually port all of the daily learning schedules from
+the TypeScript [@hebcal/learning](https://github.com/hebcal/hebcal-learning)
+package. Still to port: Daily Psalms, Arukh HaShulchan Yomi, Sefer
 HaMitzvot, Chofetz Chaim, Shemirat HaLashon, Pirkei Avot, Daf-a-Week,
-Tanakh Yomi, etc.).
+Tanakh Yomi, Perek Yomi, Kitzur Shulchan Aruch, Dirshu Amud Yomi, etc.
 
 ## License
 
