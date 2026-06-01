@@ -290,9 +290,6 @@ Change the output format to European\-style dates: dd.mm.yyyy
 .B "\-E"
 Output 24-hour times (e.g., 18:37 instead of 6:37)
 .TP
-.B "\-F"
-Output the Daf Yomi for the entire date range
-.TP
 .B "\-g"
 Emit ISO-8601 dates, i.e. YYYY-MM-DD
 .TP
@@ -402,14 +399,8 @@ minutes after sundown (default 72).
 .B "\-\-mevarchim"
 Include Shabbat Mevarchim HaChodesh.
 .TP
-.B "\-\-mishna\-yomi"
-Output the Mishna Yomi for the entire date range.
-.TP
 .B "\-M"
 Print the molad on shabbat mevorchim
-.TP
-.B "\-\-nach\-yomi"
-Output the Nach Yomi for the entire date range.
 .TP
 .B "\-\-no\-mf"
 Suppress minor fast days.
@@ -448,21 +439,6 @@ following that date is printed.  If there is no reading for the next
 Saturday, then nothing is printed.  See
 .B \-i.
 .TP
-.B "\-\-daily-learning " name
-Output an additional daily learning schedule by name for the entire
-date range.  May be repeated.  Supported names include
-.I 929
-(the 929 daily bible chapter project),
-.I rambam1
-(Daily Rambam, one chapter a day), and
-.I rambam3
-(Daily Rambam, three chapters a day).
-.TP
-.B "\-\-schottenstein"
-Use Schottenstein edition of Yerushalmi Yomi (default Vilna page
-numbers).
-This option implies the \fB\-\-yerushalmi\fP option.
-.TP
 .B "\-t"
 Print calendar information for today's date only.
 .B \-d
@@ -497,9 +473,6 @@ Print only the last two digits of the year.
 Generate events for
 .I n
 years (default 1)
-.TP
-.B "\-\-yerushalmi"
-Output the Yerushalmi Yomi for the entire date range.
 .TP
 .B "\-\-ykk"
 Include Yom Kippur Katan, a minor day of atonement occurring
@@ -562,6 +535,61 @@ Show help text
 .B \-\-version
 Show version number
 .sp 0.5v
+.SS "Learning Schedules"
+Hebcal can interleave a variety of daily and weekly Torah and Talmud
+learning schedules into the calendar.  The schedules below have dedicated
+options; in addition, any schedule may be requested by name with the
+repeatable
+.B \-\-daily\-learning
+option.
+.TP
+.B "\-F" ", " "\-\-daf\-yomi"
+Output the Daf Yomi (Bavli) for the entire date range.
+.TP
+.B "\-\-mishna\-yomi"
+Output the Mishna Yomi for the entire date range.
+.TP
+.B "\-\-nach\-yomi"
+Output the Nach Yomi for the entire date range.
+.TP
+.B "\-\-yerushalmi"
+Output the Yerushalmi Yomi for the entire date range.
+.TP
+.B "\-\-schottenstein"
+Use the Schottenstein edition of Yerushalmi Yomi (default Vilna page
+numbers).  This option implies the \fB\-\-yerushalmi\fP option.
+.TP
+.BI "\-\-daily\-learning " name
+Output the named learning schedule for the entire date range.  May be
+repeated.  Valid names are:
+.I dafYomi
+(Daf Yomi, Babylonian Talmud),
+.I mishnaYomi
+(Mishna Yomi, two Mishnayot per day),
+.I nachYomi
+(Nach Yomi, a chapter of Nevi'im and Ketuvim),
+.I yerushalmi\-vilna
+and
+.I yerushalmi\-schottenstein
+(Yerushalmi Yomi, Jerusalem Talmud),
+.I 929
+(929, a daily chapter of the Hebrew Bible, Sun\(enThu),
+.I rambam1
+and
+.I rambam3
+(Daily Rambam, one or three chapters a day),
+.I dafWeekly
+and
+.I dafWeeklySunday
+(Daf\-a\-Week),
+.I perekYomi
+(one chapter of the Mishnah per day),
+.I psalms
+(Daily Psalms / Tehillim, 30\-day cycle),
+.I pirkeiAvotSummer
+(Pirkei Avot, summer Shabbatot), and
+.I tanakhYomi
+(Tanakh Yomi, annual Masoretic seder cycle).
 .SH "CANDLE\-LIGHTING TIMES"
 Hebcal's candlelighting times are only approximations.
 If you ever have any doubts about its times,

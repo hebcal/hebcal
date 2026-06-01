@@ -84,15 +84,12 @@ Option | Description
    -D, --add-hebrew-dates-for-events | print the Hebrew date for dates with some events
    -e, --euro-dates | Output "European" dates -- DD.MM.YYYY format.
    -E, --24hour | Output 24-hour times (e.g. 18:37 instead of 6:37).
-   -F, --daf-yomi | Output the Daf Yomi (Bavli) for the entire date range.
    -g, --iso-8601 | Output ISO 8601 dates -- YYYY-MM-DD (this overrides -y)
    -h, --no-holidays | Suppress default holidays.
    -i, --israeli | Use Israeli holiday and sedra schedule.
    --lang LANG | Use ISO 639-1 LANG code (one of `ashkenazi`, `ashkenazi_litvish`, `ashkenazi_poylish`, `ashkenazi_romanian`, `ashkenazi_standard`, `de`, `es`, `fi`, `fr`, `he`, `he-x-NoNikud`, `hu`, `pl`, `ro`, `ru`, `uk`)
    --mevarchim | Include Shabbat Mevarchim HaChodesh.
-   --mishna-yomi | Output the Mishna Yomi for the entire date range.
    -M, --molad | Print the molad on shabbat mevorchim.
-   --nach-yomi | Output the Nach Yomi for the entire date range.
    --no-mf | Suppress minor fast days.
    --no-modern | Suppress modern Israeli holidays.
    --no-special | Suppress Special Shabbatot.
@@ -100,7 +97,6 @@ Option | Description
    -O, --sunrise-and-sunset | Output sunrise and sunset times every day.
    -r, --tabs | Tab delineated format.
    -s, --sedrot | Add weekly sedrot on Saturday.
-   --schottenstein | Use Schottenstein edition of Yerushalmi Yomi
    -S, --daily-sedra | Print sedrah of the week on all calendar days.
    --verbose | Verbose mode, currently used only for --exit-if-chag
    -w, --weekday | Add day of the week.
@@ -108,8 +104,38 @@ Option | Description
    -x, --no-rosh-chodesh | Suppress Rosh Chodesh.
    -y, --year-abbrev | Print only last two digits of year.
    --years N | Generate events for `N` years (default `1`)
-   --yerushalmi | Output the Yerushalmi Yomi for the entire date range.
    --ykk | Include Yom Kippur Katan, minor day of atonement occurring monthly on the day preceding each Rosh Chodesh
+
+#### Learning Schedules
+Hebcal can interleave a variety of daily and weekly Torah and Talmud learning schedules into the calendar. The schedules below have dedicated options; in addition, any schedule may be requested by name with the repeatable `--daily-learning` option, e.g. `hebcal --daily-learning rambam1 --daily-learning 929`.
+
+Option | Description
+--- | ---
+   -F, --daf-yomi | Output the Daf Yomi (Bavli) for the entire date range.
+   --mishna-yomi | Output the Mishna Yomi for the entire date range.
+   --nach-yomi | Output the Nach Yomi for the entire date range.
+   --yerushalmi | Output the Yerushalmi Yomi for the entire date range.
+   --schottenstein | Use the Schottenstein edition of Yerushalmi Yomi (implies --yerushalmi; default is the Vilna edition).
+   --daily-learning NAME | Output the named learning schedule for the entire date range. May be repeated. See the table below for valid names.
+
+The following schedule names are accepted by `--daily-learning`:
+
+Name | Description
+--- | ---
+   `dafYomi` | Daf Yomi, a daily page of the Babylonian Talmud (Bavli).
+   `mishnaYomi` | Mishna Yomi, two Mishnayot per day (~6-year cycle).
+   `nachYomi` | Nach Yomi, a daily chapter of Nevi'im (Prophets) and Ketuvim (Writings).
+   `yerushalmi-vilna` | Yerushalmi Yomi, a daily page of the Jerusalem Talmud (Vilna edition).
+   `yerushalmi-schottenstein` | Yerushalmi Yomi, a daily page of the Jerusalem Talmud (Schottenstein edition).
+   `929` | 929 (Tanakh B'Yachad), a daily chapter of the Hebrew Bible, Sun–Thu, covering all 929 chapters in ~3.5 years.
+   `rambam1` | Daily Rambam (Mishneh Torah), one chapter a day.
+   `rambam3` | Daily Rambam (Mishneh Torah), three chapters a day.
+   `dafWeekly` | Daf-a-Week, the same page of the Babylonian Talmud studied for an entire week (~52-year cycle).
+   `dafWeeklySunday` | Daf-a-Week, shown only on Sundays.
+   `perekYomi` | Perek Yomi, one chapter of the Mishnah per day (~17-month cycle).
+   `psalms` | Daily Psalms (Tehillim) in the traditional 30-day cycle, completing the book of Psalms each Hebrew month.
+   `pirkeiAvotSummer` | Pirkei Avot ("Ethics of the Fathers"), one chapter on each Shabbat of the summer between Pesach and Rosh Hashana.
+   `tanakhYomi` | Tanakh Yomi, completing the Tanakh annually by the Masoretic division into sedarim (skips Shabbat and major festivals).
 
 #### Options related to candle-lighting times
 Option | Description
