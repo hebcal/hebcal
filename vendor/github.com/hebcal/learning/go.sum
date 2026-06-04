@@ -11,6 +11,8 @@ github.com/hebcal/hdate v1.2.3 h1:M6DBwA2dUbS8P5kqc2wnZD7TYns85jTcXwvUzDh/KXI=
 github.com/hebcal/hdate v1.2.3/go.mod h1:TgWO5XSsx/FytmKTme0JvDwxOSDZ96B3xrQ4PIBZYXw=
 github.com/hebcal/hebcal-go v0.14.0 h1:gGC64TXbPO9tlhgjIXrkY9knreUCyfFLqymr/mJGe64=
 github.com/hebcal/hebcal-go v0.14.0/go.mod h1:kVj/kiCIBU44CoViYDj0scMMEL672NkKN81taRzoaX8=
+github.com/hebcal/locales v0.9.0 h1:fNnzOXKbpHYFY6/2Uzh1bkHSzCt1uuDeRQVBmKEsFVI=
+github.com/hebcal/locales v0.9.0/go.mod h1:KzagA5BjUI9Eh8BxLMmt0J91ByjeeswM54abysBdxXI=
 github.com/nathan-osman/go-sunrise v1.1.0 h1:ZqZmtmtzs8Os/DGQYi0YMHpuUqR/iRoJK+wDO0wTCw8=
 github.com/nathan-osman/go-sunrise v1.1.0/go.mod h1:RcWqhT+5ShCZDev79GuWLayetpJp78RSjSWxiDowmlM=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
@@ -26,6 +28,8 @@ github.com/stretchr/testify v1.8.4/go.mod h1:sz/lmYIOXD/1dqDmKjjqLyZ2RngseejIcXl
 github.com/stretchr/testify v1.10.0/go.mod h1:r2ic/lqez/lEtzL7wO/rwa5dbSLXVDPFyf8C91i36aY=
 github.com/stretchr/testify v1.11.1 h1:7s2iGBzp5EwR7/aIZr8ao5+dra3wiQyKjjFuvgVKu7U=
 github.com/stretchr/testify v1.11.1/go.mod h1:wZwfW3scLgRK+23gO65QZefKpKQRnfz6sD981Nm4B6U=
+golang.org/x/text v0.21.0 h1:zyQAAkrwaneQ066sspRyJaG9VNi/YJ1NfzcGB3hZ/qo=
+golang.org/x/text v0.21.0/go.mod h1:4IBbMaMmOPCJ8SecivzSH54+73PCFmPWxNTLm+vZkEQ=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405 h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=

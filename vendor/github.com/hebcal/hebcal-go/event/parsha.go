@@ -4,8 +4,8 @@ import (
 	"strings"
 
 	"github.com/hebcal/hdate"
-	"github.com/hebcal/hebcal-go/locales"
 	"github.com/hebcal/hebcal-go/sedra"
+	"github.com/hebcal/locales"
 )
 
 // Represents one of 54 weekly Torah portions, always on a Saturday

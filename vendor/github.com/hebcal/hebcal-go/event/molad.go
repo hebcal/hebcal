@@ -5,8 +5,8 @@ import (
 	"strings"
 
 	"github.com/hebcal/hdate"
-	"github.com/hebcal/hebcal-go/locales"
 	"github.com/hebcal/hebcal-go/molad"
+	"github.com/hebcal/locales"
 )
 
 type moladEvent struct {

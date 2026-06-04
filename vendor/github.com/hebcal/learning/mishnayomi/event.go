@@ -21,7 +21,7 @@ import (
 
 	"github.com/hebcal/hdate"
 	"github.com/hebcal/hebcal-go/event"
-	"github.com/hebcal/hebcal-go/locales"
+	"github.com/hebcal/locales"
 )
 
 type mishnaYomiEvent struct {
