@@ -14,7 +14,7 @@ import (
 	"github.com/hebcal/hebcal-go/dailylearning"
 	"github.com/hebcal/hebcal-go/event"
 	"github.com/hebcal/hebcal-go/hebcal"
-	"github.com/hebcal/hebcal-go/locales"
+	"github.com/hebcal/locales"
 	"github.com/hebcal/hebcal-go/zmanim"
 	_ "github.com/hebcal/learning"
 	getopt "github.com/pborman/getopt/v2"
