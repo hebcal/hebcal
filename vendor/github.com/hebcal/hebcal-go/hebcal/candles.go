@@ -24,8 +24,8 @@ import (
 	"github.com/hebcal/hdate"
 
 	"github.com/hebcal/hebcal-go/event"
-	"github.com/hebcal/hebcal-go/locales"
 	"github.com/hebcal/hebcal-go/zmanim"
+	"github.com/hebcal/locales"
 )
 
 func formatTime(t *time.Time, opts *CalOptions) string {
