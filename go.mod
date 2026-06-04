@@ -1,6 +1,6 @@
 module github.com/hebcal/hebcal
 
-go 1.13
+go 1.18
 
 require (
 	github.com/hebcal/greg v1.0.2
@@ -9,4 +9,11 @@ require (
 	github.com/hebcal/learning v0.4.1-0.20260604134938-80aae0dad7bf
 	github.com/hebcal/locales v0.9.0
 	github.com/pborman/getopt/v2 v2.1.0
+)
+
+require (
+	github.com/dustin/go-humanize v1.0.1 // indirect
+	github.com/hebcal/gematriya v1.0.1 // indirect
+	github.com/nathan-osman/go-sunrise v1.1.0 // indirect
+	golang.org/x/text v0.21.0 // indirect
 )

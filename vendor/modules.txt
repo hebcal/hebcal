@@ -1,12 +1,17 @@
 # github.com/dustin/go-humanize v1.0.1
+## explicit; go 1.16
 github.com/dustin/go-humanize
 # github.com/hebcal/gematriya v1.0.1
+## explicit; go 1.13
 github.com/hebcal/gematriya
 # github.com/hebcal/greg v1.0.2
+## explicit; go 1.13
 github.com/hebcal/greg
 # github.com/hebcal/hdate v1.2.3
+## explicit; go 1.17
 github.com/hebcal/hdate
 # github.com/hebcal/hebcal-go v0.15.0
+## explicit; go 1.18
 github.com/hebcal/hebcal-go/dailylearning
 github.com/hebcal/hebcal-go/event
 github.com/hebcal/hebcal-go/hebcal
@@ -15,6 +20,7 @@ github.com/hebcal/hebcal-go/omer
 github.com/hebcal/hebcal-go/sedra
 github.com/hebcal/hebcal-go/zmanim
 # github.com/hebcal/learning v0.4.1-0.20260604134938-80aae0dad7bf
+## explicit; go 1.17
 github.com/hebcal/learning
 github.com/hebcal/learning/dafweekly
 github.com/hebcal/learning/dafyomi
@@ -28,12 +34,16 @@ github.com/hebcal/learning/rambam
 github.com/hebcal/learning/tanakhyomi
 github.com/hebcal/learning/yerushalmi
 # github.com/hebcal/locales v0.9.0
+## explicit; go 1.18
 github.com/hebcal/locales
 # github.com/nathan-osman/go-sunrise v1.1.0
+## explicit; go 1.13
 github.com/nathan-osman/go-sunrise
 # github.com/pborman/getopt/v2 v2.1.0
+## explicit; go 1.13
 github.com/pborman/getopt/v2
 # golang.org/x/text v0.21.0
+## explicit; go 1.18
 golang.org/x/text/feature/plural
 golang.org/x/text/internal
 golang.org/x/text/internal/catmsg
