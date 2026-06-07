@@ -715,7 +715,7 @@ hebcal 93, but rather hebcal 1993.
 
 
 Hebcal is copyright (c) 1994-2011 By Danny Sadinoff
-Portions Copyright (c) 2011-2022 Michael J. Radwin. All rights reserved.
+Portions Copyright (c) 2011-2026 Michael J. Radwin. All rights reserved.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License

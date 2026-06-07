@@ -87,7 +87,7 @@ Option | Description
    -g, --iso-8601 | Output ISO 8601 dates -- YYYY-MM-DD (this overrides -y)
    -h, --no-holidays | Suppress default holidays.
    -i, --israeli | Use Israeli holiday and sedra schedule.
-   --lang LANG | Use ISO 639-1 LANG code (one of `ashkenazi`, `ashkenazi_litvish`, `ashkenazi_poylish`, `ashkenazi_romanian`, `ashkenazi_standard`, `de`, `es`, `fi`, `fr`, `he`, `he-x-NoNikud`, `hu`, `pl`, `ro`, `ru`, `uk`)
+   --lang LANG | Use LANG titles (one of `en`, `ashkenazi`, `ashkenazi_komatz`, `ashkenazi_litvish`, `ashkenazi_poylish`, `ashkenazi_romanian`, `ashkenazi_standard`, `de`, `es`, `fi`, `fr`, `he`, `he-x-NoNikud`, `hu`, `nl`, `pl`, `pt`, `ro`, `ru`, `uk`, `yi`)
    --mevarchim | Include Shabbat Mevarchim HaChodesh.
    -M, --molad | Print the molad on shabbat mevorchim.
    --no-mf | Suppress minor fast days.
@@ -100,7 +100,7 @@ Option | Description
    -S, --daily-sedra | Print sedrah of the week on all calendar days.
    --verbose | Verbose mode, currently used only for --exit-if-chag
    -w, --weekday | Add day of the week.
-   -W, --abbreviated | Weekly view. Omer, dafyomi, and non-date-specific zemanim are shown once a week, on the day which corresponds to the first day in the range.
+   -W, --abbrev | Weekly view. Omer, dafyomi, and non-date-specific zemanim are shown once a week, on the day which corresponds to the first day in the range.
    -x, --no-rosh-chodesh | Suppress Rosh Chodesh.
    -y, --year-abbrev | Print only last two digits of year.
    --years N | Generate events for `N` years (default `1`)
@@ -312,7 +312,7 @@ Slackware users can use the slackbuild at https://slackbuilds.org/repository/15.
 ## DISTRIBUTION
    Copyright (C) 1994-2011  Danny Sadinoff
 
-   Portions Copyright (c) 2011-2022 Michael J. Radwin. All Rights Reserved.
+   Portions Copyright (c) 2011-2026 Michael J. Radwin. All Rights Reserved.
 
    Hebcal is distributed under the GNU Public License.  The program
    and its source code may be freely distributed.  For details, see

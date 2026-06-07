@@ -110,6 +110,11 @@ hebcal - a Jewish calendar generator
 .if n .ti +5
 .br
 	[
+.B \--no-julian
+]
+.if n .ti +5
+.br
+	[
 .B \--daily-learning
 .I name
 ]
@@ -370,6 +375,8 @@ degrees and \c
 .I min
 minutes.
 Negative values are south.
+.B Deprecated:
+use \fB\-\-geo\fP instead.
 .TP
 .BI "\-L " "deg\fB,\^\fPmin"
 Set the longitude for solar calculations to \c
@@ -380,16 +387,20 @@ minutes.
 Note:
 Negative values are
 .B east.
+The \fB\-l\fP and \fB\-L\fP switches must both be used, or not at
+all, and override the \fB\-C\fP (localize to city) switch.
+.B Deprecated:
+use \fB\-\-geo\fP instead.
 .TP
 .BI "\-\-lang " lang
 Display calendar in
 the
 .I lang
 language,
-which must be specified as one of the ISO 639-1 codes of
-\(lqen\(rq, \(lqashkenazi\(rq, \(lqhe\(rq,
-\(lqashkenazi_litvish\(rq, \(lqashkenazi_poylish\(rq, \(lqashkenazi_romanian\(rq, \(lqashkenazi_standard\(rq,
-\(lqde\(rq, \(lqes\(rq, \(lqfi\(rq, \(lqfr\(rq, \(lqhu\(rq, \(lqpl\(rq, \(lqro\(rq, \(lqru\(rq, \(lquk\(rq
+which must be specified as one of
+\(lqen\(rq, \(lqashkenazi\(rq, \(lqhe\(rq, \(lqhe\-x\-NoNikud\(rq,
+\(lqashkenazi_komatz\(rq, \(lqashkenazi_litvish\(rq, \(lqashkenazi_poylish\(rq, \(lqashkenazi_romanian\(rq, \(lqashkenazi_standard\(rq,
+\(lqde\(rq, \(lqes\(rq, \(lqfi\(rq, \(lqfr\(rq, \(lqhu\(rq, \(lqnl\(rq, \(lqpl\(rq, \(lqpt\(rq, \(lqro\(rq, \(lqru\(rq, \(lquk\(rq, \(lqyi\(rq
 .TP
 .BI "\-m " mins
 Set havdalah to occur
@@ -410,6 +421,10 @@ Suppress modern Israeli holidays.
 .TP
 .B "\-\-no\-special"
 Suppress Special Shabbatot.
+.TP
+.B "\-\-no\-julian"
+Disable the Julian calendar for dates before September 14, 1752,
+and use the proleptic Gregorian calendar instead.
 .TP
 .B "\-o"
 Add the count of the
@@ -465,6 +480,10 @@ Suppress Rosh Chodesh
 .B "\-X"
 Exit silently with non-zero status if today is Shabbat or
 Chag; exit with 0 status if today is chol.
+.TP
+.B "\-\-verbose"
+Verbose mode, currently used only for \fB\-\-exit\-if\-chag\fP
+(\fB\-X\fP).  Print the reason today is considered Shabbat or Chag.
 .TP
 .B "\-y"
 Print only the last two digits of the year.
@@ -875,7 +894,7 @@ Sorry.
 .SH COPYING
 Copyright \(co 1994\-2006 Danny Sadinoff
 .br
-Portions Copyright \(co 2022 Michael J. Radwin. All Rights Reserved.
+Portions Copyright \(co 2022\-2026 Michael J. Radwin. All Rights Reserved.
 .PP
 For a full text of the copyright and lack of warranty information,
 run
