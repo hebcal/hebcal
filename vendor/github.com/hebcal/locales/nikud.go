@@ -1,9 +1,8 @@
 package locales
 
-import (
-	"strings"
-)
+import "strings"
 
+// HebrewStripNikkud removes niqqud (vowels) from a Hebrew string
 func HebrewStripNikkud(str string) string {
 	src := []rune(str)
 	var builder strings.Builder

@@ -1,3 +1,7 @@
+Changes in 5.12.3
+* Add missing Tammuz / Tamuz translations
+* Add Ashkenazi transliteration for Rosh Hashana LaBehemot
+
 Changes in 5.12.2
 * On an unknown `--daily-learning` schedule, also print the list of valid calendar names to stderr
 
