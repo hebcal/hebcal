@@ -1,3 +1,7 @@
+Changes in 5.13.0
+* Replace go-sunrise with hebcal/noaa-go; add city elevations  https://github.com/hebcal/hebcal-go/pull/26
+* Add Erev Pesach chametz times to candle-lighting output https://github.com/hebcal/hebcal-go/issues/13
+
 Changes in 5.12.3
 * Add missing Tammuz / Tamuz translations
 * Add Ashkenazi transliteration for Rosh Hashana LaBehemot

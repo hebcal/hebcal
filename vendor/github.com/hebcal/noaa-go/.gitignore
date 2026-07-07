@@ -1,0 +1,7 @@
+# Test binaries
+*.test
+*.out
+
+# Go workspace file
+go.work
+go.work.sum

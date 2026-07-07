@@ -14,9 +14,9 @@ import (
 	"github.com/hebcal/hebcal-go/dailylearning"
 	"github.com/hebcal/hebcal-go/event"
 	"github.com/hebcal/hebcal-go/hebcal"
-	"github.com/hebcal/locales"
 	"github.com/hebcal/hebcal-go/zmanim"
 	_ "github.com/hebcal/learning"
+	"github.com/hebcal/locales"
 	getopt "github.com/pborman/getopt/v2"
 )
 
@@ -326,7 +326,7 @@ on the yahrtzeit. Events are printed regardless of the
 			fmt.Fprintf(os.Stderr, "%v\n", err)
 			os.Exit(1)
 		}
-		userLocation := zmanim.NewLocation("User Defined City", "", latitude, longitude, tzid)
+		userLocation := zmanim.NewLocation("User Defined City", "", latitude, longitude, 0, tzid)
 		calOptions.Location = &userLocation
 		calOptions.CandleLighting = true
 		validCity = true

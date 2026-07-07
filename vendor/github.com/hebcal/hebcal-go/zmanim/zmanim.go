@@ -18,9 +18,10 @@ package zmanim
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 import (
+	"math"
 	"time"
 
-	"github.com/nathan-osman/go-sunrise"
+	noaa "github.com/hebcal/noaa-go"
 )
 
 // Tzais (nightfall) based on the opinion of the Geonim calculated at
@@ -35,6 +36,17 @@ const Tzeit3SmallStars = 8.5
 // https://kosherjava.com/zmanim/docs/api/com/kosherjava/zmanim/ComplexZmanimCalendar.html#getTzaisGeonim7Point083Degrees()
 const Tzeit3MediumStars = 7.083
 
+// solarEventType selects which day-rollover rule getInstantFromTime applies when
+// turning a UTC time-of-day back into an absolute instant.
+type solarEventType int
+
+const (
+	eventSunrise solarEventType = iota
+	eventSunset
+	eventNoon
+	eventMidnight
+)
+
 // Zmanim are used to calculate halachic times
 type Zmanim struct {
 	Location *Location
@@ -42,11 +54,20 @@ type Zmanim struct {
 	Month    time.Month // Gregorian month
 	Day      int        // Gregorian day
 	TimeZone *time.Location
+
+	// UseElevation enables elevation-aware sunrise and sunset (and the halachic
+	// times derived from them). Degree-based zmanim, such as dawn, dusk, tzeit,
+	// alot haShachar and misheyakir, estimate the amount of light in the sky and
+	// are intentionally never affected by elevation. Defaults to false.
+	UseElevation bool
+
+	geo  *noaa.GeoLocation
+	calc *noaa.NOAACalculator
 }
 
 // New makes an instance used for calculating various halachic times during this day.
 //
-// tzid should be a timezone identifier such as "America/Los_Angeles" or "Asia/Jerusalem".
+// The Location's elevation is used only when UseElevation is set to true.
 //
 // This function panics if the latitude or longitude are out of range, or if
 // the timezone cannot be loaded.
@@ -56,7 +77,20 @@ func New(location *Location, date time.Time) Zmanim {
 	if err != nil {
 		panic(err)
 	}
-	return Zmanim{Location: location, Year: year, Month: month, Day: day, TimeZone: loc}
+	geo, err := noaa.NewGeoLocation(location.Name, location.Latitude,
+		location.Longitude, float64(location.Elevation), loc)
+	if err != nil {
+		panic(err)
+	}
+	return Zmanim{
+		Location: location,
+		Year:     year,
+		Month:    month,
+		Day:      day,
+		TimeZone: loc,
+		geo:      geo,
+		calc:     noaa.NewNOAACalculator(),
+	}
 }
 
 func (z *Zmanim) inLoc(dt time.Time) time.Time {
@@ -66,37 +100,87 @@ func (z *Zmanim) inLoc(dt time.Time) time.Time {
 	return dt.In(z.TimeZone)
 }
 
+// adjustedDate returns the date (at 00:00 UTC) passed to the underlying solar
+// calculator, adjusting for antimeridian crossover as KosherJava does. For all
+// but a handful of locations near the 180° meridian this is simply the calendar
+// date passed to New.
+func (z *Zmanim) adjustedDate() time.Time {
+	date := time.Date(z.Year, z.Month, z.Day, 0, 0, 0, 0, time.UTC)
+	midnight := time.Date(z.Year, z.Month, z.Day, 0, 0, 0, 0, z.TimeZone)
+	return date.AddDate(0, 0, z.geo.GetAntimeridianAdjustment(midnight))
+}
+
+// getInstantFromTime turns a UTC time-of-day in 24-hour decimal format (18.75
+// for 6:45:00 PM) for the given solar event into an absolute UTC time.Time. It
+// mirrors KosherJava's AstronomicalCalendar.getInstantFromTime, choosing the
+// correct calendar day for the event. A NaN time (no such event on this day,
+// e.g. in polar regions) yields the zero time.Time.
+func (z *Zmanim) getInstantFromTime(timeHours float64, event solarEventType) time.Time {
+	if math.IsNaN(timeHours) {
+		return time.Time{}
+	}
+	date := z.adjustedDate()
+	localTimeHours := z.Location.Longitude/15 + timeHours
+	switch event {
+	case eventSunrise:
+		if localTimeHours > 18 {
+			date = date.AddDate(0, 0, -1)
+		}
+	case eventSunset:
+		if localTimeHours < 6 {
+			date = date.AddDate(0, 0, 1)
+		}
+	case eventMidnight:
+		if localTimeHours < 12 {
+			date = date.AddDate(0, 0, 1)
+		}
+	case eventNoon:
+		if localTimeHours < 0 {
+			date = date.AddDate(0, 0, 1)
+		} else if localTimeHours > 24 {
+			date = date.AddDate(0, 0, -1)
+		}
+	}
+	return date.Add(time.Duration(math.Round(timeHours * float64(time.Hour))))
+}
+
 // Sunset ("shkiah") calculates when the sun will set on the given day
 // at the specified location.
 //
 // Sunset is defined as when the upper edge of the Sun disappears below
-// the horizon (0.833° below horizon)
+// the horizon (0.833° below horizon). If UseElevation is set, the location's
+// elevation is included in the calculation.
 //
-// Returns time.Time{} if there sun does not rise or set
+// Returns time.Time{} if the sun does not rise or set
 func (z *Zmanim) Sunset() time.Time {
-	_, set := sunrise.SunriseSunset(z.Location.Latitude, z.Location.Longitude, z.Year, z.Month, z.Day)
-	return z.inLoc(set)
+	t := z.calc.GetUTCSunset(z.adjustedDate(), z.geo, noaa.GeometricZenith, z.UseElevation)
+	return z.inLoc(z.getInstantFromTime(t, eventSunset))
 }
 
 // Sunrise ("neitz haChama") is defined as when the upper edge of the
 // Sun appears over the eastern horizon in the morning
-// (0.833° above horizon).
+// (0.833° above horizon). If UseElevation is set, the location's elevation is
+// included in the calculation.
 func (z *Zmanim) Sunrise() time.Time {
-	rise, _ := sunrise.SunriseSunset(z.Location.Latitude, z.Location.Longitude, z.Year, z.Month, z.Day)
-	return z.inLoc(rise)
+	t := z.calc.GetUTCSunrise(z.adjustedDate(), z.geo, noaa.GeometricZenith, z.UseElevation)
+	return z.inLoc(z.getInstantFromTime(t, eventSunrise))
 }
 
 // TimeAtAngle returns when the center of the sun will be some angle
 // below the horizon.
 // The rising parameter chooses between the AM or PM time,
 // as normally there are two such times.
+//
+// Because degree-based times estimate the amount of light in the sky, the
+// result is not affected by elevation.
 func (z *Zmanim) TimeAtAngle(angle float64, rising bool) time.Time {
-	morning, evening := sunrise.TimeOfElevation(z.Location.Latitude, z.Location.Longitude, -angle, z.Year, z.Month, z.Day)
+	zenith := noaa.GeometricZenith + angle
 	if rising {
-		return z.inLoc(morning)
-	} else {
-		return z.inLoc(evening)
+		t := z.calc.GetUTCSunrise(z.adjustedDate(), z.geo, zenith, false)
+		return z.inLoc(z.getInstantFromTime(t, eventSunrise))
 	}
+	t := z.calc.GetUTCSunset(z.adjustedDate(), z.geo, zenith, false)
+	return z.inLoc(z.getInstantFromTime(t, eventSunset))
 }
 
 // Civil dawn; Sun is 6° below the horizon in the morning
@@ -115,7 +199,8 @@ func (z *Zmanim) Dusk() time.Time {
 // A halachic Hour is thus known as a sha'ah zemanit,
 // or proportional Hour, and varies by the season and even by the day.
 func (z *Zmanim) Hour() float64 {
-	rise, set := sunrise.SunriseSunset(z.Location.Latitude, z.Location.Longitude, z.Year, z.Month, z.Day)
+	rise := z.Sunrise()
+	set := z.Sunset()
 	seconds := set.Unix() - rise.Unix()
 	return float64(seconds) / 12.0
 }
@@ -124,14 +209,8 @@ func (z *Zmanim) Hour() float64 {
 // which is the beginning of the Hebrew calendar day.
 func (z *Zmanim) GregEve() time.Time {
 	prev := time.Date(z.Year, z.Month, z.Day-1, 0, 0, 0, 0, z.TimeZone)
-	year, month, day := prev.Date()
-	zman := Zmanim{
-		Location: z.Location,
-		Year:     year,
-		Month:    month,
-		Day:      day,
-		TimeZone: z.TimeZone,
-	}
+	zman := New(z.Location, prev)
+	zman.UseElevation = z.UseElevation
 	return zman.Sunset()
 }
 
@@ -195,6 +274,20 @@ func (z *Zmanim) SofZmanShma() time.Time {
 // Latest Shacharit (Gra); Sunrise plus 4 halachic hours, according to the Gra
 func (z *Zmanim) SofZmanTfilla() time.Time {
 	return z.HourOffset(4)
+}
+
+// SofZmanAchilasChametz is the latest time to eat chametz on Erev Pesach
+// according to the Gra. It is the same as [Zmanim.SofZmanTfilla], sunrise plus 4
+// halachic hours.
+func (z *Zmanim) SofZmanAchilasChametz() time.Time {
+	return z.HourOffset(4)
+}
+
+// SofZmanBiurChametz is the latest time to burn (dispose of) chametz on Erev
+// Pesach according to the Gra: sunrise plus 5 halachic hours, one halachic hour
+// after [Zmanim.SofZmanAchilasChametz].
+func (z *Zmanim) SofZmanBiurChametz() time.Time {
+	return z.HourOffset(5)
 }
 
 func (z *Zmanim) sofZmanMGA(hours float64) time.Time {

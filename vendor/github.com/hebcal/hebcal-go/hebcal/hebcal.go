@@ -71,7 +71,7 @@ Additional non-default event types can be specified:
   - Yom Kippur Katan (opts.YomKippurKatan)
 
 Candle-lighting and Havdalah times are approximated using latitude and longitude
-specified by the HLocation class. The HLocation class contains a small
+specified by the Location class. The Location class contains a small
 database of cities with their associated geographic information and time-zone information.
 If you ever have any doubts about Hebcal's times, consult your local halachic authority.
 If you enter geographic coordinates above the arctic circle or antarctic circle,
@@ -90,6 +90,9 @@ These defaults can be changed using these options:
   - opts.HavdalahDeg - degrees for solar depression for Havdalah.
     Default is 8.5 degrees for 3 small stars. Use 7.083 degress for 3 medium-sized stars.
     Havdalah times are supressed when opts.HavdalahDeg=0.
+  - opts.UseElevation - use the location's elevation for sunrise/sunset-based times
+    (candle-lighting, Havdalah, fast start/end, and the sunset-based daily zmanim).
+    Degree-based zmanim (dawn, tzeit, alot, misheyakir) are never affected by elevation.
 
 If both opts.CandleLighting=true and opts.Location is specified,
 Chanukah candle-lighting times and minor fast start/end times will also be generated.
@@ -194,6 +197,13 @@ func HebrewCalendar(opts *CalOptions) ([]event.CalEvent, error) {
 		for _, holidayEv := range holidaysYear {
 			if hd == holidayEv.Date {
 				events, candlesEv = appendHolidayAndRelated(events, candlesEv, holidayEv, opts)
+			}
+		}
+		// When Erev Pesach falls on Shabbat, burning chametz is moved to the
+		// Friday before (13 Nisan), since chametz cannot be burned on Shabbat.
+		if opts.CandleLighting && dow == time.Friday && hd.Month() == hdate.Nisan && hd.Day() == 13 {
+			if biurEv := makeBiurChametz(hd, opts); (biurEv != TimedEvent{}) {
+				events = append(events, biurEv)
 			}
 		}
 		for _, userEv := range userEvents {
@@ -504,6 +514,9 @@ func appendHolidayAndRelated(events []event.CalEvent, candlesEv TimedEvent, ev e
 	if (!opts.YomKippurKatan && (mask&event.YOM_KIPPUR_KATAN) != 0) ||
 		(opts.NoModern && (mask&event.MODERN_HOLIDAY) != 0) {
 		return events, candlesEv // bail out early
+	}
+	if opts.CandleLighting && ev.Render("en") == "Erev Pesach" {
+		events = append(events, makeErevPesachChametz(ev, opts)...)
 	}
 	isMajorFast := (mask & event.MAJOR_FAST) != 0
 	isMinorFast := (mask & event.MINOR_FAST) != 0

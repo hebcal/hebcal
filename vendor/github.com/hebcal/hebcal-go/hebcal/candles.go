@@ -100,6 +100,18 @@ func (ev TimedEvent) Basename() string {
 	return ev.Desc
 }
 
+// newZmanim builds a Zmanim for the Gregorian date of hd at the options'
+// Location, honoring opts.UseElevation so that sunrise/sunset-based times
+// account for the location's elevation when requested. Degree-based zmanim are
+// never affected by elevation.
+func newZmanim(hd hdate.HDate, opts *CalOptions) zmanim.Zmanim {
+	year, month, day := hd.Greg()
+	gregDate := time.Date(year, month, day, 0, 0, 0, 0, time.UTC)
+	z := zmanim.New(opts.Location, gregDate)
+	z.UseElevation = opts.UseElevation
+	return z
+}
+
 func makeCandleEvent(hd hdate.HDate, opts *CalOptions, ev event.CalEvent) TimedEvent {
 	havdalahTitle := false
 	useHavdalahOffset := false
@@ -127,10 +139,7 @@ func makeCandleEvent(hd hdate.HDate, opts *CalOptions, ev event.CalEvent) TimedE
 	if useHavdalahOffset {
 		offset = opts.HavdalahMins
 	}
-	year, month, day := hd.Greg()
-	gregDate := time.Date(year, month, day, 0, 0, 0, 0, time.UTC)
-	loc := opts.Location
-	z := zmanim.New(loc, gregDate)
+	z := newZmanim(hd, opts)
 	var eventTime time.Time
 	if offset != 0 {
 		eventTime = z.SunsetOffset(offset, true)
@@ -159,10 +168,7 @@ func makeChanukahCandleLighting(ev event.HolidayEvent, opts *CalOptions) TimedEv
 		timedEv.ChanukahDay = ev.ChanukahDay
 		return timedEv
 	}
-	loc := opts.Location
-	year, month, day := hd.Greg()
-	gregDate := time.Date(year, month, day, 0, 0, 0, 0, time.UTC)
-	z := zmanim.New(loc, gregDate)
+	z := newZmanim(hd, opts)
 	candleLightingTime := z.BeinHashmashos()
 	if candleLightingTime.IsZero() {
 		return TimedEvent{} // no sunset
@@ -176,11 +182,8 @@ func makeChanukahCandleLighting(ev event.HolidayEvent, opts *CalOptions) TimedEv
 }
 
 func makeFastStartEnd(ev event.CalEvent, opts *CalOptions) (TimedEvent, TimedEvent) {
-	year, month, day := ev.GetDate().Greg()
-	gregDate := time.Date(year, month, day, 0, 0, 0, 0, time.UTC)
-	loc := opts.Location
-	z := zmanim.New(loc, gregDate)
 	hd := ev.GetDate()
+	z := newZmanim(hd, opts)
 	desc := ev.Render("en")
 	flags := ev.GetFlags()
 	var startEvent, endEvent TimedEvent
@@ -201,6 +204,47 @@ func makeFastStartEnd(ev event.CalEvent, opts *CalOptions) (TimedEvent, TimedEve
 	return startEvent, endEvent
 }
 
+// makeErevPesachChametz returns the "Finish eating chametz" (sof zman achilat
+// chametz) and "Biur Chametz" (sof zman biur chametz) events for Erev Pesach.
+// It is modeled on hebcal-es6's makeErevPesachChametzEvents.
+//
+// Sof zman achilat chametz is the same as sof zman tefilla (Gra, sunrise plus 4
+// halachic hours); sof zman biur chametz is one halachic hour later. When Erev
+// Pesach falls on Shabbat, chametz cannot be burned on Shabbat, so the Biur
+// Chametz event is emitted on the Friday before instead (see makeBiurChametz)
+// and is omitted here.
+func makeErevPesachChametz(ev event.CalEvent, opts *CalOptions) []event.CalEvent {
+	hd := ev.GetDate()
+	z := newZmanim(hd, opts)
+	events := make([]event.CalEvent, 0, 2)
+	achilas := z.SofZmanAchilasChametz()
+	if achilas.IsZero() {
+		return events
+	}
+	achilasEv := NewTimedEvent(hd, "Finish eating chametz", 0, achilas, 0, ev, opts)
+	achilasEv.Emoji = "🍞"
+	events = append(events, achilasEv)
+	if hd.Weekday() != time.Saturday {
+		if biurEv := makeBiurChametz(hd, opts); (biurEv != TimedEvent{}) {
+			events = append(events, biurEv)
+		}
+	}
+	return events
+}
+
+// makeBiurChametz returns the "Biur Chametz" (sof zman biur chametz) event for
+// the given day, or an empty TimedEvent if the sun does not rise/set.
+func makeBiurChametz(hd hdate.HDate, opts *CalOptions) TimedEvent {
+	z := newZmanim(hd, opts)
+	biur := z.SofZmanBiurChametz()
+	if biur.IsZero() {
+		return TimedEvent{}
+	}
+	biurEv := NewTimedEvent(hd, "Biur Chametz", 0, biur, 0, nil, opts)
+	biurEv.Emoji = "🔥"
+	return biurEv
+}
+
 type riseSetEvent struct {
 	date hdate.HDate
 	opts *CalOptions
@@ -211,10 +255,7 @@ func (ev riseSetEvent) GetDate() hdate.HDate {
 }
 
 func (ev riseSetEvent) Render(locale string) string {
-	loc := ev.opts.Location
-	year, month, day := ev.date.Greg()
-	gregDate := time.Date(year, month, day, 0, 0, 0, 0, time.UTC)
-	z := zmanim.New(loc, gregDate)
+	z := newZmanim(ev.date, ev.opts)
 	rise := z.Sunrise()
 	set := z.Sunset()
 	riseStr := formatTime(&rise, ev.opts)
@@ -235,10 +276,7 @@ func (ev riseSetEvent) Basename() string {
 }
 
 func dailyZemanim(date hdate.HDate, opts *CalOptions) []event.CalEvent {
-	loc := opts.Location
-	year, month, day := date.Greg()
-	gregDate := time.Date(year, month, day, 0, 0, 0, 0, time.UTC)
-	z := zmanim.New(loc, gregDate)
+	z := newZmanim(date, opts)
 	times := []struct {
 		desc string
 		t    time.Time

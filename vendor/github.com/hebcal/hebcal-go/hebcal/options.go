@@ -70,6 +70,12 @@ type CalOptions struct {
 	End hdate.HDate
 	/* calculate candle-lighting and havdalah times */
 	CandleLighting bool
+	// UseElevation enables elevation-aware sunrise and sunset (and the halachic
+	// times derived from them) using the Location's elevation. Degree-based
+	// zmanim, such as dawn, dusk, tzeit, alot haShachar and misheyakir, estimate
+	// the amount of light in the sky and are intentionally never affected by
+	// elevation. Defaults to false.
+	UseElevation bool
 	/* minutes before sundown to light candles (default 18) */
 	CandleLightingMins int
 	// minutes after sundown for Havdalah (typical values are 42, 50, or 72).
