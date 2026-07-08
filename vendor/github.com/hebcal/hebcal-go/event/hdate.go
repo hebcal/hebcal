@@ -50,6 +50,10 @@ func (ev hebrewDateEvent) Basename() string {
 	return ev.Date.String()
 }
 
+func (ev hebrewDateEvent) GetCategories() []string {
+	return CategoriesFromFlags(ev.GetFlags())
+}
+
 func NewHebrewDateEvent(hd hdate.HDate) CalEvent {
 	return hebrewDateEvent{Date: hd}
 }

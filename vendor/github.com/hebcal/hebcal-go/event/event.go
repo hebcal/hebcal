@@ -93,4 +93,43 @@ type CalEvent interface {
 	// For many holidays the basename and the event description are
 	// the same.
 	Basename() string
+	// GetCategories returns the category and optional sub-categories for this
+	// event, e.g. ["holiday", "major", "fast"] or ["roshchodesh"]. The first
+	// element is the primary category.
+	GetCategories() []string
+}
+
+// flagToCategory maps an event flag to its category and sub-categories, in
+// priority order (the first matching flag wins). It mirrors the flagToCategory
+// table in @hebcal/core.
+var flagToCategory = []struct {
+	flag HolidayFlags
+	cats []string
+}{
+	{MAJOR_FAST, []string{"holiday", "major", "fast"}},
+	{CHANUKAH_CANDLES, []string{"holiday", "minor"}},
+	{HEBREW_DATE, []string{"hebdate"}},
+	{MINOR_FAST, []string{"holiday", "fast"}},
+	{MINOR_HOLIDAY, []string{"holiday", "minor"}},
+	{MODERN_HOLIDAY, []string{"holiday", "modern"}},
+	{MOLAD, []string{"molad"}},
+	{OMER_COUNT, []string{"omer"}},
+	{PARSHA_HASHAVUA, []string{"parashat"}},
+	{ROSH_CHODESH, []string{"roshchodesh"}},
+	{SHABBAT_MEVARCHIM, []string{"mevarchim"}},
+	{SPECIAL_SHABBAT, []string{"holiday", "shabbat"}},
+	{USER_EVENT, []string{"user"}},
+}
+
+// CategoriesFromFlags returns the category and sub-categories implied by an
+// event's flag bitmask, matching the base Event.getCategories() in
+// @hebcal/core. It returns ["unknown"] when no flag matches. The returned
+// slice is a fresh copy that the caller may modify.
+func CategoriesFromFlags(mask HolidayFlags) []string {
+	for _, fc := range flagToCategory {
+		if mask&fc.flag != 0 {
+			return append([]string(nil), fc.cats...)
+		}
+	}
+	return []string{"unknown"}
 }

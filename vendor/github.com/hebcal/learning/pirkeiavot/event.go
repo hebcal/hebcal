@@ -75,3 +75,7 @@ func (ev pirkeiAvotEvent) Basename() string {
 	}
 	return pirkeiAvot + " " + strings.Join(parts, "-")
 }
+
+func (ev pirkeiAvotEvent) GetCategories() []string {
+	return []string{"pirkeiAvotSummer"}
+}

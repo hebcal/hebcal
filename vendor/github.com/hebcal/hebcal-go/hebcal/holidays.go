@@ -20,6 +20,7 @@ package hebcal
 import (
 	"sort"
 	"strconv"
+	"sync"
 	"time"
 
 	"github.com/hebcal/hdate"
@@ -625,7 +626,35 @@ func getBirkatHaChama(year int) int64 {
 
 // Returns a slice of holidays for the year.
 // For Israel holiday schedule, specify il=true.
+// holidaysYearKey identifies a memoized GetHolidaysForYear result.
+type holidaysYearKey struct {
+	year int
+	il   bool
+}
+
+// holidaysForYearCache memoizes GetHolidaysForYear. The map is unbounded (the
+// set of (year, il) pairs a process sees is small in practice) and guarded by
+// holidaysForYearMu.
+var (
+	holidaysForYearMu    sync.RWMutex
+	holidaysForYearCache = make(map[holidaysYearKey][]event.HolidayEvent)
+)
+
+// GetHolidaysForYear returns all holidays in the given Hebrew year, for either
+// the Diaspora (il=false) or Israel (il=true) schedule.
+//
+// The result is memoized and shared between callers, so it must be treated as
+// read-only: do not modify the returned slice or its elements. (The slice is
+// returned with its capacity clamped to its length, so appending to it safely
+// allocates a new backing array rather than corrupting the cache.)
 func GetHolidaysForYear(year int, il bool) []event.HolidayEvent {
+	key := holidaysYearKey{year: year, il: il}
+	holidaysForYearMu.RLock()
+	cached, ok := holidaysForYearCache[key]
+	holidaysForYearMu.RUnlock()
+	if ok {
+		return cached
+	}
 	events := getAllHolidaysForYear(year)
 	result := make([]event.HolidayEvent, 0, len(events))
 	for _, ev := range events {
@@ -634,5 +663,9 @@ func GetHolidaysForYear(year int, il bool) []event.HolidayEvent {
 			result = append(result, ev)
 		}
 	}
+	result = result[:len(result):len(result)] // clamp cap so callers' appends don't alias the cache
+	holidaysForYearMu.Lock()
+	holidaysForYearCache[key] = result
+	holidaysForYearMu.Unlock()
 	return result
 }

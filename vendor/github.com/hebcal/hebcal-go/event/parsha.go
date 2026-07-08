@@ -40,3 +40,7 @@ func (ev parshaEvent) GetEmoji() string {
 func (ev parshaEvent) Basename() string {
 	return strings.Join(ev.Parsha.Name, "-")
 }
+
+func (ev parshaEvent) GetCategories() []string {
+	return CategoriesFromFlags(ev.GetFlags())
+}

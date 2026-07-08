@@ -94,3 +94,35 @@ func (ev HolidayEvent) Basename() string {
 	}
 	return str
 }
+
+// minorHolidays are holidays whose flags do not mark them minor but which are
+// nevertheless categorized as minor, matching @hebcal/core HolidayEvent.
+var minorHolidays = map[string]bool{
+	"Lag BaOmer":             true,
+	"Leil Selichot":          true,
+	"Pesach Sheni":           true,
+	"Erev Purim":             true,
+	"Purim Katan":            true,
+	"Shushan Purim":          true,
+	"Tu B'Av":                true,
+	"Tu BiShvat":             true,
+	"Rosh Hashana LaBehemot": true,
+}
+
+// GetCategories returns the category and sub-categories for a holiday,
+// mirroring HolidayEvent.getCategories() in @hebcal/core: chol hamoed days are
+// major, otherwise the flag-based category is used, falling back to a minor or
+// major holiday when the flags alone are inconclusive.
+func (ev HolidayEvent) GetCategories() []string {
+	if ev.CholHaMoedDay != 0 {
+		return []string{"holiday", "major", "cholhamoed"}
+	}
+	cats := CategoriesFromFlags(ev.Flags)
+	if cats[0] != "unknown" {
+		return cats
+	}
+	if minorHolidays[ev.Desc] {
+		return []string{"holiday", "minor"}
+	}
+	return []string{"holiday", "major"}
+}

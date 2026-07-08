@@ -71,6 +71,9 @@ func (ev rambam1Event) Render(locale string) string  { return renderReading(ev.R
 func (ev rambam1Event) GetFlags() event.HolidayFlags { return event.DAILY_LEARNING }
 func (ev rambam1Event) GetEmoji() string             { return "" }
 func (ev rambam1Event) Basename() string             { return ev.Reading.String() }
+func (ev rambam1Event) GetCategories() []string {
+	return []string{"rambam1"}
+}
 
 // --- 3 chapters a day ---
 
@@ -104,4 +107,8 @@ func (ev rambam3Event) Basename() string {
 		parts[i] = r.String()
 	}
 	return strings.Join(parts, ", ")
+}
+
+func (ev rambam3Event) GetCategories() []string {
+	return []string{"rambam3"}
 }

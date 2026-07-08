@@ -89,6 +89,10 @@ func (ev OmerEvent) Basename() string {
 	return "Omer"
 }
 
+func (ev OmerEvent) GetCategories() []string {
+	return event.CategoriesFromFlags(ev.GetFlags())
+}
+
 func (ev OmerEvent) GetWeeks() int {
 	if ev.DaysWithinWeeks == 7 {
 		return ev.WeekNumber

@@ -23,8 +23,8 @@ import (
 	"github.com/hebcal/gematriya"
 	"github.com/hebcal/hdate"
 	"github.com/hebcal/hebcal-go/event"
-	"github.com/hebcal/locales"
 	"github.com/hebcal/learning/dafyomi"
+	"github.com/hebcal/locales"
 )
 
 type dafWeeklyEvent struct {
@@ -60,4 +60,8 @@ func (ev dafWeeklyEvent) GetEmoji() string {
 
 func (ev dafWeeklyEvent) Basename() string {
 	return ev.Daf.String()
+}
+
+func (ev dafWeeklyEvent) GetCategories() []string {
+	return []string{"dafWeekly"}
 }

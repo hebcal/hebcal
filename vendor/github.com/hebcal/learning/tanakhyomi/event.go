@@ -94,3 +94,7 @@ func (ev tanakhYomiEvent) Basename() string {
 	}
 	return s
 }
+
+func (ev tanakhYomiEvent) GetCategories() []string {
+	return []string{"tanakhYomi"}
+}

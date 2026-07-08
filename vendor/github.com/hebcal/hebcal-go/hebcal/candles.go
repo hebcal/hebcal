@@ -60,6 +60,14 @@ func NewTimedEvent(hd hdate.HDate, desc string, flags event.HolidayFlags, t time
 	case event.CHANUKAH_CANDLES:
 		emoji = chanukahEmoji
 	}
+	// Round to the nearest minute, matching @hebcal/core's TimedEvent
+	// (this.eventTime = Zmanim.roundTime(eventTime)). SunsetOffset already
+	// yields a whole minute, so in practice this only affects the degree-based
+	// tzeit times (havdalah, fast begin/end, chametz). The ZMANIM daily-times
+	// feature has no @hebcal/core equivalent and keeps its unrounded times.
+	if flags != event.ZMANIM {
+		t = roundToMinute(t)
+	}
 	return TimedEvent{
 		HolidayEvent: event.HolidayEvent{
 			Date:  hd,
@@ -72,6 +80,23 @@ func NewTimedEvent(hd hdate.HDate, desc string, flags event.HolidayFlags, t time
 		opts:         opts,
 		sunsetOffset: sunsetOffset,
 	}
+}
+
+// roundToMinute rounds t to the nearest minute (>= 30 seconds rounds up),
+// matching @hebcal/core Zmanim.roundTime.
+func roundToMinute(t time.Time) time.Time {
+	if t.IsZero() {
+		return t
+	}
+	if t.Second() == 0 && t.Nanosecond() == 0 {
+		return t
+	}
+	year, month, day := t.Date()
+	hour, min, sec := t.Clock()
+	if sec >= 30 {
+		min++
+	}
+	return time.Date(year, month, day, hour, min, 0, 0, t.Location())
 }
 
 func (ev TimedEvent) GetDate() hdate.HDate {
@@ -98,6 +123,25 @@ func (ev TimedEvent) GetEmoji() string {
 
 func (ev TimedEvent) Basename() string {
 	return ev.Desc
+}
+
+// GetCategories returns the category and sub-categories for a timed event,
+// keyed by its description, matching TimedEvent.getCategories() in
+// @hebcal/core.
+func (ev TimedEvent) GetCategories() []string {
+	switch ev.Desc {
+	case "Candle lighting":
+		return []string{"candles"}
+	case "Havdalah":
+		return []string{"havdalah"}
+	case "Fast begins", "Fast ends":
+		return []string{"zmanim", "fast"}
+	case "Finish eating chametz":
+		return []string{"zmanim", "achilasChametz"}
+	case "Biur Chametz":
+		return []string{"zmanim", "biurChametz"}
+	}
+	return []string{"unknown"}
 }
 
 // newZmanim builds a Zmanim for the Gregorian date of hd at the options'
@@ -273,6 +317,10 @@ func (ev riseSetEvent) GetEmoji() string {
 
 func (ev riseSetEvent) Basename() string {
 	return ev.Render("en")
+}
+
+func (ev riseSetEvent) GetCategories() []string {
+	return []string{"zmanim"}
 }
 
 func dailyZemanim(date hdate.HDate, opts *CalOptions) []event.CalEvent {

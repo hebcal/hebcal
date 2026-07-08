@@ -1,7 +1,6 @@
 # hebcal/learning
 
 [![Build Status](https://github.com/hebcal/learning/actions/workflows/go.yml/badge.svg)](https://github.com/hebcal/learning/actions/workflows/go.yml)
-[![Go Report Card](https://goreportcard.com/badge/github.com/hebcal/learning)](https://goreportcard.com/report/github.com/hebcal/learning)
 [![GoDoc](https://pkg.go.dev/badge/github.com/hebcal/learning?status.svg)](https://pkg.go.dev/github.com/hebcal/learning)
 
 Daily learning schedules for the [Hebcal](https://www.hebcal.com/) Jewish

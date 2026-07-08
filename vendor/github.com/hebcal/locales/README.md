@@ -8,6 +8,7 @@ Translations for Hebcal events in multiple languages (Golang)
 
 Adds support for the following locales:
 
+* `en` - only `MEMO:*` strings for holiday descriptions
 * `ashkenazi_komatz` - Ashkenazic transliterations, komatz variant - courtesy Chaim Leib Halbert
 * `ashkenazi_litvish` - Ashkenazic transliterations, Litvish variant - courtesy Andrey Rozenberg
 * `ashkenazi_poylish` - Ashkenazic transliterations, Poylish variant - courtesy Andrey Rozenberg

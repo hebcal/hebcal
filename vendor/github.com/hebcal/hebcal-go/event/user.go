@@ -6,8 +6,8 @@ import (
 
 // UserEvent is for Yahrzeit or Birthday
 type UserEvent struct {
-	Date          hdate.HDate  // Date of occurrence
-	Desc          string       // Description
+	Date hdate.HDate // Date of occurrence
+	Desc string      // Description
 }
 
 func (ev UserEvent) GetDate() hdate.HDate {
@@ -28,4 +28,8 @@ func (ev UserEvent) GetEmoji() string {
 
 func (ev UserEvent) Basename() string {
 	return ev.Desc
+}
+
+func (ev UserEvent) GetCategories() []string {
+	return CategoriesFromFlags(ev.GetFlags())
 }

@@ -61,3 +61,7 @@ func (ev perekYomiEvent) GetEmoji() string {
 func (ev perekYomiEvent) Basename() string {
 	return ev.Reading.String()
 }
+
+func (ev perekYomiEvent) GetCategories() []string {
+	return []string{"perekYomi"}
+}

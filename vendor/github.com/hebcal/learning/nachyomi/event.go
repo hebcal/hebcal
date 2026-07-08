@@ -23,8 +23,8 @@ import (
 	"github.com/hebcal/gematriya"
 	"github.com/hebcal/hdate"
 	"github.com/hebcal/hebcal-go/event"
-	"github.com/hebcal/locales"
 	"github.com/hebcal/learning/dafyomi"
+	"github.com/hebcal/locales"
 )
 
 type nachYomiEvent struct {
@@ -61,4 +61,8 @@ func (ev nachYomiEvent) GetEmoji() string {
 
 func (ev nachYomiEvent) Basename() string {
 	return ev.Chapter.String()
+}
+
+func (ev nachYomiEvent) GetCategories() []string {
+	return []string{"nachyomi"}
 }

@@ -60,3 +60,7 @@ func (ev dafYomiEvent) GetEmoji() string {
 func (ev dafYomiEvent) Basename() string {
 	return ev.Daf.String()
 }
+
+func (ev dafYomiEvent) GetCategories() []string {
+	return []string{"dafyomi"}
+}

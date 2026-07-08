@@ -65,3 +65,7 @@ func (ev psalmsEvent) GetEmoji() string {
 func (ev psalmsEvent) Basename() string {
 	return "Psalms " + ev.Reading.String()
 }
+
+func (ev psalmsEvent) GetCategories() []string {
+	return []string{"dailyPsalms"}
+}

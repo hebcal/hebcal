@@ -63,3 +63,7 @@ func (ev yyomiEvent) GetEmoji() string {
 func (ev yyomiEvent) Basename() string {
 	return ev.Daf.String()
 }
+
+func (ev yyomiEvent) GetCategories() []string {
+	return []string{"yerushalmi"}
+}

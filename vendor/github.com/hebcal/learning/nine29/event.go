@@ -63,6 +63,10 @@ func (ev nine29Event) Basename() string {
 	return ev.Reading.String()
 }
 
+func (ev nine29Event) GetCategories() []string {
+	return []string{"929"}
+}
+
 func isHebrewLocale(locale string) bool {
 	locale = strings.ToLower(locale)
 	return locale == "he" || locale == "he-x-nonikud"

@@ -166,8 +166,8 @@ func HebrewCalendar(opts *CalOptions) ([]event.CalEvent, error) {
 					observedDate, err := hdate.GetYahrzeit(currentYear, origDate)
 					if err == nil {
 						userEvents = append(userEvents, event.UserEvent{
-							Date:  observedDate,
-							Desc:  yahrzeit.Name,
+							Date: observedDate,
+							Desc: yahrzeit.Name,
 						})
 					}
 				}
@@ -175,8 +175,8 @@ func HebrewCalendar(opts *CalOptions) ([]event.CalEvent, error) {
 					// Watch for ShortKislev and LongCheshvan
 					if userEv.Day <= hdate.DaysInMonth(userEv.Month, hyear) {
 						userEvents = append(userEvents, event.UserEvent{
-							Date:  hdate.New(hyear, userEv.Month, userEv.Day),
-							Desc:  userEv.Desc,
+							Date: hdate.New(hyear, userEv.Month, userEv.Day),
+							Desc: userEv.Desc,
 						})
 					}
 				}
@@ -256,6 +256,13 @@ func HebrewCalendar(opts *CalOptions) ([]event.CalEvent, error) {
 		}
 		if (candlesEv == TimedEvent{}) && opts.CandleLighting && (dow == time.Friday || dow == time.Saturday) {
 			candlesEv = makeCandleEvent(hd, opts, nil)
+			// Link erev-Shabbat candle-lighting to this week's parsha (matching
+			// @hebcal/core), so consumers can render "Parashat X" as its memo.
+			if dow == time.Friday && opts.Sedrot && (candlesEv != TimedEvent{}) {
+				if parsha := sedraYear.LookupByRD(abs); !parsha.Chag {
+					candlesEv.LinkedEvent = event.NewParshaEvent(hd.OnOrAfter(time.Saturday), parsha, il)
+				}
+			}
 		}
 		if (candlesEv != TimedEvent{}) {
 			events = append(events, candlesEv)
@@ -263,7 +270,11 @@ func HebrewCalendar(opts *CalOptions) ([]event.CalEvent, error) {
 		if opts.Molad && dow == time.Saturday && hd.Month() != hdate.Elul && hd.Day() >= 23 && hd.Day() <= 29 {
 			nextMonthName, nextMonth := nextMonthName(hd.Year(), hd.Month())
 			molad := molad.New(hd.Year(), nextMonth)
-			events = append(events, event.NewMoladEvent(hd, molad, nextMonthName))
+			cc := ""
+			if opts.Location != nil {
+				cc = opts.Location.CountryCode
+			}
+			events = append(events, event.NewMoladEvent(hd, molad, nextMonthName, cc))
 		}
 		if (opts.AddHebrewDates && (!opts.WeeklyAbbreviated || dow == firstWeekday)) ||
 			((opts.AddHebrewDates || opts.AddHebrewDatesForEvents) && prevEventsLength != len(events)) {
@@ -509,6 +520,15 @@ func getMaskFromOptions(opts *CalOptions) event.HolidayFlags {
 	return mask
 }
 
+// makeMevarchimEvent upgrades a bare "Shabbat Mevarchim Chodesh" holiday event
+// to a MevarchimChodeshEvent carrying the molad of the upcoming month.
+func makeMevarchimEvent(ev event.HolidayEvent) event.MevarchimChodeshEvent {
+	hd := ev.Date
+	nextName, nextMonth := nextMonthName(hd.Year(), hd.Month())
+	m := molad.New(hd.Year(), nextMonth)
+	return event.NewMevarchimChodeshEvent(hd, nextName, m)
+}
+
 func appendHolidayAndRelated(events []event.CalEvent, candlesEv TimedEvent, ev event.CalEvent, opts *CalOptions) ([]event.CalEvent, TimedEvent) {
 	mask := ev.GetFlags()
 	if (!opts.YomKippurKatan && (mask&event.YOM_KIPPUR_KATAN) != 0) ||
@@ -539,6 +559,13 @@ func appendHolidayAndRelated(events []event.CalEvent, candlesEv TimedEvent, ev e
 			} else {
 				hd := ev.GetDate()
 				candlesEv = makeCandleEvent(hd, opts, ev)
+			}
+		}
+		if (mask&event.SHABBAT_MEVARCHIM) != 0 && !opts.NoHolidays {
+			// Upgrade the bare holiday event to a MevarchimChodeshEvent that
+			// carries the molad of the upcoming month.
+			if he, ok := ev.(event.HolidayEvent); ok {
+				ev = makeMevarchimEvent(he)
 			}
 		}
 		if opts.YomKippurKatan && (mask&event.YOM_KIPPUR_KATAN) != 0 {

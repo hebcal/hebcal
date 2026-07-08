@@ -68,3 +68,7 @@ func (ev mishnaYomiEvent) GetEmoji() string {
 func (ev mishnaYomiEvent) Basename() string {
 	return ev.Mishna.String()
 }
+
+func (ev mishnaYomiEvent) GetCategories() []string {
+	return []string{"mishnayomi"}
+}

@@ -1,3 +1,10 @@
+Changes in 5.14.0
+* event: add GetCategories to CalEvent  in https://github.com/hebcal/hebcal-go/pull/31
+* hebcal: round tzeit times, link candle to parsha, add MevarchimChodeshEvent  in https://github.com/hebcal/hebcal-go/pull/32
+* event: align English molad memo format with @hebcal/core  in https://github.com/hebcal/hebcal-go/pull/33
+* zmanim: compute sofZmanMGA from sea-level sunrise/sunset  in https://github.com/hebcal/hebcal-go/pull/30
+* Add zmanim for the JSON API + IsAssurBemlacha  in https://github.com/hebcal/hebcal-go/pull/29
+
 Changes in 5.13.0
 * Replace go-sunrise with hebcal/noaa-go; add city elevations  https://github.com/hebcal/hebcal-go/pull/26
 * Add Erev Pesach chametz times to candle-lighting output https://github.com/hebcal/hebcal-go/issues/13
