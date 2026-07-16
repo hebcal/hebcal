@@ -73,7 +73,7 @@ type Zmanim struct {
 // the timezone cannot be loaded.
 func New(location *Location, date time.Time) Zmanim {
 	year, month, day := date.Date()
-	loc, err := time.LoadLocation(location.TimeZoneId)
+	loc, err := LoadLocation(location.TimeZoneId)
 	if err != nil {
 		panic(err)
 	}

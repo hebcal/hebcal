@@ -49,35 +49,37 @@ func GetYahrzeit(hyear int, date HDate) (HDate, error) {
 		return HDate{}, fmt.Errorf("year %d occurs on or before original date", hyear)
 	}
 
-	if date.Month() == Cheshvan && date.Day() == 30 && !LongCheshvan(date.Year()+1) {
+	month, day := date.Month(), date.Day()
+	switch {
+	case month == Cheshvan && day == 30 && !LongCheshvan(date.Year()+1):
 		// If it's Heshvan 30 it depends on the first anniversary;
 		// if that was not Heshvan 30, use the day before Kislev 1.
-		date = FromRD(ToRD(hyear, Kislev, 1) - 1)
-	} else if date.Month() == Kislev && date.Day() == 30 && ShortKislev(date.Year()+1) {
+		hd := FromRD(ToRD(hyear, Kislev, 1) - 1)
+		month, day = hd.Month(), hd.Day()
+	case month == Kislev && day == 30 && ShortKislev(date.Year()+1):
 		// If it's Kislev 30 it depends on the first anniversary;
 		// if that was not Kislev 30, use the day before Teveth 1.
-		date = FromRD(ToRD(hyear, Tevet, 1) - 1)
-	} else if date.Month() == Adar2 {
+		hd := FromRD(ToRD(hyear, Tevet, 1) - 1)
+		month, day = hd.Month(), hd.Day()
+	case month == Adar2:
 		// If it's Adar II, use the same day in last month of year (Adar or Adar II).
-		date.month = HMonth(MonthsInYear(hyear))
-	} else if date.Month() == Adar1 && date.Day() == 30 && !IsLeapYear(hyear) {
+		month = HMonth(MonthsInYear(hyear))
+	case month == Adar1 && day == 30 && !IsLeapYear(hyear):
 		// If it's the 30th in Adar I and year is not a leap year
 		// (so Adar has only 29 days), use the last day in Shevat.
-		date.day = 30
-		date.month = Shvat
+		month, day = Shvat, 30
 	}
 	// In all other cases, use the normal anniversary of the date of death.
 
 	// advance day to rosh chodesh if needed
-	if date.Month() == Cheshvan && date.Day() == 30 && !LongCheshvan(hyear) {
-		date.month = Kislev
-		date.day = 1
-	} else if date.Month() == Kislev && date.Day() == 30 && ShortKislev(hyear) {
-		date.month = Tevet
-		date.day = 1
+	switch {
+	case month == Cheshvan && day == 30 && !LongCheshvan(hyear):
+		month, day = Kislev, 1
+	case month == Kislev && day == 30 && ShortKislev(hyear):
+		month, day = Tevet, 1
 	}
 
-	return New(hyear, date.Month(), date.Day()), nil
+	return New(hyear, month, day), nil
 }
 
 // GetBirthdayOrAnniversary calculates a birthday or anniversary (non-yahrzeit).

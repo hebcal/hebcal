@@ -32,6 +32,7 @@ import (
 	"strings"
 	"sync/atomic"
 	"time"
+	"unicode/utf8"
 
 	"github.com/hebcal/greg"
 )
@@ -86,7 +87,10 @@ var longMonthNames = []string{
 }
 
 var heAdar = [2]string{"אַדָר", "אדר"}
-var heMonthNames = map[HMonth][2]string{
+
+// heMonthNames is indexed by HMonth; element 0 is unused. The two strings are
+// the nikud and no-nikud ("he-x-NoNikud") spellings.
+var heMonthNames = [Adar2 + 1][2]string{
 	Adar1:    {"אַדָר א׳", "אדר א׳"},
 	Adar2:    {"אַדָר ב׳", "אדר ב׳"},
 	Av:       {"אָב", "אב"},
@@ -163,16 +167,16 @@ func ShortKislev(year int) bool {
 
 // DaysInMonth returns the number of days in Hebrew month in a given year (29 or 30).
 func DaysInMonth(month HMonth, year int) int {
-	switch month {
-	case Iyyar, Tamuz, Elul, Tevet, Adar2:
-		return 29
-	}
-	if (month == Adar1 && !IsLeapYear(year)) ||
-		(month == Cheshvan && !LongCheshvan(year)) ||
-		(month == Kislev && ShortKislev(year)) {
-		return 29
-	}
-	return 30
+	return daysInMonth(yearType(DaysInYear(year)), month)
+}
+
+// yearInfo returns the elapsed days of a Hebrew year together with its year
+// type, sharing the lookup of the year's start and end between them. The
+// conversion routines need both, and computing them separately would consult
+// elapsedDays three times instead of twice.
+func yearInfo(year int) (elapsed int64, t int) {
+	elapsed = elapsedDays(year)
+	return elapsed, yearType(int(elapsedDays(year+1) - elapsed))
 }
 
 // edCache memoizes elapsedDays for the practical Hebrew year range.
@@ -239,21 +243,8 @@ func elapsedDays0(year int) int64 {
 //
 // https://en.wikipedia.org/wiki/Rata_Die
 func ToRD(year int, month HMonth, day int) int64 {
-	tempabs := int64(day)
-	if month < Tishrei {
-		monthsInYear := HMonth(MonthsInYear(year))
-		for m := Tishrei; m <= monthsInYear; m++ {
-			tempabs += int64(DaysInMonth(m, year))
-		}
-		for m := Nisan; m < month; m++ {
-			tempabs += int64(DaysInMonth(m, year))
-		}
-	} else {
-		for m := Tishrei; m < month; m++ {
-			tempabs += int64(DaysInMonth(m, year))
-		}
-	}
-	return Epoch + elapsedDays(year) + tempabs - 1
+	elapsed, t := yearInfo(year)
+	return Epoch + elapsed + monthOffset(t, month) + int64(day) - 1
 }
 
 // New creates a new HDate from year, Hebrew month, and day of month.
@@ -262,8 +253,18 @@ func ToRD(year int, month HMonth, day int) int64 {
 // is not in the range [Tishrei..Adar2], or if Hebrew day
 // is not in the range [1..30]
 func New(year int, month HMonth, day int) HDate {
+	hd, err := newHDate(year, month, day)
+	if err != nil {
+		panic(err.Error())
+	}
+	return hd
+}
+
+// newHDate is New without the panic, for callers such as UnmarshalJSON that
+// are handed untrusted input and must report bad values as an error.
+func newHDate(year int, month HMonth, day int) (HDate, error) {
 	if year < 1 {
-		panic(fmt.Sprintf("invalid Hebrew year %d", year))
+		return HDate{}, fmt.Errorf("invalid Hebrew year %d", year)
 	}
 	if month == Adar2 && !IsLeapYear(year) {
 		month = Adar1
@@ -272,13 +273,14 @@ func New(year int, month HMonth, day int) HDate {
 		month = Nisan
 	}
 	if month < Nisan || month > Adar2 {
-		panic("invalid Hebrew Month " + month.String())
+		return HDate{}, errors.New("invalid Hebrew Month " + month.String())
 	}
-	daysInMonth := DaysInMonth(month, year)
-	if day < 1 || day > daysInMonth {
-		panic(fmt.Sprintf("invalid Hebrew day %d", day))
+	elapsed, t := yearInfo(year)
+	if day < 1 || day > daysInMonth(t, month) {
+		return HDate{}, fmt.Errorf("invalid Hebrew day %d", day)
 	}
-	return HDate{year: year, month: month, day: day}
+	abs := Epoch + elapsed + monthOffset(t, month) + int64(day) - 1
+	return HDate{year: year, month: month, day: day, abs: abs}, nil
 }
 
 func newYear(year int) int64 {
@@ -292,23 +294,24 @@ func FromRD(rataDie int64) HDate {
 	if rataDie <= Epoch {
 		panic(fmt.Sprintf("invalid R.D. date %d", rataDie))
 	}
-	approx := float64(rataDie-Epoch) / avgHebrewYearDays
-	year := int(approx)
-	for newYear(year) <= rataDie {
+	// Estimate the year from the mean year length, then correct. The estimate
+	// is off by at most a year or so, and rataDie > Epoch guarantees that year
+	// 1 always starts on or before rataDie, so the search cannot run away.
+	year := int(float64(rataDie-Epoch) / avgHebrewYearDays)
+	if year < 1 {
+		year = 1
+	}
+	for year > 1 && newYear(year) > rataDie {
+		year--
+	}
+	for newYear(year+1) <= rataDie {
 		year++
 	}
-	year--
-	var month HMonth
-	if rataDie < ToRD(year, Nisan, 1) {
-		month = Tishrei
-	} else {
-		month = Nisan
-	}
-	for rataDie > ToRD(year, month, DaysInMonth(month, year)) {
-		month++
-	}
-	day := 1 + rataDie - ToRD(year, month, 1)
-	return HDate{year: year, month: month, day: int(day), abs: rataDie}
+	elapsed, t := yearInfo(year)
+	dayOfYear := int(rataDie - (Epoch + elapsed)) // 0-based
+	month := HMonth(monthByDayOfYear[t][dayOfYear])
+	day := dayOfYear - int(monthOffsetTab[t][month]) + 1
+	return HDate{year: year, month: month, day: day, abs: rataDie}
 }
 
 // FromGregorian creates an HDate from Gregorian year, month and day.
@@ -334,10 +337,7 @@ func FromTime(t time.Time) HDate {
 // Abs converts Hebrew date to R.D. (Rata Die) fixed days.
 //
 // R.D. 1 is the imaginary date Monday, January 1, 1 on the Gregorian Calendar.
-func (hd *HDate) Abs() int64 {
-	if hd.abs == 0 {
-		hd.abs = ToRD(hd.Year(), hd.Month(), hd.Day())
-	}
+func (hd HDate) Abs() int64 {
 	return hd.abs
 }
 
@@ -409,12 +409,15 @@ func (hd HDate) IsLeapYear() bool {
 func (hd HDate) MonthName(locale string) string {
 	month := hd.Month()
 	isAdar := month == Adar1 && !hd.IsLeapYear()
-	locale = strings.ToLower(locale)
-	if locale == "he" || locale == "he-x-nonikud" {
-		idx := 0
-		if locale == "he-x-nonikud" {
-			idx = 1
-		}
+	// EqualFold avoids the allocation that strings.ToLower makes on every call.
+	idx := -1
+	switch {
+	case strings.EqualFold(locale, "he"):
+		idx = 0
+	case strings.EqualFold(locale, "he-x-nonikud"):
+		idx = 1
+	}
+	if idx >= 0 && Nisan <= month && month <= Adar2 {
 		if isAdar {
 			return heAdar[idx]
 		}
@@ -429,8 +432,19 @@ func (hd HDate) MonthName(locale string) string {
 // String returns a string representation of the Hebrew date
 // in English transliteration (e.g. "15 Cheshvan 5769").
 func (hd HDate) String() string {
-	return strconv.Itoa(hd.Day()) + " " + hd.MonthName("en") + " " + strconv.Itoa(hd.Year())
+	// Formatted into a stack buffer so only the result string is allocated.
+	var buf [32]byte
+	b := strconv.AppendInt(buf[:0], int64(hd.Day()), 10)
+	b = append(b, ' ')
+	b = append(b, hd.MonthName("en")...)
+	b = append(b, ' ')
+	b = strconv.AppendInt(b, int64(hd.Year()), 10)
+	return string(b)
 }
+
+// ErrMonthName is returned by MonthFromName when the string cannot be parsed
+// as a Hebrew month name. Test for it with errors.Is.
+var ErrMonthName = errors.New("unable to parse month name")
 
 // adarRegex matches the suffix that disambiguates "Adar I" / "Adar Rishon"
 // from "Adar II" / "Adar Sheini" in MonthFromName.
@@ -461,17 +475,18 @@ var adarRegex = regexp.MustCompile("(?i)(1|[^i]i|a|א)(׳?)$")
 //	Adar1, Adar 1, Adar I, אדר א׳
 //	Adar2, Adar 2, Adar II, אדר ב׳
 func MonthFromName(monthName string) (HMonth, error) {
-	str := strings.ToLower(monthName)
-	runes := []rune(str)
-	strlen := len(runes)
-	if strlen == 0 {
-		return 0, errors.New("unable to parse month name")
+	// Only the first two runes are ever examined, so decode just those rather
+	// than allocating a lowercased copy and a []rune of the whole string.
+	r0, size := utf8.DecodeRuneInString(monthName)
+	if size == 0 {
+		return 0, ErrMonthName
 	}
 	var r1 rune
-	if strlen > 1 {
-		r1 = runes[1]
+	if size < len(monthName) {
+		r1, _ = utf8.DecodeRuneInString(monthName[size:])
 	}
-	switch runes[0] {
+	r0, r1 = toLowerASCII(r0), toLowerASCII(r1)
+	switch r0 {
 	case 'n', 'נ':
 		if r1 == 'o' {
 			break // this catches "november"
@@ -539,7 +554,16 @@ func MonthFromName(monthName string) (HMonth, error) {
 			return Tishrei, nil
 		}
 	}
-	return 0, errors.New("unable to parse month name")
+	return 0, ErrMonthName
+}
+
+// toLowerASCII lowercases a rune if it is an ASCII letter. Hebrew is caseless,
+// so this covers every alphabet MonthFromName accepts.
+func toLowerASCII(r rune) rune {
+	if 'A' <= r && r <= 'Z' {
+		return r + ('a' - 'A')
+	}
+	return r
 }
 
 // DayOnOrBefore returns the R.D. of the given day of the week on or
@@ -552,7 +576,14 @@ func MonthFromName(monthName string) (HMonth, error) {
 // rataDie, applying it to d-1 gives the dayOfWeek previous to
 // rataDie, and applying it to d+7 gives the dayOfWeek following rataDie.
 func DayOnOrBefore(dayOfWeek time.Weekday, rataDie int64) int64 {
-	return rataDie - ((rataDie - int64(dayOfWeek)) % 7)
+	// Go's % truncates toward zero, so it must be floored by hand: R.D.
+	// numbers are negative before the common era, and a truncated remainder
+	// there would return a day *after* rataDie.
+	rem := (rataDie - int64(dayOfWeek)) % 7
+	if rem < 0 {
+		rem += 7
+	}
+	return rataDie - rem
 }
 
 func onOrBefore(dayOfWeek time.Weekday, rataDie int64) HDate {
@@ -615,8 +646,10 @@ func (hd *HDate) UnmarshalJSON(b []byte) error {
 	if err != nil {
 		return err
 	}
-	hd.year = tmp.Year
-	hd.day = tmp.Day
-	hd.month = month
+	parsed, err := newHDate(tmp.Year, month, tmp.Day)
+	if err != nil {
+		return err
+	}
+	*hd = parsed
 	return nil
 }

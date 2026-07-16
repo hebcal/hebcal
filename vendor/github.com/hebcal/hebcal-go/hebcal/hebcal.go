@@ -135,8 +135,8 @@ func HebrewCalendar(opts *CalOptions) ([]event.CalEvent, error) {
 		yerushalmiCalendar = "yerushalmi-schottenstein"
 	}
 	var (
-		il           bool = opts.IL
-		currentYear  int  = -1
+		il           = opts.IL
+		currentYear  = -1
 		holidaysYear []event.HolidayEvent
 		sedraYear    sedra.Sedra
 		beginOmer    int64
@@ -287,10 +287,12 @@ func HebrewCalendar(opts *CalOptions) ([]event.CalEvent, error) {
 }
 
 func getStartAndEnd(opts *CalOptions) (int64, int64, error) {
-	if (opts.Start != hdate.HDate{} && opts.End == hdate.HDate{}) ||
-		(opts.Start == hdate.HDate{} && opts.End != hdate.HDate{}) {
+	hasStart := opts.Start != hdate.HDate{}
+	hasEnd := opts.End != hdate.HDate{}
+	if hasStart != hasEnd {
 		return 0, 0, errors.New("opts.Start requires opts.End")
-	} else if (opts.Start != hdate.HDate{}) && (opts.End != hdate.HDate{}) {
+	}
+	if hasStart && hasEnd {
 		return opts.Start.Abs(), opts.End.Abs(), nil
 	}
 	year := opts.Year
@@ -324,41 +326,39 @@ func getStartAndEnd(opts *CalOptions) (int64, int64, error) {
 			startAbs--
 		}
 		endDate := hdate.New(year+numYears, hdate.Tishrei, 1)
-		endAbs := endDate.Abs() - 1
-		return startAbs, endAbs, nil
+		return startAbs, endDate.Abs() - 1, nil
+	}
+	// disable candle-lighting times for very early dates
+	if year < 1753 {
+		opts.CandleLighting = false
+	}
+	month := time.January
+	if opts.Month != 0 {
+		month = opts.Month
+	}
+	var startAbs int64
+	if opts.NoJulian {
+		startAbs = greg.ProlepticToRD(year, month, 1)
 	} else {
-		// disable candle-lighting times for very early dates
-		if year < 1753 {
-			opts.CandleLighting = false
-		}
-		month := time.January
-		if opts.Month != 0 {
-			month = opts.Month
-		}
-		var startAbs int64
-		if opts.NoJulian {
-			startAbs = greg.ProlepticToRD(year, month, 1)
-		} else {
-			startAbs = greg.ToRD(year, month, 1)
-		}
-		if opts.Month != 0 {
-			endAbs := startAbs + int64(greg.DaysIn(opts.Month, year))
-			return startAbs, endAbs - 1, nil
-		}
-		var endAbs int64
-		if opts.NoJulian {
-			endAbs = greg.ProlepticToRD(year+numYears, time.January, 1)
-		} else {
-			endYear := year + numYears
-			// historical Gregorian calendar has no year 0; 1 BC (-1) is
-			// followed directly by 1 AD (+1), so skip over 0
-			if year < 0 && endYear >= 0 {
-				endYear++
-			}
-			endAbs = greg.ToRD(endYear, time.January, 1)
-		}
+		startAbs = greg.ToRD(year, month, 1)
+	}
+	if opts.Month != 0 {
+		endAbs := startAbs + int64(greg.DaysIn(opts.Month, year))
 		return startAbs, endAbs - 1, nil
 	}
+	var endAbs int64
+	if opts.NoJulian {
+		endAbs = greg.ProlepticToRD(year+numYears, time.January, 1)
+	} else {
+		endYear := year + numYears
+		// historical Gregorian calendar has no year 0; 1 BC (-1) is
+		// followed directly by 1 AD (+1), so skip over 0
+		if year < 0 && endYear >= 0 {
+			endYear++
+		}
+		endAbs = greg.ToRD(endYear, time.January, 1)
+	}
+	return startAbs, endAbs - 1, nil
 }
 
 func intAbs(x int) int {
@@ -394,18 +394,20 @@ func checkCandleOptions(opts *CalOptions) error {
 	if opts.HavdalahMins != 0 && opts.HavdalahDeg != 0.0 {
 		return errors.New("opts.HavdalahMins and opts.HavdalahDeg are mutually exclusive")
 	}
-	min := 18
+	mins := 18
 	if opts.CandleLightingMins != 0 {
-		min = opts.CandleLightingMins
+		mins = opts.CandleLightingMins
 	}
 	loc := opts.Location
-	if loc.CountryCode == "IL" {
-		offset := israelCityOffset[loc.Name]
-		if offset != 0 && min == 18 {
-			min = offset
+	if loc.CountryCode == "IL" && mins == 18 {
+		offset, ok := israelCityOffset[loc.Name]
+		if ok {
+			mins = offset
+		} else {
+			mins = 20
 		}
 	}
-	opts.CandleLightingMins = -1 * intAbs(min)
+	opts.CandleLightingMins = -1 * intAbs(mins)
 	if opts.HavdalahMins != 0 {
 		opts.HavdalahMins = intAbs(opts.HavdalahMins)
 	} else if opts.HavdalahDeg != 0.0 {
@@ -475,17 +477,16 @@ func getMaskFromOptions(opts *CalOptions) event.HolidayFlags {
 	}
 	// suppression of defaults
 	if opts.NoRoshChodesh {
-		mask &= ^event.ROSH_CHODESH
+		mask &^= event.ROSH_CHODESH
 	}
 	if opts.NoModern {
-		mask &= ^event.MODERN_HOLIDAY
+		mask &^= event.MODERN_HOLIDAY
 	}
 	if opts.NoMinorFast {
-		mask &= ^event.MINOR_FAST
+		mask &^= event.MINOR_FAST
 	}
 	if opts.NoSpecialShabbat {
-		mask &= ^event.SPECIAL_SHABBAT
-		mask &= ^event.SHABBAT_MEVARCHIM
+		mask &^= event.SPECIAL_SHABBAT | event.SHABBAT_MEVARCHIM
 	}
 	if opts.IL {
 		mask |= event.IL_ONLY

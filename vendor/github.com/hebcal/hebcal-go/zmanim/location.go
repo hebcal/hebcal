@@ -17,7 +17,37 @@ package zmanim
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-import "strings"
+import (
+	"strings"
+	"sync"
+	"time"
+)
+
+// tzCache memoizes successful [LoadLocation] results keyed by tzid.
+var tzCache sync.Map // map[string]*time.Location
+
+// LoadLocation is a caching wrapper around [time.LoadLocation]. The standard
+// library re-parses the zoneinfo out of the tzdata database on every call
+// (roughly 10µs and several KB of garbage for a typical zone) and does not
+// cache internally. Zmanim calculations resolve the same handful of timezones
+// repeatedly — notably once per day across a date range — so memoizing the
+// resolved *time.Location (which is immutable and safe to share) turns those
+// into cheap pointer loads.
+//
+// Only successful lookups are cached: an unknown tzid is caller-controlled,
+// potentially unbounded input, so caching failures could grow the map without
+// bound.
+func LoadLocation(name string) (*time.Location, error) {
+	if v, ok := tzCache.Load(name); ok {
+		return v.(*time.Location), nil
+	}
+	loc, err := time.LoadLocation(name)
+	if err != nil {
+		return nil, err
+	}
+	tzCache.Store(name, loc)
+	return loc, nil
+}
 
 // Location represents a location for Zmanim
 type Location struct {

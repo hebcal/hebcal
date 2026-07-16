@@ -1,6 +1,6 @@
 # gematriya
 
-[![Build Status](https://app.travis-ci.com/hebcal/gematriya.svg?branch=main)](https://app.travis-ci.com/hebcal/gematriya)
+[![Build Status](https://github.com/hebcal/gematriya/actions/workflows/go.yml/badge.svg)](https://github.com/hebcal/gematriya/actions/workflows/go.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/hebcal/gematriya)](https://goreportcard.com/report/github.com/hebcal/gematriya)
 [![GoDoc](https://pkg.go.dev/badge/github.com/hebcal/gematriya?status.svg)](https://pkg.go.dev/github.com/hebcal/gematriya)
 

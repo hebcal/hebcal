@@ -1,3 +1,7 @@
+Changes in 5.15.0
+* Israel default candle-lighting times 20 mins before sunset
+* Performance improvements in Hebrew <=> Gregorian date conversions
+
 Changes in 5.14.0
 * event: add GetCategories to CalEvent  in https://github.com/hebcal/hebcal-go/pull/31
 * hebcal: round tzeit times, link candle to parsha, add MevarchimChodeshEvent  in https://github.com/hebcal/hebcal-go/pull/32

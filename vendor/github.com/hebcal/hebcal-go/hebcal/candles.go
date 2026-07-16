@@ -28,13 +28,14 @@ import (
 	"github.com/hebcal/locales"
 )
 
-func formatTime(t *time.Time, opts *CalOptions) string {
+// formatTime renders t as 24-hour "15:04", or as 12-hour time with the AM/PM
+// suffix stripped.
+func formatTime(t time.Time, opts *CalOptions) string {
 	if opts.Hour24 {
 		return t.Format("15:04")
-	} else {
-		timeStr0 := t.Format(time.Kitchen)
-		return timeStr0[0 : len(timeStr0)-2]
 	}
+	kitchen := t.Format(time.Kitchen)
+	return kitchen[:len(kitchen)-2]
 }
 
 // TimedEvent is used for Candle-lighting, Havdalah, and fast start/end
@@ -109,7 +110,7 @@ func (ev TimedEvent) Render(locale string) string {
 		minStr, _ := locales.LookupTranslation("min", locale)
 		desc = fmt.Sprintf("%s (%d %s)", desc, ev.sunsetOffset, minStr)
 	}
-	timeStr := formatTime(&ev.EventTime, ev.opts)
+	timeStr := formatTime(ev.EventTime, ev.opts)
 	return fmt.Sprintf("%s: %s", desc, timeStr)
 }
 
@@ -300,10 +301,8 @@ func (ev riseSetEvent) GetDate() hdate.HDate {
 
 func (ev riseSetEvent) Render(locale string) string {
 	z := newZmanim(ev.date, ev.opts)
-	rise := z.Sunrise()
-	set := z.Sunset()
-	riseStr := formatTime(&rise, ev.opts)
-	setStr := formatTime(&set, ev.opts)
+	riseStr := formatTime(z.Sunrise(), ev.opts)
+	setStr := formatTime(z.Sunset(), ev.opts)
 	return fmt.Sprintf("Sunrise: %s; Sunset %s", riseStr, setStr)
 }
 

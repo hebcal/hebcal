@@ -247,9 +247,8 @@ func taanitEstherDate(pesach hdate.HDate) hdate.HDate {
 func taanitBechorotDate(pesach hdate.HDate) hdate.HDate {
 	if pesach.Prev().Weekday() == time.Saturday {
 		return hdate.FromRD(hdate.DayOnOrBefore(time.Thursday, pesach.Abs()))
-	} else {
-		return hdate.New(pesach.Year(), hdate.Nisan, 14)
 	}
+	return hdate.New(pesach.Year(), hdate.Nisan, 14)
 }
 
 type byDate []event.HolidayEvent

@@ -1,5 +1,3 @@
-// Hebcal's greg package converts between Gregorian dates
-// and R.D. (Rata Die) day numbers.
 package greg
 
 // Hebcal - A Jewish Calendar Generator
@@ -23,8 +21,12 @@ import (
 	"time"
 )
 
-// Returns true if the Gregorian year is a leap year
+// prolepticIsLeapYear returns true if the Gregorian year is a leap year
 // using the Proleptic Gregorian calendar.
+//
+// This relies on mod's floor semantics rather than Go's truncating %: for a
+// year such as -100, mod(year, 400) is 300 (not a leap year), whereas % would
+// yield -100 and wrongly report a leap year.
 func prolepticIsLeapYear(year int) bool {
 	gyear := int64(year)
 	if mod(gyear, 4) == 0 {
@@ -36,48 +38,47 @@ func prolepticIsLeapYear(year int) bool {
 	return false
 }
 
-func prolepticMonthOffset(year int, month time.Month) int {
+// prolepticMonthOffset is the Proleptic Gregorian counterpart of monthOffset.
+func prolepticMonthOffset(year int, month time.Month) int64 {
 	if month <= time.February {
 		return 0
-	} else if prolepticIsLeapYear(year) {
-		return -1
-	} else {
-		return -2
 	}
+	if prolepticIsLeapYear(year) {
+		return -1
+	}
+	return -2
 }
 
-// Converts Gregorian date to absolute R.D. (Rata Die) days
+// ProlepticToRD converts a Gregorian date to absolute R.D. (Rata Die) days
 // using the Proleptic Gregorian calendar.
 func ProlepticToRD(year int, month time.Month, day int) int64 {
 	py := int64(year - 1)
-	abs := 365*py +
+	return 365*py +
 		quotient(py, 4) -
 		quotient(py, 100) +
 		quotient(py, 400) +
-		quotient((367*int64(month)-362), 12) +
-		int64(prolepticMonthOffset(year, month)) + int64(day)
-	return abs
+		quotient(367*int64(month)-362, 12) +
+		prolepticMonthOffset(year, month) +
+		int64(day)
 }
 
+// prolepticYearFromFixed finds the Proleptic Gregorian year in which a given
+// R.D. occurs.
 func prolepticYearFromFixed(rataDie int64) int {
-	l0 := int64(rataDie) - 1
-	n400 := quotient(l0, 146097)
-	d1 := mod(l0, 146097)
-	n100 := quotient(d1, 36524)
-	d2 := mod(d1, 36524)
-	n4 := quotient(d2, 1461)
-	d3 := mod(d2, 1461)
+	l0 := rataDie - 1
+	n400, d1 := divmod(l0, 146097)
+	n100, d2 := divmod(d1, 36524)
+	n4, d3 := divmod(d2, 1461)
 	n1 := quotient(d3, 365)
-	year := 400*n400 + 100*n100 + 4*n4 + n1
-	yy := int(year)
+	year := int(400*n400 + 100*n100 + 4*n4 + n1)
 	if n100 == 4 || n1 == 4 {
-		return yy
+		return year
 	}
-	return yy + 1
+	return year + 1
 }
 
 /*
-Converts from Rata Die (R.D. number) to Gregorian date
+ProlepticFromRD converts from R.D. (Rata Die) number to a Gregorian date
 using the Proleptic Gregorian calendar.
 
 See the footnote on page 384 of “Calendrical Calculations, Part II:
@@ -87,16 +88,21 @@ Clamen, Software--Practice and Experience, Volume 23, Number 4
 */
 func ProlepticFromRD(rataDie int64) (int, time.Month, int) {
 	year := prolepticYearFromFixed(rataDie)
+
+	jan1 := ProlepticToRD(year, time.January, 1)
+
 	var correction int64
-	if rataDie < ProlepticToRD(year, time.March, 1) {
+	switch {
+	case rataDie < ProlepticToRD(year, time.March, 1):
 		correction = 0
-	} else if prolepticIsLeapYear(year) {
+	case prolepticIsLeapYear(year):
 		correction = 1
-	} else {
+	default:
 		correction = 2
 	}
-	priorDays := rataDie - ProlepticToRD(year, time.January, 1)
-	month := quotient(12*(priorDays+correction)+373, 367)
+
+	priorDays := rataDie - jan1
+	month := quotient(12*(priorDays+correction)+373, 367) // trick to find month
 	day := rataDie - ProlepticToRD(year, time.Month(month), 1) + 1
 	return year, time.Month(month), int(day)
 }

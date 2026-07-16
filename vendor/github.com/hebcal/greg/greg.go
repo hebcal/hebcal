@@ -1,13 +1,3 @@
-// Hebcal's greg package converts between Gregorian/Julian dates
-// and R.D. (Rata Die) day numbers.
-// An R.D. number consists of an absolute number equal the number of days
-// that elapsed from a fixed point in time. We use negative numbers to represent
-// days before that fixed point. For this library, we use the Gregorian date 12/31/1 BCE
-// (or the equivalent Julian date 1/2/1 CE) as our fixed point.
-// We use the Julian calendar before Sep 1752, and the Gregorian one thereafter.
-
-// Note: Comments contain dates in American format (mm/dd/yy)
-
 package greg
 
 // Hebcal - A Jewish Calendar Generator
@@ -28,16 +18,37 @@ package greg
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 import (
-	"math"
 	"time"
 )
 
-// the dates on which we switch from Julian to Gregorian
-// all days between these dates (exclusive) are invalid
-var GREG_ADJUSTMENT_BEGIN = time.Date(1752, time.September, 2, 0, 0, 0, 0, time.Local)
-var GREG_ADJUSTMENT_END = time.Date(1752, time.September, 14, 0, 0, 0, 0, time.Local)
+// The dates on which we switch from the Julian to the Gregorian calendar.
+// All days between these dates (exclusive) are invalid.
+//
+// These are the canonical values; the equivalent GREG_ADJUSTMENT_BEGIN and
+// GREG_ADJUSTMENT_END variables are derived from them.
+const (
+	gregAdjustmentBeginYear  = 1752
+	gregAdjustmentBeginMonth = time.September
+	gregAdjustmentBeginDay   = 2
 
-// 1-based month lengths
+	gregAdjustmentEndYear  = 1752
+	gregAdjustmentEndMonth = time.September
+	gregAdjustmentEndDay   = 14
+
+	// gregAdjustmentBeginRD is the R.D. number of GREG_ADJUSTMENT_BEGIN, the
+	// final day of the Julian period. Any R.D. at or below it is Julian.
+	// TestGregAdjustmentBeginRD asserts this stays in sync with ToRD.
+	gregAdjustmentBeginRD = 639796
+)
+
+// The dates on which we switch from Julian to Gregorian.
+// All days between these dates (exclusive) are invalid.
+var (
+	GREG_ADJUSTMENT_BEGIN = time.Date(gregAdjustmentBeginYear, gregAdjustmentBeginMonth, gregAdjustmentBeginDay, 0, 0, 0, 0, time.Local)
+	GREG_ADJUSTMENT_END   = time.Date(gregAdjustmentEndYear, gregAdjustmentEndMonth, gregAdjustmentEndDay, 0, 0, 0, 0, time.Local)
+)
+
+// 1-based month lengths in a non-leap year.
 var monthLen = [13]int{0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
 
 // DaysIn returns the number of days in the Gregorian/Julian month.
@@ -48,202 +59,210 @@ func DaysIn(m time.Month, year int) int {
 	return monthLen[m]
 }
 
-// Returns true if the year is a leap year
+// IsLeapYear returns true if the year is a leap year.
+//
+// Years before the switch to the Gregorian calendar follow the Julian rule
+// (every 4th year), so the century exception does not apply to them.
 func IsLeapYear(year int) bool {
-
-	y := int64(year)
-
-	// adjust and pretend 0 was a valid year to simplify the math
-	// this change is internal and localized to this function
-	if y < 0 {
-		y++
+	// Adjust and pretend 0 was a valid year to simplify the math.
+	// This change is internal and localized to this function.
+	if year < 0 {
+		year++
 	}
 
-	if mod(y, 400) == 0 {
+	// A remainder is zero under floor division exactly when it is zero under
+	// Go's truncating %, regardless of sign, so % is safe here.
+	if year%400 == 0 {
 		return true
 	}
-
-	if y > int64(GREG_ADJUSTMENT_BEGIN.Year()) && mod(y, 100) == 0 {
+	if year > gregAdjustmentBeginYear && year%100 == 0 {
 		return false
 	}
-
-	if mod(y, 4) == 0 {
-		return true
-	}
-
-	return false
+	return year%4 == 0
 }
 
-// Converts given date to absolute R.D. (Rata Die) days.
-// Hours, minutes and seconds are ignored
+// DateToRD converts the given date to absolute R.D. (Rata Die) days.
+// Hours, minutes and seconds are ignored.
 func DateToRD(t time.Time) int64 {
 	year, month, day := t.Date()
-	abs := ToRD(year, month, day)
-	return abs
+	return ToRD(year, month, day)
 }
 
-// This function helps with a trick we later use to find the absolute number
+// monthOffset helps with a trick we later use to find the absolute number
 // of the current day this year. The idea is that if we are in Jan or Feb,
-// our approximation is exactly accurate. But for later months we need to subtract 1
-// if it's a leap year, and 2 if it isn't
-func monthOffset(year int, month time.Month) int {
+// our approximation is exactly accurate. But for later months we need to
+// subtract 1 if it's a leap year, and 2 if it isn't.
+func monthOffset(year int, month time.Month) int64 {
 	if month <= time.February {
 		return 0
-	} else if IsLeapYear(year) {
-		return -1
-	} else {
-		return -2
 	}
+	if IsLeapYear(year) {
+		return -1
+	}
+	return -2
 }
 
-// Converts given date to absolute R.D. (Rata Die) days.
-// Panics if the year is 0
+// ToRD converts the given date to absolute R.D. (Rata Die) days.
+//
+// It panics if the year is 0 (there was no year 0), or if the date falls in
+// the gap between GREG_ADJUSTMENT_BEGIN and GREG_ADJUSTMENT_END, which never
+// occurred.
 func ToRD(year int, month time.Month, day int) int64 {
-
-	// ensure year is valid
 	if year == 0 {
 		panic("Error: There was no year 0")
 	}
 
-	// ensure date is valid
-	if year >= GREG_ADJUSTMENT_BEGIN.Year() && year <= GREG_ADJUSTMENT_END.Year() &&
-		month >= GREG_ADJUSTMENT_BEGIN.Month() && month <= GREG_ADJUSTMENT_END.Month() &&
-		day > GREG_ADJUSTMENT_BEGIN.Day() && day < GREG_ADJUSTMENT_END.Day() {
+	if year >= gregAdjustmentBeginYear && year <= gregAdjustmentEndYear &&
+		month >= gregAdjustmentBeginMonth && month <= gregAdjustmentEndMonth &&
+		day > gregAdjustmentBeginDay && day < gregAdjustmentEndDay {
 		panic("Error: Date is between GREG_ADJUSTMENT_BEGIN and GREG_ADJUSTMENT_END")
 	}
 
-	var py int64
-
+	// Days up to the preceding year. There is no year 0, so positive years
+	// step down by one and negative years are already "off by one".
+	py := int64(year)
 	if year > 0 {
-		py = int64(year - 1)
-	} else {
-		py = int64(year)
+		py--
 	}
 
 	abs := 365*py + // days up to preceding year
 		quotient(py, 4) + // add in Julian leap years
-		quotient((367*int64(month)-362), 12) + // add in the days so far this year
-		int64(monthOffset(year, month)) + int64(day)
+		quotient(367*int64(month)-362, 12) + // add in the days so far this year
+		monthOffset(year, month) +
+		int64(day)
 
-	if year > GREG_ADJUSTMENT_BEGIN.Year() ||
-		(year == GREG_ADJUSTMENT_BEGIN.Year() && (month > GREG_ADJUSTMENT_BEGIN.Month() ||
-			(month == GREG_ADJUSTMENT_BEGIN.Month() &&
-				day > GREG_ADJUSTMENT_BEGIN.Day()))) {
+	if isGregorian(year, month, day) {
 		abs -= quotient(py, 100) // subtract out century leap years
 		abs += quotient(py, 400) // add in Gregorian leap years
 	} else {
-		// absolute dates obtained from Julian dates need to be adjusted because the
-		// Julian date 1/2/1 is the equivlent of Gregorian 12/31/1 BC, so the number
-		// of days since Julian 12/31/1 BC is 2 greater than since Gregorian 12/31/1 BC
+		// Absolute dates obtained from Julian dates need to be adjusted because
+		// the Julian date 1/2/1 is the equivalent of Gregorian 12/31/1 BCE, so
+		// the number of days since Julian 12/31/1 BCE is 2 greater than since
+		// Gregorian 12/31/1 BCE.
 		abs -= 2
 	}
 
 	return abs
 }
 
-// the next two functions allow us to deal with negative R.D. numbers
-func mod(x, y int64) int64 {
-	X := float64(x)
-	Y := float64(y)
-	return int64(X - Y*math.Floor(X/Y))
+// isGregorian reports whether the date falls after the switch from the Julian
+// to the Gregorian calendar.
+func isGregorian(year int, month time.Month, day int) bool {
+	if year != gregAdjustmentBeginYear {
+		return year > gregAdjustmentBeginYear
+	}
+	if month != gregAdjustmentBeginMonth {
+		return month > gregAdjustmentBeginMonth
+	}
+	return day > gregAdjustmentBeginDay
 }
 
+// quotient returns the quotient of x/y rounded toward negative infinity.
+// Go's / operator truncates toward zero, which differs from floor division
+// when exactly one operand is negative, so the R.D. math (which relies on
+// floor semantics for dates BCE) corrects for that case here.
 func quotient(x, y int64) int64 {
-	return int64(math.Floor(float64(x) / float64(y)))
+	q := x / y
+	if x%y != 0 && (x < 0) != (y < 0) {
+		q--
+	}
+	return q
+}
+
+// mod returns x modulo y, taking the sign of y, to match quotient's floor
+// division. It is the companion of quotient: x == y*quotient(x,y) + mod(x,y).
+func mod(x, y int64) int64 {
+	m := x % y
+	if m != 0 && (m < 0) != (y < 0) {
+		m += y
+	}
+	return m
+}
+
+// divmod returns quotient(x, y) and mod(x, y) together. The calendar cycle
+// math needs both for the same operands, and computing them in one step lets
+// the compiler emit a single division rather than two.
+func divmod(x, y int64) (q, m int64) {
+	q, m = x/y, x%y
+	if m != 0 && (m < 0) != (y < 0) {
+		q--
+		m += y
+	}
+	return q, m
 }
 
 /*
-Finds the year in which a given R.D. occurs
-Returns the year and remaining days
+yearFromFixed finds the year in which a given R.D. occurs.
+Returns the year and remaining days.
 See the footnote on page 384 of “Calendrical Calculations, Part II:
 Three Historical Calendars” by E. M. Reingold,  N. Dershowitz, and S. M.
 Clamen, Software--Practice and Experience, Volume 23, Number 4
 (April, 1993), pages 383-404 for an explanation.
 */
 func yearFromFixed(rataDie int64) (int, int64) {
+	// Subtract 1 because we are counting from Gregorian 12/31/1 BCE (Julian 1/2/1).
+	l0 := rataDie - 1
 
-	l0 := int64(rataDie) - 1 // subtract 1 because we are counting from Gregorian date 12/31/1 BCE (Julian 1/2/1)
-
-	// get the absolute date for Sep, 2 1752
-	adj_date := DateToRD(GREG_ADJUSTMENT_BEGIN)
-
-	// Gregorian 12/31/1 BCE = Julian 1/2/1 CE
-	// So if we are in the Julian calendar, add 2
-	// so that we are counting from Julian 12/31/1 BCE
-	if rataDie <= adj_date {
-		l0 += 2
-	}
-
-	// number of 100 and 400 year periods
-	// and days into current period
+	// Number of 100 and 400 year periods, and days into the current period.
+	// The cycle lengths differ between the calendars: the Julian calendar has a
+	// leap day every 4 years with no century exception (146100 days per 400
+	// years), while the Gregorian calendar drops 3 of them (146097).
 	var n400, n100, d1, d2 int64
-
-	if rataDie > adj_date {
-		n400 = quotient(l0, 146097)
-		d1 = mod(l0, 146097)
-		n100 = quotient(d1, 36524)
-		d2 = mod(d1, 36524)
+	if rataDie > gregAdjustmentBeginRD {
+		n400, d1 = divmod(l0, 146097)
+		n100, d2 = divmod(d1, 36524)
 	} else {
-		n400 = quotient(l0, 146100)
-		d1 = mod(l0, 146100)
-		n100 = quotient(d1, 36525)
-		d2 = mod(d1, 36525)
+		// Gregorian 12/31/1 BCE = Julian 1/2/1 CE, so in the Julian calendar add
+		// 2 to count from Julian 12/31/1 BCE.
+		l0 += 2
+		n400, d1 = divmod(l0, 146100)
+		n100, d2 = divmod(d1, 36525)
 	}
 
-	n4 := quotient(d2, 1461) // number of 4 year periods
-	d3 := mod(d2, 1461)
-	n1 := quotient(d3, 365) // number of years into current period
-	day := mod(d3, 365)
-	year := 400*n400 + 100*n100 + 4*n4 + n1 // total years
-	yy := int(year)
+	n4, d3 := divmod(d2, 1461) // number of 4 year periods
+	n1, day := divmod(d3, 365) // number of years into current period, days into that year
 
-	// at this point, year 1 is represented as 0
-	if yy < 0 {
-		yy -= 1
+	year := int(400*n400 + 100*n100 + 4*n4 + n1) // total years
+
+	// At this point, year 1 is represented as 0.
+	if year < 0 {
+		year--
 	}
 
-	// if we didn't get a 4-year block (with a leap day in it), but we did get 4 separate years
-	// it must be December 31 on the previous year (because there was a leap day). So don't add 1
+	// If we didn't get a 4-year block (with a leap day in it), but we did get 4
+	// separate years, it must be December 31 of the previous year (because there
+	// was a leap day). So don't add 1.
 	if n100 == 4 || n1 == 4 {
-
-		// but first, if yy is 0, then we are actually in 1 BCE
-		if yy != 0 {
-			return yy, 365
-		} else {
-			// year 1 BCE was a leap year
+		if year == 0 {
+			// Year 1 BCE was a leap year.
 			return -1, 365
 		}
+		return year, 365
 	}
 
-	// otherwise it is the next year (because there is no year 0, so generally add 1)
-	return yy + 1, day
+	// Otherwise it is the next year (because there is no year 0, so generally add 1).
+	return year + 1, day
 }
 
-// Converts from Rata Die (R.D. number) to Gregorian/Julian date.
+// FromRD converts from R.D. (Rata Die) number to a Gregorian/Julian date.
 func FromRD(rataDie int64) (int, time.Month, int) {
-	year, day := yearFromFixed(rataDie) // get the year we are in and the day within the year
-
+	year, day := yearFromFixed(rataDie) // the year, and the day within that year
 	day++
 
-	month := 1
-	for ; month <= 12; month++ {
-		mlen := int64(DaysIn(time.Month(month), year))
+	// Hoist the leap year test out of the loop; it is the same for every month.
+	leap := IsLeapYear(year)
+
+	month := time.January
+	for ; month <= time.December; month++ {
+		mlen := int64(monthLen[month])
+		if leap && month == time.February {
+			mlen++
+		}
 		if mlen >= day {
 			break
-		} else {
-			day -= mlen
 		}
+		day -= mlen
 	}
 
-	// var correction int64
-	// if rataDie < ToRD(year, time.March, 1) {
-	// 	correction = 0
-	// } else if IsLeapYear(year) {
-	// 	correction = 1
-	// } else {
-	// 	correction = 2
-	// }
-	// month := quotient(12*(priorDays+correction)+373, 367) // trick to find month
-	// day := rataDie - ToRD(year, time.Month(month), 1) + 1 // find remaining days
-	return year, time.Month(month), int(day)
+	return year, month, int(day)
 }

@@ -28,6 +28,7 @@ import (
 	"github.com/hebcal/locales"
 )
 
+// OmerEvent represents a single day of the Counting of the Omer.
 type OmerEvent struct {
 	Date            hdate.HDate
 	OmerDay         int
@@ -35,6 +36,8 @@ type OmerEvent struct {
 	DaysWithinWeeks int
 }
 
+// NewOmerEvent constructs an OmerEvent for the given Hebrew date and day of the
+// Omer. It panics if omerDay is outside the range 1-49.
 func NewOmerEvent(hd hdate.HDate, omerDay int) OmerEvent {
 	if omerDay < 1 || omerDay > 49 {
 		panic("invalid omerDay")
@@ -96,9 +99,8 @@ func (ev OmerEvent) GetCategories() []string {
 func (ev OmerEvent) GetWeeks() int {
 	if ev.DaysWithinWeeks == 7 {
 		return ev.WeekNumber
-	} else {
-		return ev.WeekNumber - 1
 	}
+	return ev.WeekNumber - 1
 }
 
 // adapted from pip hdate package (GPL)
@@ -118,18 +120,20 @@ var ones = []string{
 	"תִּשְׁעָה",
 }
 
-const shnei = "שְׁנֵי"
-const yamim = "יָמִים"
-const shneiYamim = shnei + " " + yamim
-const shavuot = "שָׁבוּעוֹת"
-const yom = "יוֹם"
+const (
+	shnei      = "שְׁנֵי"
+	yamim      = "יָמִים"
+	shneiYamim = shnei + " " + yamim
+	shavuot    = "שָׁבוּעוֹת"
+	yom        = "יוֹם"
+)
 
 var yomEchad = yom + " " + ones[1]
 
 func todayIsHe(omer int) string {
-	var ten = (omer / 10)
-	var one = omer % 10
-	var str = "הַיוֹם "
+	ten := omer / 10
+	one := omer % 10
+	str := "הַיוֹם "
 	if 10 < omer && omer < 20 {
 		str += ones[one] + " עָשָׂר"
 	} else if omer > 9 {
@@ -155,8 +159,8 @@ func todayIsHe(omer int) string {
 	if omer > 6 {
 		str = strings.TrimSpace(str) // remove trailing space before comma
 		str += ", שְׁהֵם "
-		var weeks = (omer / 7)
-		var days = omer % 7
+		weeks := omer / 7
+		days := omer % 7
 		if weeks > 2 {
 			str += ones[weeks] + " " + shavuot + " "
 		} else if weeks == 1 {
@@ -242,7 +246,8 @@ func (ev OmerEvent) Sefira(locale string) string {
 	dayWithinWeekStr := sefirot[ev.DaysWithinWeeks]
 	weekNum2or6 := ev.WeekNumber == 2 || ev.WeekNumber == 6
 	locale = strings.ToLower(locale)
-	if locale == "he" || locale == "he-x-nonikud" {
+	switch locale {
+	case "he", "he-x-nonikud":
 		week, _ := locales.LookupTranslation(weekStr, locale)
 		dayWithinWeek, _ := locales.LookupTranslation(dayWithinWeekStr, locale)
 		prefix := "שֶׁבְּ"
@@ -253,7 +258,7 @@ func (ev OmerEvent) Sefira(locale string) string {
 			prefix = locales.HebrewStripNikkud(prefix)
 		}
 		return dayWithinWeek + " " + prefix + week
-	} else if locale == "translit" {
+	case "translit":
 		week := sefirotTranslit[ev.WeekNumber]
 		dayWithinWeek := sefirotTranslit[ev.DaysWithinWeeks]
 		prefix := "sheb'"
@@ -261,7 +266,6 @@ func (ev OmerEvent) Sefira(locale string) string {
 			prefix = "shebi"
 		}
 		return dayWithinWeek + " " + prefix + week
-	} else {
-		return dayWithinWeekStr + " within " + weekStr
 	}
+	return dayWithinWeekStr + " within " + weekStr
 }
