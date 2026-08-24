@@ -65,3 +65,8 @@ func (ev dafWeeklyEvent) Basename() string {
 func (ev dafWeeklyEvent) GetCategories() []string {
 	return []string{"dafWeekly"}
 }
+
+// URL returns a link to sefaria.org (or dafyomi.org) for the daf.
+func (ev dafWeeklyEvent) URL() string {
+	return dafyomi.URL(ev.Daf)
+}

@@ -48,8 +48,16 @@ var staticHolidays = []holiday{
 		flags: event.EREV | event.LIGHT_CANDLES},
 	{mm: hdate.Tishrei, dd: 10, desc: "Yom Kippur",
 		flags: event.CHAG | event.MAJOR_FAST | event.YOM_TOV_ENDS},
+	// Erev Sukkot and Erev Pesach are listed twice, once per schedule, so that
+	// the event carries CHUL_ONLY or IL_ONLY like the yom tov it leads into.
+	// Consumers rely on that flag to tell the two schedules apart -- the
+	// canonical URL appends ?i=on for an Israel observance -- and an entry
+	// carrying neither flag is emitted in both calendars, so it cannot.
 	{mm: hdate.Tishrei, dd: 14, desc: "Erev Sukkot",
-		flags: event.EREV | event.LIGHT_CANDLES,
+		flags: event.CHUL_ONLY | event.EREV | event.LIGHT_CANDLES,
+		emoji: sukkotEmoji},
+	{mm: hdate.Tishrei, dd: 14, desc: "Erev Sukkot",
+		flags: event.IL_ONLY | event.EREV | event.LIGHT_CANDLES,
 		emoji: sukkotEmoji},
 
 	{mm: hdate.Tishrei, dd: 15, desc: "Sukkot I",
@@ -117,7 +125,10 @@ var staticHolidays = []holiday{
 		flags: event.MINOR_HOLIDAY,
 		emoji: "🎭️📜"},
 	{mm: hdate.Nisan, dd: 14, desc: "Erev Pesach",
-		flags: event.EREV | event.LIGHT_CANDLES,
+		flags: event.CHUL_ONLY | event.EREV | event.LIGHT_CANDLES,
+		emoji: "🫓🍷"},
+	{mm: hdate.Nisan, dd: 14, desc: "Erev Pesach",
+		flags: event.IL_ONLY | event.EREV | event.LIGHT_CANDLES,
 		emoji: "🫓🍷"},
 	// Pesach Israel
 	{mm: hdate.Nisan, dd: 15, desc: "Pesach I",

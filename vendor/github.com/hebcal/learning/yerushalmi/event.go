@@ -20,22 +20,25 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/hebcal/gematriya"
 	"github.com/hebcal/hdate"
 	"github.com/hebcal/hebcal-go/event"
-	"github.com/hebcal/locales"
 	"github.com/hebcal/learning/dafyomi"
+	"github.com/hebcal/learning/internal/hebrew"
+	"github.com/hebcal/learning/internal/sefaria"
+	"github.com/hebcal/locales"
 )
 
 type yyomiEvent struct {
-	Date hdate.HDate
-	Daf  dafyomi.Daf
+	Date    hdate.HDate
+	Daf     dafyomi.Daf
+	Edition Edition
 }
 
 // NewYerushalmiYomiEvent returns a calendar event for the Yerushalmi Yomi
-// (Jerusalem Talmud) on the given date.
-func NewYerushalmiYomiEvent(hd hdate.HDate, daf dafyomi.Daf) event.CalEvent {
-	return yyomiEvent{Date: hd, Daf: daf}
+// (Jerusalem Talmud) on the given date. edition is Vilna or Schottenstein;
+// only the Vilna edition carries a sefaria.org URL.
+func NewYerushalmiYomiEvent(hd hdate.HDate, daf dafyomi.Daf, edition Edition) event.CalEvent {
+	return yyomiEvent{Date: hd, Daf: daf, Edition: edition}
 }
 
 func (ev yyomiEvent) GetDate() hdate.HDate {
@@ -47,7 +50,7 @@ func (ev yyomiEvent) Render(locale string) string {
 	name, _ := locales.LookupTranslation(ev.Daf.Name, locale)
 	locale = strings.ToLower(locale)
 	if locale == "he" || locale == "he-x-nonikud" {
-		return yerushalmiStr + " " + name + " דף " + gematriya.Gematriya(ev.Daf.Blatt)
+		return yerushalmiStr + " " + name + " דף " + hebrew.GematriyaNN(ev.Daf.Blatt)
 	}
 	return yerushalmiStr + " " + name + " " + strconv.Itoa(ev.Daf.Blatt)
 }
@@ -66,4 +69,28 @@ func (ev yyomiEvent) Basename() string {
 
 func (ev yyomiEvent) GetCategories() []string {
 	return []string{"yerushalmi"}
+}
+
+// URL returns a link to sefaria.org for the daf, e.g.
+// https://www.sefaria.org/Jerusalem_Talmud_Berakhot.1.5.9-14?lang=bi . Only
+// the Vilna edition is mapped to Sefaria references; the Schottenstein
+// edition and dapim without a mapping return "".
+func (ev yyomiEvent) URL() string {
+	if ev.Edition != Vilna {
+		return ""
+	}
+	pageMap, ok := vilnaMap[ev.Daf.Name]
+	if !ok {
+		return ""
+	}
+	idx := ev.Daf.Blatt - 1
+	if idx < 0 || idx >= len(pageMap) {
+		return ""
+	}
+	verses0 := pageMap[idx]
+	if verses0 == "" {
+		return ""
+	}
+	verses := strings.ReplaceAll(verses0, ":", ".")
+	return sefaria.URL("Jerusalem Talmud "+ev.Daf.Name, verses)
 }

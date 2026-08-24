@@ -60,20 +60,32 @@ func skipDay(abs int64) bool {
 	return dow == 5 || dow == 6
 }
 
-// findCycleEnd returns the R.D. day on which chapter 929 is read, given
-// the R.D. day (always a Sunday) on which a cycle begins.
-func findCycleEnd(cycleStart int64) int64 {
-	chaptersRead := 0
-	abs := cycleStart
-	for {
-		if !skipDay(abs) {
-			chaptersRead++
-			if chaptersRead == Total929Chapters {
-				return abs
-			}
-		}
-		abs++
+// lastChapterOffset is the day offset from the start of a cycle (always a
+// Sunday) to the day chapter 929 is read.
+//
+// Reading 5 chapters a week, 929 chapters is 185 full weeks (925 chapters)
+// plus 4 more: the 185 weeks span days 0..1294, so chapters 926-929 fall on
+// the Sun/Mon/Tue/Wed of the following week, i.e. offsets 1295..1298. That
+// makes the last chapter land on offset 1298, always a Wednesday.
+const lastChapterOffset = 1298
+
+// cycleDays is the number of days from the start of one cycle to the start
+// of the next. The last chapter is a Wednesday, and the next cycle begins the
+// following Sunday (+4 days), so cycles repeat on a fixed 1302-day period.
+const cycleDays = lastChapterOffset + 4
+
+// chaptersInDays returns the number of chapters read in the days days
+// starting at a cycle start (always a Sunday), i.e. ending just before
+// cycleStart+days.
+//
+// Whole weeks contribute 5 chapters each; the partial week contributes one
+// per day from Sunday through Thursday, capped at 5 since Fri/Sat are skipped.
+func chaptersInDays(days int64) int {
+	partial := days % 7
+	if partial > 5 {
+		partial = 5
 	}
+	return int(days/7*5 + partial)
 }
 
 // New calculates the 929 reading for the given date.
@@ -88,51 +100,41 @@ func New(hd hdate.HDate) (Reading, bool) {
 		return Reading{}, false
 	}
 
-	cycleStart := Nine29Start
-	cycleNumber := 1
-	for {
-		cycleEnd := findCycleEnd(cycleStart)
-		// Cycle 1->2 has a unique 3-month gap; later transitions are +4 days
-		// (Wed last chapter, skip Thu-Sat, next Sunday).
-		var nextStart int64
-		if cycleNumber == 1 {
-			nextStart = nine29StartCycle2
-		} else {
-			nextStart = cycleEnd + 4
-		}
-
-		if abs < nextStart {
-			if skipDay(abs) {
-				return Reading{}, false
-			}
-			// Cycle 1 used a modified (holiday-skipping) schedule; cap it at
-			// the historical end date rather than the formula-computed end.
-			effectiveCycleEnd := cycleEnd
-			if cycleNumber == 1 {
-				effectiveCycleEnd = nine29EndCycle1
-			}
-			if abs > effectiveCycleEnd {
-				return Reading{}, false
-			}
-			chaptersBeforeToday := 0
-			for i := cycleStart; i < abs; i++ {
-				if !skipDay(i) {
-					chaptersBeforeToday++
-				}
-			}
-			chapterNum := chaptersBeforeToday + 1
-			book, bookChap := chapterToBook(chapterNum)
-			return Reading{
-				CycleChap: chapterNum,
-				CycleNum:  cycleNumber,
-				Book:      book,
-				BookChap:  bookChap,
-			}, true
-		}
-
-		cycleStart = nextStart
-		cycleNumber++
+	// Locate the cycle containing this date directly. Cycle 1->2 has a unique
+	// ~3-month gap, so cycle 1 is special-cased; from cycle 2 onward the
+	// cycles repeat on a fixed cycleDays period.
+	var cycleNumber int
+	var cycleStart int64
+	if abs < nine29StartCycle2 {
+		cycleNumber = 1
+		cycleStart = Nine29Start
+	} else {
+		elapsed := (abs - nine29StartCycle2) / cycleDays
+		cycleNumber = 2 + int(elapsed)
+		cycleStart = nine29StartCycle2 + elapsed*cycleDays
 	}
+
+	if skipDay(abs) {
+		return Reading{}, false
+	}
+	// Cycle 1 used a modified (holiday-skipping) schedule; cap it at the
+	// historical end date rather than the formula-computed end.
+	effectiveCycleEnd := cycleStart + lastChapterOffset
+	if cycleNumber == 1 {
+		effectiveCycleEnd = nine29EndCycle1
+	}
+	if abs > effectiveCycleEnd {
+		// Wind-down / historical gap: no reading.
+		return Reading{}, false
+	}
+	chapterNum := chaptersInDays(abs-cycleStart) + 1
+	book, bookChap := chapterToBook(chapterNum)
+	return Reading{
+		CycleChap: chapterNum,
+		CycleNum:  cycleNumber,
+		Book:      book,
+		BookChap:  bookChap,
+	}, true
 }
 
 // chapterToBook maps a 1-based cycle chapter number (1-929) to its book

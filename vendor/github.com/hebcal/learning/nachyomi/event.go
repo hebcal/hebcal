@@ -24,6 +24,7 @@ import (
 	"github.com/hebcal/hdate"
 	"github.com/hebcal/hebcal-go/event"
 	"github.com/hebcal/learning/dafyomi"
+	"github.com/hebcal/learning/internal/sefaria"
 	"github.com/hebcal/locales"
 )
 
@@ -65,4 +66,9 @@ func (ev nachYomiEvent) Basename() string {
 
 func (ev nachYomiEvent) GetCategories() []string {
 	return []string{"nachyomi"}
+}
+
+// URL returns a link to sefaria.org for the chapter.
+func (ev nachYomiEvent) URL() string {
+	return sefaria.URL(ev.Chapter.Name, strconv.Itoa(ev.Chapter.Blatt))
 }

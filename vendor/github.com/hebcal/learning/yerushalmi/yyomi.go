@@ -137,33 +137,16 @@ func New(hd hdate.HDate, edition Edition) dafyomi.Daf {
 		return dafyomi.Daf{}
 	}
 
-	shas := vilnaShas
-	prevCycle := VilnaStartRD
-	nextCycle := VilnaStartRD
-	if edition == Schottenstein {
-		if cday < SchottensteinStartRD {
-			panic(hd.String() + " is before Schottenstein Edition Yomi Yerushalmi cycle began")
-		}
-		shas = schottensteinShas
-		prevCycle = SchottensteinStartRD
-		nextCycle = SchottensteinStartRD
+	if edition == Schottenstein && cday < SchottensteinStartRD {
+		panic(hd.String() + " is before Schottenstein Edition Yomi Yerushalmi cycle began")
 	}
+	shas := shasFor(edition)
 
-	numDapim := 0
-	for _, masechet := range shas {
-		numDapim += masechet.Blatt
-	}
-
-	for cday >= nextCycle {
-		prevCycle = nextCycle
-		nextCycle += int64(numDapim)
-		n := numSpecialDays(edition, prevCycle, nextCycle)
-		// recalculate for any additional special days at the end
-		n2 := numSpecialDays(edition, nextCycle, nextCycle+int64(n))
-		nextCycle += int64(n + n2)
-	}
-
-	total := int(cday - prevCycle - int64(numSpecialDays(edition, prevCycle, cday)))
+	// Each cycle consumes exactly numDapim reading days, so the position
+	// within the current cycle is just the running reading count modulo the
+	// cycle length -- no need to walk cycle by cycle from the start of the
+	// epoch.
+	total := readingsBefore(edition, cday) % countDapim(edition)
 
 	for j := 0; j < len(shas); j++ {
 		masechet := shas[j]
@@ -173,7 +156,106 @@ func New(hd hdate.HDate, edition Edition) dafyomi.Daf {
 		total -= masechet.Blatt
 	}
 
-	panic("Interal error, this code should be unreachable")
+	// A modulo can't reach numDapim, so this is genuinely unreachable.
+	panic("Internal error, this code should be unreachable")
+}
+
+// shasFor returns the masechtot and page counts for the given edition.
+func shasFor(edition Edition) []dafyomi.Daf {
+	if edition == Schottenstein {
+		return schottensteinShas
+	}
+	return vilnaShas
+}
+
+// startAbsFor returns the R.D. day on which the given edition's first cycle
+// began.
+func startAbsFor(edition Edition) int64 {
+	if edition == Schottenstein {
+		return SchottensteinStartRD
+	}
+	return VilnaStartRD
+}
+
+// countDapim returns the total number of pages in the given edition, i.e. the
+// number of reading days in a full cycle.
+func countDapim(edition Edition) int {
+	numDapim := 0
+	for _, masechet := range shasFor(edition) {
+		numDapim += masechet.Blatt
+	}
+	return numDapim
+}
+
+func yomKippurAbs(year int) int64 {
+	return hdate.ToRD(year, hdate.Tishrei, 10)
+}
+
+func tishaBavObservedAbs(year int) int64 {
+	av9dt := hdate.New(year, hdate.Av, 9)
+	if av9dt.Weekday() == time.Saturday {
+		av9dt = av9dt.Next()
+	}
+	return av9dt.Abs()
+}
+
+// skippedDaysBefore returns the number of skipped days (Yom Kippur and the
+// observed Tisha B'Av) falling strictly before abs, counted from an arbitrary
+// fixed origin.
+//
+// Every Hebrew year contains exactly one of each, with Yom Kippur (10 Tishrei)
+// near the start of the year and Tisha B'Av (9 Av, deferred to the 10th when
+// the 9th is Shabbat) near the end. So every skipped day of every preceding
+// year is before abs, and only the current year needs to be examined. The
+// arbitrary origin cancels whenever two of these counts are subtracted.
+func skippedDaysBefore(abs int64) int {
+	year := hdate.FromRD(abs).Year()
+	n := 2 * year
+	if yomKippurAbs(year) < abs {
+		n++
+	}
+	if tishaBavObservedAbs(year) < abs {
+		n++
+	}
+	return n
+}
+
+// readingsBefore returns the number of reading days in the half-open range
+// [startAbs, cday), i.e. how many dapim have been studied before cday.
+func readingsBefore(edition Edition, cday int64) int {
+	startAbs := startAbsFor(edition)
+	elapsed := int(cday - startAbs)
+	if edition == Schottenstein {
+		return elapsed
+	}
+	return elapsed - (skippedDaysBefore(cday) - skippedDaysBefore(startAbs))
+}
+
+// cycleStart returns the R.D. day on which the cycle containing cday began.
+func cycleStart(edition Edition, cday int64) int64 {
+	numDapim := countDapim(edition)
+	startAbs := startAbsFor(edition)
+	target := readingsBefore(edition, cday) / numDapim * numDapim
+	if edition == Schottenstein {
+		return startAbs + int64(target)
+	}
+	// Invert readingsBefore(): begin at the lower bound that assumes no
+	// skipped days, then add back however many were found, repeating until the
+	// count settles. Skipped days are sparse (two per Hebrew year), so adding
+	// them can only uncover a handful more and this converges after a couple
+	// of passes.
+	abs := startAbs + int64(target)
+	deficit := target - readingsBefore(edition, abs)
+	for deficit > 0 {
+		abs += int64(deficit)
+		deficit = target - readingsBefore(edition, abs)
+	}
+	// A cycle boundary can land on a skipped day; advance to the first day
+	// that actually has a reading.
+	for skipDay(hdate.FromRD(abs)) {
+		abs++
+	}
+	return abs
 }
 
 // No Daf for Yom Kippur and Tisha B'Av when following
@@ -201,24 +283,7 @@ func numSpecialDays(edition Edition, startAbs, endAbs int64) int {
 	if edition == Schottenstein {
 		return 0
 	}
-	startYear := hdate.FromRD(startAbs).Year()
-	endYear := hdate.FromRD(endAbs).Year()
-
-	specialDays := 0
-	for year := startYear; year <= endYear; year++ {
-		yk := hdate.New(year, hdate.Tishrei, 10)
-		ykAbs := yk.Abs()
-		if ykAbs >= startAbs && ykAbs <= endAbs {
-			specialDays++
-		}
-		av9dt := hdate.New(year, hdate.Av, 9)
-		if av9dt.Weekday() == time.Saturday {
-			av9dt = av9dt.Next()
-		}
-		av9abs := av9dt.Abs()
-		if av9abs >= startAbs && av9abs <= endAbs {
-			specialDays++
-		}
-	}
-	return specialDays
+	// Both bounds are inclusive, so count everything before endAbs+1 and
+	// discount everything before startAbs.
+	return skippedDaysBefore(endAbs+1) - skippedDaysBefore(startAbs)
 }

@@ -87,6 +87,12 @@ type CalOptions struct {
 	// Default is 8.5 degrees for 3 small stars.
 	// Use 7.083 degress for 3 medium-sized stars.
 	HavdalahDeg float64
+	// SuppressHavdalah omits Havdalah events entirely, keeping candle-lighting.
+	// Because HavdalahMins is a plain int, it cannot distinguish "unset, use the
+	// default tzeit" (0) from "the user asked for no Havdalah" the way
+	// @hebcal/core's nullable havdalahMins does (where havdalahMins===0 suppresses
+	// Havdalah). Callers that need that behavior set this flag explicitly.
+	SuppressHavdalah bool
 	/* calculate parashah hashavua on Saturdays */
 	Sedrot bool
 	/* Israeli holiday and sedra schedule */

@@ -29,7 +29,7 @@ type Set struct {
 	stateMu sync.Mutex
 	state   State
 
-	// args are the parameters remaining after parsing the optoins.
+	// args are the parameters remaining after parsing the options.
 	args []string
 
 	// program is the name of the program for usage and error messages.

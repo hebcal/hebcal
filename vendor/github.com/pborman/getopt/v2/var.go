@@ -92,7 +92,7 @@ func (s *Set) addFlag(p Value, name string, short rune, helpvalue ...string) Opt
 		opt.where = where
 	}
 	if opt.short == 0 && opt.long == "" {
-		fmt.Fprintf(stderr, opt.where+": no short or long option given")
+		fmt.Fprint(stderr, opt.where+": no short or long option given")
 		exit(1)
 	}
 	s.AddOption(opt)

@@ -175,7 +175,7 @@
 //	getopt.Flag(&a, 'b', "use method B").SetGroup("method")
 //
 // A set can have multiple mutually exclusive groups.  Mutually exclusive groups
-// are identified with their group name in {}'s appeneded to their help message:
+// are identified with their group name in {}'s appended to their help message:
 //
 //	 -a    use method A {method}
 //	 -b    use method B {method}

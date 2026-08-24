@@ -20,9 +20,10 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/hebcal/gematriya"
 	"github.com/hebcal/hdate"
 	"github.com/hebcal/hebcal-go/event"
+	"github.com/hebcal/learning/internal/hebrew"
+	"github.com/hebcal/learning/internal/sefaria"
 	"github.com/hebcal/locales"
 )
 
@@ -64,19 +65,13 @@ func (ev tanakhYomiEvent) Render(locale string) string {
 // gematriya; a split seder like "4.1" becomes gematriya(major) + minor.
 func sederHebrew(blatt string) string {
 	if n, err := strconv.Atoi(blatt); err == nil {
-		return gematriyaNN(n)
+		return hebrew.GematriyaNN(n)
 	}
 	parts := strings.SplitN(blatt, ".", 2)
 	if maj, err := strconv.Atoi(parts[0]); err == nil && len(parts) == 2 {
-		return gematriyaNN(maj) + parts[1]
+		return hebrew.GematriyaNN(maj) + parts[1]
 	}
 	return blatt
-}
-
-// gematriyaNN formats a number as Hebrew letters without the geresh /
-// gershayim punctuation marks.
-func gematriyaNN(n int) string {
-	return strings.NewReplacer("׳", "", "״", "").Replace(gematriya.Gematriya(n))
 }
 
 func (ev tanakhYomiEvent) GetFlags() event.HolidayFlags {
@@ -97,4 +92,23 @@ func (ev tanakhYomiEvent) Basename() string {
 
 func (ev tanakhYomiEvent) GetCategories() []string {
 	return []string{"tanakhYomi"}
+}
+
+// URL returns a link to sefaria.org for the seder's verse range, e.g.
+// https://www.sefaria.org/Isaiah.55.13-58.13?lang=bi . The verse range is
+// prefixed with the book name when it is not already (see makeReading),
+// then split on the final space into book and chapter.verse reference.
+func (ev tanakhYomiEvent) URL() string {
+	v := ev.Reading.Verses
+	if v == "" {
+		return ""
+	}
+	full := v
+	if v[0] >= '0' && v[0] <= '9' {
+		full = ev.Reading.Name + " " + v
+	}
+	space := strings.LastIndex(full, " ")
+	book := full[:space]
+	verses := strings.ReplaceAll(full[space+1:], ":", ".")
+	return sefaria.URL(book, verses)
 }

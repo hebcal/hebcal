@@ -176,7 +176,7 @@ Hebcal kann leider keine Datumsberechnungen vor dem Jahr 2 n. .d. Z. durchführe
 
 Um hebcal aus dem Quellcode-Repository zu bauen, benötigen Sie ein paar mehr Werkzeuge, als für das Bauen aus Distributionen sonst nötig sind. Insbesondere benötigen Sie
 
-* Go version 1.13 oder höher
+* Go version 1.18 oder höher
 * GNU make Version 3.79 oder höher
 
 Sobald Sie diese haben, können Sie die Build-Umgebung wie folgt vorbereiten:

@@ -19,7 +19,7 @@ func init() {
 		if daf.Blatt == 0 {
 			return nil
 		}
-		return NewYerushalmiYomiEvent(hd, daf)
+		return NewYerushalmiYomiEvent(hd, daf, Vilna)
 	}, hdate.FromRD(VilnaStartRD))
 
 	dailylearning.AddCalendar("yerushalmi-schottenstein", func(hd hdate.HDate, il bool) event.CalEvent {
@@ -30,6 +30,6 @@ func init() {
 		if daf.Blatt == 0 {
 			return nil
 		}
-		return NewYerushalmiYomiEvent(hd, daf)
+		return NewYerushalmiYomiEvent(hd, daf, Schottenstein)
 	}, hdate.FromRD(SchottensteinStartRD))
 }

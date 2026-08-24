@@ -18,6 +18,7 @@ package mishnayomi
 
 import (
 	"strconv"
+	"strings"
 
 	"github.com/hebcal/hdate"
 	"github.com/hebcal/hebcal-go/event"
@@ -71,4 +72,29 @@ func (ev mishnaYomiEvent) Basename() string {
 
 func (ev mishnaYomiEvent) GetCategories() []string {
 	return []string{"mishnayomi"}
+}
+
+// URL returns a link to sefaria.org for the pair of mishnayot, e.g.
+// https://www.sefaria.org/Mishnah_Berakhot.3.6-4.1?lang=bi . When the two
+// mishnayot span different tractates only the first is linked.
+func (ev mishnaYomiEvent) URL() string {
+	m1 := ev.Mishna[0]
+	m2 := ev.Mishna[1]
+	mishna := "Mishnah"
+	if m1.Tractate == "Avot" {
+		mishna = "Pirkei"
+	}
+	name := strings.ReplaceAll(m1.Tractate, " ", "_")
+	prefix := "https://www.sefaria.org/" + mishna + "_" + name
+	verse1 := strconv.Itoa(m1.Chap) + "." + strconv.Itoa(m1.Verse)
+	if m1.Tractate != m2.Tractate {
+		return prefix + "." + verse1 + "?lang=bi"
+	}
+	var verse2 string
+	if m1.Chap == m2.Chap {
+		verse2 = strconv.Itoa(m2.Verse)
+	} else {
+		verse2 = strconv.Itoa(m2.Chap) + "." + strconv.Itoa(m2.Verse)
+	}
+	return prefix + "." + verse1 + "-" + verse2 + "?lang=bi"
 }

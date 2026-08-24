@@ -23,6 +23,7 @@ import (
 	"github.com/hebcal/gematriya"
 	"github.com/hebcal/hdate"
 	"github.com/hebcal/hebcal-go/event"
+	"github.com/hebcal/learning/internal/sefaria"
 	"github.com/hebcal/locales"
 )
 
@@ -78,4 +79,13 @@ func (ev pirkeiAvotEvent) Basename() string {
 
 func (ev pirkeiAvotEvent) GetCategories() []string {
 	return []string{"pirkeiAvotSummer"}
+}
+
+// URL returns a link to sefaria.org for the chapter(s).
+func (ev pirkeiAvotEvent) URL() string {
+	parts := make([]string, len(ev.Chapters))
+	for i, c := range ev.Chapters {
+		parts[i] = strconv.Itoa(c)
+	}
+	return sefaria.URL(pirkeiAvot, strings.Join(parts, "-"))
 }

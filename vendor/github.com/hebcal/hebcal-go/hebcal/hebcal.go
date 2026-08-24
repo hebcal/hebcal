@@ -264,6 +264,13 @@ func HebrewCalendar(opts *CalOptions) ([]event.CalEvent, error) {
 				}
 			}
 		}
+		// Suppress Havdalah when asked, matching @hebcal/core's behavior for
+		// havdalahMins===0 (which drops any HavdalahEvent). Candle-lighting on
+		// Fridays and yom-tov evenings is unaffected; only the "Havdalah"-titled
+		// events (Saturday night and the end of yom tov) are dropped.
+		if opts.SuppressHavdalah && candlesEv.Desc == "Havdalah" {
+			candlesEv = TimedEvent{}
+		}
 		if (candlesEv != TimedEvent{}) {
 			events = append(events, candlesEv)
 		}

@@ -23,6 +23,7 @@ import (
 	"github.com/hebcal/gematriya"
 	"github.com/hebcal/hdate"
 	"github.com/hebcal/hebcal-go/event"
+	"github.com/hebcal/learning/internal/sefaria"
 	"github.com/hebcal/locales"
 )
 
@@ -68,4 +69,11 @@ func (ev psalmsEvent) Basename() string {
 
 func (ev psalmsEvent) GetCategories() []string {
 	return []string{"dailyPsalms"}
+}
+
+// URL returns a link to sefaria.org for the Psalms portion, e.g.
+// https://www.sefaria.org/Psalms.10-17?lang=bi .
+func (ev psalmsEvent) URL() string {
+	chapter := strings.ReplaceAll(ev.Reading.Begin+"-"+ev.Reading.End, ":", ".")
+	return sefaria.URL("Psalms", chapter)
 }

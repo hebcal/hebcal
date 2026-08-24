@@ -132,20 +132,11 @@ func New(hd hdate.HDate) (Reading, bool) {
 		} else if rhDow == 6 {
 			blatt = 10
 		}
-		for i := rh + 2; i < cday; i++ {
-			if !skipDayAbs(i) {
-				blatt++
-			}
-		}
+		blatt += countReadingDays(rh+2, cday)
 		return makeReading("Chronicles", strconv.Itoa(blatt)), true
 	}
 
-	total := 0
-	for i := startAbs; i < cday; i++ {
-		if !skipDayAbs(i) {
-			total++
-		}
-	}
+	total := countReadingDays(startAbs, cday)
 	rt := makeReadingTable(hyear)
 	for _, el := range rt.table {
 		if total < el.blatt {
@@ -189,10 +180,31 @@ type readingTable struct {
 	longJoshua   bool
 }
 
-// makeReadingTable adjusts the seder counts for the given Hebrew year so
+// makeReadingTable returns the reading table for the given Hebrew year,
+// building it on first use and caching it thereafter.
+func makeReadingTable(year int) readingTable {
+	readingTableCacheMu.Lock()
+	defer readingTableCacheMu.Unlock()
+	if rt, ok := readingTableCache[year]; ok {
+		return rt
+	}
+	rt := buildReadingTable(year)
+	if len(readingTableCache) >= maxCachedYears {
+		readingTableCache = map[int]readingTable{}
+	}
+	readingTableCache[year] = rt
+	return rt
+}
+
+var (
+	readingTableCacheMu sync.Mutex
+	readingTableCache   = map[int]readingTable{}
+)
+
+// buildReadingTable adjusts the seder counts for the given Hebrew year so
 // that the cycle exactly fills the available reading days, splitting
 // chapters at the end of the book list when there are extra days.
-func makeReadingTable(year int) readingTable {
+func buildReadingTable(year int) readingTable {
 	numDays := calculateNumDaysToRead(year)
 	count := numDays
 	if hdate.IsLeapYear(year) {
@@ -230,13 +242,69 @@ func makeReadingTable(year int) readingTable {
 func calculateNumDaysToRead(year int) int {
 	startAbs := hdate.ToRD(year, hdate.Tishrei, 23)
 	endAbs := hdate.ToRD(year+1, hdate.Tishrei, 22)
-	included := 0
-	for abs := startAbs; abs <= endAbs; abs++ {
-		if !skipDayAbs(abs) {
-			included++
+	return countReadingDays(startAbs, endAbs+1)
+}
+
+// yearReadingDays holds the prefix sums of reading days for one Hebrew year.
+type yearReadingDays struct {
+	rh     int64   // R.D. day number of 1 Tishrei
+	length int64   // length of the Hebrew year in days
+	prefix []int32 // prefix[i] is the number of reading days in [rh, rh+i)
+}
+
+// Determining whether a day is skipped requires a holiday lookup, which is by
+// far the most expensive part of this calendar. Counting reading days one at a
+// time therefore costs hundreds of holiday lookups per query. Instead, resolve
+// a whole Hebrew year at once and cache the prefix sums, so that repeated
+// queries -- overwhelmingly for dates in the same year or two -- reduce to
+// slice subtraction.
+var (
+	yearCacheMu sync.Mutex
+	yearCache   = map[int]*yearReadingDays{}
+)
+
+// maxCachedYears keeps the caches bounded when callers sweep across many years.
+const maxCachedYears = 64
+
+func getYearReadingDays(year int) *yearReadingDays {
+	yearCacheMu.Lock()
+	defer yearCacheMu.Unlock()
+	if info, ok := yearCache[year]; ok {
+		return info
+	}
+	rh := hdate.ToRD(year, hdate.Tishrei, 1)
+	length := hdate.ToRD(year+1, hdate.Tishrei, 1) - rh
+	prefix := make([]int32, length+1)
+	count := int32(0)
+	for i := int64(0); i < length; i++ {
+		prefix[i] = count
+		if !skipDayAbs(rh + i) {
+			count++
 		}
 	}
-	return included
+	prefix[length] = count
+	info := &yearReadingDays{rh: rh, length: length, prefix: prefix}
+	if len(yearCache) >= maxCachedYears {
+		yearCache = map[int]*yearReadingDays{}
+	}
+	yearCache[year] = info
+	return info
+}
+
+// countReadingDays returns the number of reading days (days that are not
+// skipped) in the half-open range [startAbs, endAbs).
+func countReadingDays(startAbs, endAbs int64) int {
+	count := 0
+	for abs := startAbs; abs < endAbs; {
+		info := getYearReadingDays(hdate.FromRD(abs).Year())
+		stop := info.rh + info.length
+		if endAbs < stop {
+			stop = endAbs
+		}
+		count += int(info.prefix[stop-info.rh] - info.prefix[abs-info.rh])
+		abs = stop
+	}
+	return count
 }
 
 func skipDayAbs(abs int64) bool {

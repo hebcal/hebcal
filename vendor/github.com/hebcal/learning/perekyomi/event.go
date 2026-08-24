@@ -23,6 +23,7 @@ import (
 	"github.com/hebcal/gematriya"
 	"github.com/hebcal/hdate"
 	"github.com/hebcal/hebcal-go/event"
+	"github.com/hebcal/learning/internal/sefaria"
 	"github.com/hebcal/locales"
 )
 
@@ -64,4 +65,13 @@ func (ev perekYomiEvent) Basename() string {
 
 func (ev perekYomiEvent) GetCategories() []string {
 	return []string{"perekYomi"}
+}
+
+// URL returns a link to sefaria.org for the Mishna chapter.
+func (ev perekYomiEvent) URL() string {
+	prefix := "Mishnah"
+	if ev.Reading.Tractate == "Avot" {
+		prefix = "Pirkei"
+	}
+	return sefaria.URL(prefix+" "+ev.Reading.Tractate, strconv.Itoa(ev.Reading.Chap))
 }

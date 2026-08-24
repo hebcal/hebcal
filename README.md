@@ -298,7 +298,7 @@ The sunup/sundown routines aren’t accurate enough. If you enter geographic coo
 
 To build hebcal from the source repository, you'll need the following:
 
-* Go version 1.13 or higher
+* Go version 1.18 or higher
 * GNU make v3.79 or later
 
 Once you have those, you can prepare the build environment as follows:

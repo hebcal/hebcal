@@ -67,3 +67,11 @@ func (s *Set) CounterLong(name string, short rune, helpvalue ...string) *int {
 	s.FlagLong((*counterValue)(&p), name, short, helpvalue...).SetFlag()
 	return &p
 }
+
+func CounterLongVar(p *int, name string, short rune, helpvalue ...string) Option {
+	return CommandLine.FlagLong((*counterValue)(p), name, short, helpvalue...).SetFlag()
+}
+
+func (s *Set) CounterLongVar(p *int, name string, short rune, helpvalue ...string) Option {
+	return s.FlagLong((*counterValue)(p), name, short, helpvalue...).SetFlag()
+}

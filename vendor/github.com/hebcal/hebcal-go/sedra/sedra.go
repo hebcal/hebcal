@@ -405,3 +405,12 @@ func (p Parsha) Render(locale string) string {
 	}
 	return sb.String()
 }
+
+// Parshiot returns the 54 weekly Torah portion names in reading order,
+// starting with Bereshit. The index of a name plus one is the parsha number
+// used in hebcal.com's short /s/<year>/<id> URLs.
+func Parshiot() []string {
+	out := make([]string, len(parshiot))
+	copy(out, parshiot)
+	return out
+}

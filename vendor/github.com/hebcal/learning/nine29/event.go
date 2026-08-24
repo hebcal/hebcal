@@ -23,6 +23,7 @@ import (
 	"github.com/hebcal/gematriya"
 	"github.com/hebcal/hdate"
 	"github.com/hebcal/hebcal-go/event"
+	"github.com/hebcal/learning/internal/sefaria"
 	"github.com/hebcal/locales"
 )
 
@@ -65,6 +66,12 @@ func (ev nine29Event) Basename() string {
 
 func (ev nine29Event) GetCategories() []string {
 	return []string{"929"}
+}
+
+// URL returns a link to sefaria.org for the current chapter, e.g.
+// https://www.sefaria.org/Deuteronomy.34?lang=bi .
+func (ev nine29Event) URL() string {
+	return sefaria.URL(ev.Reading.Book, strconv.Itoa(ev.Reading.BookChap))
 }
 
 func isHebrewLocale(locale string) bool {

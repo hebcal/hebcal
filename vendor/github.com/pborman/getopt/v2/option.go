@@ -25,6 +25,10 @@ type Option interface {
 	// is no long name.  The name does not include the "--".
 	LongName() string
 
+	// Help always returns a description of the option, or "" if there
+	// is no description.
+	Help() string
+
 	// IsFlag returns true if Option is a flag.
 	IsFlag() bool
 
@@ -163,6 +167,10 @@ func (o *option) ShortName() string {
 
 func (o *option) LongName() string {
 	return o.long
+}
+
+func (o *option) Help() string {
+	return o.help
 }
 
 // Reset rests an option so that it appears it has not yet been seen.

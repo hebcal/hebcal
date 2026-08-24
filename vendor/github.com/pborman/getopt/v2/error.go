@@ -31,11 +31,11 @@ const (
 func (e ErrorCode) String() string {
 	switch e {
 	case UnknownOption:
-		return "unknow option"
+		return "unknown option"
 	case MissingParameter:
 		return "missing argument"
 	case ExtraParameter:
-		return "unxpected value"
+		return "unexpected value"
 	case Invalid:
 		return "error setting value"
 	}
@@ -61,7 +61,7 @@ func unknownOption(name interface{}) *Error {
 }
 
 // missingArg returns an Error inidicating option o was not passed
-// a required paramter.
+// a required parameter.
 func missingArg(o Option) *Error {
 	return &Error{
 		ErrorCode: MissingParameter,
@@ -71,7 +71,7 @@ func missingArg(o Option) *Error {
 }
 
 // extraArg returns an Error inidicating option o was passed the
-// unexpected paramter value.
+// unexpected parameter value.
 func extraArg(o Option, value string) *Error {
 	return &Error{
 		ErrorCode: ExtraParameter,
