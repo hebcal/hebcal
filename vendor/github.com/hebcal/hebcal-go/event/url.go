@@ -111,7 +111,7 @@ func (ev HolidayEvent) URL() string {
 		}
 	}
 	url := "https://www.hebcal.com/holidays/" + slug + "-" + suffix
-	if ev.Flags&IL_ONLY != 0 {
+	if ev.Flags.Has(IL_ONLY) {
 		url += "?i=on"
 	}
 	return url

@@ -5,7 +5,7 @@ go 1.18
 require (
 	github.com/hebcal/greg v1.1.0
 	github.com/hebcal/hdate v1.4.0
-	github.com/hebcal/hebcal-go v0.19.1
+	github.com/hebcal/hebcal-go v0.20.0
 	github.com/hebcal/learning v0.5.0
 	github.com/hebcal/locales v1.1.1
 	github.com/pborman/getopt/v2 v2.2.0

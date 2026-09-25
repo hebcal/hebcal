@@ -26,11 +26,11 @@ func (ev HolidayEvent) GetDate() hdate.HDate {
 
 func (ev HolidayEvent) Render(locale string) string {
 	switch {
-	case (ev.Flags & ROSH_CHODESH) != 0:
+	case ev.Flags.Has(ROSH_CHODESH):
 		rchStr, _ := locales.LookupTranslation("Rosh Chodesh", locale)
 		monthStr, _ := locales.LookupTranslation(ev.Desc[13:], locale)
 		return rchStr + " " + monthStr
-	case (ev.Flags & SHABBAT_MEVARCHIM) != 0:
+	case ev.Flags.Has(SHABBAT_MEVARCHIM):
 		mevarchimStr, _ := locales.LookupTranslation(
 			"Shabbat Mevarchim Chodesh",
 			locale,
@@ -48,7 +48,7 @@ func (ev HolidayEvent) Render(locale string) string {
 			return s + " " + gematriya.Gematriya(year)
 		}
 		return s + " " + strconv.Itoa(year)
-	case (ev.Flags & YOM_KIPPUR_KATAN) != 0:
+	case ev.Flags.Has(YOM_KIPPUR_KATAN):
 		rchStr, _ := locales.LookupTranslation("Yom Kippur Katan", locale)
 		monthStr, _ := locales.LookupTranslation(ev.Desc[17:], locale)
 		return rchStr + " " + monthStr

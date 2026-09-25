@@ -10,7 +10,7 @@ github.com/hebcal/greg
 # github.com/hebcal/hdate v1.4.0
 ## explicit; go 1.18
 github.com/hebcal/hdate
-# github.com/hebcal/hebcal-go v0.19.1
+# github.com/hebcal/hebcal-go v0.20.0
 ## explicit; go 1.18
 github.com/hebcal/hebcal-go/dailylearning
 github.com/hebcal/hebcal-go/event

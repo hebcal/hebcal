@@ -668,8 +668,8 @@ func GetHolidaysForYear(year int, il bool) []event.HolidayEvent {
 	events := getAllHolidaysForYear(year)
 	result := make([]event.HolidayEvent, 0, len(events))
 	for _, ev := range events {
-		if (il && (ev.Flags&event.CHUL_ONLY) == 0) ||
-			(!il && (ev.Flags&event.IL_ONLY) == 0) {
+		if (il && !ev.Flags.Has(event.CHUL_ONLY)) ||
+			(!il && !ev.Flags.Has(event.IL_ONLY)) {
 			result = append(result, ev)
 		}
 	}
