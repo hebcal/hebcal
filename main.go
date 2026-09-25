@@ -2,12 +2,10 @@ package main
 
 import (
 	"fmt"
-	"regexp"
+	"os"
 	"strconv"
 	"strings"
 	"time"
-
-	"os"
 
 	"github.com/hebcal/greg"
 	"github.com/hebcal/hdate"
@@ -20,38 +18,42 @@ import (
 	getopt "github.com/pborman/getopt/v2"
 )
 
-type RangeType int
+// calRange is the span of dates to generate events for.
+type calRange int
 
 const (
-	YEAR RangeType = 0 + iota
-	MONTH
-	DAY
-	TODAY
+	rangeYear calRange = iota
+	rangeMonth
+	rangeDay
+	rangeToday
 )
 
-type GregDateFormat int
+// dateFormat is the output format for Gregorian dates.
+type dateFormat int
 
 const (
-	AMERICAN GregDateFormat = 1 + iota
-	EURO
-	ISO
+	dateAmerican dateFormat = iota // MM/DD/YYYY
+	dateEuro                       // DD.MM.YYYY
+	dateISO                        // YYYY-MM-DD
 )
 
-var lang = "en"
-var theYear = 0
-var theGregMonth time.Month = 0
-var theHebMonth hdate.HMonth = 0
-var theDay = 0
-var rangeType = YEAR
-var tabsSw = false
-var weekdaySw = false
-var gregDateOutputFormatCodeSw = AMERICAN
-var todaySw = false
-var noGregSw = false
-var yearDigitsSw = false
-var isTodayChagSw = false
-var verboseSw = false
-var noJulianSw = false
+var (
+	lang                       = "en"
+	theYear                    int
+	theGregMonth               time.Month
+	theHebMonth                hdate.HMonth
+	theDay                     int
+	rangeType                  calRange
+	tabsSw                     bool
+	weekdaySw                  bool
+	gregDateOutputFormatCodeSw dateFormat
+	todaySw                    bool
+	noGregSw                   bool
+	yearDigitsSw               bool
+	isTodayChagSw              bool
+	verboseSw                  bool
+	noJulianSw                 bool
+)
 
 func handleArgs() hebcal.CalOptions {
 	calOptions := hebcal.CalOptions{}
@@ -88,7 +90,7 @@ func handleArgs() hebcal.CalOptions {
 		"Exit silently with non-zero status if today is Shabbat or Chag; exit with 0 status if today is chol")
 	opt.FlagLong(&verboseSw, "verbose", 0,
 		"Verbose mode, currently used only for --exit-if-chag")
-	var chagOnlySw = false
+	var chagOnlySw bool
 	opt.FlagLong(&chagOnlySw, "chag-only", 0,
 		"Output only Chag and Erev Chag events (when melakha/labor is prohibited)")
 	opt.FlagLong(&noJulianSw, "no-julian", 0,
@@ -177,22 +179,12 @@ Description is a newline-terminated string to be printed
 on the yahrtzeit. Events are printed regardless of the
 -h (suppress holidays) switch.`, "FILENAME")
 
-	if err := opt.Getopt(os.Args, nil); err != nil {
-		fmt.Fprintf(os.Stderr, "%v\n", err)
+	// Options from HEBCAL_OPTS come first so that command-line flags override them
+	args := append([]string{os.Args[0]}, strings.Fields(os.Getenv("HEBCAL_OPTS"))...)
+	args = append(args, os.Args[1:]...)
+	if err := opt.Getopt(args, nil); err != nil {
+		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
-	}
-
-	envOpts := os.Getenv("HEBCAL_OPTS")
-	if envOpts != "" {
-		spaceOrTab := func(c rune) bool {
-			return c == ' ' || c == '\t'
-		}
-		args := strings.FieldsFunc(envOpts, spaceOrTab)
-		args = append([]string{"hebcal"}, args...)
-		if err := opt.Getopt(args, nil); err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
-			os.Exit(1)
-		}
 	}
 
 	if *help {
@@ -205,10 +197,10 @@ on the yahrtzeit. Events are printed regardless of the
 	}
 
 	if *euroDatesSw {
-		gregDateOutputFormatCodeSw = EURO
+		gregDateOutputFormatCodeSw = dateEuro
 	}
 	if *iso8601datesSw {
-		gregDateOutputFormatCodeSw = ISO
+		gregDateOutputFormatCodeSw = dateISO
 	}
 	if *schottenstein {
 		calOptions.YerushalmiYomi = true
@@ -234,7 +226,7 @@ on the yahrtzeit. Events are printed regardless of the
 	checkLang()
 
 	validCity := false
-	if cityNameArg != nil && *cityNameArg != "" {
+	if *cityNameArg != "" {
 		city := zmanim.LookupCity(*cityNameArg)
 		if city == nil {
 			fmt.Fprintf(os.Stderr, "unknown city: %s. Use a nearby city or geographic coordinates.\n", *cityNameArg)
@@ -254,64 +246,39 @@ on the yahrtzeit. Events are printed regardless of the
 		}
 	}
 
-	latitude := 0.0
-	hasLat := false
-	if latitudeStr != "" {
-		latdeg := 0
-		latmin := 0
-		n, err := fmt.Sscanf(latitudeStr, "%d,%d", &latdeg, &latmin)
-		if err != nil || n != 2 {
-			fmt.Fprintf(os.Stderr, "unable to read latitude argument: %s\n", latitudeStr)
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+	var latitude, longitude float64
+	hasLat := latitudeStr != ""
+	if hasLat {
+		var err error
+		latitude, err = parseDegMin(latitudeStr, 90)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "latitude: %v\n", err)
 			os.Exit(1)
 		}
-		if (intAbs(latdeg) > 90) || latmin > 60 || latmin < 0 {
-			fmt.Fprintf(os.Stderr, "Error, latitude argument out of range: %s\n", latitudeStr)
-			os.Exit(1)
-		}
-		latmin = intAbs(latmin)
-		if latdeg < 0 {
-			latmin = -latmin
-		}
-		latitude = float64(latdeg) + (float64(latmin) / 60.0)
-		hasLat = true
 	}
-
-	longitude := 0.0
-	hasLong := false
-	if longitudeStr != "" {
-		longdeg := 0
-		longmin := 0
-		n, err := fmt.Sscanf(longitudeStr, "%d,%d", &longdeg, &longmin)
-		if err != nil || n != 2 {
-			fmt.Fprintf(os.Stderr, "unable to read longitude argument: %s\n", longitudeStr)
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+	hasLong := longitudeStr != ""
+	if hasLong {
+		var err error
+		longitude, err = parseDegMin(longitudeStr, 180)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "longitude: %v\n", err)
 			os.Exit(1)
 		}
-		if (intAbs(longdeg) > 180) || longmin > 60 || longmin < 0 {
-			fmt.Fprintf(os.Stderr, "Error, longitude argument out of range: %s\n", longitudeStr)
-			os.Exit(1)
-		}
-		longmin = intAbs(longmin)
-		if longdeg < 0 {
-			longmin = -longmin
-		}
-		longitude = float64(-1*longdeg) + (float64(longmin) / -60.0)
-		hasLong = true
+		longitude = -longitude // -L uses positive values for WEST
 	}
 
 	if coordinates != "" {
 		n, err := fmt.Sscanf(coordinates, "%f,%f", &latitude, &longitude)
 		if err != nil || n != 2 {
 			fmt.Fprintf(os.Stderr, "geo coordinates must be LATITUDE,LONGITUDE: %s\n", coordinates)
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+			fmt.Fprintln(os.Stderr, err)
 			os.Exit(1)
 		}
 		hasLat = true
 		hasLong = true
 	}
 
-	if (hasLat && !hasLong) || (hasLong && !hasLat) {
+	if hasLat != hasLong {
 		fmt.Fprintf(os.Stderr, "Error, you must enter BOTH the latitude and the longitude\n")
 		os.Exit(1)
 	}
@@ -323,7 +290,7 @@ on the yahrtzeit. Events are printed regardless of the
 		}
 		_, err := time.LoadLocation(tzid)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+			fmt.Fprintln(os.Stderr, err)
 			os.Exit(1)
 		}
 		userLocation := zmanim.NewLocation("User Defined City", "", latitude, longitude, 0, tzid)
@@ -351,9 +318,9 @@ on the yahrtzeit. Events are printed regardless of the
 
 	if todaySw {
 		calOptions.AddHebrewDates = true
-		rangeType = TODAY
-		theGregMonth = gregTodayMM /* year and month specified */
-		theDay = gregTodayDD       /* printc theDay of theMonth */
+		rangeType = rangeToday
+		theGregMonth = gregTodayMM
+		theDay = gregTodayDD
 		calOptions.Omer = true
 		calOptions.IsHebrewYear = false
 	}
@@ -371,7 +338,7 @@ on the yahrtzeit. Events are printed regardless of the
 	}
 
 	// Get the remaining positional parameters
-	args := opt.Args()
+	args = opt.Args()
 
 	switch len(args) {
 	case 0:
@@ -385,7 +352,7 @@ on the yahrtzeit. Events are printed regardless of the
 		arg0 := strings.TrimSpace(args[0])
 		yy, err := strconv.Atoi(arg0)
 		if err == nil {
-			theYear = yy /* just year specified */
+			theYear = yy // just year specified
 		} else {
 			switch arg0 {
 			case "help":
@@ -414,53 +381,49 @@ on the yahrtzeit. Events are printed regardless of the
 				fmt.Print(warranty)
 				os.Exit(0)
 			default:
-				regex := regexp.MustCompile(`^\d\d\d\d-\d\d-\d\d$`)
-				if regex.MatchString(arg0) {
-					theYear, _ = strconv.Atoi(arg0[0:4])
-					gregMonth, _ := strconv.Atoi(arg0[5:7])
-					theGregMonth = time.Month(gregMonth)
-					theDay, _ = strconv.Atoi(arg0[8:10])
-					rangeType = DAY
-				} else {
+				t, err := time.Parse("2006-01-02", arg0)
+				if err != nil {
 					fmt.Fprintf(os.Stderr, "unrecognized command '%s'\n", args[0])
 					fmt.Fprintf(os.Stderr, "Usage: hebcal %s\n", opt.UsageLine())
 					os.Exit(1)
 				}
+				theYear, theGregMonth, theDay = t.Date()
+				rangeType = rangeDay
 			}
 		}
 	case 2:
 		yy, err := strconv.Atoi(args[1])
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+			fmt.Fprintln(os.Stderr, err)
 			os.Exit(1)
 		}
 		theYear = yy
 		parseGregOrHebMonth(&calOptions, theYear, args[0], &theGregMonth, &theHebMonth)
-		rangeType = MONTH
+		rangeType = rangeMonth
 	case 3:
 		dd, err := strconv.Atoi(args[1])
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+			fmt.Fprintln(os.Stderr, err)
 			os.Exit(1)
 		}
 		theDay = dd
 		yy, err := strconv.Atoi(args[2])
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+			fmt.Fprintln(os.Stderr, err)
 			os.Exit(1)
 		}
 		theYear = yy
 		parseGregOrHebMonth(&calOptions, theYear, args[0], &theGregMonth, &theHebMonth)
-		rangeType = DAY
+		rangeType = rangeDay
 	default:
 		opt.PrintUsage(os.Stderr)
 		os.Exit(1)
 	}
 
-	if calOptions.NumYears != 1 && rangeType != YEAR {
+	if calOptions.NumYears != 1 && rangeType != rangeYear {
 		fmt.Fprintf(os.Stderr, "Sorry, --years option works only with entire-year calendars\n")
 		os.Exit(1)
-	} else if todaySw && rangeType != DAY && rangeType != TODAY {
+	} else if todaySw && rangeType != rangeDay && rangeType != rangeToday {
 		fmt.Fprintf(os.Stderr, "Sorry, --today option works only with single-day calendars\n")
 		os.Exit(1)
 	}
@@ -469,20 +432,16 @@ on the yahrtzeit. Events are printed regardless of the
 
 func checkLang() {
 	lang = strings.ToLower(lang)
-	if lang != "en" {
-		found := false
-		for _, a := range locales.AllLocales {
-			a = strings.ToLower(a)
-			if a == lang {
-				found = true
-				break
-			}
-		}
-		if !found {
-			fmt.Fprintf(os.Stderr, "Unknown lang '%s'; using default\n", lang)
-			lang = "en"
+	if lang == "en" {
+		return
+	}
+	for _, a := range locales.AllLocales {
+		if strings.EqualFold(a, lang) {
+			return
 		}
 	}
+	fmt.Fprintf(os.Stderr, "Unknown lang '%s'; using default\n", lang)
+	lang = "en"
 }
 
 func parseGregOrHebMonth(calOptions *hebcal.CalOptions, theYear int, arg string, gregMonth *time.Month, hebMonth *hdate.HMonth) {
@@ -492,14 +451,14 @@ func parseGregOrHebMonth(calOptions *hebcal.CalOptions, theYear int, arg string,
 			fmt.Fprintf(os.Stderr, "Don't use numbers to specify Hebrew months.\n")
 			os.Exit(1)
 		}
-		*gregMonth = time.Month(mm) /* gregorian month */
+		*gregMonth = time.Month(mm)
 	} else {
 		hm, err := hdate.MonthFromName(arg)
 		if err == nil {
 			*hebMonth = hm
-			calOptions.IsHebrewYear = true /* automagically turn it on */
+			calOptions.IsHebrewYear = true // automagically turn it on
 			if hm == hdate.Adar2 && !hdate.IsLeapYear(theYear) {
-				*hebMonth = hdate.Adar1 /* silently fix this mistake */
+				*hebMonth = hdate.Adar1 // silently fix this mistake
 			}
 		} else {
 			fmt.Fprintf(os.Stderr, "Unknown Hebrew month: %s.\n", arg)
@@ -511,19 +470,18 @@ func parseGregOrHebMonth(calOptions *hebcal.CalOptions, theYear int, arg string,
 func fromGregorian(year int, month time.Month, day int) hdate.HDate {
 	if noJulianSw {
 		return hdate.FromProlepticGregorian(year, month, day)
-	} else {
-		return hdate.FromGregorian(year, month, day)
 	}
+	return hdate.FromGregorian(year, month, day)
 }
 
 func main() {
 	calOptions := handleArgs()
 	switch rangeType {
-	case TODAY:
+	case rangeToday:
 		calOptions.AddHebrewDates = true
 		calOptions.Start = fromGregorian(theYear, theGregMonth, theDay)
 		calOptions.End = calOptions.Start
-	case DAY:
+	case rangeDay:
 		calOptions.AddHebrewDates = true
 		if calOptions.IsHebrewYear {
 			calOptions.Start = hdate.New(theYear, theHebMonth, theDay)
@@ -531,7 +489,7 @@ func main() {
 			calOptions.Start = fromGregorian(theYear, theGregMonth, theDay)
 		}
 		calOptions.End = calOptions.Start
-	case MONTH:
+	case rangeMonth:
 		if calOptions.IsHebrewYear {
 			calOptions.Start = hdate.New(theYear, theHebMonth, 1)
 			calOptions.End = hdate.New(theYear, theHebMonth, calOptions.Start.DaysInMonth())
@@ -539,7 +497,7 @@ func main() {
 			calOptions.Start = fromGregorian(theYear, theGregMonth, 1)
 			calOptions.End = fromGregorian(theYear, theGregMonth, greg.DaysIn(theGregMonth, theYear))
 		}
-	case YEAR:
+	case rangeYear:
 		calOptions.Year = theYear
 	default:
 		panic("Oh, NO! internal error #17q!")
@@ -547,7 +505,7 @@ func main() {
 
 	events, err := hebcal.HebrewCalendar(&calOptions)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
 
@@ -560,9 +518,7 @@ func main() {
 	}
 
 	for _, ev := range events {
-		gregDate := printGregDate(ev.GetDate())
-		desc := ev.Render(lang)
-		fmt.Printf("%s%s\n", gregDate, desc)
+		fmt.Println(formatGregDate(ev.GetDate()) + ev.Render(lang))
 	}
 }
 
@@ -588,7 +544,7 @@ func isTodayChag(calOptions *hebcal.CalOptions, events []event.CalEvent) (int, s
 
 	now := time.Now().In(loc)
 	nowSec := now.Unix()
-	if rangeType != TODAY {
+	if rangeType != rangeToday {
 		hour, minute, sec := now.Clock()
 		now = time.Date(theYear, theGregMonth, theDay, hour, minute, sec, 0, loc)
 		nowSec = now.Unix()
@@ -641,52 +597,56 @@ func isTodayChag(calOptions *hebcal.CalOptions, events []event.CalEvent) (int, s
 	return 0, ""
 }
 
-func printGregDate(hd hdate.HDate) string {
-	str := ""
+// formatGregDate returns the date and weekday prefix for an output line.
+func formatGregDate(hd hdate.HDate) string {
+	var sb strings.Builder
 	if !noGregSw {
-		var year int
+		var year, day int
 		var month time.Month
-		var day int
 		if noJulianSw {
 			year, month, day = hd.ProlepticGreg()
 		} else {
 			year, month, day = hd.Greg()
 		}
-		d := time.Date(year, month, day, 0, 0, 0, 0, time.UTC)
-		if gregDateOutputFormatCodeSw == ISO {
-			timeStr := d.Format(time.RFC3339)
-			idx := strings.IndexRune(timeStr, 'T')
-			str += timeStr[:idx]
-		} else {
-			if gregDateOutputFormatCodeSw == EURO {
-				str += fmt.Sprintf("%d.%d.", day, month) /* dd.mm.yyyy */
-			} else {
-				str += fmt.Sprintf("%d/%d/", month, day) /* mm/dd/yyyy */
-			}
-			if yearDigitsSw {
-				str += strconv.Itoa(year % 100)
-			} else {
-				str += strconv.Itoa(year)
-			}
+		displayYear := year
+		if yearDigitsSw {
+			displayYear = year % 100
+		}
+		switch gregDateOutputFormatCodeSw {
+		case dateISO:
+			sb.WriteString(time.Date(year, month, day, 0, 0, 0, 0, time.UTC).Format("2006-01-02"))
+		case dateEuro:
+			fmt.Fprintf(&sb, "%d.%d.%d", day, month, displayYear)
+		default:
+			fmt.Fprintf(&sb, "%d/%d/%d", month, day, displayYear)
 		}
 		if tabsSw {
-			str += "\t"
+			sb.WriteByte('\t')
 		} else {
-			str += " "
+			sb.WriteByte(' ')
 		}
 	}
 	if weekdaySw {
-		tmp := hd.Weekday().String()
-		str += tmp[0:3] + ", "
+		sb.WriteString(hd.Weekday().String()[:3] + ", ")
 	}
-	return str
+	return sb.String()
 }
 
-func intAbs(x int) int {
-	if x < 0 {
-		return -x
+// parseDegMin parses a "DEG,MIN" string such as "40,43" into decimal degrees.
+// The sign of DEG applies to the whole value.
+func parseDegMin(s string, maxDeg int) (float64, error) {
+	var deg, min int
+	if _, err := fmt.Sscanf(s, "%d,%d", &deg, &min); err != nil {
+		return 0, fmt.Errorf("unable to read argument %q: %w", s, err)
 	}
-	return x
+	if deg < -maxDeg || deg > maxDeg || min < 0 || min >= 60 {
+		return 0, fmt.Errorf("argument out of range: %s", s)
+	}
+	val := float64(deg) + float64(min)/60
+	if deg < 0 {
+		val = float64(deg) - float64(min)/60
+	}
+	return val, nil
 }
 
 func displayHelp(opt *getopt.Set) {
