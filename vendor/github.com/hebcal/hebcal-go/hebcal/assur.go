@@ -52,7 +52,7 @@ func isTomorrowShabbosOrYomTov(dow time.Weekday, events []event.HolidayEvent) bo
 		return true
 	}
 	for _, ev := range events {
-		if ev.GetFlags()&lightCandlesMask != 0 {
+		if ev.GetFlags().HasAny(lightCandlesMask) {
 			return true
 		}
 	}
@@ -66,7 +66,7 @@ func isTodayAssurBemelacha(dow time.Weekday, events []event.HolidayEvent) bool {
 		return true
 	}
 	for _, ev := range events {
-		if ev.GetFlags()&event.CHAG != 0 {
+		if ev.GetFlags().Has(event.CHAG) {
 			return true
 		}
 	}

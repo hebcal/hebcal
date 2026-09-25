@@ -168,9 +168,9 @@ func makeCandleEvent(hd hdate.HDate, opts *CalOptions, ev event.CalEvent) TimedE
 	if ev != nil {
 		flags = ev.GetFlags()
 		if dow != time.Friday {
-			if (flags & (event.LIGHT_CANDLES_TZEIS | event.CHANUKAH_CANDLES)) != 0 {
+			if flags.HasAny(event.LIGHT_CANDLES_TZEIS | event.CHANUKAH_CANDLES) {
 				useHavdalahOffset = true
-			} else if (flags & event.YOM_TOV_ENDS) != 0 {
+			} else if flags.Has(event.YOM_TOV_ENDS) {
 				havdalahTitle = true
 				useHavdalahOffset = true
 			}
@@ -366,7 +366,7 @@ func dailyZemanim(date hdate.HDate, opts *CalOptions) []event.CalEvent {
 // page, and following every link would attach a holiday URL to each Friday
 // evening in the calendar.
 func (ev TimedEvent) URL() string {
-	if ev.Flags&event.CHANUKAH_CANDLES == 0 || ev.LinkedEvent == nil {
+	if !ev.Flags.Has(event.CHANUKAH_CANDLES) || ev.LinkedEvent == nil {
 		return ""
 	}
 	return event.URL(ev.LinkedEvent)

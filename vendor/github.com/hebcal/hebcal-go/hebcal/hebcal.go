@@ -433,40 +433,40 @@ const maskLightCandles = event.LIGHT_CANDLES |
 func getMaskFromOptions(opts *CalOptions) event.HolidayFlags {
 	if opts.Mask != 0 {
 		m := opts.Mask
-		if (m & event.ROSH_CHODESH) != 0 {
+		if m.Has(event.ROSH_CHODESH) {
 			opts.NoRoshChodesh = false
 		}
-		if (m & event.MODERN_HOLIDAY) != 0 {
+		if m.Has(event.MODERN_HOLIDAY) {
 			opts.NoModern = false
 		}
-		if (m & event.MINOR_FAST) != 0 {
+		if m.Has(event.MINOR_FAST) {
 			opts.NoMinorFast = false
 		}
-		if (m & event.SPECIAL_SHABBAT) != 0 {
+		if m.Has(event.SPECIAL_SHABBAT) {
 			opts.NoSpecialShabbat = false
 		}
-		if (m & event.PARSHA_HASHAVUA) != 0 {
+		if m.Has(event.PARSHA_HASHAVUA) {
 			opts.Sedrot = true
 		}
-		if (m & event.DAF_YOMI) != 0 {
+		if m.Has(event.DAF_YOMI) {
 			opts.DafYomi = true
 		}
-		if (m & event.OMER_COUNT) != 0 {
+		if m.Has(event.OMER_COUNT) {
 			opts.Omer = true
 		}
-		if (m & event.SHABBAT_MEVARCHIM) != 0 {
+		if m.Has(event.SHABBAT_MEVARCHIM) {
 			opts.ShabbatMevarchim = true
 		}
-		if (m & event.MISHNA_YOMI) != 0 {
+		if m.Has(event.MISHNA_YOMI) {
 			opts.MishnaYomi = true
 		}
-		if (m & event.NACH_YOMI) != 0 {
+		if m.Has(event.NACH_YOMI) {
 			opts.NachYomi = true
 		}
-		if (m & event.YOM_KIPPUR_KATAN) != 0 {
+		if m.Has(event.YOM_KIPPUR_KATAN) {
 			opts.YomKippurKatan = true
 		}
-		if (m & event.YERUSHALMI_YOMI) != 0 {
+		if m.Has(event.YERUSHALMI_YOMI) {
 			opts.YerushalmiYomi = true
 		}
 		return m
@@ -539,15 +539,15 @@ func makeMevarchimEvent(ev event.HolidayEvent) event.MevarchimChodeshEvent {
 
 func appendHolidayAndRelated(events []event.CalEvent, candlesEv TimedEvent, ev event.CalEvent, opts *CalOptions) ([]event.CalEvent, TimedEvent) {
 	mask := ev.GetFlags()
-	if (!opts.YomKippurKatan && (mask&event.YOM_KIPPUR_KATAN) != 0) ||
-		(opts.NoModern && (mask&event.MODERN_HOLIDAY) != 0) {
+	if (!opts.YomKippurKatan && mask.Has(event.YOM_KIPPUR_KATAN)) ||
+		(opts.NoModern && mask.Has(event.MODERN_HOLIDAY)) {
 		return events, candlesEv // bail out early
 	}
 	if opts.CandleLighting && ev.Render("en") == "Erev Pesach" {
 		events = append(events, makeErevPesachChametz(ev, opts)...)
 	}
-	isMajorFast := (mask & event.MAJOR_FAST) != 0
-	isMinorFast := (mask & event.MINOR_FAST) != 0
+	isMajorFast := mask.Has(event.MAJOR_FAST)
+	isMinorFast := mask.Has(event.MINOR_FAST)
 	var startEvent, endEvent TimedEvent
 	if opts.CandleLighting && (isMajorFast || isMinorFast) && ev.Render("en") != "Yom Kippur" {
 		startEvent, endEvent = makeFastStartEnd(ev, opts)
@@ -555,9 +555,9 @@ func appendHolidayAndRelated(events []event.CalEvent, candlesEv TimedEvent, ev e
 			events = append(events, startEvent)
 		}
 	}
-	if (mask & opts.Mask) != 0 {
-		if opts.CandleLighting && (mask&maskLightCandles) != 0 {
-			if (mask&event.CHANUKAH_CANDLES) != 0 && !opts.NoHolidays {
+	if mask.HasAny(opts.Mask) {
+		if opts.CandleLighting && mask.HasAny(maskLightCandles) {
+			if mask.Has(event.CHANUKAH_CANDLES) && !opts.NoHolidays {
 				// Replace Chanukah event with a clone that includes candle lighting time.
 				// For clarity, allow a "duplicate" candle lighting event to remain for Shabbat
 				tmp := makeChanukahCandleLighting(ev.(event.HolidayEvent), opts)
@@ -569,14 +569,14 @@ func appendHolidayAndRelated(events []event.CalEvent, candlesEv TimedEvent, ev e
 				candlesEv = makeCandleEvent(hd, opts, ev)
 			}
 		}
-		if (mask&event.SHABBAT_MEVARCHIM) != 0 && !opts.NoHolidays {
+		if mask.Has(event.SHABBAT_MEVARCHIM) && !opts.NoHolidays {
 			// Upgrade the bare holiday event to a MevarchimChodeshEvent that
 			// carries the molad of the upcoming month.
 			if he, ok := ev.(event.HolidayEvent); ok {
 				ev = makeMevarchimEvent(he)
 			}
 		}
-		if opts.YomKippurKatan && (mask&event.YOM_KIPPUR_KATAN) != 0 {
+		if opts.YomKippurKatan && mask.Has(event.YOM_KIPPUR_KATAN) {
 			events = append(events, ev)
 		} else if !opts.NoHolidays {
 			events = append(events, ev)

@@ -569,7 +569,7 @@ func main() {
 func isTodayChag(calOptions *hebcal.CalOptions, events []event.CalEvent) (int, string) {
 	if calOptions.Location == nil {
 		for _, ev := range events {
-			if (ev.GetFlags() & event.CHAG) != 0 {
+			if ev.GetFlags().Has(event.CHAG) {
 				return 1, ev.Render(lang)
 			}
 		}
@@ -633,7 +633,7 @@ func isTodayChag(calOptions *hebcal.CalOptions, events []event.CalEvent) (int, s
 		// Today still might be chag (e.g. RH first day, or perhaps
 		// day 1 of a 2-day chag chutz l'aretz)
 		for _, ev := range events {
-			if (ev.GetFlags() & event.CHAG) != 0 {
+			if ev.GetFlags().Has(event.CHAG) {
 				return 1, ev.Render(lang)
 			}
 		}
