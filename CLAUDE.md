@@ -34,11 +34,13 @@ CI (`.github/workflows/go.yml`) runs `make all` then `make test` on Go 1.18.
 
 ## Code layout
 
-- `main.go` — the whole program. `handleArgs()` builds a `hebcal.CalOptions`
-  struct from getopt flags; `main()` resolves the date range, calls the library
-  to produce events, and prints them. Most CLI flags map directly onto fields of
+- `main.go` — the whole program. `parseArgs()` builds a `config` struct (which
+  holds a `hebcal.CalOptions` in its `cal` field) from getopt flags, returning errors
+  rather than exiting; `main()` runs any informational command (`info`,
+  `cities`, ...), resolves the date range, calls the library to produce events,
+  and prints them. Most CLI flags map directly onto fields of
   `hebcal.CalOptions`, so adding a flag that the library already supports is
-  usually just one `opt.FlagLong(&calOptions.X, ...)` line.
+  usually just one `opt.FlagLong(&c.cal.X, ...)` line.
 - `user.go` — parsers for the `-I` user-events file and `-Y` yahrzeit file.
 - `version.go` — single source of truth for the version string. Drives both the
   man page version and the `hebcal info` / `--version` output.
@@ -50,8 +52,8 @@ CI (`.github/workflows/go.yml`) runs `make all` then `make test` on Go 1.18.
   top of `NEWS.md`. Dependency upgrades (especially `hebcal-go` and `learning`)
   are typically the substance of a release — note the module versions in NEWS.md,
   as existing entries do.
-- **Flag style:** flags use `pborman/getopt/v2`. Globals named `<thing>_sw`
-  are package-level switches read by `main()`; prefer wiring new options straight
-  into `calOptions` fields when the library exposes them.
+- **Flag style:** flags use `pborman/getopt/v2`. There are no package-level
+  option globals; CLI-only switches are fields on `config`. Prefer wiring new
+  options straight into `c.cal` fields when the library exposes them.
 - `README.md` is the authoritative source for user-facing option docs and is kept
   in sync with `hebcal.1.in`. `README_DE.md` is a German translation of it.

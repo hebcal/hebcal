@@ -14,12 +14,12 @@ import (
 	"github.com/hebcal/hebcal-go/hebcal"
 )
 
-func readUserFile(filename string) []hebcal.UserEvent {
+func readUserFile(filename string) ([]hebcal.UserEvent, error) {
 	f, err := os.Open(filename)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "could not open input file %s.\n", filename)
-		os.Exit(1)
+		return nil, fmt.Errorf("could not open input file %s.", filename)
 	}
+	defer f.Close()
 	scanner := bufio.NewScanner(f)
 	re := regexp.MustCompile(`^(\S+)\s+(\d+)\s+(.+)$`)
 	lineNumber := 0
@@ -44,15 +44,15 @@ func readUserFile(filename string) []hebcal.UserEvent {
 		}
 		entries = append(entries, hebcal.UserEvent{Month: month, Day: day, Desc: fields[3]})
 	}
-	return entries
+	return entries, scanner.Err()
 }
 
-func readYahrzeitFile(filename string) []hebcal.UserYahrzeit {
+func readYahrzeitFile(filename string) ([]hebcal.UserYahrzeit, error) {
 	f, err := os.Open(filename)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "could not open yahrtzeit input file %s.\n", filename)
-		os.Exit(1)
+		return nil, fmt.Errorf("could not open yahrtzeit input file %s.", filename)
 	}
+	defer f.Close()
 	scanner := bufio.NewScanner(f)
 	re := regexp.MustCompile(`^(\d+)\s+(\d+)\s+(\d+)\s+(.+)$`)
 	lineNumber := 0
@@ -80,5 +80,5 @@ func readYahrzeitFile(filename string) []hebcal.UserYahrzeit {
 		gregDate := time.Date(year, month, day, 0, 0, 0, 0, time.UTC)
 		entries = append(entries, hebcal.UserYahrzeit{Date: gregDate, Name: fields[4]})
 	}
-	return entries
+	return entries, scanner.Err()
 }
