@@ -1,3 +1,11 @@
+Changes in 5.16.0
+* Fix `HEBCAL_OPTS` discarding the month/day/year given on the command line (e.g. `HEBCAL_OPTS=-s hebcal 2020` ignored 2020); command-line flags now also take precedence over `HEBCAL_OPTS`
+* Fix crash on an out-of-range Gregorian month number (e.g. `hebcal 13 2024`)
+* Reject invalid `YYYY-MM-DD` dates (e.g. `2024-02-30`) and `-l`/`-L` minutes of 60 or more
+* Print calendar-generation errors to stderr instead of stdout
+* Internal cleanup of `main.go` toward idiomatic Go
+* Require Go 1.18; update to github.com/hebcal/hebcal-go@v0.20.0, github.com/hebcal/learning@v0.5.0, and github.com/pborman/getopt/v2@v2.2.0
+
 Changes in 5.15.0
 * Israel default candle-lighting times 20 mins before sunset
 * Performance improvements in Hebrew <=> Gregorian date conversions
