@@ -43,15 +43,15 @@ var theGregMonth time.Month = 0
 var theHebMonth hdate.HMonth = 0
 var theDay = 0
 var rangeType = YEAR
-var tabs_sw = false
-var weekday_sw = false
-var gregDateOutputFormatCode_sw = AMERICAN
-var today_sw = false
-var noGreg_sw = false
-var yearDigits_sw = false
-var isTodayChag_sw = false
-var verbose_sw = false
-var noJulian_sw = false
+var tabsSw = false
+var weekdaySw = false
+var gregDateOutputFormatCodeSw = AMERICAN
+var todaySw = false
+var noGregSw = false
+var yearDigitsSw = false
+var isTodayChagSw = false
+var verboseSw = false
+var noJulianSw = false
 
 func handleArgs() hebcal.CalOptions {
 	calOptions := hebcal.CalOptions{}
@@ -59,15 +59,15 @@ func handleArgs() hebcal.CalOptions {
 	opt.SetProgram("hebcal")
 	opt.SetParameters("[[ month [ day ]] year]")
 	var (
-		help            = opt.BoolLong("help", 0, "print this help text")
-		ashkenazi_sw    = opt.BoolLong("ashkenazi", 'a', "Use Ashkenazi Hebrew transliterations (alias for --lang=ashkenazi)")
-		euroDates_sw    = opt.BoolLong("euro-dates", 'e', "Output 'European' dates -- DD.MM.YYYY")
-		iso8601dates_sw = opt.BoolLong("iso-8601", 'g', "Output ISO 8601 dates -- YYYY-MM-DD")
-		version_sw      = opt.BoolLong("version", 0, "Show version number")
-		cityNameArg     = opt.StringLong("city", 'C', "", "City for candle-lighting", "CITY")
-		utf8_hebrew_sw  = opt.BoolLong("", '8', "Use UTF-8 Hebrew (alias for --lang=he)")
-		schottenstein   = opt.BoolLong("schottenstein", 0, "Use Schottenstein edition of Yerushalmi Yomi")
-		dailyLearning   = opt.ListLong("daily-learning", 0, "Output a daily learning schedule by name (e.g. 929, rambam1, rambam3); may be repeated", "NAME")
+		help           = opt.BoolLong("help", 0, "print this help text")
+		ashkenaziSw    = opt.BoolLong("ashkenazi", 'a', "Use Ashkenazi Hebrew transliterations (alias for --lang=ashkenazi)")
+		euroDatesSw    = opt.BoolLong("euro-dates", 'e', "Output 'European' dates -- DD.MM.YYYY")
+		iso8601datesSw = opt.BoolLong("iso-8601", 'g', "Output ISO 8601 dates -- YYYY-MM-DD")
+		versionSw      = opt.BoolLong("version", 0, "Show version number")
+		cityNameArg    = opt.StringLong("city", 'C', "", "City for candle-lighting", "CITY")
+		utf8HebrewSw   = opt.BoolLong("", '8', "Use UTF-8 Hebrew (alias for --lang=he)")
+		schottenstein  = opt.BoolLong("schottenstein", 0, "Use Schottenstein edition of Yerushalmi Yomi")
+		dailyLearning  = opt.ListLong("daily-learning", 0, "Output a daily learning schedule by name (e.g. 929, rambam1, rambam3); may be repeated", "NAME")
 	)
 
 	var coordinates string
@@ -82,21 +82,21 @@ func handleArgs() hebcal.CalOptions {
 		"longitude", 'L', "Set the longitude for solar calculations to XX degrees and YY minutes. Negative values are EAST. The -l and -L switches must both be used, or not at all.", "XX,YY")
 	opt.FlagLong(&tzid, "timezone", 'z', "Use specified timezone, overriding the -C (localize to city) switch", "TIMEZONE")
 
-	opt.FlagLong(&today_sw, "today", 't', "Only output for today's date")
-	opt.FlagLong(&noGreg_sw, "today-brief", 'T', "Print today's pertinent information")
-	opt.FlagLong(&isTodayChag_sw, "exit-if-chag", 'X',
+	opt.FlagLong(&todaySw, "today", 't', "Only output for today's date")
+	opt.FlagLong(&noGregSw, "today-brief", 'T', "Print today's pertinent information")
+	opt.FlagLong(&isTodayChagSw, "exit-if-chag", 'X',
 		"Exit silently with non-zero status if today is Shabbat or Chag; exit with 0 status if today is chol")
-	opt.FlagLong(&verbose_sw, "verbose", 0,
+	opt.FlagLong(&verboseSw, "verbose", 0,
 		"Verbose mode, currently used only for --exit-if-chag")
-	var chagOnly_sw = false
-	opt.FlagLong(&chagOnly_sw, "chag-only", 0,
+	var chagOnlySw = false
+	opt.FlagLong(&chagOnlySw, "chag-only", 0,
 		"Output only Chag and Erev Chag events (when melakha/labor is prohibited)")
-	opt.FlagLong(&noJulian_sw, "no-julian", 0,
+	opt.FlagLong(&noJulianSw, "no-julian", 0,
 		"Disable use of Julian calendar for dates before 1752")
 
-	opt.FlagLong(&yearDigits_sw, "year-abbrev", 'y', "Print only last two digits of year")
-	opt.FlagLong(&tabs_sw, "tabs", 'r', "Tab delineated format")
-	opt.FlagLong(&weekday_sw, "weekday", 'w', "Add day of the week")
+	opt.FlagLong(&yearDigitsSw, "year-abbrev", 'y', "Print only last two digits of year")
+	opt.FlagLong(&tabsSw, "tabs", 'r', "Tab delineated format")
+	opt.FlagLong(&weekdaySw, "weekday", 'w', "Add day of the week")
 	opt.FlagLong(&calOptions.Hour24,
 		"24hour", 'E', "Output 24-hour times (e.g. 18:37 instead of 6:37)")
 	opt.FlagLong(&calOptions.SunriseSunset,
@@ -199,16 +199,16 @@ on the yahrtzeit. Events are printed regardless of the
 		displayHelp(opt)
 		os.Exit(0)
 	}
-	if *version_sw {
+	if *versionSw {
 		fmt.Printf("Hebcal version %s\n", Version)
 		os.Exit(0)
 	}
 
-	if *euroDates_sw {
-		gregDateOutputFormatCode_sw = EURO
+	if *euroDatesSw {
+		gregDateOutputFormatCodeSw = EURO
 	}
-	if *iso8601dates_sw {
-		gregDateOutputFormatCode_sw = ISO
+	if *iso8601datesSw {
+		gregDateOutputFormatCodeSw = ISO
 	}
 	if *schottenstein {
 		calOptions.YerushalmiYomi = true
@@ -223,12 +223,12 @@ on the yahrtzeit. Events are printed regardless of the
 		}
 	}
 
-	if *ashkenazi_sw && *utf8_hebrew_sw {
+	if *ashkenaziSw && *utf8HebrewSw {
 		fmt.Fprintf(os.Stderr, "Cannot specify both options -a and -8\n")
 		os.Exit(1)
-	} else if *ashkenazi_sw {
+	} else if *ashkenaziSw {
 		lang = "ashkenazi"
-	} else if *utf8_hebrew_sw {
+	} else if *utf8HebrewSw {
 		lang = "he"
 	}
 	checkLang()
@@ -340,16 +340,16 @@ on the yahrtzeit. Events are printed regardless of the
 		calOptions.HavdalahMins = 72
 	}
 
-	if noGreg_sw || isTodayChag_sw {
-		today_sw = true
+	if noGregSw || isTodayChagSw {
+		todaySw = true
 	}
-	if noJulian_sw {
+	if noJulianSw {
 		calOptions.NoJulian = true
 	}
 
 	gregTodayYY, gregTodayMM, gregTodayDD := time.Now().Date()
 
-	if today_sw {
+	if todaySw {
 		calOptions.AddHebrewDates = true
 		rangeType = TODAY
 		theGregMonth = gregTodayMM /* year and month specified */
@@ -358,7 +358,7 @@ on the yahrtzeit. Events are printed regardless of the
 		calOptions.IsHebrewYear = false
 	}
 
-	if chagOnly_sw {
+	if chagOnlySw {
 		calOptions.Mask = event.CHAG | event.LIGHT_CANDLES |
 			event.LIGHT_CANDLES_TZEIS | event.YOM_TOV_ENDS
 	}
@@ -460,7 +460,7 @@ on the yahrtzeit. Events are printed regardless of the
 	if calOptions.NumYears != 1 && rangeType != YEAR {
 		fmt.Fprintf(os.Stderr, "Sorry, --years option works only with entire-year calendars\n")
 		os.Exit(1)
-	} else if today_sw && rangeType != DAY && rangeType != TODAY {
+	} else if todaySw && rangeType != DAY && rangeType != TODAY {
 		fmt.Fprintf(os.Stderr, "Sorry, --today option works only with single-day calendars\n")
 		os.Exit(1)
 	}
@@ -509,7 +509,7 @@ func parseGregOrHebMonth(calOptions *hebcal.CalOptions, theYear int, arg string,
 }
 
 func fromGregorian(year int, month time.Month, day int) hdate.HDate {
-	if noJulian_sw {
+	if noJulianSw {
 		return hdate.FromProlepticGregorian(year, month, day)
 	} else {
 		return hdate.FromGregorian(year, month, day)
@@ -551,9 +551,9 @@ func main() {
 		os.Exit(1)
 	}
 
-	if isTodayChag_sw {
+	if isTodayChagSw {
 		status, reason := isTodayChag(&calOptions, events)
-		if reason != "" && verbose_sw {
+		if reason != "" && verboseSw {
 			fmt.Println(reason)
 		}
 		os.Exit(status)
@@ -589,8 +589,8 @@ func isTodayChag(calOptions *hebcal.CalOptions, events []event.CalEvent) (int, s
 	now := time.Now().In(loc)
 	nowSec := now.Unix()
 	if rangeType != TODAY {
-		hour, min, sec := now.Clock()
-		now = time.Date(theYear, theGregMonth, theDay, hour, min, sec, 0, loc)
+		hour, minute, sec := now.Clock()
+		now = time.Date(theYear, theGregMonth, theDay, hour, minute, sec, 0, loc)
 		nowSec = now.Unix()
 	}
 
@@ -643,39 +643,39 @@ func isTodayChag(calOptions *hebcal.CalOptions, events []event.CalEvent) (int, s
 
 func printGregDate(hd hdate.HDate) string {
 	str := ""
-	if !noGreg_sw {
+	if !noGregSw {
 		var year int
 		var month time.Month
 		var day int
-		if noJulian_sw {
+		if noJulianSw {
 			year, month, day = hd.ProlepticGreg()
 		} else {
 			year, month, day = hd.Greg()
 		}
 		d := time.Date(year, month, day, 0, 0, 0, 0, time.UTC)
-		if gregDateOutputFormatCode_sw == ISO {
+		if gregDateOutputFormatCodeSw == ISO {
 			timeStr := d.Format(time.RFC3339)
 			idx := strings.IndexRune(timeStr, 'T')
 			str += timeStr[:idx]
 		} else {
-			if gregDateOutputFormatCode_sw == EURO {
+			if gregDateOutputFormatCodeSw == EURO {
 				str += fmt.Sprintf("%d.%d.", day, month) /* dd.mm.yyyy */
 			} else {
 				str += fmt.Sprintf("%d/%d/", month, day) /* mm/dd/yyyy */
 			}
-			if yearDigits_sw {
+			if yearDigitsSw {
 				str += strconv.Itoa(year % 100)
 			} else {
 				str += strconv.Itoa(year)
 			}
 		}
-		if tabs_sw {
+		if tabsSw {
 			str += "\t"
 		} else {
 			str += " "
 		}
 	}
-	if weekday_sw {
+	if weekdaySw {
 		tmp := hd.Weekday().String()
 		str += tmp[0:3] + ", "
 	}
