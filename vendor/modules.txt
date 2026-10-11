@@ -10,7 +10,7 @@ github.com/hebcal/greg
 # github.com/hebcal/hdate v1.4.0
 ## explicit; go 1.18
 github.com/hebcal/hdate
-# github.com/hebcal/hebcal-go v0.20.0
+# github.com/hebcal/hebcal-go v0.23.0
 ## explicit; go 1.18
 github.com/hebcal/hebcal-go/dailylearning
 github.com/hebcal/hebcal-go/event
@@ -35,7 +35,7 @@ github.com/hebcal/learning/psalms
 github.com/hebcal/learning/rambam
 github.com/hebcal/learning/tanakhyomi
 github.com/hebcal/learning/yerushalmi
-# github.com/hebcal/locales v1.1.1
+# github.com/hebcal/locales v1.1.3
 ## explicit; go 1.18
 github.com/hebcal/locales
 # github.com/hebcal/noaa-go v1.0.0

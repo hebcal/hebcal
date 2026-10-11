@@ -179,17 +179,18 @@ func makeCandleEvent(hd hdate.HDate, opts *CalOptions, ev event.CalEvent) TimedE
 		havdalahTitle = true
 		flags = event.LIGHT_CANDLES_TZEIS
 	}
-	// if offset is 0 or undefined, we'll use tzeit time
+	// A zero Havdalah offset means tzeit. A zero candle-lighting offset
+	// means sunset itself (CandleLightingAtSunset).
 	offset := opts.CandleLightingMins
 	if useHavdalahOffset {
 		offset = opts.HavdalahMins
 	}
 	z := newZmanim(hd, opts)
 	var eventTime time.Time
-	if offset != 0 {
-		eventTime = z.SunsetOffset(offset, true)
-	} else {
+	if useHavdalahOffset && offset == 0 {
 		eventTime = z.Tzeit(opts.HavdalahDeg)
+	} else {
+		eventTime = z.SunsetOffset(offset, true)
 	}
 	if eventTime.IsZero() {
 		return TimedEvent{} // no sunset
@@ -236,17 +237,67 @@ func makeFastStartEnd(ev event.CalEvent, opts *CalOptions) (TimedEvent, TimedEve
 		sunset := z.Sunset()
 		startEvent = NewTimedEvent(hd, "Fast begins", flags, sunset, 0, ev, opts)
 	} else if strings.HasPrefix(desc, "Tish'a B'Av") {
-		tzeit := z.Tzeit(zmanim.Tzeit3MediumStars)
-		endEvent = NewTimedEvent(hd, "Fast ends", flags, tzeit, 0, ev, opts)
+		endEvent = NewTimedEvent(hd, "Fast ends", flags, fastEndTime(&z, true, opts), 0, ev, opts)
 	} else {
-		dawn := z.AlotHaShachar()
-		startEvent = NewTimedEvent(hd, "Fast begins", flags, dawn, 0, ev, opts)
+		startEvent = NewTimedEvent(hd, "Fast begins", flags, fastStartTime(&z, opts), 0, ev, opts)
 		if hd.Weekday() != time.Friday && !(hd.Day() == 14 && hd.Month() == hdate.Nisan) {
-			tzeit := z.Tzeit(zmanim.Tzeit3MediumStars)
-			endEvent = NewTimedEvent(hd, "Fast ends", flags, tzeit, 0, ev, opts)
+			endEvent = NewTimedEvent(hd, "Fast ends", flags, fastEndTime(&z, false, opts), 0, ev, opts)
 		}
 	}
 	return startEvent, endEvent
+}
+
+const (
+	// alot16Point1 is Alot HaShachar, the default start of a minor fast.
+	alot16Point1 = 16.1
+	// tzeitTucazinsky is the default end of Tish'a B'Av, 6.45 degrees as
+	// calculated by Rabbi Yechiel Michel Tucazinsky.
+	tzeitTucazinsky = 6.45
+	// minorFastEndMinutesIL is the default end of a minor fast in Israel, 15
+	// minutes after sunset (Rabbi Deblitzky's practice).
+	minorFastEndMinutesIL = 15
+)
+
+// fastStartTime is when a minor fast begins: opts.FastStartMins before
+// sunrise, when the sun is opts.FastStartDeg below the horizon, or at Alot
+// HaShachar.
+func fastStartTime(z *zmanim.Zmanim, opts *CalOptions) time.Time {
+	if opts.FastStartMins != 0 {
+		return z.SunriseOffset(-opts.FastStartMins, true)
+	}
+	deg := opts.FastStartDeg
+	if deg == 0 {
+		deg = alot16Point1
+	}
+	return z.TimeAtAngle(deg, true)
+}
+
+// fastEndTime is when a fast ends. Tish'a B'Av ends opts.TishaBavEndMins
+// after sunset, at tzeit opts.TishaBavEndDeg, or at tzeit 6.45 degrees, and
+// ignores opts.IL. A minor fast ends opts.FastEndMins after sunset, at tzeit
+// opts.FastEndDeg, or else 15 minutes after sunset in Israel and at tzeit
+// 7.083 degrees elsewhere.
+func fastEndTime(z *zmanim.Zmanim, isTishaBav bool, opts *CalOptions) time.Time {
+	if isTishaBav {
+		if opts.TishaBavEndMins != 0 {
+			return z.SunsetOffset(opts.TishaBavEndMins, true)
+		}
+		deg := opts.TishaBavEndDeg
+		if deg == 0 {
+			deg = tzeitTucazinsky
+		}
+		return z.Tzeit(deg)
+	}
+	if opts.FastEndMins != 0 {
+		return z.SunsetOffset(opts.FastEndMins, true)
+	}
+	if opts.FastEndDeg != 0 {
+		return z.Tzeit(opts.FastEndDeg)
+	}
+	if opts.IL {
+		return z.SunsetOffset(minorFastEndMinutesIL, true)
+	}
+	return z.Tzeit(zmanim.Tzeit3MediumStars)
 }
 
 // makeErevPesachChametz returns the "Finish eating chametz" (sof zman achilat

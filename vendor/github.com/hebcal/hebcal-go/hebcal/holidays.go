@@ -237,6 +237,10 @@ var staticModernHolidays = []struct {
 	// https://www.gov.il/he/departments/policies/2012_des5234
 	{firstYear: 5773, mm: hdate.Tevet, dd: 21, desc: "Hebrew Language Day",
 		friSatMovetoThu: true},
+	// https://fs.knesset.gov.il/25/law/25_lsr_14184773.pdf
+	// (Published in Sefer HaChukim No. 3567 on 8 Av 5786 / July 22, 2026)
+	{firstYear: 5786, mm: hdate.Tishrei, dd: 24, desc: "Swords of Iron War Memorial Day",
+		chul: true, satPostponeToSun: true},
 }
 
 func tzomGedaliahDate(rh hdate.HDate) hdate.HDate {
@@ -584,6 +588,30 @@ func getAllHolidaysForYear(year int) []event.HolidayEvent {
 				Date:  ykk,
 				Desc:  "Yom Kippur Katan " + nextMonthName,
 				Flags: event.MINOR_FAST | event.YOM_KIPPUR_KATAN})
+	}
+
+	// Ta'anit BeHaB: Monday, Thursday, Monday after Rosh Chodesh Cheshvan and Iyyar
+	for _, month := range []hdate.HMonth{hdate.Cheshvan, hdate.Iyyar} {
+		rc := hdate.New(year, month, 1)
+		shabbos := hdate.DayOnOrBefore(time.Saturday, rc.Abs()+6)
+		if shabbos == rc.Abs() {
+			shabbos += 7
+		}
+		fastDays := []hdate.HDate{
+			hdate.FromRD(shabbos + 2),
+			hdate.FromRD(shabbos + 5),
+			hdate.FromRD(shabbos + 9),
+		}
+		// Pesach Sheni: move the last fast to 17 Iyyar
+		if month == hdate.Iyyar && fastDays[2].Day() == 14 {
+			fastDays[2] = hdate.New(year, hdate.Iyyar, 17)
+		}
+		for _, hd := range fastDays {
+			events = append(events, event.HolidayEvent{
+				Date:  hd,
+				Desc:  "Ta'anit BeHaB",
+				Flags: event.MINOR_FAST | event.BEHAB})
+		}
 	}
 
 	sedra := sedra.New(year, false)

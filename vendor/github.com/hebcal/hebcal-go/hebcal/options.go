@@ -78,6 +78,13 @@ type CalOptions struct {
 	UseElevation bool
 	/* minutes before sundown to light candles (default 18) */
 	CandleLightingMins int
+	// CandleLightingAtSunset lights candles at sunset itself, with no offset.
+	// A zero CandleLightingMins cannot say this, because zero means "unset,
+	// use the default" (18 minutes, or the Israeli city's custom). When set,
+	// CandleLightingMins is ignored. Candle-lighting that follows Havdalah
+	// rules (the second night of Yom Tov, Chanukah on Saturday night) is not
+	// affected.
+	CandleLightingAtSunset bool
 	// minutes after sundown for Havdalah (typical values are 42, 50, or 72).
 	// If 0 (the default), calculate Havdalah according to Tzeit Hakochavim -
 	// Nightfall (the point when 3 small stars are observable in the night time sky with
@@ -93,6 +100,31 @@ type CalOptions struct {
 	// @hebcal/core's nullable havdalahMins does (where havdalahMins===0 suppresses
 	// Havdalah). Callers that need that behavior set this flag explicitly.
 	SuppressHavdalah bool
+	// degrees for solar depression for the start of minor fasts
+	// (Yom Kippur Katan included). Mutually exclusive with FastStartMins.
+	// If neither is set, minor fasts begin at Alot HaShachar, 16.1 degrees.
+	// Tish'a B'Av begins at sunset the evening before and is not affected.
+	FastStartDeg float64
+	// minutes before sunrise for the start of minor fasts (typical values are
+	// 72 or 90). Mutually exclusive with FastStartDeg.
+	FastStartMins int
+	// degrees for solar depression for the end of minor fasts (Yom Kippur
+	// Katan included). Commonly-used values are 7.083 (3 medium-sized stars)
+	// and 6.45 (Rabbi Yechiel Michel Tucazinsky). Mutually exclusive with
+	// FastEndMins. If neither is set, minor fasts end at 7.083 degrees in the
+	// Diaspora, or 15 minutes after sunset in Israel (Rabbi Deblitzky's
+	// practice). Tish'a B'Av is not affected; see TishaBavEndDeg.
+	FastEndDeg float64
+	// minutes after sunset for the end of minor fasts. Mutually exclusive with
+	// FastEndDeg. Tish'a B'Av is not affected; see TishaBavEndMins.
+	FastEndMins int
+	// degrees for solar depression for the end of Tish'a B'Av. Mutually
+	// exclusive with TishaBavEndMins. If neither is set, Tish'a B'Av ends at
+	// 6.45 degrees (Rabbi Yechiel Michel Tucazinsky), in Israel too.
+	TishaBavEndDeg float64
+	// minutes after sunset for the end of Tish'a B'Av. Mutually exclusive
+	// with TishaBavEndDeg.
+	TishaBavEndMins int
 	/* calculate parashah hashavua on Saturdays */
 	Sedrot bool
 	/* Israeli holiday and sedra schedule */
@@ -145,6 +177,11 @@ type CalOptions struct {
 	//
 	// See https://en.wikipedia.org/wiki/Yom_Kippur_Katan#Practices
 	YomKippurKatan bool
+	// include BeHaB fast days (default false): the Monday, Thursday and
+	// Monday after Pesach (in Iyyar) and after Sukkot (in Cheshvan).
+	// When the final Monday of Iyyar is 14 Iyyar (Pesach Sheni), that fast
+	// is moved to 17 Iyyar.
+	BeHaB bool
 	// Whether to use 24-hour time (as opposed to 12-hour time) for
 	// TimedEvent.Render().
 	Hour24 bool

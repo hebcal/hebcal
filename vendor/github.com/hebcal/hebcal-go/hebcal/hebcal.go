@@ -69,6 +69,7 @@ Additional non-default event types can be specified:
   - Shabbat Mevarchim HaChodesh on Saturday before Rosh Chodesh (opts.ShabbatMevarchim)
   - Molad announcement on Saturday before Rosh Chodesh (opts.Molad)
   - Yom Kippur Katan (opts.YomKippurKatan)
+  - BeHaB fast days (opts.BeHaB)
 
 Candle-lighting and Havdalah times are approximated using latitude and longitude
 specified by the Location class. The Location class contains a small
@@ -85,6 +86,7 @@ are observable in the night time sky with the naked eye). The default Havdalah
 option (Tzeit Hakochavim) is calculated when the sun is 8.5° below the horizon.
 These defaults can be changed using these options:
   - opts.CandleLightingMins - minutes before sundown to light candles
+  - opts.CandleLightingAtSunset - light candles at sundown itself
   - opts.HavdalahMins - minutes after sundown for Havdalah (typical values are 42, 50, or 72).
     Havdalah times are supressed when opts.HavdalahMins=0.
   - opts.HavdalahDeg - degrees for solar depression for Havdalah.
@@ -102,7 +104,14 @@ Saturday night (see above).
 
 Minor fasts begin at Alot HaShachar (sun is 16.1° below the horizon in the morning) and
 end when 3 medium-sized stars are observable in the night sky (sun is 7.083° below the horizon
-in the evening).
+in the evening), or in Israel 15 minutes after sunset. Tish'a B'Av begins at sunset and
+ends when the sun is 6.45° below the horizon. These defaults can be changed using these
+options, each pair mutually exclusive:
+  - opts.FastStartDeg / opts.FastStartMins - start of minor fasts, in degrees of solar
+    depression or minutes before sunrise
+  - opts.FastEndDeg / opts.FastEndMins - end of minor fasts, in degrees of solar
+    depression or minutes after sunset
+  - opts.TishaBavEndDeg / opts.TishaBavEndMins - end of Tish'a B'Av, likewise
 
 Two options also exist for generating an Event with the Hebrew date:
   - opts.AddHebrewDates - print the Hebrew date for the entire date range
@@ -401,20 +410,33 @@ func checkCandleOptions(opts *CalOptions) error {
 	if opts.HavdalahMins != 0 && opts.HavdalahDeg != 0.0 {
 		return errors.New("opts.HavdalahMins and opts.HavdalahDeg are mutually exclusive")
 	}
-	mins := 18
-	if opts.CandleLightingMins != 0 {
-		mins = opts.CandleLightingMins
+	if opts.FastStartMins != 0 && opts.FastStartDeg != 0.0 {
+		return errors.New("opts.FastStartMins and opts.FastStartDeg are mutually exclusive")
 	}
-	loc := opts.Location
-	if loc.CountryCode == "IL" && mins == 18 {
-		offset, ok := israelCityOffset[loc.Name]
-		if ok {
-			mins = offset
-		} else {
-			mins = 20
+	if opts.FastEndMins != 0 && opts.FastEndDeg != 0.0 {
+		return errors.New("opts.FastEndMins and opts.FastEndDeg are mutually exclusive")
+	}
+	if opts.TishaBavEndMins != 0 && opts.TishaBavEndDeg != 0.0 {
+		return errors.New("opts.TishaBavEndMins and opts.TishaBavEndDeg are mutually exclusive")
+	}
+	if opts.CandleLightingAtSunset {
+		opts.CandleLightingMins = 0
+	} else {
+		mins := 18
+		if opts.CandleLightingMins != 0 {
+			mins = opts.CandleLightingMins
 		}
+		loc := opts.Location
+		if loc.CountryCode == "IL" && mins == 18 {
+			offset, ok := israelCityOffset[loc.Name]
+			if ok {
+				mins = offset
+			} else {
+				mins = 20
+			}
+		}
+		opts.CandleLightingMins = -1 * intAbs(mins)
 	}
-	opts.CandleLightingMins = -1 * intAbs(mins)
 	if opts.HavdalahMins != 0 {
 		opts.HavdalahMins = intAbs(opts.HavdalahMins)
 	} else if opts.HavdalahDeg != 0.0 {
@@ -422,6 +444,12 @@ func checkCandleOptions(opts *CalOptions) error {
 	} else {
 		opts.HavdalahDeg = zmanim.Tzeit3SmallStars
 	}
+	opts.FastStartMins = intAbs(opts.FastStartMins)
+	opts.FastStartDeg = math.Abs(opts.FastStartDeg)
+	opts.FastEndMins = intAbs(opts.FastEndMins)
+	opts.FastEndDeg = math.Abs(opts.FastEndDeg)
+	opts.TishaBavEndMins = intAbs(opts.TishaBavEndMins)
+	opts.TishaBavEndDeg = math.Abs(opts.TishaBavEndDeg)
 	return nil
 }
 
@@ -465,6 +493,9 @@ func getMaskFromOptions(opts *CalOptions) event.HolidayFlags {
 		}
 		if m.Has(event.YOM_KIPPUR_KATAN) {
 			opts.YomKippurKatan = true
+		}
+		if m.Has(event.BEHAB) {
+			opts.BeHaB = true
 		}
 		if m.Has(event.YERUSHALMI_YOMI) {
 			opts.YerushalmiYomi = true
@@ -525,6 +556,9 @@ func getMaskFromOptions(opts *CalOptions) event.HolidayFlags {
 	if opts.YomKippurKatan {
 		mask |= event.YOM_KIPPUR_KATAN
 	}
+	if opts.BeHaB {
+		mask |= event.BEHAB
+	}
 	return mask
 }
 
@@ -540,6 +574,7 @@ func makeMevarchimEvent(ev event.HolidayEvent) event.MevarchimChodeshEvent {
 func appendHolidayAndRelated(events []event.CalEvent, candlesEv TimedEvent, ev event.CalEvent, opts *CalOptions) ([]event.CalEvent, TimedEvent) {
 	mask := ev.GetFlags()
 	if (!opts.YomKippurKatan && mask.Has(event.YOM_KIPPUR_KATAN)) ||
+		(!opts.BeHaB && mask.Has(event.BEHAB)) ||
 		(opts.NoModern && mask.Has(event.MODERN_HOLIDAY)) {
 		return events, candlesEv // bail out early
 	}
@@ -576,7 +611,8 @@ func appendHolidayAndRelated(events []event.CalEvent, candlesEv TimedEvent, ev e
 				ev = makeMevarchimEvent(he)
 			}
 		}
-		if opts.YomKippurKatan && mask.Has(event.YOM_KIPPUR_KATAN) {
+		if (opts.YomKippurKatan && mask.Has(event.YOM_KIPPUR_KATAN)) ||
+			(opts.BeHaB && mask.Has(event.BEHAB)) {
 			events = append(events, ev)
 		} else if !opts.NoHolidays {
 			events = append(events, ev)

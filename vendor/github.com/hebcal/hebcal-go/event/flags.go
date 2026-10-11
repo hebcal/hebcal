@@ -68,6 +68,8 @@ const (
 	// Daily learning schedule supplied by a plugin (e.g. 929, Daily Rambam)
 	// via the dailylearning registry, with no dedicated flag of its own.
 	DAILY_LEARNING
+	// BeHaB fast days on Monday, Thursday and Monday after Pesach and Sukkot
+	BEHAB
 )
 
 // Has reports whether f contains every flag set in flags.
@@ -124,6 +126,7 @@ var flagNames = [...]string{
 	"YERUSHALMI_YOMI",
 	"NACH_YOMI",
 	"DAILY_LEARNING",
+	"BEHAB",
 }
 
 // String returns the names of the flags set in f joined by "|",
