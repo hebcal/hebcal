@@ -244,7 +244,10 @@ on the yahrtzeit. Events are printed regardless of the
 		return nil, err
 	}
 
-	if c.cal.CandleLighting && c.cal.HavdalahDeg == 0.0 && c.cal.HavdalahMins == 0 {
+	// An explicit -m 0 means "no Havdalah", as distinct from leaving -m unset
+	if opt.IsSet("havdalah-mins") && c.cal.HavdalahMins == 0 {
+		c.cal.SuppressHavdalah = true
+	} else if c.cal.CandleLighting && c.cal.HavdalahDeg == 0.0 && c.cal.HavdalahMins == 0 {
 		c.cal.HavdalahMins = 72
 	}
 

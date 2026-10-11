@@ -70,6 +70,8 @@ const (
 	DAILY_LEARNING
 	// BeHaB fast days on Monday, Thursday and Monday after Pesach and Sukkot
 	BEHAB
+	// Latest time for Kiddush Levana, according to the Maharil
+	KIDDUSH_LEVANA
 )
 
 // Has reports whether f contains every flag set in flags.
@@ -127,6 +129,7 @@ var flagNames = [...]string{
 	"NACH_YOMI",
 	"DAILY_LEARNING",
 	"BEHAB",
+	"KIDDUSH_LEVANA",
 }
 
 // String returns the names of the flags set in f joined by "|",

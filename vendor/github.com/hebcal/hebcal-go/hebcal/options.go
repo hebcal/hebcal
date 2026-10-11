@@ -182,6 +182,10 @@ type CalOptions struct {
 	// When the final Monday of Iyyar is 14 Iyyar (Pesach Sheni), that fast
 	// is moved to 17 Iyyar.
 	BeHaB bool
+	// include the latest time for Kiddush Levana each month, calculated as
+	// halfway between one molad and the next (the Maharil's opinion).
+	// Requires Location. See KiddushLevanaEvent.
+	KiddushLevanaMaharil bool
 	// Whether to use 24-hour time (as opposed to 12-hour time) for
 	// TimedEvent.Render().
 	Hour24 bool

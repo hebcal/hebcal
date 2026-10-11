@@ -70,6 +70,8 @@ Additional non-default event types can be specified:
   - Molad announcement on Saturday before Rosh Chodesh (opts.Molad)
   - Yom Kippur Katan (opts.YomKippurKatan)
   - BeHaB fast days (opts.BeHaB)
+  - Latest time for Kiddush Levana, according to the Maharil
+    (opts.KiddushLevanaMaharil, requires opts.Location; see KiddushLevanaEvent)
 
 Candle-lighting and Havdalah times are approximated using latitude and longitude
 specified by the Location class. The Location class contains a small
@@ -118,6 +120,10 @@ Two options also exist for generating an Event with the Hebrew date:
   - opts.AddHebrewDatesForEvents - print the Hebrew date for dates with some events
 */
 func HebrewCalendar(opts *CalOptions) ([]event.CalEvent, error) {
+	// before checkCandleOptions, because the mask can enable this option
+	if opts.Mask.Has(event.KIDDUSH_LEVANA) {
+		opts.KiddushLevanaMaharil = true
+	}
 	err := checkCandleOptions(opts)
 	if err != nil {
 		return nil, err
@@ -151,6 +157,9 @@ func HebrewCalendar(opts *CalOptions) ([]event.CalEvent, error) {
 		beginOmer    int64
 		endOmer      int64
 		userEvents   []event.UserEvent
+		klMonthKey   = -1
+		klEv         KiddushLevanaEvent
+		klOk         bool
 	)
 	firstWeekday := time.Weekday(startAbs % 7)
 	events := make([]event.CalEvent, 0, 20)
@@ -261,6 +270,18 @@ func HebrewCalendar(opts *CalOptions) ([]event.CalEvent, error) {
 			if opts.DailyZmanim {
 				zmanEvents := dailyZemanim(hd, opts)
 				events = append(events, zmanEvents...)
+			}
+		}
+		if opts.KiddushLevanaMaharil && hd.Day() >= 9 && hd.Day() <= 17 {
+			// The event usually falls between the 11th and the 16th, but may be
+			// moved back to candle-lighting before a Shabbat or Yom Tov
+			monthKey := hyear*100 + int(hd.Month())
+			if monthKey != klMonthKey {
+				klMonthKey = monthKey
+				klEv, klOk = makeKiddushLevanaEvent(hyear, hd.Month(), opts)
+			}
+			if klOk && klEv.Date == hd {
+				events = append(events, klEv)
 			}
 		}
 		if (candlesEv == TimedEvent{}) && opts.CandleLighting && (dow == time.Friday || dow == time.Saturday) {
@@ -401,11 +422,20 @@ var israelCityOffset = map[string]int{
 }
 
 func checkCandleOptions(opts *CalOptions) error {
-	if !opts.CandleLighting {
+	if !opts.CandleLighting && !opts.KiddushLevanaMaharil {
 		return nil
 	}
 	if opts.Location == nil {
-		return errors.New("opts.CandleLighting requires opts.Location")
+		if opts.CandleLighting {
+			return errors.New("opts.CandleLighting requires opts.Location")
+		}
+		return errors.New("opts.KiddushLevanaMaharil requires opts.Location")
+	}
+	// Kiddush Levana needs candle-lighting time for Shabbat and Yom Tov
+	setCandleLightingMins(opts)
+	if !opts.CandleLighting {
+		// Havdalah and fast options only affect candle-lighting events
+		return nil
 	}
 	if opts.HavdalahMins != 0 && opts.HavdalahDeg != 0.0 {
 		return errors.New("opts.HavdalahMins and opts.HavdalahDeg are mutually exclusive")
@@ -418,24 +448,6 @@ func checkCandleOptions(opts *CalOptions) error {
 	}
 	if opts.TishaBavEndMins != 0 && opts.TishaBavEndDeg != 0.0 {
 		return errors.New("opts.TishaBavEndMins and opts.TishaBavEndDeg are mutually exclusive")
-	}
-	if opts.CandleLightingAtSunset {
-		opts.CandleLightingMins = 0
-	} else {
-		mins := 18
-		if opts.CandleLightingMins != 0 {
-			mins = opts.CandleLightingMins
-		}
-		loc := opts.Location
-		if loc.CountryCode == "IL" && mins == 18 {
-			offset, ok := israelCityOffset[loc.Name]
-			if ok {
-				mins = offset
-			} else {
-				mins = 20
-			}
-		}
-		opts.CandleLightingMins = -1 * intAbs(mins)
 	}
 	if opts.HavdalahMins != 0 {
 		opts.HavdalahMins = intAbs(opts.HavdalahMins)
@@ -451,6 +463,29 @@ func checkCandleOptions(opts *CalOptions) error {
 	opts.TishaBavEndMins = intAbs(opts.TishaBavEndMins)
 	opts.TishaBavEndDeg = math.Abs(opts.TishaBavEndDeg)
 	return nil
+}
+
+// setCandleLightingMins normalizes opts.CandleLightingMins to a negative
+// offset from sunset, applying the default and Israeli city customs.
+func setCandleLightingMins(opts *CalOptions) {
+	if opts.CandleLightingAtSunset {
+		opts.CandleLightingMins = 0
+		return
+	}
+	mins := 18
+	if opts.CandleLightingMins != 0 {
+		mins = opts.CandleLightingMins
+	}
+	loc := opts.Location
+	if loc.CountryCode == "IL" && mins == 18 {
+		offset, ok := israelCityOffset[loc.Name]
+		if ok {
+			mins = offset
+		} else {
+			mins = 20
+		}
+	}
+	opts.CandleLightingMins = -1 * intAbs(mins)
 }
 
 const maskLightCandles = event.LIGHT_CANDLES |
@@ -499,6 +534,9 @@ func getMaskFromOptions(opts *CalOptions) event.HolidayFlags {
 		}
 		if m.Has(event.YERUSHALMI_YOMI) {
 			opts.YerushalmiYomi = true
+		}
+		if m.Has(event.KIDDUSH_LEVANA) {
+			opts.KiddushLevanaMaharil = true
 		}
 		return m
 	}
@@ -558,6 +596,9 @@ func getMaskFromOptions(opts *CalOptions) event.HolidayFlags {
 	}
 	if opts.BeHaB {
 		mask |= event.BEHAB
+	}
+	if opts.KiddushLevanaMaharil {
+		mask |= event.KIDDUSH_LEVANA
 	}
 	return mask
 }
