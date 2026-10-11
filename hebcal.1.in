@@ -406,6 +406,9 @@ which must be specified as one of
 Set havdalah to occur
 .I mins
 minutes after sundown (default 72).
+Use
+.B "\-m 0"
+to suppress Havdalah entirely.
 .TP
 .B "\-\-mevarchim"
 Include Shabbat Mevarchim HaChodesh.
@@ -618,7 +621,10 @@ coordinates above the arctic circle or below the antarctic circle,
 the times are guaranteed to be wrong.
 .PP
 In addition to candle-lighting on Erev Shabbat and Chag, the
-\fB\-c\fP switch also generates Havdalah and fast start/end times.
+\fB\-c\fP switch also generates Havdalah and fast start/end times,
+and the latest time for Kiddush Levana each month according to the
+Maharil (omitted when Rosh Chodesh is suppressed with \fB\-x\fP or
+Havdalah is suppressed with \fB\-m 0\fP).
 .PP
 By default, candle-lighting times are 18 minutes before sunset
 (see \fB\-b\fP option above for exceptions).
@@ -631,6 +637,7 @@ Saturday night.
 Havdalah time defaults to 72 minutes after sunset (Rabbeinu Tam).
 Adjust with the \fB\-m\fP (minutes) option or with \fB\-G\fP
 (havdalah degrees below horizon).
+Use \fB\-m 0\fP to omit Havdalah times entirely.
 .PP
 Minor fasts begin in the morning at
 .I alot haShachar

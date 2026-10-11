@@ -1,3 +1,8 @@
+Changes in 5.17.0
+* `-m 0` (`--havdalah-mins=0`) now suppresses Havdalah times entirely; omitting `-m` still defaults to 72 minutes with `-c`
+* Candle-lighting calendars (`-c`) now include the latest time for Kiddush Levana each month, according to the Maharil, unless Rosh Chodesh (`-x`) or Havdalah (`-m 0`) is suppressed. This matches hebcal.com
+* Update to github.com/hebcal/hebcal-go@v0.24.0
+
 Changes in 5.16.0
 * Fix `HEBCAL_OPTS` discarding the month/day/year given on the command line (e.g. `HEBCAL_OPTS=-s hebcal 2020` ignored 2020); command-line flags now also take precedence over `HEBCAL_OPTS`
 * Fix crash on an out-of-range Gregorian month number (e.g. `hebcal 13 2024`)

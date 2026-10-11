@@ -251,6 +251,12 @@ on the yahrtzeit. Events are printed regardless of the
 		c.cal.HavdalahMins = 72
 	}
 
+	// Match hebcal-web's makeHebcalOptions(): candle-lighting calendars that
+	// include Rosh Chodesh and Havdalah also get the latest Kiddush Levana time
+	if c.cal.CandleLighting && !c.cal.NoRoshChodesh && !c.cal.SuppressHavdalah {
+		c.cal.KiddushLevanaMaharil = true
+	}
+
 	if c.noGreg || c.isTodayChag {
 		c.today = true
 	}

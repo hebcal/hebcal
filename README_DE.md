@@ -89,13 +89,15 @@ Option | Beschreibung
    -C, --city stadt | Breitengrad, Längengrad und Zeitzone entsprechend der angegebenen Stadt einstellen. Diese Option setzt die Option -c voraus.
    -l, --latitude xx,yy | Setzt den Breitengrad für Sonnenberechnungen auf `xx` Grad und `yy` Minuten.  Negative Werte bedeuten Süden.
    -L, --longitude xx,yy | Setzt den Längengrad für Sonnenberechnungen auf `xx` Grad und `yy` Minuten.  *Negative Werte sind OST*. Die Schalter `-l` und `-L` müssen beide verwendet werden, oder aber gar nicht. Diese Schalter haben Vorrang vor dem Schalter `-C` (Lokalisierung auf Stadt).
-   -m, --havdalah-mins minuten | Legt fest, dass Hawdalah so viele Minuten wie angegeben nach Sonnenuntergang stattfindet
+   -m, --havdalah-mins minuten | Legt fest, dass Hawdalah so viele Minuten wie angegeben nach Sonnenuntergang stattfindet (0 unterdrückt Hawdalah)
    -z, --timezone timezone | Verwendet die angegebene Zeitzone und überschreibt den Schalter `-C` (Lokalisierung nach Stadt).
    -Z, --zmanim | **EXPERIMENTELL** Smanim hinzufügen (Alot HaSchachar; Mischejakir; Kriat Schma, Sof Sman; Tfilah, Sof Sman; Chazot haJom; Mincha Gdolah; Mincha Ktanah; Plag HaMincha; Zeit HaKochawim)
 
 ## Zeiten des Kerzenzündens
 
 Die Zeiten zum Kerzenzünden von Hebcal sind nur Näherungswerte. Sollten Sie jemals Zweifel an den Zeiten haben, fragen Sie Ihre lokale halachische Autorität. Wenn Sie geographische Koordinaten oberhalb des Polarkreises oder des Antarktischen Kreises eingeben, sind die Zeiten garantiert falsch.
+
+Zusätzlich zum Kerzenzünden am Erew Schabbat und Feiertagen gibt der Schalter `-c` auch Hawdalah-Zeiten, Beginn und Ende der Fasttage sowie die späteste Zeit für Kiddusch Lewana nach dem Maharil aus (entfällt, wenn Rosch Chodesch mit `-x` oder Hawdalah mit `-m 0` unterdrückt wird). Hawdalah ist standardmäßig 72 Minuten nach Sonnenuntergang; mit `-m 0` werden die Hawdalah-Zeiten ganz weggelassen.
 
 Hebcal enthält eine kleine Datenbank von Städten mit den zugehörigen geografischen Informationen und Zeitzoneninformationen. Die geografischen und zeitlichen Informationen, die für die Berechnung der Sonnenuntergangszeiten erforderlich sind, können auf drei verschiedene Arten zu Hebcal gelangen:
 

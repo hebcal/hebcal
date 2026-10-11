@@ -147,7 +147,7 @@ Option | Description
    -G, --havdalah-deg DEGREES | Set Havdalah to occur this many degrees below the horizon
    -l, --latitude XX,YY | Set the latitude for solar calculations to `XX` degrees and `YY` minutes. Negative values are south. **Deprecated**: use `--geo` instead.
    -L, --longitude XX,YY | Set the longitude for solar calculations to `XX` degrees and `YY` minutes. *Negative values are EAST*. The `-l` and `-L` switches must both be used, or not at all. These switches override the `-C` (localize to city) switch. **Deprecated**: use `--geo` instead.
-   -m, --havdalah-mins MINS | Set havdalah to occur this many minutes after sundown
+   -m, --havdalah-mins MINS | Set havdalah to occur this many minutes after sundown (0 suppresses Havdalah)
    -z, --timezone timezone | Use specified timezone, overriding the `-C` (localize to city) switch. For correct DST rules, use a full timezone name (such as `America/New_York`) instead of a timezone abbreviation (such as `EST`)
    -Z, --zmanim | Add zemanim (Alot HaShachar; Misheyakir; Kriat Shema, sof zeman; Tefilah, sof zeman; Chatzot hayom; Mincha Gedolah; Mincha Ketanah; Plag HaMincha; Tzait HaKochavim)
 
@@ -156,7 +156,10 @@ Option | Description
 Hebcal’s candlelighting times are only approximations. If you ever have any doubts about its times, consult your local halachic authority. If you enter geographic coordinates above the arctic circle or antarctic circle, the times are guaranteed to be wrong.
 
 In addition to candle-lighting on Erev Shabbat and Chag, the
-`-c` switch also generates Havdalah and fast start/end times.
+`-c` switch also generates Havdalah and fast start/end times,
+and the latest time for Kiddush Levana each month according to the
+Maharil (omitted when Rosh Chodesh is suppressed with `-x` or Havdalah
+is suppressed with `-m 0`).
 
 By default, candle-lighting times are 18 minutes before sunset
 (see `-b` option above for exceptions).
@@ -168,6 +171,7 @@ Saturday night.
 Havdalah time defaults to 72 minutes after sunset (Rabbeinu Tam).
 Adjust with the `-m` (minutes) option or with `-G`
 (havdalah degrees below horizon).
+Use `-m 0` to omit Havdalah times entirely.
 
 Minor fasts begin in the morning at *alot haShachar* (solar
 depression 16.1 degrees) and conclude at *tzeit*
