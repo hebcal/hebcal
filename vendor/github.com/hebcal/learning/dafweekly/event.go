@@ -28,18 +28,18 @@ import (
 )
 
 type dafWeeklyEvent struct {
-	Date hdate.HDate
+	date hdate.HDate
 	Daf  dafyomi.Daf
 }
 
 // NewDafWeeklyEvent returns a calendar event for the Daf-a-Week page on
 // the given date.
 func NewDafWeeklyEvent(hd hdate.HDate, daf dafyomi.Daf) event.CalEvent {
-	return dafWeeklyEvent{Date: hd, Daf: daf}
+	return dafWeeklyEvent{date: hd, Daf: daf}
 }
 
-func (ev dafWeeklyEvent) GetDate() hdate.HDate {
-	return ev.Date
+func (ev dafWeeklyEvent) Date() hdate.HDate {
+	return ev.date
 }
 
 func (ev dafWeeklyEvent) Render(locale string) string {
@@ -50,19 +50,22 @@ func (ev dafWeeklyEvent) Render(locale string) string {
 	return name + " " + strconv.Itoa(ev.Daf.Blatt)
 }
 
-func (ev dafWeeklyEvent) GetFlags() event.HolidayFlags {
-	return event.DAILY_LEARNING
+func (ev dafWeeklyEvent) Flags() event.Flags {
+	return event.DailyLearning
 }
 
-func (ev dafWeeklyEvent) GetEmoji() string {
+func (ev dafWeeklyEvent) Emoji() string {
 	return ""
 }
+
+// Desc returns the untranslated description, the same as Basename.
+func (ev dafWeeklyEvent) Desc() string { return ev.Basename() }
 
 func (ev dafWeeklyEvent) Basename() string {
 	return ev.Daf.String()
 }
 
-func (ev dafWeeklyEvent) GetCategories() []string {
+func (ev dafWeeklyEvent) Categories() []string {
 	return []string{"dafWeekly"}
 }
 

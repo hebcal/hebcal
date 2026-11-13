@@ -29,18 +29,18 @@ import (
 )
 
 type nachYomiEvent struct {
-	Date    hdate.HDate
+	date    hdate.HDate
 	Chapter dafyomi.Daf
 }
 
 // NewNachYomiEvent returns a calendar event for the Nach Yomi (a chapter
 // of Nevi'im or Ketuvim) on the given date.
 func NewNachYomiEvent(hd hdate.HDate, chapter dafyomi.Daf) event.CalEvent {
-	return nachYomiEvent{Date: hd, Chapter: chapter}
+	return nachYomiEvent{date: hd, Chapter: chapter}
 }
 
-func (ev nachYomiEvent) GetDate() hdate.HDate {
-	return ev.Date
+func (ev nachYomiEvent) Date() hdate.HDate {
+	return ev.date
 }
 
 func (ev nachYomiEvent) Render(locale string) string {
@@ -52,19 +52,22 @@ func (ev nachYomiEvent) Render(locale string) string {
 	return name + " " + strconv.Itoa(ev.Chapter.Blatt)
 }
 
-func (ev nachYomiEvent) GetFlags() event.HolidayFlags {
-	return event.NACH_YOMI
+func (ev nachYomiEvent) Flags() event.Flags {
+	return event.NachYomi | event.DailyLearning
 }
 
-func (ev nachYomiEvent) GetEmoji() string {
+func (ev nachYomiEvent) Emoji() string {
 	return ""
 }
+
+// Desc returns the untranslated description, the same as Basename.
+func (ev nachYomiEvent) Desc() string { return ev.Basename() }
 
 func (ev nachYomiEvent) Basename() string {
 	return ev.Chapter.String()
 }
 
-func (ev nachYomiEvent) GetCategories() []string {
+func (ev nachYomiEvent) Categories() []string {
 	return []string{"nachyomi"}
 }
 

@@ -5,6 +5,7 @@
 package yerushalmi
 
 import (
+	"errors"
 	"time"
 
 	"github.com/hebcal/greg"
@@ -121,25 +122,26 @@ var VilnaStartRD = greg.ToRD(1980, time.February, 2)
 // Yerushalmi Yomi using the Schottenstein Edition page numbering.
 var SchottensteinStartRD = greg.ToRD(2022, time.November, 14)
 
+// ErrBeforeCycle means a date is before the edition's cycle began.
+var ErrBeforeCycle = errors.New("yerushalmi: date is before the cycle began")
+
 // New calculates the Daf Yomi Yerushalmi for given date.
 //
-// Returns an empty Daf for Yom Kippur and Tisha B'Av.
+// It returns an empty Daf, and no error, for the days the Vilna edition
+// skips: Yom Kippur and Tisha B'Av.
 //
-// Panics if the date is before Daf Yomi Yerushalmi cycle began
-// (2 February 1980).
-func New(hd hdate.HDate, edition Edition) dafyomi.Daf {
+// It returns ErrBeforeCycle if the date is before the edition's cycle began:
+// 2 February 1980 for the Vilna edition, 14 November 2022 for Schottenstein.
+func New(hd hdate.HDate, edition Edition) (dafyomi.Daf, error) {
 	cday := hd.Abs()
-	if cday < VilnaStartRD {
-		panic(hd.String() + " is before Daf Yomi Yerushalmi cycle began")
+	if cday < VilnaStartRD || (edition == Schottenstein && cday < SchottensteinStartRD) {
+		return dafyomi.Daf{}, ErrBeforeCycle
 	}
 
 	if edition == Vilna && skipDay(hd) {
-		return dafyomi.Daf{}
+		return dafyomi.Daf{}, nil
 	}
 
-	if edition == Schottenstein && cday < SchottensteinStartRD {
-		panic(hd.String() + " is before Schottenstein Edition Yomi Yerushalmi cycle began")
-	}
 	shas := shasFor(edition)
 
 	// Each cycle consumes exactly numDapim reading days, so the position
@@ -151,7 +153,7 @@ func New(hd hdate.HDate, edition Edition) dafyomi.Daf {
 	for j := 0; j < len(shas); j++ {
 		masechet := shas[j]
 		if total < masechet.Blatt {
-			return dafyomi.Daf{Name: masechet.Name, Blatt: total + 1}
+			return dafyomi.Daf{Name: masechet.Name, Blatt: total + 1}, nil
 		}
 		total -= masechet.Blatt
 	}

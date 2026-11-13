@@ -28,18 +28,18 @@ import (
 )
 
 type perekYomiEvent struct {
-	Date    hdate.HDate
+	date    hdate.HDate
 	Reading Reading
 }
 
 // NewPerekYomiEvent returns a calendar event for the Perek Yomi reading
 // on the given date.
 func NewPerekYomiEvent(hd hdate.HDate, reading Reading) event.CalEvent {
-	return perekYomiEvent{Date: hd, Reading: reading}
+	return perekYomiEvent{date: hd, Reading: reading}
 }
 
-func (ev perekYomiEvent) GetDate() hdate.HDate {
-	return ev.Date
+func (ev perekYomiEvent) Date() hdate.HDate {
+	return ev.date
 }
 
 func (ev perekYomiEvent) Render(locale string) string {
@@ -51,19 +51,22 @@ func (ev perekYomiEvent) Render(locale string) string {
 	return name + " " + strconv.Itoa(r.Chap)
 }
 
-func (ev perekYomiEvent) GetFlags() event.HolidayFlags {
-	return event.DAILY_LEARNING
+func (ev perekYomiEvent) Flags() event.Flags {
+	return event.DailyLearning
 }
 
-func (ev perekYomiEvent) GetEmoji() string {
+func (ev perekYomiEvent) Emoji() string {
 	return ""
 }
+
+// Desc returns the untranslated description, the same as Basename.
+func (ev perekYomiEvent) Desc() string { return ev.Basename() }
 
 func (ev perekYomiEvent) Basename() string {
 	return ev.Reading.String()
 }
 
-func (ev perekYomiEvent) GetCategories() []string {
+func (ev perekYomiEvent) Categories() []string {
 	return []string{"perekYomi"}
 }
 

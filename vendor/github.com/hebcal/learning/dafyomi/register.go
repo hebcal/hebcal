@@ -15,7 +15,7 @@ import (
 // hebcal-go's calendar generation.
 func init() {
 	start := hdate.FromRD(greg.ToRD(1923, time.September, 11))
-	dailylearning.AddCalendar("dafYomi", func(hd hdate.HDate, il bool) event.CalEvent {
+	dailylearning.AddCalendarFrom("dafYomi", func(hd hdate.HDate, il bool) event.CalEvent {
 		daf, err := New(hd)
 		if err != nil {
 			return nil

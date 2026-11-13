@@ -2,17 +2,17 @@
 //
 // Source of truth is the .po files in these npm packages:
 //   @hebcal/hdate@0.23.1
-//   @hebcal/core@6.14.1
-//   @hebcal/locales@6.5.3
+//   @hebcal/core@6.16.0
+//   @hebcal/locales@6.7.0
 //   @hebcal/leyning@10.1.0
-//   @hebcal/rest-api@7.3.1
-//   @hebcal/learning@6.12.0
+//   @hebcal/rest-api@7.3.3
+//   @hebcal/learning@6.13.1
 //
 // Regenerate with: npm run generate
 
 package locales
 
-// Translations for ashkenazi (122 entries) -> tag und-x-ashkenaz
+// Translations for ashkenazi (125 entries) -> tag und-x-ashkenaz
 func init() {
 	Catalog.SetString(tag_ashkenazi, "Achrei Mot", "Achrei Mos")
 	Catalog.SetString(tag_ashkenazi, "Alot HaShachar", "Alos HaShachar")
@@ -47,6 +47,8 @@ func init() {
 	Catalog.SetString(tag_ashkenazi, "Erev Shavuot", "Erev Shavuos")
 	Catalog.SetString(tag_ashkenazi, "Erev Sukkot", "Erev Sukkos")
 	Catalog.SetString(tag_ashkenazi, "Horayot", "Horayos")
+	Catalog.SetString(tag_ashkenazi, "Iggeret HaKodesh", "Iggeres HaKodesh")
+	Catalog.SetString(tag_ashkenazi, "Iggeret HaTeshuvah", "Iggeres HaTeshuvah")
 	Catalog.SetString(tag_ashkenazi, "Keritot", "Kerisos")
 	Catalog.SetString(tag_ashkenazi, "Ketubot", "Kesubos")
 	Catalog.SetString(tag_ashkenazi, "Ki Tavo", "Ki Savo")
@@ -88,6 +90,7 @@ func init() {
 	Catalog.SetString(tag_ashkenazi, "Shabbat Shekalim", "Shabbos Shekalim")
 	Catalog.SetString(tag_ashkenazi, "Shabbat Shirah", "Shabbos Shirah")
 	Catalog.SetString(tag_ashkenazi, "Shabbat Shuva", "Shabbos Shuvah")
+	Catalog.SetString(tag_ashkenazi, "Shabbat Times for", "Shabbos Times for")
 	Catalog.SetString(tag_ashkenazi, "Shabbat Zachor", "Shabbos Zachor")
 	Catalog.SetString(tag_ashkenazi, "Shavuot", "Shavuos")
 	Catalog.SetString(tag_ashkenazi, "Shavuot I", "Shavuos I")

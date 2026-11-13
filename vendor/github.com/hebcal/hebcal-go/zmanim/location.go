@@ -18,6 +18,7 @@ package zmanim
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 import (
+	"errors"
 	"strings"
 	"sync"
 	"time"
@@ -56,7 +57,8 @@ type Location struct {
 	Latitude    float64 // In the range [-90,90]
 	Longitude   float64 // In the range [-180,180]
 	Elevation   int     // Elevation in meters above sea level (never negative)
-	TimeZoneId  string  // timezone identifier such as "America/Los_Angeles" or "Asia/Jerusalem"
+	TimeZoneID  string  // timezone identifier such as "America/Los_Angeles" or "Asia/Jerusalem"
+	GeoNameID   int     // GeoNames.org identifier, or 0 when unknown
 }
 
 // NewLocation creates an instance of a Location object.
@@ -65,13 +67,11 @@ type Location struct {
 // elevation-aware zmanim are requested (see [Zmanim.UseElevation]); negative
 // values are clamped to 0.
 //
-// This function panics if the latitude or longitude are out of range.
-func NewLocation(name string, countryCode string, latitude float64, longitude float64, elevation int, tzid string) Location {
-	if latitude < -90 || latitude > 90 {
-		panic("Latitude out of range [-90,90]")
-	}
-	if longitude < -180 || longitude > 180 {
-		panic("Longitude out of range [-180,180]")
+// It returns ErrLatitude or ErrLongitude if a coordinate is out of range.
+// The time zone is not checked here; New reports one that cannot be loaded.
+func NewLocation(name string, countryCode string, latitude float64, longitude float64, elevation int, tzid string) (Location, error) {
+	if err := checkCoordinates(latitude, longitude); err != nil {
+		return Location{}, err
 	}
 	if elevation < 0 {
 		elevation = 0
@@ -82,8 +82,41 @@ func NewLocation(name string, countryCode string, latitude float64, longitude fl
 		Latitude:    latitude,
 		Longitude:   longitude,
 		Elevation:   elevation,
-		TimeZoneId:  tzid,
+		TimeZoneID:  tzid,
+	}, nil
+}
+
+// MustNewLocation is like NewLocation but panics if a coordinate is out of
+// range. It is meant for locations written into a program, such as in tests.
+func MustNewLocation(name string, countryCode string, latitude float64, longitude float64, elevation int, tzid string) Location {
+	loc, err := NewLocation(name, countryCode, latitude, longitude, elevation, tzid)
+	if err != nil {
+		panic(err)
 	}
+	return loc
+}
+
+// Errors reported for a Location that cannot be used. Test for them with
+// errors.Is.
+var (
+	// ErrLatitude means a latitude is outside the range [-90,90].
+	ErrLatitude = errors.New("zmanim: latitude out of range [-90,90]")
+	// ErrLongitude means a longitude is outside the range [-180,180].
+	ErrLongitude = errors.New("zmanim: longitude out of range [-180,180]")
+	// ErrTimeZone means a time zone identifier is unknown to the system's
+	// time zone database.
+	ErrTimeZone = errors.New("zmanim: unknown time zone")
+)
+
+func checkCoordinates(latitude, longitude float64) error {
+	// written so that NaN fails too
+	if !(latitude >= -90 && latitude <= 90) {
+		return ErrLatitude
+	}
+	if !(longitude >= -180 && longitude <= 180) {
+		return ErrLongitude
+	}
+	return nil
 }
 
 // LookupCity returns a Location object of one of 60 "classic" Hebcal city names.
@@ -118,6 +151,8 @@ func LookupCity(name string) *Location {
 	return nil
 }
 
+// AllCities returns the "classic" Hebcal cities that LookupCity knows. The
+// slice is a copy, which the caller may modify.
 func AllCities() []Location {
-	return classicCities
+	return append([]Location(nil), classicCities...)
 }

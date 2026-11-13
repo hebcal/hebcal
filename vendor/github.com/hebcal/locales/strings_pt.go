@@ -2,17 +2,17 @@
 //
 // Source of truth is the .po files in these npm packages:
 //   @hebcal/hdate@0.23.1
-//   @hebcal/core@6.14.1
-//   @hebcal/locales@6.5.3
+//   @hebcal/core@6.16.0
+//   @hebcal/locales@6.7.0
 //   @hebcal/leyning@10.1.0
-//   @hebcal/rest-api@7.3.1
-//   @hebcal/learning@6.12.0
+//   @hebcal/rest-api@7.3.3
+//   @hebcal/learning@6.13.1
 //
 // Regenerate with: npm run generate
 
 package locales
 
-// Translations for pt (130 entries) -> tag pt
+// Translations for pt (134 entries) -> tag pt
 func init() {
 	Catalog.SetString(tag_pt, "Achrei Mot", "Acharei Mot")
 	Catalog.SetString(tag_pt, "Asara B'Tevet", "Asara b'Tevet")
@@ -63,6 +63,8 @@ func init() {
 	Catalog.SetString(tag_pt, "Meilah", "Meilá")
 	Catalog.SetString(tag_pt, "Nasso", "Naso")
 	Catalog.SetString(tag_pt, "Niddah", "Nidá")
+	Catalog.SetString(tag_pt, "occurs on", "será")
+	Catalog.SetString(tag_pt, "on", "de")
 	Catalog.SetString(tag_pt, "Parashat", "Parashá")
 	Catalog.SetString(tag_pt, "Pesach Chol ha-Moed Day 1", "Chol ha-Moed Pesach Dia 1")
 	Catalog.SetString(tag_pt, "Pesach Chol ha-Moed Day 2", "Chol ha-Moed Pesach Dia 2")
@@ -95,6 +97,7 @@ func init() {
 	Catalog.SetString(tag_pt, "Shabbat Shekalim", "Shabat Shekalim")
 	Catalog.SetString(tag_pt, "Shabbat Shirah", "Shabat Shira")
 	Catalog.SetString(tag_pt, "Shabbat Shuva", "Shabat Shuva")
+	Catalog.SetString(tag_pt, "Shabbat Times for", "Horários de Shabat para")
 	Catalog.SetString(tag_pt, "Shabbat Zachor", "Shabat Zachor")
 	Catalog.SetString(tag_pt, "Shavuot II (on Shabbat)", "Shavuot II (no Shabat)")
 	Catalog.SetString(tag_pt, "Shevuot", "Shavuot")
@@ -123,6 +126,7 @@ func init() {
 	Catalog.SetString(tag_pt, "Temurah", "Temurá")
 	Catalog.SetString(tag_pt, "Terumah", "Terumá")
 	Catalog.SetString(tag_pt, "Tetzaveh", "Tetzave")
+	Catalog.SetString(tag_pt, "This week’s Torah portion is", "A porção da Torá desta semana é")
 	Catalog.SetString(tag_pt, "Tish'a B'Av", "Tishá b'Av")
 	Catalog.SetString(tag_pt, "Tish'a B'Av (observed)", "Tishá b'Av (observado)")
 	Catalog.SetString(tag_pt, "Tu B'Av", "Tu b'Av")

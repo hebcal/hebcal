@@ -1,5 +1,5 @@
 /*
-Hebcal's zmanim package calculates halachic times.
+Package zmanim calculates halachic times.
   - chatzotNight: Midnight – Chatzot.
     Sunset plus 6 halachic hours
   - alotHaShachar: Dawn – Alot haShachar.

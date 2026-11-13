@@ -18,30 +18,43 @@ const mevarchimChodeshPrefix = "Shabbat Mevarchim Chodesh"
 // as an announcement (the time-of-day format is locale/location dependent, so
 // it is intentionally not baked into a single string here).
 type MevarchimChodeshEvent struct {
-	Date      hdate.HDate // the Shabbat on which the month is blessed
-	MonthName string      // untranslated English name of the upcoming month
-	Molad     molad.Molad // molad of the upcoming month
+	date        hdate.HDate // the Shabbat on which the month is blessed
+	MonthName   string      // untranslated English name of the upcoming month
+	Molad       molad.Molad // molad of the upcoming month
+	CountryCode string      // picks the memo's 12- or 24-hour clock; see ReformatTimeStr
+	Clock       ClockFormat // overrides CountryCode unless ClockAuto
 }
 
 // NewMevarchimChodeshEvent constructs a MevarchimChodeshEvent for the given
 // Shabbat, upcoming (untranslated) month name, and molad.
 func NewMevarchimChodeshEvent(date hdate.HDate, monthName string, m molad.Molad) MevarchimChodeshEvent {
-	return MevarchimChodeshEvent{Date: date, MonthName: monthName, Molad: m}
+	return MevarchimChodeshEvent{date: date, MonthName: monthName, Molad: m}
 }
 
-func (ev MevarchimChodeshEvent) GetDate() hdate.HDate {
-	return ev.Date
+// Date returns the Shabbat on which the month is blessed.
+func (ev MevarchimChodeshEvent) Date() hdate.HDate {
+	return ev.date
 }
 
-func (ev MevarchimChodeshEvent) GetFlags() HolidayFlags {
-	return SHABBAT_MEVARCHIM
+// Desc returns the untranslated title, e.g. "Shabbat Mevarchim Chodesh Sivan".
+func (ev MevarchimChodeshEvent) Desc() string {
+	return ev.Basename()
 }
 
-func (ev MevarchimChodeshEvent) GetEmoji() string {
+// URL returns "": Shabbat Mevarchim has no page on hebcal.com.
+func (ev MevarchimChodeshEvent) URL() string {
 	return ""
 }
 
-func (ev MevarchimChodeshEvent) GetCategories() []string {
+func (ev MevarchimChodeshEvent) Flags() Flags {
+	return ShabbatMevarchim
+}
+
+func (ev MevarchimChodeshEvent) Emoji() string {
+	return ""
+}
+
+func (ev MevarchimChodeshEvent) Categories() []string {
 	return []string{"mevarchim"}
 }
 
@@ -54,7 +67,13 @@ func (ev MevarchimChodeshEvent) Basename() string {
 func (ev MevarchimChodeshEvent) Render(locale string) string {
 	prefix, _ := locales.LookupTranslation(mevarchimChodeshPrefix, locale)
 	month, _ := locales.LookupTranslation(ev.MonthName, locale)
-	return prefix + " " + month
+	return SmartApostrophe(prefix + " " + month)
+}
+
+// Memo returns the announcement of the molad, e.g. "Molad Sivan: Friday,
+// 2:16pm and 5 chalakim" (see RenderMolad).
+func (ev MevarchimChodeshEvent) Memo(locale string) string {
+	return RenderMolad(ev.Molad, ev.MonthName, locale, ev.CountryCode, ev.Clock)
 }
 
 // RenderBrief returns the title without the leading "Shabbat" word, e.g.

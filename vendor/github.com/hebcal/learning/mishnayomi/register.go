@@ -11,7 +11,7 @@ import (
 func init() {
 	idx := MakeIndex()
 	start := hdate.FromRD(MishnaYomiStart)
-	dailylearning.AddCalendar("mishnaYomi", func(hd hdate.HDate, il bool) event.CalEvent {
+	dailylearning.AddCalendarFrom("mishnaYomi", func(hd hdate.HDate, il bool) event.CalEvent {
 		pair, err := idx.Lookup(hd)
 		if err != nil {
 			return nil

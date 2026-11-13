@@ -28,43 +28,53 @@ import (
 )
 
 type nine29Event struct {
-	Date    hdate.HDate
+	date    hdate.HDate
 	Reading Reading
 }
 
 // NewNine29Event returns a calendar event for the 929 reading on the
 // given date.
 func NewNine29Event(hd hdate.HDate, reading Reading) event.CalEvent {
-	return nine29Event{Date: hd, Reading: reading}
+	return nine29Event{date: hd, Reading: reading}
 }
 
-func (ev nine29Event) GetDate() hdate.HDate {
-	return ev.Date
+func (ev nine29Event) Date() hdate.HDate {
+	return ev.date
 }
 
+// Render returns the chapter followed by its day in the cycle, e.g.
+// "Deuteronomy 34 (187)".
 func (ev nine29Event) Render(locale string) string {
+	return ev.RenderBrief(locale) + " (" + strconv.Itoa(ev.Reading.CycleChap) + ")"
+}
+
+// RenderBrief returns the chapter without its day in the cycle, e.g.
+// "Deuteronomy 34" or "דְּבָרִים ל״ד".
+func (ev nine29Event) RenderBrief(locale string) string {
 	r := ev.Reading
-	cycleChap := " (" + strconv.Itoa(r.CycleChap) + ")"
 	if isHebrewLocale(locale) {
 		name, _ := locales.LookupTranslation(r.Book, locale)
-		return name + " " + gematriya.Gematriya(r.BookChap) + cycleChap
+		return name + " " + gematriya.Gematriya(r.BookChap)
 	}
-	return r.Book + " " + strconv.Itoa(r.BookChap) + cycleChap
+	return r.Book + " " + strconv.Itoa(r.BookChap)
 }
 
-func (ev nine29Event) GetFlags() event.HolidayFlags {
-	return event.DAILY_LEARNING
+func (ev nine29Event) Flags() event.Flags {
+	return event.DailyLearning
 }
 
-func (ev nine29Event) GetEmoji() string {
+func (ev nine29Event) Emoji() string {
 	return ""
 }
+
+// Desc returns the untranslated description, the same as Basename.
+func (ev nine29Event) Desc() string { return ev.Basename() }
 
 func (ev nine29Event) Basename() string {
 	return ev.Reading.String()
 }
 
-func (ev nine29Event) GetCategories() []string {
+func (ev nine29Event) Categories() []string {
 	return []string{"929"}
 }
 

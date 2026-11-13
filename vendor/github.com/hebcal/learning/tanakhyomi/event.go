@@ -17,6 +17,7 @@ package tanakhyomi
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 import (
+	"regexp"
 	"strconv"
 	"strings"
 
@@ -28,35 +29,124 @@ import (
 )
 
 type tanakhYomiEvent struct {
-	Date    hdate.HDate
+	date    hdate.HDate
 	Reading Reading
 }
 
 // NewTanakhYomiEvent returns a calendar event for the Tanakh Yomi reading
 // on the given date.
 func NewTanakhYomiEvent(hd hdate.HDate, reading Reading) event.CalEvent {
-	return tanakhYomiEvent{Date: hd, Reading: reading}
+	return tanakhYomiEvent{date: hd, Reading: reading}
 }
 
-func (ev tanakhYomiEvent) GetDate() hdate.HDate {
-	return ev.Date
+func (ev tanakhYomiEvent) Date() hdate.HDate {
+	return ev.date
 }
 
+// Render returns the seder followed by its verse range, e.g.
+// "Joshua Seder 9 (14:15-17:3)" or "Kings Seder 6 (I Kings 7:21-8:10)".
+// The range names a book only when it differs from the seder's book.
+// Hebrew locales use Hebrew book names and numerals throughout.
 func (ev tanakhYomiEvent) Render(locale string) string {
 	r := ev.Reading
 	var s string
-	if l := strings.ToLower(locale); l == "he" || l == "he-x-nonikud" {
+	if isHebrew(locale) {
 		name, _ := locales.LookupTranslation(r.Name, locale)
 		s = name + " ס׳ " + sederHebrew(r.Blatt)
 	} else {
-		name, ok := locales.LookupTranslation(r.Name, locale)
-		if !ok || name == "" {
-			name = r.Name
-		}
-		s = name + " Seder " + r.Blatt
+		s = translate(r.Name, locale) + " Seder " + r.Blatt
 	}
 	if r.Verses != "" {
-		s += " (" + r.Verses + ")"
+		s += " (" + renderVerses(r, locale) + ")"
+	}
+	return s
+}
+
+// RenderBrief returns Render's text with "Seder" abbreviated, e.g.
+// "Kings S6 (I Kings 7:21-8:10)". The verse range stays: it is the reading
+// itself, not supplementary detail.
+func (ev tanakhYomiEvent) RenderBrief(locale string) string {
+	return strings.Replace(ev.Render(locale), " Seder ", " S", 1)
+}
+
+// Memo returns the seder's verse range, always naming its book, e.g.
+// "Isaiah 1:1-4:2" or "I Kings 7:21-8:10", in every locale.
+func (ev tanakhYomiEvent) Memo(locale string) string {
+	v := ev.Reading.Verses
+	if v != "" && v[0] >= '0' && v[0] <= '9' {
+		return ev.Reading.Name + " " + v
+	}
+	return v
+}
+
+func isHebrew(locale string) bool {
+	l := strings.ToLower(locale)
+	return l == "he" || l == "he-x-nonikud"
+}
+
+// hebrewFallback covers book names missing from the locales package.
+var hebrewFallback = map[string]map[string]string{
+	"Nahum": {"he": "נַחוּם", "he-x-nonikud": "נחום"},
+}
+
+func translate(s, locale string) string {
+	if name, ok := locales.LookupTranslation(s, locale); ok && name != "" {
+		return name
+	}
+	if name, ok := hebrewFallback[s][strings.ToLower(locale)]; ok {
+		return name
+	}
+	return s
+}
+
+// verseRange is a parsed Masoretic verse range such as "14:15-17:3",
+// "I Kings 7:21-8:10" or, for a seder that runs into the next book,
+// "Hosea 14:6-Joel 2:26". EndBook is empty when the range ends in Book.
+// End is a bare verse ("41") when the range ends in the starting chapter.
+type verseRange struct {
+	Book, Start, EndBook, End string
+}
+
+var rangeRE = regexp.MustCompile(`^(?:(.+?) )?(\d+:\d+)(?:-(?:(.+?) )?(\d+(?::\d+)?))?$`)
+
+func parseVerses(r Reading) verseRange {
+	m := rangeRE.FindStringSubmatch(r.Verses)
+	if m == nil {
+		return verseRange{Book: r.Name, Start: r.Verses}
+	}
+	book := m[1]
+	if book == "" {
+		book = r.Name
+	}
+	return verseRange{Book: book, Start: m[2], EndBook: m[3], End: m[4]}
+}
+
+func renderVerses(r Reading, locale string) string {
+	v := parseVerses(r)
+	he := isHebrew(locale)
+	num := func(s string) string {
+		if !he {
+			return s
+		}
+		parts := strings.Split(s, ":")
+		for i, p := range parts {
+			if n, err := strconv.Atoi(p); err == nil {
+				parts[i] = hebrew.GematriyaNN(n)
+			}
+		}
+		return strings.Join(parts, ":")
+	}
+	s := ""
+	if v.Book != r.Name {
+		s = translate(v.Book, locale) + " "
+	}
+	s += num(v.Start)
+	if v.End != "" {
+		s += "-"
+		if v.EndBook != "" {
+			s += translate(v.EndBook, locale) + " "
+		}
+		s += num(v.End)
 	}
 	return s
 }
@@ -74,41 +164,57 @@ func sederHebrew(blatt string) string {
 	return blatt
 }
 
-func (ev tanakhYomiEvent) GetFlags() event.HolidayFlags {
-	return event.DAILY_LEARNING
+func (ev tanakhYomiEvent) Flags() event.Flags {
+	return event.DailyLearning
 }
 
-func (ev tanakhYomiEvent) GetEmoji() string {
+func (ev tanakhYomiEvent) Emoji() string {
 	return ""
 }
 
+// Desc returns the untranslated description, the same as Basename.
+func (ev tanakhYomiEvent) Desc() string { return ev.Basename() }
+
 func (ev tanakhYomiEvent) Basename() string {
-	s := ev.Reading.String()
-	if ev.Reading.Verses != "" {
-		s += " (" + ev.Reading.Verses + ")"
-	}
-	return s
+	return ev.Render("en")
 }
 
-func (ev tanakhYomiEvent) GetCategories() []string {
+func (ev tanakhYomiEvent) Categories() []string {
 	return []string{"tanakhYomi"}
 }
 
+// lastVerse is the final verse of each book in which a seder starts but
+// does not end. Sefaria cannot link a range that spans two books, so the
+// link for such a seder covers its part in the first book.
+var lastVerse = map[string]string{
+	"I Samuel":     "31:13",
+	"I Kings":      "22:54",
+	"Hosea":        "14:10",
+	"Joel":         "4:21",
+	"Amos":         "9:15",
+	"Obadiah":      "1:21",
+	"Micah":        "7:20",
+	"Zephaniah":    "3:20",
+	"Haggai":       "2:23",
+	"Zechariah":    "14:21",
+	"Ezra":         "10:44",
+	"I Chronicles": "29:30",
+}
+
 // URL returns a link to sefaria.org for the seder's verse range, e.g.
-// https://www.sefaria.org/Isaiah.55.13-58.13?lang=bi . The verse range is
-// prefixed with the book name when it is not already (see makeReading),
-// then split on the final space into book and chapter.verse reference.
+// https://www.sefaria.org/Isaiah.55.13-58.13?lang=bi .
 func (ev tanakhYomiEvent) URL() string {
-	v := ev.Reading.Verses
-	if v == "" {
+	if ev.Reading.Verses == "" {
 		return ""
 	}
-	full := v
-	if v[0] >= '0' && v[0] <= '9' {
-		full = ev.Reading.Name + " " + v
+	v := parseVerses(ev.Reading)
+	end := v.End
+	if v.EndBook != "" {
+		end = lastVerse[v.Book]
 	}
-	space := strings.LastIndex(full, " ")
-	book := full[:space]
-	verses := strings.ReplaceAll(full[space+1:], ":", ".")
-	return sefaria.URL(book, verses)
+	verses := v.Start
+	if end != "" && end != v.Start {
+		verses += "-" + end
+	}
+	return sefaria.URL(v.Book, strings.ReplaceAll(verses, ":", "."))
 }

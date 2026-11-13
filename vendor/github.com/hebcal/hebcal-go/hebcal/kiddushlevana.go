@@ -30,6 +30,36 @@ import (
 
 const latestKiddushLevana = "Latest Kiddush Levana"
 
+// KiddushLevanaAdjustment says why a KiddushLevanaEvent's time differs from
+// the Maharil's time. The zero value (KiddushLevanaNotAdjusted) means it was
+// not adjusted, apart from rounding down to the minute.
+type KiddushLevanaAdjustment int
+
+const (
+	// KiddushLevanaNotAdjusted means the time is the Maharil's time,
+	// rounded down to the minute.
+	KiddushLevanaNotAdjusted KiddushLevanaAdjustment = iota
+	// KiddushLevanaAlot means the time fell during the day, so it moved
+	// back to alot hashachar.
+	KiddushLevanaAlot
+	// KiddushLevanaCandleLighting means the time fell on Shabbat or Yom Tov,
+	// so it moved back to candle-lighting time before it.
+	KiddushLevanaCandleLighting
+)
+
+// String returns "alot" or "candleLighting", the same values as
+// @hebcal/core's adjustedTo, or "" for KiddushLevanaNotAdjusted.
+func (a KiddushLevanaAdjustment) String() string {
+	switch a {
+	case KiddushLevanaAlot:
+		return "alot"
+	case KiddushLevanaCandleLighting:
+		return "candleLighting"
+	default:
+		return ""
+	}
+}
+
 // KiddushLevanaEvent is the latest time to recite Kiddush Levana
 // (Sanctification of the Moon), calculated as halfway between one molad and
 // the next, according to the Maharil (14 days, 18 hours, 22 minutes and
@@ -46,14 +76,61 @@ const latestKiddushLevana = "Latest Kiddush Levana"
 //
 // Memo lists the unadjusted earliest (3 and 7 days after the molad) and
 // latest (Maharil and 15 days after the molad) times.
+// It satisfies event.Timed.
 type KiddushLevanaEvent struct {
-	TimedEvent
+	// timed carries the date, time and clock format. It is a field rather
+	// than an embedded TimedEvent so that every method of this type is
+	// written out below.
+	timed TimedEvent
 	// The molad of the month this event belongs to
 	Molad molad.Molad
+	// Why the event time was moved earlier than the Maharil's time,
+	// or KiddushLevanaNotAdjusted if it was not adjusted (apart from
+	// rounding down to the minute).
+	AdjustedTo KiddushLevanaAdjustment
 }
 
-// GetCategories returns ["zmanim", "kiddushLevana"].
-func (ev KiddushLevanaEvent) GetCategories() []string {
+var (
+	_ event.Timed         = KiddushLevanaEvent{}
+	_ event.Memoer        = KiddushLevanaEvent{}
+	_ event.BriefRenderer = KiddushLevanaEvent{}
+)
+
+// Date returns the Hebrew date of the event, which is earlier than the
+// date of the Maharil's time when that falls on Shabbat or a Yom Tov.
+func (ev KiddushLevanaEvent) Date() hdate.HDate { return ev.timed.date }
+
+// Time returns the latest time, adjusted as the type's documentation
+// describes, in the time zone of the calendar's location.
+func (ev KiddushLevanaEvent) Time() time.Time { return ev.timed.eventTime }
+
+// Kind returns KiddushLevana.
+func (ev KiddushLevanaEvent) Kind() TimedKind { return KiddushLevana }
+
+// Desc returns the untranslated description, "Latest Kiddush Levana".
+func (ev KiddushLevanaEvent) Desc() string { return latestKiddushLevana }
+
+// Basename returns the untranslated description, "Latest Kiddush Levana".
+func (ev KiddushLevanaEvent) Basename() string { return latestKiddushLevana }
+
+// Render returns the translated description and the time, e.g. "Latest
+// Kiddush Levana: 9:44pm".
+func (ev KiddushLevanaEvent) Render(locale string) string { return ev.timed.Render(locale) }
+
+// RenderBrief returns the translated description without its time.
+func (ev KiddushLevanaEvent) RenderBrief(locale string) string { return ev.timed.RenderBrief(locale) }
+
+// Flags returns event.KiddushLevana.
+func (ev KiddushLevanaEvent) Flags() event.Flags { return event.KiddushLevana }
+
+// Emoji returns a waxing gibbous moon.
+func (ev KiddushLevanaEvent) Emoji() string { return "🌔" }
+
+// URL returns "": the event has no page on hebcal.com.
+func (ev KiddushLevanaEvent) URL() string { return "" }
+
+// Categories returns ["zmanim", "kiddushLevana"].
+func (ev KiddushLevanaEvent) Categories() []string {
 	return []string{"zmanim", "kiddushLevana"}
 }
 
@@ -62,7 +139,7 @@ func (ev KiddushLevanaEvent) GetCategories() []string {
 // "Earliest Kiddush Levana (3 days): Mon, Sep 14, 2026, 2:39pm".
 // Earliest times are rounded up to the minute and latest times down.
 func (ev KiddushLevanaEvent) Memo(locale string) string {
-	tz := ev.EventTime.Location()
+	tz := ev.timed.eventTime.Location()
 	times := []struct {
 		label string
 		t     time.Time
@@ -76,10 +153,7 @@ func (ev KiddushLevanaEvent) Memo(locale string) string {
 	for i, zman := range times {
 		label, _ := locales.LookupTranslation(zman.label, locale)
 		t := zman.t.In(tz)
-		timeStr := t.Format("3:04pm")
-		if ev.opts.Hour24 {
-			timeStr = t.Format("15:04")
-		}
+		timeStr := ev.timed.clock.formatTime(t)
 		lines[i] = label + ": " + t.Format("Mon, Jan 2, 2006") + ", " + timeStr
 	}
 	return strings.Join(lines, "\n")
@@ -98,38 +172,43 @@ func isShabbatOrChag(hd hdate.HDate, il bool) bool {
 	if hd.Weekday() == time.Saturday {
 		return true
 	}
-	for _, ev := range GetHolidaysOnDate(hd, il) {
-		if ev.Flags.Has(event.CHAG) {
+	for _, ev := range HolidaysOnDate(hd, il) {
+		if ev.Flags().Has(event.Chag) {
 			return true
 		}
 	}
 	return false
 }
 
-func newKiddushLevanaEvent(hd hdate.HDate, t time.Time, m molad.Molad, opts *CalOptions) KiddushLevanaEvent {
-	timedEv := NewTimedEvent(hd, latestKiddushLevana, event.KIDDUSH_LEVANA, t, 0, nil, opts)
-	timedEv.Emoji = "🌔"
-	return KiddushLevanaEvent{TimedEvent: timedEv, Molad: m}
+func newKiddushLevanaEvent(hd hdate.HDate, t time.Time, m molad.Molad, opts *calConfig, adjustedTo KiddushLevanaAdjustment) KiddushLevanaEvent {
+	timedEv := newTimedEvent(hd, KiddushLevana, latestKiddushLevana, event.KiddushLevana, t, 0, nil, opts.clock)
+	timedEv.emoji = "🌔"
+	return KiddushLevanaEvent{timed: timedEv, Molad: m, AdjustedTo: adjustedTo}
 }
 
 // makeKiddushLevanaEvent makes the "Latest Kiddush Levana" event for one
 // Hebrew month, or returns false if it can't be calculated (e.g. no sunrise
 // or sunset). The returned event's date may be earlier than the date of the
 // actual latest time, when that time falls on Shabbat or a Yom Tov.
-func makeKiddushLevanaEvent(hyear int, hmonth hdate.HMonth, opts *CalOptions) (KiddushLevanaEvent, bool) {
+func makeKiddushLevanaEvent(hyear int, hmonth hdate.HMonth, opts *calConfig) (KiddushLevanaEvent, bool) {
 	il := opts.IL
 	// Find the civil date on which the Maharil's time falls.
 	// Zmanim only computes this zman between the 11th and 16th of the month.
 	for dd := 11; dd <= 16; dd++ {
 		hd := hdate.New(hyear, hmonth, dd)
 		z := newZmanim(hd, opts)
-		if z.SofZmanKidushLevanaBetweenMoldos(time.Time{}, time.Time{}).IsZero() {
+		unadjusted := z.SofZmanKidushLevanaBetweenMoldos(time.Time{}, time.Time{})
+		if unadjusted.IsZero() {
 			continue
 		}
 		// Move a daytime time back to alot hashachar that morning.
-		// Same tzeit (8.5°) as IsAssurBemlacha()
+		// Same tzeit (8.5°) as IsAssurBemelacha()
 		t := z.SofZmanKidushLevanaBetweenMoldos(z.AlotHaShachar(), z.Tzeit(zmanim.Tzeit3SmallStars))
 		m := molad.New(hyear, hmonth)
+		adjustedTo := KiddushLevanaNotAdjusted
+		if !t.Equal(unadjusted) {
+			adjustedTo = KiddushLevanaAlot
+		}
 		// After daytime adjustment the time is at night: before alot hashachar
 		// it belongs to today's Hebrew date, after tzeit to tomorrow's.
 		nightOf := hd
@@ -137,7 +216,7 @@ func makeKiddushLevanaEvent(hyear int, hmonth hdate.HMonth, opts *CalOptions) (K
 			nightOf = hd.Next()
 		}
 		if !isShabbatOrChag(nightOf, il) {
-			return newKiddushLevanaEvent(hd, t.Truncate(time.Minute), m, opts), true
+			return newKiddushLevanaEvent(hd, t.Truncate(time.Minute), m, opts, adjustedTo), true
 		}
 		// Back up to candle-lighting time before the Shabbat or Yom Tov
 		first := nightOf
@@ -150,7 +229,7 @@ func makeKiddushLevanaEvent(hyear int, hmonth hdate.HMonth, opts *CalOptions) (K
 		if candleLighting.IsZero() {
 			return KiddushLevanaEvent{}, false
 		}
-		return newKiddushLevanaEvent(erev, candleLighting, m, opts), true
+		return newKiddushLevanaEvent(erev, candleLighting, m, opts, KiddushLevanaCandleLighting), true
 	}
 	return KiddushLevanaEvent{}, false
 }

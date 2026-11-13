@@ -3,32 +3,12 @@ package event
 import (
 	"fmt"
 
-	"github.com/hebcal/hdate"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/hebcal/hdate"
 )
-
-// URLer is implemented by events that have a canonical page on hebcal.com.
-//
-// It is deliberately a separate interface rather than a method on CalEvent:
-// CalEvent is implemented outside this package, and widening it would break
-// those implementations. Callers should use the URL helper below, which
-// returns "" for events that do not carry a URL.
-type URLer interface {
-	// URL returns the absolute hebcal.com URL for this event, or "" if the
-	// event has no page (for example a Molad, or a date outside the range the
-	// website covers).
-	URL() string
-}
-
-// URL returns the canonical hebcal.com URL for ev, or "" if it has none.
-func URL(ev CalEvent) string {
-	if u, ok := ev.(URLer); ok {
-		return u.URL()
-	}
-	return ""
-}
 
 // slugOverrides maps a generated slug onto the spelling hebcal.com actually
 // uses, where the two differ. The website predates these tables and its URLs
@@ -49,11 +29,6 @@ func urlFriendly(s string) string {
 	return s
 }
 
-// gregYearInRange reports whether a Gregorian year has a page on the website.
-func gregYearInRange(gy int) bool {
-	return gy >= 100 && gy <= 2999
-}
-
 // URL returns the holiday's page on hebcal.com, e.g.
 // https://www.hebcal.com/holidays/sukkot-2026 .
 //
@@ -66,19 +41,20 @@ func gregYearInRange(gy int) bool {
 //
 // Israel-only observances carry ?i=on so the page shows the Israel schedule.
 func (ev HolidayEvent) URL() string {
-	gy, gm, gd := ev.Date.ProlepticGreg()
-	if !gregYearInRange(gy) {
+	hy := ev.date.Year()
+	if hy < 5513 || hy > 6260 {
 		return ""
 	}
-	// Yom Kippur Katan has no page on the website.
-	if strings.HasPrefix(ev.Desc, "Yom Kippur Katan") {
+	// Yom Kippur Katan and Ta'anit BeHaB have no page on the website.
+	if strings.HasPrefix(ev.desc, "Yom Kippur Katan") || ev.flags.Has(BeHaB) {
 		return ""
 	}
+	gy, gm, gd := ev.date.ProlepticGreg()
 	var suffix string
 	switch {
-	case ev.Desc == "Asara B'Tevet":
+	case ev.desc == "Asara B'Tevet":
 		suffix = fmt.Sprintf("%04d%02d%02d", gy, int(gm), gd)
-	case strings.HasPrefix(ev.Desc, "Chanukah"):
+	case strings.HasPrefix(ev.desc, "Chanukah"):
 		year := gy
 		if gm == time.January {
 			year--
@@ -91,16 +67,18 @@ func (ev HolidayEvent) URL() string {
 	if alt, ok := slugOverrides[slug]; ok {
 		slug = alt
 	}
-	// In a leap year the two Adars share one description, but the website
-	// files them under separate pages. Rosh Chodesh can span two days, and on
-	// the first of them the date is the 30th of the *previous* month, so the
-	// month has to be advanced before deciding which Adar this is.
+	// Generated Rosh Chodesh events in a leap year are already described as
+	// "Rosh Chodesh Adar I" or "Adar II", and Basename keeps the numeral.
+	// A caller-built event may say just "Rosh Chodesh Adar", so infer which
+	// Adar from the date. Rosh Chodesh can span two days, and on the first
+	// of them the date is the 30th of the *previous* month, so the month has
+	// to be advanced before deciding which Adar this is.
 	//
 	// A common year has a single Adar and keeps the undecorated slug, even
 	// though hdate numbers that month Adar1.
-	if slug == "rosh-chodesh-adar" && hdate.IsLeapYear(ev.Date.Year()) {
-		m := ev.Date.Month()
-		if ev.Date.Day() == 30 {
+	if slug == "rosh-chodesh-adar" && hdate.IsLeapYear(ev.date.Year()) {
+		m := ev.date.Month()
+		if ev.date.Day() == 30 {
 			m++
 		}
 		switch m {
@@ -111,7 +89,7 @@ func (ev HolidayEvent) URL() string {
 		}
 	}
 	url := "https://www.hebcal.com/holidays/" + slug + "-" + suffix
-	if ev.Flags.Has(IL_ONLY) {
+	if ev.flags.Has(ILOnly) {
 		url += "?i=on"
 	}
 	return url
@@ -121,11 +99,12 @@ func (ev HolidayEvent) URL() string {
 // https://www.hebcal.com/sedrot/bereshit-20261010 . The date is the Saturday
 // on which the portion is read, which is what makes the URL unique across the
 // triennial and doubled-parsha variations.
-func (ev parshaEvent) URL() string {
-	gy, gm, gd := ev.Date.ProlepticGreg()
-	if !gregYearInRange(gy) {
+func (ev ParshaEvent) URL() string {
+	hy := ev.date.Year()
+	if hy < 5513 || hy > 6260 {
 		return ""
 	}
+	gy, gm, gd := ev.date.ProlepticGreg()
 	url := "https://www.hebcal.com/sedrot/" +
 		urlFriendly(strings.Join(ev.Parsha.Name, "-")) +
 		fmt.Sprintf("-%04d%02d%02d", gy, int(gm), gd)
@@ -137,8 +116,8 @@ func (ev parshaEvent) URL() string {
 
 // URL returns the Hebrew date's converter page, e.g.
 // https://www.hebcal.com/converter?hd=15&hm=Nisan&hy=5786&h2g=1 .
-func (ev hebrewDateEvent) URL() string {
-	hd := ev.Date
+func (ev HebrewDateEvent) URL() string {
+	hd := ev.date
 	if hd.Year() < 1 {
 		return ""
 	}

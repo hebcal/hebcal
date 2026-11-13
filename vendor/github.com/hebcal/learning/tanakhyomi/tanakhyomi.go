@@ -27,8 +27,6 @@ import (
 
 	"github.com/hebcal/greg"
 	"github.com/hebcal/hdate"
-	"github.com/hebcal/hebcal-go/event"
-	"github.com/hebcal/hebcal-go/hebcal"
 )
 
 const (
@@ -68,14 +66,6 @@ var books = []book{
 	{"Ezra and Nehemiah", 10},
 	{"Chronicles", 25},
 	{"Chronicles", 25},
-}
-
-// Holidays (besides Shabbat and any CHAG) on which Tanakh Yomi is skipped.
-var toSkip = map[string]bool{
-	"Purim":                  true,
-	"Yom HaAtzma'ut":         true,
-	"Tish'a B'Av":            true,
-	"Tish'a B'Av (observed)": true,
 }
 
 // Reading is one day's Tanakh Yomi reading: a single Masoretic seder
@@ -252,12 +242,10 @@ type yearReadingDays struct {
 	prefix []int32 // prefix[i] is the number of reading days in [rh, rh+i)
 }
 
-// Determining whether a day is skipped requires a holiday lookup, which is by
-// far the most expensive part of this calendar. Counting reading days one at a
-// time therefore costs hundreds of holiday lookups per query. Instead, resolve
-// a whole Hebrew year at once and cache the prefix sums, so that repeated
-// queries -- overwhelmingly for dates in the same year or two -- reduce to
-// slice subtraction.
+// Counting reading days one at a time costs hundreds of skipDay calls per
+// query. Instead, resolve a whole Hebrew year at once and cache the prefix
+// sums, so that repeated queries -- overwhelmingly for dates in the same
+// year or two -- reduce to slice subtraction.
 var (
 	yearCacheMu sync.Mutex
 	yearCache   = map[int]*yearReadingDays{}
@@ -311,35 +299,54 @@ func skipDayAbs(abs int64) bool {
 	return skipDay(hdate.FromRD(abs))
 }
 
-// skipDay reports whether Tanakh Yomi is not studied on the given date:
-// Shabbat, any CHAG, or one of the toSkip holidays (Israel schedule).
+// skipDay reports whether Tanakh Yomi is not studied on the given date.
+// It decides from the Hebrew month and day alone: Shabbat, the days that
+// are Chag in Israel (Rosh Hashana, Yom Kippur, Sukkot I, Shmini Atzeret,
+// Pesach I/VII, Shavuot), Purim, Tish'a B'Av (and its postponed Sunday)
+// and Yom HaAtzma'ut.
 func skipDay(hd hdate.HDate) bool {
-	if hd.Weekday() == time.Saturday {
+	dow := hd.Weekday()
+	if dow == time.Saturday {
 		return true
 	}
-	_, ok := holidaySkips(hd.Year())[hd.Abs()]
-	return ok
+	dd := hd.Day()
+	switch hd.Month() {
+	case hdate.Tishrei:
+		// Rosh Hashana, Yom Kippur, Sukkot I, Shmini Atzeret (Israel)
+		return dd == 1 || dd == 2 || dd == 10 || dd == 15 || dd == 22
+	case hdate.Nisan:
+		// Pesach I and VII (Israel)
+		return dd == 15 || dd == 21
+	case hdate.Iyyar:
+		return dd == yomHaAtzmautDay(hd.Year())
+	case hdate.Sivan:
+		// Shavuot (Israel)
+		return dd == 6
+	case hdate.Av:
+		// Tish'a B'Av, or observed on 10 Av when 9 Av is Shabbat
+		return dd == 9 || (dd == 10 && dow == time.Sunday)
+	case hdate.Adar1:
+		return dd == 14 && !hdate.IsLeapYear(hd.Year())
+	case hdate.Adar2:
+		return dd == 14
+	default:
+		return false
+	}
 }
 
-var (
-	skipCacheMu sync.Mutex
-	skipCache   = map[int]map[int64]bool{}
-)
-
-// holidaySkips returns the set of R.D. day numbers in the given Hebrew
-// year on which a CHAG or toSkip holiday occurs (Israel schedule).
-func holidaySkips(year int) map[int64]bool {
-	skipCacheMu.Lock()
-	defer skipCacheMu.Unlock()
-	if set, ok := skipCache[year]; ok {
-		return set
+// yomHaAtzmautDay returns the day of Iyyar on which Yom HaAtzma'ut is
+// observed: 5 Iyyar, moved earlier to Thursday when it would fall on
+// Friday or Shabbat, and (from 5764) moved from Monday to Tuesday so Yom
+// HaZikaron does not begin on Motzei Shabbat.
+func yomHaAtzmautDay(year int) int {
+	pdow := hdate.ToRD(year, hdate.Nisan, 15) % 7
+	switch {
+	case pdow == 0:
+		return 3
+	case pdow == 6:
+		return 4
+	case year >= 5764 && pdow == 2:
+		return 6
 	}
-	set := map[int64]bool{}
-	for _, ev := range hebcal.GetHolidaysForYear(year, true) {
-		if ev.Flags&event.CHAG != 0 || toSkip[ev.Desc] {
-			set[ev.Date.Abs()] = true
-		}
-	}
-	skipCache[year] = set
-	return set
+	return 5
 }

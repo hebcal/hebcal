@@ -30,18 +30,18 @@ import (
 const pirkeiAvot = "Pirkei Avot"
 
 type pirkeiAvotEvent struct {
-	Date     hdate.HDate
+	date     hdate.HDate
 	Chapters []int
 }
 
 // NewPirkeiAvotSummerEvent returns a calendar event for the Pirkei Avot
 // chapter(s) studied on the given Shabbat.
 func NewPirkeiAvotSummerEvent(hd hdate.HDate, chapters []int) event.CalEvent {
-	return pirkeiAvotEvent{Date: hd, Chapters: chapters}
+	return pirkeiAvotEvent{date: hd, Chapters: chapters}
 }
 
-func (ev pirkeiAvotEvent) GetDate() hdate.HDate {
-	return ev.Date
+func (ev pirkeiAvotEvent) Date() hdate.HDate {
+	return ev.date
 }
 
 func (ev pirkeiAvotEvent) Render(locale string) string {
@@ -61,13 +61,16 @@ func (ev pirkeiAvotEvent) Render(locale string) string {
 	return book + " " + strings.Join(parts, "-")
 }
 
-func (ev pirkeiAvotEvent) GetFlags() event.HolidayFlags {
-	return event.DAILY_LEARNING
+func (ev pirkeiAvotEvent) Flags() event.Flags {
+	return event.DailyLearning
 }
 
-func (ev pirkeiAvotEvent) GetEmoji() string {
+func (ev pirkeiAvotEvent) Emoji() string {
 	return ""
 }
+
+// Desc returns the untranslated description, the same as Basename.
+func (ev pirkeiAvotEvent) Desc() string { return ev.Basename() }
 
 func (ev pirkeiAvotEvent) Basename() string {
 	parts := make([]string, len(ev.Chapters))
@@ -77,7 +80,7 @@ func (ev pirkeiAvotEvent) Basename() string {
 	return pirkeiAvot + " " + strings.Join(parts, "-")
 }
 
-func (ev pirkeiAvotEvent) GetCategories() []string {
+func (ev pirkeiAvotEvent) Categories() []string {
 	return []string{"pirkeiAvotSummer"}
 }
 

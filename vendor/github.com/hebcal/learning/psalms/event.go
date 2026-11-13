@@ -28,18 +28,18 @@ import (
 )
 
 type psalmsEvent struct {
-	Date    hdate.HDate
+	date    hdate.HDate
 	Reading Reading
 }
 
 // NewPsalmsEvent returns a calendar event for the Daily Psalms reading on
 // the given date.
 func NewPsalmsEvent(hd hdate.HDate, reading Reading) event.CalEvent {
-	return psalmsEvent{Date: hd, Reading: reading}
+	return psalmsEvent{date: hd, Reading: reading}
 }
 
-func (ev psalmsEvent) GetDate() hdate.HDate {
-	return ev.Date
+func (ev psalmsEvent) Date() hdate.HDate {
+	return ev.date
 }
 
 func (ev psalmsEvent) Render(locale string) string {
@@ -55,19 +55,22 @@ func (ev psalmsEvent) Render(locale string) string {
 	return book + " " + r.Begin + "-" + r.End
 }
 
-func (ev psalmsEvent) GetFlags() event.HolidayFlags {
-	return event.DAILY_LEARNING
+func (ev psalmsEvent) Flags() event.Flags {
+	return event.DailyLearning
 }
 
-func (ev psalmsEvent) GetEmoji() string {
+func (ev psalmsEvent) Emoji() string {
 	return ""
 }
+
+// Desc returns the untranslated description, the same as Basename.
+func (ev psalmsEvent) Desc() string { return ev.Basename() }
 
 func (ev psalmsEvent) Basename() string {
 	return "Psalms " + ev.Reading.String()
 }
 
-func (ev psalmsEvent) GetCategories() []string {
+func (ev psalmsEvent) Categories() []string {
 	return []string{"dailyPsalms"}
 }
 

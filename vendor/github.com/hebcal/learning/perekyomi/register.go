@@ -9,7 +9,7 @@ import (
 // Register the Perek Yomi schedule with the dailylearning registry under
 // the name "perekYomi".
 func init() {
-	dailylearning.AddCalendar("perekYomi", func(hd hdate.HDate, il bool) event.CalEvent {
+	dailylearning.AddCalendarFrom("perekYomi", func(hd hdate.HDate, il bool) event.CalEvent {
 		reading, ok := New(hd)
 		if !ok {
 			return nil

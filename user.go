@@ -14,7 +14,7 @@ import (
 	"github.com/hebcal/hebcal-go/hebcal"
 )
 
-func readUserFile(filename string) ([]hebcal.UserEvent, error) {
+func readUserFile(filename string) ([]hebcal.UserEventSpec, error) {
 	f, err := os.Open(filename)
 	if err != nil {
 		return nil, fmt.Errorf("could not open input file %s.", filename)
@@ -23,7 +23,7 @@ func readUserFile(filename string) ([]hebcal.UserEvent, error) {
 	scanner := bufio.NewScanner(f)
 	re := regexp.MustCompile(`^(\S+)\s+(\d+)\s+(.+)$`)
 	lineNumber := 0
-	entries := make([]hebcal.UserEvent, 0, 10)
+	entries := make([]hebcal.UserEventSpec, 0, 10)
 	for scanner.Scan() {
 		line0 := scanner.Text()
 		line := strings.TrimSpace(line0)
@@ -42,7 +42,7 @@ func readUserFile(filename string) ([]hebcal.UserEvent, error) {
 		if day < 1 || day > 30 {
 			fmt.Fprintf(os.Stderr, "error, invalid days: %s:%d\n", filename, lineNumber)
 		}
-		entries = append(entries, hebcal.UserEvent{Month: month, Day: day, Desc: fields[3]})
+		entries = append(entries, hebcal.UserEventSpec{Month: month, Day: day, Desc: fields[3]})
 	}
 	return entries, scanner.Err()
 }

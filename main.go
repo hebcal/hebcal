@@ -41,7 +41,7 @@ const (
 
 // config holds everything parsed from the command line.
 type config struct {
-	cal  hebcal.CalOptions
+	cal  hebcal.Options
 	lang string
 
 	// Requested date range; month is Hebrew or Gregorian per cal.IsHebrewYear
@@ -57,6 +57,7 @@ type config struct {
 	weekday    bool
 	yearAbbrev bool
 	noGreg     bool
+	hour24     bool
 
 	today       bool
 	isTodayChag bool
@@ -118,7 +119,7 @@ func parseArgs(argv []string, envOpts string) (*config, error) {
 	opt.FlagLong(&c.yearAbbrev, "year-abbrev", 'y', "Print only last two digits of year")
 	opt.FlagLong(&c.tabs, "tabs", 'r', "Tab delineated format")
 	opt.FlagLong(&c.weekday, "weekday", 'w', "Add day of the week")
-	opt.FlagLong(&c.cal.Hour24,
+	opt.FlagLong(&c.hour24,
 		"24hour", 'E', "Output 24-hour times (e.g. 18:37 instead of 6:37)")
 	opt.FlagLong(&c.cal.SunriseSunset,
 		"sunrise-and-sunset", 'O', "Output sunrise and sunset times every day")
@@ -226,7 +227,7 @@ on the yahrtzeit. Events are printed regardless of the
 	for _, name := range c.cal.DailyLearning {
 		if !dailylearning.Has(name) {
 			return nil, fmt.Errorf("unknown --daily-learning calendar: %s\nvalid calendars are: %s",
-				name, strings.Join(dailylearning.GetCalendars(), ", "))
+				name, strings.Join(dailylearning.Calendars(), ", "))
 		}
 	}
 
@@ -239,6 +240,9 @@ on the yahrtzeit. Events are printed regardless of the
 		c.lang = "he"
 	}
 	c.checkLang()
+	if c.hour24 {
+		c.cal.Clock = event.Clock24
+	}
 
 	if err := c.setLocation(*cityName, latitudeStr, longitudeStr, coordinates, tzid); err != nil {
 		return nil, err
@@ -270,8 +274,8 @@ on the yahrtzeit. Events are printed regardless of the
 	}
 
 	if chagOnlySw {
-		c.cal.Mask = event.CHAG | event.LIGHT_CANDLES |
-			event.LIGHT_CANDLES_TZEIS | event.YOM_TOV_ENDS
+		c.cal.Mask = event.Chag | event.LightCandles |
+			event.LightCandlesTzeis | event.YomTovEnds
 	}
 
 	if *yahrzeitFileName != "" {
@@ -358,7 +362,10 @@ func (c *config) setLocation(cityName, latitudeStr, longitudeStr, coordinates, t
 		if _, err := time.LoadLocation(tzid); err != nil {
 			return err
 		}
-		userLocation := zmanim.NewLocation("User Defined City", "", latitude, longitude, 0, tzid)
+		userLocation, err := zmanim.NewLocation("User Defined City", "", latitude, longitude, 0, tzid)
+		if err != nil {
+			return err
+		}
 		c.cal.Location = &userLocation
 		c.cal.CandleLighting = true
 	}
@@ -525,7 +532,7 @@ func (c *config) runCommand() {
 	case "cities":
 		for _, city := range zmanim.AllCities() {
 			fmt.Printf("%s (%.5f,%.5f  %s)\n",
-				city.Name, city.Latitude, city.Longitude, city.TimeZoneId)
+				city.Name, city.Latitude, city.Longitude, city.TimeZoneID)
 		}
 	case "copying":
 		fmt.Println(gplv2txt)
@@ -547,6 +554,11 @@ func main() {
 	}
 
 	c.setDateRange()
+	if c.isTodayChag {
+		// The reason printed with --verbose always gives 24-hour times.
+		// Events keep the clock format they were generated with.
+		c.cal.Clock = event.Clock24
+	}
 	events, err := hebcal.HebrewCalendar(&c.cal)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
@@ -569,7 +581,7 @@ func main() {
 	}
 
 	for _, ev := range events {
-		fmt.Println(c.formatGregDate(ev.GetDate()) + ev.Render(c.lang))
+		fmt.Println(c.formatGregDate(ev.Date()) + ev.Render(c.lang))
 	}
 }
 
@@ -587,13 +599,10 @@ func (c *config) checkTodayChag(events []event.CalEvent) (bool, string, error) {
 		return false, "", nil
 	}
 
-	loc, err := time.LoadLocation(c.cal.Location.TimeZoneId)
+	loc, err := time.LoadLocation(c.cal.Location.TimeZoneID)
 	if err != nil {
 		return false, "", err
 	}
-	// TimedEvents keep a pointer to c.cal, so this affects how they render
-	c.cal.Hour24 = true
-
 	now := time.Now().In(loc)
 	if c.rangeType != rangeToday {
 		hour, minute, sec := now.Clock()
@@ -601,14 +610,14 @@ func (c *config) checkTodayChag(events []event.CalEvent) (bool, string, error) {
 	}
 
 	// find today's candle-lighting and Havdalah events (if any)
-	var candleLighting, havdalah *hebcal.TimedEvent
+	var candleLighting, havdalah event.Timed
 	for _, ev := range events {
-		if timedEv, ok := ev.(hebcal.TimedEvent); ok {
-			switch timedEv.Desc {
-			case "Candle lighting":
-				candleLighting = &timedEv
-			case "Havdalah":
-				havdalah = &timedEv
+		if timedEv, ok := ev.(event.Timed); ok {
+			switch kind, _ := hebcal.TimedKindOf(ev); kind {
+			case hebcal.CandleLighting:
+				candleLighting = timedEv
+			case hebcal.Havdalah:
+				havdalah = timedEv
 			}
 		}
 	}
@@ -617,12 +626,12 @@ func (c *config) checkTodayChag(events []event.CalEvent) (bool, string, error) {
 	// events and check only if the current time is during the chag window
 	nowStr := now.Format(time.RFC1123Z)
 	switch {
-	case candleLighting != nil && !now.Before(candleLighting.EventTime):
+	case candleLighting != nil && !now.Before(candleLighting.Time()):
 		return true, nowStr + " >= " + renderWithLinked(candleLighting, c.lang), nil
 	case candleLighting != nil && c.cal.Start.Weekday() == time.Saturday:
 		reason, _ := locales.LookupTranslation("Shabbat", c.lang)
 		return true, reason, nil
-	case havdalah != nil && !now.Before(havdalah.EventTime):
+	case havdalah != nil && !now.Before(havdalah.Time()):
 		return false, "", nil // Shabbat or Chag has already ended today
 	case havdalah != nil:
 		return true, nowStr + " < " + renderWithLinked(havdalah, c.lang), nil
@@ -636,17 +645,19 @@ func (c *config) checkTodayChag(events []event.CalEvent) (bool, string, error) {
 // findChag returns the first event that is a Chag, if any.
 func findChag(events []event.CalEvent, lang string) (bool, string) {
 	for _, ev := range events {
-		if ev.GetFlags().Has(event.CHAG) {
+		if ev.Flags().Has(event.Chag) {
 			return true, ev.Render(lang)
 		}
 	}
 	return false, ""
 }
 
-func renderWithLinked(ev *hebcal.TimedEvent, lang string) string {
+// renderWithLinked renders ev followed by the event it belongs to, if any,
+// e.g. "Candle lighting: 18:37 / Erev Pesach".
+func renderWithLinked(ev event.CalEvent, lang string) string {
 	s := ev.Render(lang)
-	if ev.LinkedEvent != nil {
-		s += " / " + ev.LinkedEvent.Render(lang)
+	if linked, ok := ev.(event.Linked); ok && linked.LinkedEvent() != nil {
+		s += " / " + linked.LinkedEvent().Render(lang)
 	}
 	return s
 }

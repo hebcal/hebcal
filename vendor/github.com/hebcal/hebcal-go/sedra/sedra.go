@@ -1,4 +1,4 @@
-// Hebcal's sedra package calculates the weekly Torah reading
+// Package sedra calculates the weekly Torah reading
 // (Parashat HaShavua).
 package sedra
 
@@ -21,7 +21,6 @@ package sedra
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
 	"time"
 
@@ -291,12 +290,56 @@ type Parsha struct {
 	// Matot-Masei it would be {42, 43}
 	Num []int
 
-	// Chag is true if this is a regular parasha HaShavua Torah reading,
-	// false if it's a special holiday reading
+	// Chag is true if a holiday reading replaces the weekly parsha, in which
+	// case Name holds the one name of that reading (e.g. "Pesach Shabbat Chol
+	// ha-Moed") and Num is empty.
 	Chag bool
 }
 
+// chagReading names the holiday reading on a Shabbat that has no weekly
+// parsha.
+func chagReading(sat hdate.HDate, il bool) string {
+	d := sat.Day()
+	switch sat.Month() {
+	case hdate.Tishrei:
+		switch {
+		case d <= 2:
+			return "Rosh Hashana"
+		case d == 10:
+			return "Yom Kippur"
+		case d == 15 || d == 16:
+			return "Sukkot"
+		case d < 22:
+			return "Sukkot Shabbat Chol ha-Moed"
+		default:
+			return "Shmini Atzeret"
+		}
+	case hdate.Nisan:
+		switch {
+		case d == 15:
+			if il {
+				return "Pesach"
+			}
+			return "Pesach I"
+		case d == 16 && !il:
+			return "Pesach II"
+		case d < 21:
+			return "Pesach Shabbat Chol ha-Moed"
+		case d == 21:
+			return "Pesach VII"
+		default:
+			return "Pesach VIII"
+		}
+	case hdate.Sivan:
+		return "Shavuot"
+	}
+	return ""
+}
+
 // New constructs a Sedra for the entire Hebrew year.
+//
+// year must be a valid Hebrew year, 1 or later; as elsewhere in this module
+// and in github.com/hebcal/hdate, an earlier year panics.
 func New(year int, il bool) Sedra {
 	longC := hdate.LongCheshvan(year)
 	shortK := hdate.ShortKislev(year)
@@ -317,7 +360,10 @@ func New(year int, il bool) Sedra {
 }
 
 // LookupByRD returns the Parsha that's read on the Saturday on or after the
-// R.D. date.
+// R.D. date. A date outside the Sedra's own year is answered by the year it
+// belongs to, earlier or later.
+//
+// It panics if s is the zero Sedra rather than one made by New.
 func (s *Sedra) LookupByRD(rataDie int64) Parsha {
 	sedraNumWeeks := len(s.theSedraArray)
 	if sedraNumWeeks == 0 {
@@ -325,28 +371,24 @@ func (s *Sedra) LookupByRD(rataDie int64) Parsha {
 	}
 	abs := hdate.DayOnOrBefore(time.Saturday, rataDie+6)
 	if abs < s.firstSaturday {
-		panic("lookup date " + strconv.FormatInt(abs, 10) +
-			" is earlier than start of year " +
-			strconv.FormatInt(s.firstSaturday, 10))
+		// The Saturday falls before this year's Rosh Hashana: ask the
+		// previous year.
+		prev := New(s.Year-1, s.IL)
+		return prev.LookupByRD(abs)
 	}
-	var idx int
 	weekNum := int((abs - s.firstSaturday) / 7)
 	if weekNum >= sedraNumWeeks {
-		indexLast := s.theSedraArray[sedraNumWeeks-1]
-		if indexLast < 0 {
-			/* advance 2 parashiyot ahead after a doubled week */
-			idx = undoubled(indexLast) + 2
-		} else {
-			idx = indexLast + 1
-		}
-	} else {
-		idx = s.theSedraArray[weekNum]
+		// The Saturday falls in the next Hebrew year, whose first Shabbat may
+		// well be Rosh Hashana or Shabbat Shuva: ask that year.
+		next := New(s.Year+1, s.IL)
+		return next.LookupByRD(abs)
 	}
+	idx := s.theSedraArray[weekNum]
 	switch {
 	case idx >= 0:
 		return Parsha{Name: []string{parshiot[idx]}, Num: []int{idx + 1}, Chag: false}
 	case idx == -1:
-		return Parsha{Chag: true}
+		return Parsha{Name: []string{chagReading(hdate.FromRD(abs), s.IL)}, Chag: true}
 	default:
 		p1 := undoubled(idx)
 		p2 := p1 + 1

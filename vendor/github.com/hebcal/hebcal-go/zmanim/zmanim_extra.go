@@ -83,7 +83,7 @@ func (z *Zmanim) SofZmanTfillaMGA19Point8() time.Time {
 // sunset. If [Zmanim.UseElevation] is set, elevation is included via sunrise and
 // sunset.
 func (z *Zmanim) MinchaGedolaMGA() time.Time {
-	return z.addTemporalHours(z.Sunrise().Add(-72*time.Minute), z.Sunset().Add(72*time.Minute), 6.5)
+	return z.addTemporalHours(offset(z.Sunrise(), -72*time.Minute), offset(z.Sunset(), 72*time.Minute), 6.5)
 }
 
 // MinchaKetanaMGA is the preferable earliest time to recite Mincha (MGA): 9.5
@@ -91,7 +91,16 @@ func (z *Zmanim) MinchaGedolaMGA() time.Time {
 // ends 72 minutes after sunset. If [Zmanim.UseElevation] is set, elevation is
 // included via sunrise and sunset.
 func (z *Zmanim) MinchaKetanaMGA() time.Time {
-	return z.addTemporalHours(z.Sunrise().Add(-72*time.Minute), z.Sunset().Add(72*time.Minute), 9.5)
+	return z.addTemporalHours(offset(z.Sunrise(), -72*time.Minute), offset(z.Sunset(), 72*time.Minute), 9.5)
+}
+
+// offset returns t plus d, keeping the zero time (an event that does not
+// occur) zero rather than turning it into a time near year 1.
+func offset(t time.Time, d time.Duration) time.Time {
+	if t.IsZero() {
+		return t
+	}
+	return t.Add(d)
 }
 
 // ---------------------------------------------------------------------------

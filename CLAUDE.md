@@ -35,11 +35,11 @@ CI (`.github/workflows/go.yml`) runs `make all` then `make test` on Go 1.18.
 ## Code layout
 
 - `main.go` — the whole program. `parseArgs()` builds a `config` struct (which
-  holds a `hebcal.CalOptions` in its `cal` field) from getopt flags, returning errors
+  holds a `hebcal.Options` in its `cal` field) from getopt flags, returning errors
   rather than exiting; `main()` runs any informational command (`info`,
   `cities`, ...), resolves the date range, calls the library to produce events,
   and prints them. Most CLI flags map directly onto fields of
-  `hebcal.CalOptions`, so adding a flag that the library already supports is
+  `hebcal.Options`, so adding a flag that the library already supports is
   usually just one `opt.FlagLong(&c.cal.X, ...)` line.
 - `user.go` — parsers for the `-I` user-events file and `-Y` yahrzeit file.
 - `version.go` — single source of truth for the version string. Drives both the

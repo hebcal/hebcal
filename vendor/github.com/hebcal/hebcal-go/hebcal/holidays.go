@@ -32,177 +32,184 @@ type holiday struct {
 	mm     hdate.HMonth
 	dd     int
 	desc   string
-	flags  event.HolidayFlags
+	flags  event.Flags
 	emoji  string
 	chmDay int
 }
 
 const chanukahEmoji = "🕎"
+
+// chanukahCandlesEmoji is the menorah followed by the night's candle count
+// as a keycap digit ("🕎3️⃣"), the emoji of each night of Chanukah.
+func chanukahCandlesEmoji(candles int) string {
+	return chanukahEmoji + strconv.Itoa(candles) + "\uFE0F\u20E3"
+}
+
 const sukkotEmoji = "🌿🍋"
 
 var staticHolidays = []holiday{
 	{mm: hdate.Tishrei, dd: 2, desc: "Rosh Hashana II",
-		flags: event.CHAG | event.YOM_TOV_ENDS,
+		flags: event.Chag | event.YomTovEnds,
 		emoji: "🍏🍯"},
 	{mm: hdate.Tishrei, dd: 9, desc: "Erev Yom Kippur",
-		flags: event.EREV | event.LIGHT_CANDLES},
+		flags: event.Erev | event.LightCandles},
 	{mm: hdate.Tishrei, dd: 10, desc: "Yom Kippur",
-		flags: event.CHAG | event.MAJOR_FAST | event.YOM_TOV_ENDS},
+		flags: event.Chag | event.MajorFast | event.YomTovEnds},
 	// Erev Sukkot and Erev Pesach are listed twice, once per schedule, so that
-	// the event carries CHUL_ONLY or IL_ONLY like the yom tov it leads into.
+	// the event carries ChulOnly or ILOnly like the yom tov it leads into.
 	// Consumers rely on that flag to tell the two schedules apart -- the
 	// canonical URL appends ?i=on for an Israel observance -- and an entry
 	// carrying neither flag is emitted in both calendars, so it cannot.
 	{mm: hdate.Tishrei, dd: 14, desc: "Erev Sukkot",
-		flags: event.CHUL_ONLY | event.EREV | event.LIGHT_CANDLES,
+		flags: event.ChulOnly | event.Erev | event.LightCandles,
 		emoji: sukkotEmoji},
 	{mm: hdate.Tishrei, dd: 14, desc: "Erev Sukkot",
-		flags: event.IL_ONLY | event.EREV | event.LIGHT_CANDLES,
+		flags: event.ILOnly | event.Erev | event.LightCandles,
 		emoji: sukkotEmoji},
 
 	{mm: hdate.Tishrei, dd: 15, desc: "Sukkot I",
-		flags: event.CHUL_ONLY | event.CHAG | event.LIGHT_CANDLES_TZEIS,
+		flags: event.ChulOnly | event.Chag | event.LightCandlesTzeis,
 		emoji: sukkotEmoji},
 	{mm: hdate.Tishrei, dd: 16, desc: "Sukkot II",
-		flags: event.CHUL_ONLY | event.CHAG | event.YOM_TOV_ENDS,
+		flags: event.ChulOnly | event.Chag | event.YomTovEnds,
 		emoji: sukkotEmoji},
 	{mm: hdate.Tishrei, dd: 17, desc: "Sukkot III (CH''M)",
-		flags: event.CHUL_ONLY | event.CHOL_HAMOED, chmDay: 1,
+		flags: event.ChulOnly | event.CholHamoed, chmDay: 1,
 		emoji: sukkotEmoji},
 	{mm: hdate.Tishrei, dd: 18, desc: "Sukkot IV (CH''M)",
-		flags: event.CHUL_ONLY | event.CHOL_HAMOED, chmDay: 2,
+		flags: event.ChulOnly | event.CholHamoed, chmDay: 2,
 		emoji: sukkotEmoji},
 	{mm: hdate.Tishrei, dd: 19, desc: "Sukkot V (CH''M)",
-		flags: event.CHUL_ONLY | event.CHOL_HAMOED, chmDay: 3,
+		flags: event.ChulOnly | event.CholHamoed, chmDay: 3,
 		emoji: sukkotEmoji},
 	{mm: hdate.Tishrei, dd: 20, desc: "Sukkot VI (CH''M)",
-		flags: event.CHUL_ONLY | event.CHOL_HAMOED, chmDay: 4,
+		flags: event.ChulOnly | event.CholHamoed, chmDay: 4,
 		emoji: sukkotEmoji},
 	{mm: hdate.Tishrei, dd: 22, desc: "Shmini Atzeret",
-		flags: event.CHUL_ONLY | event.CHAG | event.LIGHT_CANDLES_TZEIS},
+		flags: event.ChulOnly | event.Chag | event.LightCandlesTzeis},
 	{mm: hdate.Tishrei, dd: 23, desc: "Simchat Torah",
-		flags: event.CHUL_ONLY | event.CHAG | event.YOM_TOV_ENDS},
+		flags: event.ChulOnly | event.Chag | event.YomTovEnds},
 
 	{mm: hdate.Tishrei, dd: 15, desc: "Sukkot I",
-		flags: event.IL_ONLY | event.CHAG | event.YOM_TOV_ENDS,
+		flags: event.ILOnly | event.Chag | event.YomTovEnds,
 		emoji: sukkotEmoji},
 	{mm: hdate.Tishrei, dd: 16, desc: "Sukkot II (CH''M)",
-		flags: event.IL_ONLY | event.CHOL_HAMOED, chmDay: 1,
+		flags: event.ILOnly | event.CholHamoed, chmDay: 1,
 		emoji: sukkotEmoji},
 	{mm: hdate.Tishrei, dd: 17, desc: "Sukkot III (CH''M)",
-		flags: event.IL_ONLY | event.CHOL_HAMOED, chmDay: 2,
+		flags: event.ILOnly | event.CholHamoed, chmDay: 2,
 		emoji: sukkotEmoji},
 	{mm: hdate.Tishrei, dd: 18, desc: "Sukkot IV (CH''M)",
-		flags: event.IL_ONLY | event.CHOL_HAMOED, chmDay: 3,
+		flags: event.ILOnly | event.CholHamoed, chmDay: 3,
 		emoji: sukkotEmoji},
 	{mm: hdate.Tishrei, dd: 19, desc: "Sukkot V (CH''M)",
-		flags: event.IL_ONLY | event.CHOL_HAMOED, chmDay: 4,
+		flags: event.ILOnly | event.CholHamoed, chmDay: 4,
 		emoji: sukkotEmoji},
 	{mm: hdate.Tishrei, dd: 20, desc: "Sukkot VI (CH''M)",
-		flags: event.IL_ONLY | event.CHOL_HAMOED, chmDay: 5,
+		flags: event.ILOnly | event.CholHamoed, chmDay: 5,
 		emoji: sukkotEmoji},
 	{mm: hdate.Tishrei, dd: 22, desc: "Shmini Atzeret",
-		flags: event.IL_ONLY | event.CHAG | event.YOM_TOV_ENDS},
+		flags: event.ILOnly | event.Chag | event.YomTovEnds},
 
 	{mm: hdate.Tishrei, dd: 21, desc: "Sukkot VII (Hoshana Raba)",
-		flags: event.LIGHT_CANDLES | event.CHOL_HAMOED, chmDay: -1,
+		flags: event.LightCandles | event.CholHamoed, chmDay: -1,
 		emoji: sukkotEmoji},
 	{mm: hdate.Kislev, dd: 24, desc: "Chanukah: 1 Candle",
-		flags: event.EREV | event.MINOR_HOLIDAY | event.CHANUKAH_CANDLES,
-		emoji: chanukahEmoji},
+		flags: event.Erev | event.MinorHoliday | event.ChanukahCandles,
+		emoji: chanukahEmoji + "1\uFE0F\u20E3"},
 	{mm: hdate.Tevet, dd: 10, desc: "Asara B'Tevet",
-		flags: event.MINOR_FAST},
+		flags: event.MinorFast},
 	{mm: hdate.Shvat, dd: 15, desc: "Tu BiShvat",
-		flags: event.MINOR_HOLIDAY,
+		flags: event.MinorHoliday,
 		emoji: "🌳"},
 	{mm: hdate.Adar2, dd: 13, desc: "Erev Purim",
-		flags: event.EREV | event.MINOR_HOLIDAY,
+		flags: event.Erev | event.MinorHoliday,
 		emoji: "🎭️📜"},
 	{mm: hdate.Adar2, dd: 14, desc: "Purim",
-		flags: event.MINOR_HOLIDAY,
+		flags: event.MinorHoliday,
 		emoji: "🎭️📜"},
 	{mm: hdate.Adar2, dd: 15, desc: "Shushan Purim",
-		flags: event.MINOR_HOLIDAY,
+		flags: event.MinorHoliday,
 		emoji: "🎭️📜"},
 	{mm: hdate.Nisan, dd: 14, desc: "Erev Pesach",
-		flags: event.CHUL_ONLY | event.EREV | event.LIGHT_CANDLES,
+		flags: event.ChulOnly | event.Erev | event.LightCandles,
 		emoji: "🫓🍷"},
 	{mm: hdate.Nisan, dd: 14, desc: "Erev Pesach",
-		flags: event.IL_ONLY | event.EREV | event.LIGHT_CANDLES,
+		flags: event.ILOnly | event.Erev | event.LightCandles,
 		emoji: "🫓🍷"},
 	// Pesach Israel
 	{mm: hdate.Nisan, dd: 15, desc: "Pesach I",
-		flags: event.IL_ONLY | event.CHAG | event.YOM_TOV_ENDS,
+		flags: event.ILOnly | event.Chag | event.YomTovEnds,
 		emoji: "🫓"},
 	{mm: hdate.Nisan, dd: 16, desc: "Pesach II (CH''M)",
-		flags: event.IL_ONLY | event.CHOL_HAMOED, chmDay: 1,
+		flags: event.ILOnly | event.CholHamoed, chmDay: 1,
 		emoji: "🫓"},
 	{mm: hdate.Nisan, dd: 17, desc: "Pesach III (CH''M)",
-		flags: event.IL_ONLY | event.CHOL_HAMOED, chmDay: 2,
+		flags: event.ILOnly | event.CholHamoed, chmDay: 2,
 		emoji: "🫓"},
 	{mm: hdate.Nisan, dd: 18, desc: "Pesach IV (CH''M)",
-		flags: event.IL_ONLY | event.CHOL_HAMOED, chmDay: 3,
+		flags: event.ILOnly | event.CholHamoed, chmDay: 3,
 		emoji: "🫓"},
 	{mm: hdate.Nisan, dd: 19, desc: "Pesach V (CH''M)",
-		flags: event.IL_ONLY | event.CHOL_HAMOED, chmDay: 4,
+		flags: event.ILOnly | event.CholHamoed, chmDay: 4,
 		emoji: "🫓"},
 	{mm: hdate.Nisan, dd: 20, desc: "Pesach VI (CH''M)",
-		flags: event.IL_ONLY | event.CHOL_HAMOED | event.LIGHT_CANDLES, chmDay: 5,
+		flags: event.ILOnly | event.CholHamoed | event.LightCandles, chmDay: 5,
 		emoji: "🫓"},
 	{mm: hdate.Nisan, dd: 21, desc: "Pesach VII",
-		flags: event.IL_ONLY | event.CHAG | event.YOM_TOV_ENDS,
+		flags: event.ILOnly | event.Chag | event.YomTovEnds,
 		emoji: "🫓"},
 	// Pesach chutz l'aretz
 	{mm: hdate.Nisan, dd: 15, desc: "Pesach I",
-		flags: event.CHUL_ONLY | event.CHAG | event.LIGHT_CANDLES_TZEIS,
+		flags: event.ChulOnly | event.Chag | event.LightCandlesTzeis,
 		emoji: "🫓🍷"},
 	{mm: hdate.Nisan, dd: 16, desc: "Pesach II",
-		flags: event.CHUL_ONLY | event.CHAG | event.YOM_TOV_ENDS,
+		flags: event.ChulOnly | event.Chag | event.YomTovEnds,
 		emoji: "🫓"},
 	{mm: hdate.Nisan, dd: 17, desc: "Pesach III (CH''M)",
-		flags: event.CHUL_ONLY | event.CHOL_HAMOED, chmDay: 1,
+		flags: event.ChulOnly | event.CholHamoed, chmDay: 1,
 		emoji: "🫓"},
 	{mm: hdate.Nisan, dd: 18, desc: "Pesach IV (CH''M)",
-		flags: event.CHUL_ONLY | event.CHOL_HAMOED, chmDay: 2,
+		flags: event.ChulOnly | event.CholHamoed, chmDay: 2,
 		emoji: "🫓"},
 	{mm: hdate.Nisan, dd: 19, desc: "Pesach V (CH''M)",
-		flags: event.CHUL_ONLY | event.CHOL_HAMOED, chmDay: 3,
+		flags: event.ChulOnly | event.CholHamoed, chmDay: 3,
 		emoji: "🫓"},
 	{mm: hdate.Nisan, dd: 20, desc: "Pesach VI (CH''M)",
-		flags: event.CHUL_ONLY | event.CHOL_HAMOED | event.LIGHT_CANDLES, chmDay: 4,
+		flags: event.ChulOnly | event.CholHamoed | event.LightCandles, chmDay: 4,
 		emoji: "🫓"},
 	{mm: hdate.Nisan, dd: 21, desc: "Pesach VII",
-		flags: event.CHUL_ONLY | event.CHAG | event.LIGHT_CANDLES_TZEIS,
+		flags: event.ChulOnly | event.Chag | event.LightCandlesTzeis,
 		emoji: "🫓"},
 	{mm: hdate.Nisan, dd: 22, desc: "Pesach VIII",
-		flags: event.CHUL_ONLY | event.CHAG | event.YOM_TOV_ENDS,
+		flags: event.ChulOnly | event.Chag | event.YomTovEnds,
 		emoji: "🫓"},
 
 	{mm: hdate.Iyyar, dd: 14, desc: "Pesach Sheni",
-		flags: event.MINOR_HOLIDAY},
+		flags: event.MinorHoliday},
 	{mm: hdate.Iyyar, dd: 18, desc: "Lag BaOmer",
-		flags: event.MINOR_HOLIDAY,
+		flags: event.MinorHoliday,
 		emoji: "🔥"},
 	{mm: hdate.Sivan, dd: 5, desc: "Erev Shavuot",
-		flags: event.EREV | event.LIGHT_CANDLES,
+		flags: event.Erev | event.LightCandles,
 		emoji: "⛰️🌸"},
 	{mm: hdate.Sivan, dd: 6, desc: "Shavuot",
-		flags: event.IL_ONLY | event.CHAG | event.YOM_TOV_ENDS,
+		flags: event.ILOnly | event.Chag | event.YomTovEnds,
 		emoji: "⛰️🌸"},
 	{mm: hdate.Sivan, dd: 6, desc: "Shavuot I",
-		flags: event.CHUL_ONLY | event.CHAG | event.LIGHT_CANDLES_TZEIS,
+		flags: event.ChulOnly | event.Chag | event.LightCandlesTzeis,
 		emoji: "⛰️🌸"},
 	{mm: hdate.Sivan, dd: 7, desc: "Shavuot II",
-		flags: event.CHUL_ONLY | event.CHAG | event.YOM_TOV_ENDS,
+		flags: event.ChulOnly | event.Chag | event.YomTovEnds,
 		emoji: "⛰️🌸"},
 	{mm: hdate.Av, dd: 15, desc: "Tu B'Av",
-		flags: event.MINOR_HOLIDAY,
+		flags: event.MinorHoliday,
 		emoji: "❤️"},
 	{mm: hdate.Elul, dd: 1, desc: "Rosh Hashana LaBehemot",
-		flags: event.MINOR_HOLIDAY,
+		flags: event.MinorHoliday,
 		emoji: "🐑"},
 	{mm: hdate.Elul, dd: 29, desc: "Erev Rosh Hashana",
-		flags: event.EREV | event.LIGHT_CANDLES,
+		flags: event.Erev | event.LightCandles,
 		emoji: "🍏🍯"},
 }
 
@@ -221,8 +228,7 @@ var staticModernHolidays = []struct {
 		chul: true},
 	{firstYear: 5737, mm: hdate.Kislev, dd: 6, desc: "Ben-Gurion Day",
 		satPostponeToSun: true, friPostponeToSun: true},
-	{firstYear: 5750, mm: hdate.Shvat, dd: 30, desc: "Family Day",
-		suppressEmoji: true},
+	{firstYear: 5750, mm: hdate.Shvat, dd: 30, desc: "Family Day"},
 	{firstYear: 5758, mm: hdate.Cheshvan, dd: 12, desc: "Yitzhak Rabin Memorial Day",
 		friSatMovetoThu: true},
 	{firstYear: 5764, mm: hdate.Iyyar, dd: 10, desc: "Herzl Day",
@@ -266,21 +272,127 @@ func taanitBechorotDate(pesach hdate.HDate) hdate.HDate {
 	return hdate.New(pesach.Year(), hdate.Nisan, 14)
 }
 
-type byDate []event.HolidayEvent
+// DayPart is the part of the day in which an event falls, as far as that
+// decides the order of the events on one date. DayPartOf returns it, and the
+// values compare in the order events appear within a day.
+type DayPart int
 
-func (s byDate) Len() int {
-	return len(s)
-}
-func (s byDate) Swap(i, j int) {
-	s[i], s[j] = s[j], s[i]
-}
-func (s byDate) Less(i, j int) bool {
-	abs1 := s[i].Date.Abs()
-	abs2 := s[j].Date.Abs()
-	if abs1 == abs2 {
-		return s[i].Desc < s[j].Desc
+const (
+	// DayPartDawn: timed events before noon, such as "Fast begins".
+	DayPartDawn DayPart = iota
+	// DayPartMorning: the parsha, special Shabbatot, minor fasts.
+	DayPartMorning
+	// DayPartMevarchim: the Molad and Shabbat Mevarchim.
+	DayPartMevarchim
+	// DayPartDay: everything else, including the Omer and user events.
+	DayPartDay
+	// DayPartMidday: the deadlines for eating and burning chametz.
+	DayPartMidday
+	// DayPartLearning: daily learning.
+	DayPartLearning
+	// DayPartEvening: Erev holidays, Chanukah candle-lighting, Leil Selichot.
+	DayPartEvening
+	// DayPartNight: other timed events, such as candle-lighting and Havdalah.
+	DayPartNight
+)
+
+var dayPartNames = [...]string{"Dawn", "Morning", "Mevarchim", "Day", "Midday", "Learning", "Evening", "Night"}
+
+// String returns the name of the part of the day, e.g. "Morning".
+func (p DayPart) String() string {
+	if p < 0 || int(p) >= len(dayPartNames) {
+		return "DayPart(" + strconv.Itoa(int(p)) + ")"
 	}
-	return abs1 < abs2
+	return dayPartNames[p]
+}
+
+const learningFlags = event.DailyLearning | event.DafYomi | event.MishnaYomi |
+	event.NachYomi | event.YerushalmiYomi
+
+// holidayDayPart returns the approximate time of day of a holiday, used to order
+// holidays on the same date. See DayPartOf for the full list.
+func holidayDayPart(ev event.HolidayEvent) DayPart {
+	return untimedDayPart(ev.Flags(), ev.Desc())
+}
+
+// untimedTimeOfDay ranks an event that has no clock time by its flags and
+// untranslated description.
+func untimedDayPart(f event.Flags, desc string) DayPart {
+	switch {
+	case f.HasAny(event.Erev|event.ChanukahCandles) || desc == "Leil Selichot":
+		return DayPartEvening
+	case f.HasAny(event.ParshaHashavua|event.SpecialShabbat|event.MinorFast) ||
+		desc == "Birkat Hachamah":
+		return DayPartMorning
+	case f.HasAny(event.ShabbatMevarchim | event.Molad):
+		return DayPartMevarchim
+	case f.HasAny(learningFlags):
+		return DayPartLearning
+	}
+	return DayPartDay
+}
+
+// timedTimeOfDay ranks an event that occurs at clock time t.
+func timedDayPart(f event.Flags, kind TimedKind, t time.Time) DayPart {
+	switch {
+	case f.Has(event.ChanukahCandles):
+		// Chanukah candle-lighting sits with the evening holidays
+		return DayPartEvening
+	case kind == FinishChametz || kind == BiurChametz:
+		return DayPartMidday
+	case kind == FastBegins || kind == KiddushLevana:
+		// A minor fast begins at dawn, but Tish'a B'Av at sunset the day
+		// before. Latest Kiddush Levana is either before dawn or after
+		// nightfall.
+		if t.Hour() < 12 {
+			return DayPartDawn
+		}
+	}
+	return DayPartNight
+}
+
+// DayPartOf returns the approximate time of day of an event, used to order
+// the events on one date. HebrewCalendar sorts each day's events by it:
+// events of equal rank keep the order in which they were created, and timed
+// events of equal rank are ordered by time. A caller merging events of its
+// own into a calendar can use it to find their place.
+//   - dawn: Fast begins for a minor fast, and a Latest Kiddush Levana before
+//     noon (which is never later than alot hashachar)
+//   - morning: the parsha, special Shabbatot (tied to the Torah or Haftarah
+//     reading), minor fasts (which begin at dawn) and Birkat Hachamah
+//     (recited at sunrise)
+//   - the Molad and Shabbat Mevarchim, announced in synagogue after the Torah
+//     reading
+//   - day: everything else, including the Omer count and user events
+//   - midday: the deadlines for eating and burning chametz
+//   - daily learning
+//   - evening: Erev holidays, Chanukah candle-lighting and Leil Selichot
+//   - night: other timed events such as candle-lighting, Havdalah, Fast ends
+//     and a Latest Kiddush Levana after noon
+func DayPartOf(ev event.CalEvent) DayPart {
+	switch e := ev.(type) {
+	case TimedEvent:
+		return timedDayPart(e.flags, e.kind, e.eventTime)
+	case KiddushLevanaEvent:
+		return timedDayPart(e.Flags(), KiddushLevana, e.Time())
+	case event.HolidayEvent:
+		return holidayDayPart(e)
+	case riseSetEvent:
+		return DayPartDawn
+	}
+	return untimedDayPart(ev.Flags(), "")
+}
+
+// sortHolidays orders events by date, then by holidayDayPart. Events on the same
+// date and at the same time of day keep the order in which they were added.
+func sortHolidays(events []event.HolidayEvent) {
+	sort.SliceStable(events, func(i, j int) bool {
+		abs1, abs2 := events[i].Date().Abs(), events[j].Date().Abs()
+		if abs1 != abs2 {
+			return abs1 < abs2
+		}
+		return holidayDayPart(events[i]) < holidayDayPart(events[j])
+	})
 }
 
 func nextMonthName(year int, month hdate.HMonth) (string, hdate.HMonth) {
@@ -293,12 +405,20 @@ func nextMonthName(year int, month hdate.HMonth) (string, hdate.HMonth) {
 	return nextMonthName, nextMonth
 }
 
+// chanukahEvent constructs the holiday event of a day of Chanukah.
+func chanukahEvent(date hdate.HDate, desc string, flags event.Flags, emoji string, chanukahDay int) event.HolidayEvent {
+	ev := event.NewHolidayEvent(date, desc, flags, emoji)
+	ev.ChanukahDay = chanukahDay
+	return ev
+}
+
 func getAllHolidaysForYear(year int) []event.HolidayEvent {
 	events := make([]event.HolidayEvent, 0, 120)
 	// standard holidays that don't shift based on year
 	for _, h := range staticHolidays {
-		events = append(events, event.HolidayEvent{Date: hdate.New(year, h.mm, h.dd),
-			Desc: h.desc, Flags: h.flags, Emoji: h.emoji, CholHaMoedDay: h.chmDay})
+		ev := event.NewHolidayEvent(hdate.New(year, h.mm, h.dd), h.desc, h.flags, h.emoji)
+		ev.CholHaMoedDay = h.chmDay
+		events = append(events, ev)
 	}
 	// variable holidays
 	roshHashana := hdate.New(year, hdate.Tishrei, 1)
@@ -306,77 +426,81 @@ func getAllHolidaysForYear(year int) []event.HolidayEvent {
 	pesach := hdate.New(year, hdate.Nisan, 15)
 	pesachAbs := pesach.Abs()
 	events = append(events,
-		event.HolidayEvent{
-			Date:  roshHashana,
-			Desc:  "Rosh Hashana " + strconv.Itoa(year),
-			Flags: event.CHAG | event.LIGHT_CANDLES_TZEIS,
-			Emoji: "🍏🍯"},
-		event.HolidayEvent{
-			Date:  hdate.FromRD(hdate.DayOnOrBefore(time.Saturday, 7+roshHashana.Abs())),
-			Desc:  "Shabbat Shuva",
-			Flags: event.SPECIAL_SHABBAT},
-		event.HolidayEvent{
-			Date:  tzomGedaliahDate(roshHashana),
-			Desc:  "Tzom Gedaliah",
-			Flags: event.MINOR_FAST},
-		event.HolidayEvent{
-			Date:  hdate.FromRD(hdate.DayOnOrBefore(time.Saturday, pesachAbs-43)),
-			Desc:  "Shabbat Shekalim",
-			Flags: event.SPECIAL_SHABBAT},
-		event.HolidayEvent{
-			Date:  hdate.FromRD(hdate.DayOnOrBefore(time.Saturday, pesachAbs-30)),
-			Desc:  "Shabbat Zachor",
-			Flags: event.SPECIAL_SHABBAT},
-		event.HolidayEvent{
-			Date:  taanitEstherDate(pesach),
-			Desc:  "Ta'anit Esther",
-			Flags: event.MINOR_FAST},
-		event.HolidayEvent{
-			Date:  hdate.FromRD(hdate.DayOnOrBefore(time.Saturday, pesachAbs-14) - 7),
-			Desc:  "Shabbat Parah",
-			Flags: event.SPECIAL_SHABBAT},
-		event.HolidayEvent{
-			Date: hdate.FromRD(hdate.DayOnOrBefore(time.Saturday, pesachAbs-14)),
-			Desc: "Shabbat HaChodesh", Flags: event.SPECIAL_SHABBAT},
-		event.HolidayEvent{
-			Date: hdate.FromRD(hdate.DayOnOrBefore(time.Saturday, pesachAbs-1)),
-			Desc: "Shabbat HaGadol", Flags: event.SPECIAL_SHABBAT},
-		event.HolidayEvent{
-			Date:  taanitBechorotDate(pesach),
-			Desc:  "Ta'anit Bechorot",
-			Flags: event.MINOR_FAST},
-		event.HolidayEvent{
-			Date:  hdate.FromRD(hdate.DayOnOrBefore(time.Saturday, nextRh.Abs()-4)),
-			Desc:  "Leil Selichot",
-			Flags: event.MINOR_HOLIDAY,
-			Emoji: "🕍"},
+		event.NewHolidayEvent(
+			roshHashana,
+			"Rosh Hashana "+strconv.Itoa(year),
+			event.Chag|event.LightCandlesTzeis,
+			"🍏🍯"),
+		event.NewHolidayEvent(
+			hdate.FromRD(hdate.DayOnOrBefore(time.Saturday, 7+roshHashana.Abs())),
+			"Shabbat Shuva",
+			event.SpecialShabbat,
+			""),
+		event.NewHolidayEvent(
+			tzomGedaliahDate(roshHashana),
+			"Tzom Gedaliah",
+			event.MinorFast,
+			""),
+		event.NewHolidayEvent(
+			hdate.FromRD(hdate.DayOnOrBefore(time.Saturday, pesachAbs-43)),
+			"Shabbat Shekalim",
+			event.SpecialShabbat,
+			""),
+		event.NewHolidayEvent(
+			hdate.FromRD(hdate.DayOnOrBefore(time.Saturday, pesachAbs-30)),
+			"Shabbat Zachor",
+			event.SpecialShabbat,
+			""),
+		event.NewHolidayEvent(
+			taanitEstherDate(pesach),
+			"Ta'anit Esther",
+			event.MinorFast,
+			""),
+		event.NewHolidayEvent(
+			hdate.FromRD(hdate.DayOnOrBefore(time.Saturday, pesachAbs-14)-7),
+			"Shabbat Parah",
+			event.SpecialShabbat,
+			""),
+		event.NewHolidayEvent(
+			hdate.FromRD(hdate.DayOnOrBefore(time.Saturday, pesachAbs-14)),
+			"Shabbat HaChodesh",
+			event.SpecialShabbat,
+			""),
+		event.NewHolidayEvent(
+			hdate.FromRD(hdate.DayOnOrBefore(time.Saturday, pesachAbs-1)),
+			"Shabbat HaGadol",
+			event.SpecialShabbat,
+			""),
+		event.NewHolidayEvent(
+			taanitBechorotDate(pesach),
+			"Ta'anit Bechorot",
+			event.MinorFast,
+			""),
+		event.NewHolidayEvent(
+			hdate.FromRD(hdate.DayOnOrBefore(time.Saturday, nextRh.Abs()-4)),
+			"Leil Selichot",
+			event.MinorHoliday,
+			"🕍"),
 	)
 	if pesach.Weekday() == time.Sunday {
-		events = append(events, event.HolidayEvent{
-			Date:  hdate.New(year, hdate.Adar2, 16),
-			Desc:  "Purim Meshulash",
-			Flags: event.MINOR_HOLIDAY},
+		events = append(events, event.NewHolidayEvent(
+			hdate.New(year, hdate.Adar2, 16),
+			"Purim Meshulash",
+			event.MinorHoliday,
+			""),
 		)
 	}
 	if hdate.IsLeapYear(year) {
-		events = append(events, event.HolidayEvent{
-			Date:  hdate.New(year, hdate.Adar1, 14),
-			Desc:  "Purim Katan",
-			Flags: event.MINOR_HOLIDAY,
-			Emoji: "🎭️"})
-		events = append(events, event.HolidayEvent{
-			Date:  hdate.New(year, hdate.Adar1, 15),
-			Desc:  "Shushan Purim Katan",
-			Flags: event.MINOR_HOLIDAY,
-			Emoji: "🎭️"})
-	}
-	for candles := 2; candles <= 6; candles++ {
-		events = append(events, event.HolidayEvent{
-			Date:        hdate.New(year, hdate.Kislev, 23+candles),
-			Desc:        "Chanukah: " + strconv.Itoa(candles) + " Candles",
-			Flags:       event.MINOR_HOLIDAY | event.CHANUKAH_CANDLES,
-			Emoji:       chanukahEmoji,
-			ChanukahDay: candles - 1})
+		events = append(events, event.NewHolidayEvent(
+			hdate.New(year, hdate.Adar1, 14),
+			"Purim Katan",
+			event.MinorHoliday,
+			"🎭️"))
+		events = append(events, event.NewHolidayEvent(
+			hdate.New(year, hdate.Adar1, 15),
+			"Shushan Purim Katan",
+			event.MinorHoliday,
+			"🎭️"))
 	}
 	var chanukah7 hdate.HDate
 	if hdate.ShortKislev(year) {
@@ -384,33 +508,37 @@ func getAllHolidaysForYear(year int) []event.HolidayEvent {
 	} else {
 		chanukah7 = hdate.New(year, hdate.Kislev, 30)
 	}
-	chanukah8 := chanukah7.Next()
-	events = append(events,
-		event.HolidayEvent{
-			Date:        chanukah7,
-			Desc:        "Chanukah: 7 Candles",
-			Flags:       event.MINOR_HOLIDAY | event.CHANUKAH_CANDLES,
-			Emoji:       chanukahEmoji,
-			ChanukahDay: 6},
-		event.HolidayEvent{
-			Date:        chanukah8,
-			Desc:        "Chanukah: 8 Candles",
-			Flags:       event.MINOR_HOLIDAY | event.CHANUKAH_CANDLES,
-			Emoji:       chanukahEmoji,
-			ChanukahDay: 7},
-		event.HolidayEvent{
-			Date:        chanukah8.Next(),
-			Desc:        "Chanukah: 8th Day",
-			Flags:       event.MINOR_HOLIDAY,
-			Emoji:       chanukahEmoji,
-			ChanukahDay: 8})
-
 	// On the 1st day of Rosh Chodesh Tevet
 	events = append(events,
-		event.HolidayEvent{
-			Date:  chanukah7,
-			Desc:  "Chag HaBanot",
-			Flags: event.MINOR_HOLIDAY})
+		event.NewHolidayEvent(
+			chanukah7,
+			"Chag HaBanot",
+			event.MinorHoliday,
+			""))
+	for candles := 2; candles <= 6; candles++ {
+		events = append(events, chanukahEvent(
+			hdate.New(year, hdate.Kislev, 23+candles),
+			"Chanukah: "+strconv.Itoa(candles)+" Candles",
+			event.MinorHoliday|event.ChanukahCandles,
+			chanukahCandlesEmoji(candles), candles-1))
+	}
+	chanukah8 := chanukah7.Next()
+	events = append(events,
+		chanukahEvent(
+			chanukah7,
+			"Chanukah: 7 Candles",
+			event.MinorHoliday|event.ChanukahCandles,
+			chanukahCandlesEmoji(7), 6),
+		chanukahEvent(
+			chanukah8,
+			"Chanukah: 8 Candles",
+			event.MinorHoliday|event.ChanukahCandles,
+			chanukahCandlesEmoji(8), 7),
+		chanukahEvent(
+			chanukah8.Next(),
+			"Chanukah: 8th Day",
+			event.MinorHoliday,
+			chanukahEmoji, 8))
 
 	// Tisha BAv and the 3 weeks
 	var tamuz17 = hdate.New(year, hdate.Tamuz, 17)
@@ -418,7 +546,7 @@ func getAllHolidaysForYear(year int) []event.HolidayEvent {
 		tamuz17 = tamuz17.Next()
 	}
 	events = append(events,
-		event.HolidayEvent{Date: tamuz17, Desc: "Tzom Tammuz", Flags: event.MINOR_FAST})
+		event.NewHolidayEvent(tamuz17, "Tzom Tammuz", event.MinorFast, ""))
 
 	var av9dt = hdate.New(year, hdate.Av, 9)
 	var av9title = "Tish'a B'Av"
@@ -428,19 +556,22 @@ func getAllHolidaysForYear(year int) []event.HolidayEvent {
 	}
 	var av9abs = av9dt.Abs()
 	events = append(events,
-		event.HolidayEvent{
-			Date:  hdate.FromRD(hdate.DayOnOrBefore(time.Saturday, av9abs)),
-			Desc:  "Shabbat Chazon",
-			Flags: event.SPECIAL_SHABBAT},
-		event.HolidayEvent{
-			Date:  av9dt.Prev(),
-			Desc:  "Erev Tish'a B'Av",
-			Flags: event.EREV | event.MAJOR_FAST},
-		event.HolidayEvent{Date: av9dt, Desc: av9title, Flags: event.MAJOR_FAST},
-		event.HolidayEvent{
-			Date:  hdate.FromRD(hdate.DayOnOrBefore(time.Saturday, av9abs+7)),
-			Desc:  "Shabbat Nachamu",
-			Flags: event.SPECIAL_SHABBAT})
+		event.NewHolidayEvent(
+			hdate.FromRD(hdate.DayOnOrBefore(time.Saturday, av9abs)),
+			"Shabbat Chazon",
+			event.SpecialShabbat,
+			""),
+		event.NewHolidayEvent(
+			av9dt.Prev(),
+			"Erev Tish'a B'Av",
+			event.Erev|event.MajorFast,
+			""),
+		event.NewHolidayEvent(av9dt, av9title, event.MajorFast, ""),
+		event.NewHolidayEvent(
+			hdate.FromRD(hdate.DayOnOrBefore(time.Saturday, av9abs+7)),
+			"Shabbat Nachamu",
+			event.SpecialShabbat,
+			""))
 
 	// modern holidays
 	if year >= 5708 {
@@ -459,16 +590,16 @@ func getAllHolidaysForYear(year int) []event.HolidayEvent {
 		}
 		var tmpDate = hdate.New(year, hdate.Iyyar, day)
 		events = append(events,
-			event.HolidayEvent{
-				Date:  tmpDate,
-				Desc:  "Yom HaZikaron",
-				Flags: event.MODERN_HOLIDAY,
-				Emoji: "🇮🇱"},
-			event.HolidayEvent{
-				Date:  tmpDate.Next(),
-				Desc:  "Yom HaAtzma'ut",
-				Flags: event.MODERN_HOLIDAY,
-				Emoji: "🇮🇱"},
+			event.NewHolidayEvent(
+				tmpDate,
+				"Yom HaZikaron",
+				event.ModernHoliday,
+				"🇮🇱"),
+			event.NewHolidayEvent(
+				tmpDate.Next(),
+				"Yom HaAtzma'ut",
+				event.ModernHoliday,
+				"🇮🇱"),
 		)
 	}
 
@@ -487,10 +618,11 @@ func getAllHolidaysForYear(year int) []event.HolidayEvent {
 			nisan27dt = nisan27dt.Next()
 		}
 		events = append(events,
-			event.HolidayEvent{
-				Date:  nisan27dt,
-				Desc:  "Yom HaShoah",
-				Flags: event.MODERN_HOLIDAY})
+			event.NewHolidayEvent(
+				nisan27dt,
+				"Yom HaShoah",
+				event.ModernHoliday,
+				""))
 	}
 
 	for _, h := range staticModernHolidays {
@@ -508,15 +640,15 @@ func getAllHolidaysForYear(year int) []event.HolidayEvent {
 			} else if h.satPostponeToSun && dow == time.Saturday {
 				hd = hd.Next()
 			}
-			flags := event.MODERN_HOLIDAY
+			flags := event.ModernHoliday
 			if !h.chul {
-				flags |= event.IL_ONLY
+				flags |= event.ILOnly
 			}
-			events = append(events, event.HolidayEvent{
-				Date:  hd,
-				Desc:  h.desc,
-				Flags: flags,
-				Emoji: emoji})
+			events = append(events, event.NewHolidayEvent(
+				hd,
+				h.desc,
+				flags,
+				emoji))
 		}
 	}
 
@@ -537,21 +669,24 @@ func getAllHolidaysForYear(year int) []event.HolidayEvent {
 		desc := "Rosh Chodesh " + monthName
 		if prevMonthNumDays == 30 {
 			events = append(events,
-				event.HolidayEvent{
-					Date:  hdate.New(year, prevMonth, 30),
-					Desc:  desc,
-					Flags: event.ROSH_CHODESH},
-				event.HolidayEvent{
-					Date:  hdate.New(year, month, 1),
-					Desc:  desc,
-					Flags: event.ROSH_CHODESH},
+				event.NewHolidayEvent(
+					hdate.New(year, prevMonth, 30),
+					desc,
+					event.RoshChodesh,
+					""),
+				event.NewHolidayEvent(
+					hdate.New(year, month, 1),
+					desc,
+					event.RoshChodesh,
+					""),
 			)
 		} else if month != hdate.Tishrei {
 			events = append(events,
-				event.HolidayEvent{
-					Date:  hdate.New(year, month, 1),
-					Desc:  desc,
-					Flags: event.ROSH_CHODESH})
+				event.NewHolidayEvent(
+					hdate.New(year, month, 1),
+					desc,
+					event.RoshChodesh,
+					""))
 		}
 
 		// Shabbat Mevarchim Chodesh
@@ -560,11 +695,11 @@ func getAllHolidaysForYear(year int) []event.HolidayEvent {
 		}
 		nextMonthName, _ := nextMonthName(year, month)
 		events = append(events,
-			event.HolidayEvent{
-				Date:  hdate.New(year, month, 29).OnOrBefore(time.Saturday),
-				Desc:  "Shabbat Mevarchim Chodesh " + nextMonthName,
-				Flags: event.SHABBAT_MEVARCHIM,
-			})
+			event.NewHolidayEvent(
+				hdate.New(year, month, 29).OnOrBefore(time.Saturday),
+				"Shabbat Mevarchim Chodesh "+nextMonthName,
+				event.ShabbatMevarchim,
+				""))
 	}
 
 	// Begin: Yom Kippur Katan
@@ -584,10 +719,11 @@ func getAllHolidaysForYear(year int) []event.HolidayEvent {
 		}
 
 		events = append(events,
-			event.HolidayEvent{
-				Date:  ykk,
-				Desc:  "Yom Kippur Katan " + nextMonthName,
-				Flags: event.MINOR_FAST | event.YOM_KIPPUR_KATAN})
+			event.NewHolidayEvent(
+				ykk,
+				"Yom Kippur Katan "+nextMonthName,
+				event.MinorFast|event.YomKippurKatan,
+				""))
 	}
 
 	// Ta'anit BeHaB: Monday, Thursday, Monday after Rosh Chodesh Cheshvan and Iyyar
@@ -607,33 +743,35 @@ func getAllHolidaysForYear(year int) []event.HolidayEvent {
 			fastDays[2] = hdate.New(year, hdate.Iyyar, 17)
 		}
 		for _, hd := range fastDays {
-			events = append(events, event.HolidayEvent{
-				Date:  hd,
-				Desc:  "Ta'anit BeHaB",
-				Flags: event.MINOR_FAST | event.BEHAB})
+			events = append(events, event.NewHolidayEvent(
+				hd,
+				"Ta'anit BeHaB",
+				event.MinorFast|event.BeHaB,
+				""))
 		}
 	}
 
 	sedra := sedra.New(year, false)
 	beshalachHd, _ := sedra.FindParshaNum(16)
 	events = append(events,
-		event.HolidayEvent{
-			Date:  beshalachHd,
-			Desc:  "Shabbat Shirah",
-			Flags: event.SPECIAL_SHABBAT})
+		event.NewHolidayEvent(
+			beshalachHd,
+			"Shabbat Shirah",
+			event.SpecialShabbat,
+			""))
 
 	// Birkat Hachamah appears only once every 28 years.
 	birkatHaChamaRD := getBirkatHaChama(year)
 	if birkatHaChamaRD != 0 {
 		events = append(events,
-			event.HolidayEvent{
-				Date:  hdate.FromRD(birkatHaChamaRD),
-				Desc:  "Birkat Hachamah",
-				Flags: event.MINOR_HOLIDAY,
-				Emoji: "☀️"})
+			event.NewHolidayEvent(
+				hdate.FromRD(birkatHaChamaRD),
+				"Birkat Hachamah",
+				event.MinorHoliday,
+				"☀️"))
 	}
 
-	sort.Sort(byDate(events))
+	sortHolidays(events)
 	return events
 }
 
@@ -662,15 +800,13 @@ func getBirkatHaChama(year int) int64 {
 	return 0
 }
 
-// Returns a slice of holidays for the year.
-// For Israel holiday schedule, specify il=true.
-// holidaysYearKey identifies a memoized GetHolidaysForYear result.
+// holidaysYearKey identifies a memoized HolidaysForYear result.
 type holidaysYearKey struct {
 	year int
 	il   bool
 }
 
-// holidaysForYearCache memoizes GetHolidaysForYear. The map is unbounded (the
+// holidaysForYearCache memoizes HolidaysForYear. The map is unbounded (the
 // set of (year, il) pairs a process sees is small in practice) and guarded by
 // holidaysForYearMu.
 var (
@@ -678,14 +814,17 @@ var (
 	holidaysForYearCache = make(map[holidaysYearKey][]event.HolidayEvent)
 )
 
-// GetHolidaysForYear returns all holidays in the given Hebrew year, for either
+// HolidaysForYear returns all holidays in the given Hebrew year, for either
 // the Diaspora (il=false) or Israel (il=true) schedule.
+//
+// year must be a valid Hebrew year, 1 or later; an earlier year panics, as
+// in github.com/hebcal/hdate.
 //
 // The result is memoized and shared between callers, so it must be treated as
 // read-only: do not modify the returned slice or its elements. (The slice is
 // returned with its capacity clamped to its length, so appending to it safely
 // allocates a new backing array rather than corrupting the cache.)
-func GetHolidaysForYear(year int, il bool) []event.HolidayEvent {
+func HolidaysForYear(year int, il bool) []event.HolidayEvent {
 	key := holidaysYearKey{year: year, il: il}
 	holidaysForYearMu.RLock()
 	cached, ok := holidaysForYearCache[key]
@@ -696,8 +835,8 @@ func GetHolidaysForYear(year int, il bool) []event.HolidayEvent {
 	events := getAllHolidaysForYear(year)
 	result := make([]event.HolidayEvent, 0, len(events))
 	for _, ev := range events {
-		if (il && !ev.Flags.Has(event.CHUL_ONLY)) ||
-			(!il && !ev.Flags.Has(event.IL_ONLY)) {
+		if (il && !ev.Flags().Has(event.ChulOnly)) ||
+			(!il && !ev.Flags().Has(event.ILOnly)) {
 			result = append(result, ev)
 		}
 	}
