@@ -41,7 +41,7 @@ const (
 
 // config holds everything parsed from the command line.
 type config struct {
-	cal  hebcal.CalOptions
+	cal  hebcal.Options
 	lang string
 
 	// Requested date range; month is Hebrew or Gregorian per cal.IsHebrewYear
