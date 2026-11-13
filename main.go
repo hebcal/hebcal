@@ -227,7 +227,7 @@ on the yahrtzeit. Events are printed regardless of the
 	for _, name := range c.cal.DailyLearning {
 		if !dailylearning.Has(name) {
 			return nil, fmt.Errorf("unknown --daily-learning calendar: %s\nvalid calendars are: %s",
-				name, strings.Join(dailylearning.GetCalendars(), ", "))
+				name, strings.Join(dailylearning.Calendars(), ", "))
 		}
 	}
 
@@ -274,8 +274,8 @@ on the yahrtzeit. Events are printed regardless of the
 	}
 
 	if chagOnlySw {
-		c.cal.Mask = event.CHAG | event.LIGHT_CANDLES |
-			event.LIGHT_CANDLES_TZEIS | event.YOM_TOV_ENDS
+		c.cal.Mask = event.Chag | event.LightCandles |
+			event.LightCandlesTzeis | event.YomTovEnds
 	}
 
 	if *yahrzeitFileName != "" {
@@ -362,7 +362,10 @@ func (c *config) setLocation(cityName, latitudeStr, longitudeStr, coordinates, t
 		if _, err := time.LoadLocation(tzid); err != nil {
 			return err
 		}
-		userLocation := zmanim.NewLocation("User Defined City", "", latitude, longitude, 0, tzid)
+		userLocation, err := zmanim.NewLocation("User Defined City", "", latitude, longitude, 0, tzid)
+		if err != nil {
+			return err
+		}
 		c.cal.Location = &userLocation
 		c.cal.CandleLighting = true
 	}
@@ -529,7 +532,7 @@ func (c *config) runCommand() {
 	case "cities":
 		for _, city := range zmanim.AllCities() {
 			fmt.Printf("%s (%.5f,%.5f  %s)\n",
-				city.Name, city.Latitude, city.Longitude, city.TimeZoneId)
+				city.Name, city.Latitude, city.Longitude, city.TimeZoneID)
 		}
 	case "copying":
 		fmt.Println(gplv2txt)
@@ -578,7 +581,7 @@ func main() {
 	}
 
 	for _, ev := range events {
-		fmt.Println(c.formatGregDate(ev.GetDate()) + ev.Render(c.lang))
+		fmt.Println(c.formatGregDate(ev.Date()) + ev.Render(c.lang))
 	}
 }
 
@@ -596,7 +599,7 @@ func (c *config) checkTodayChag(events []event.CalEvent) (bool, string, error) {
 		return false, "", nil
 	}
 
-	loc, err := time.LoadLocation(c.cal.Location.TimeZoneId)
+	loc, err := time.LoadLocation(c.cal.Location.TimeZoneID)
 	if err != nil {
 		return false, "", err
 	}
@@ -642,7 +645,7 @@ func (c *config) checkTodayChag(events []event.CalEvent) (bool, string, error) {
 // findChag returns the first event that is a Chag, if any.
 func findChag(events []event.CalEvent, lang string) (bool, string) {
 	for _, ev := range events {
-		if ev.GetFlags().Has(event.CHAG) {
+		if ev.Flags().Has(event.Chag) {
 			return true, ev.Render(lang)
 		}
 	}
