@@ -1,3 +1,6 @@
+Changes in 5.18.0
+* Typographic apostrophes (“Sh’vat”, “CH’’M”), am/pm on times, and some event ordering changes
+
 Changes in 5.17.0
 * `-m 0` (`--havdalah-mins=0`) now suppresses Havdalah times entirely; omitting `-m` still defaults to 72 minutes with `-c`
 * Candle-lighting calendars (`-c`) now include the latest time for Kiddush Levana each month, according to the Maharil, unless Rosh Chodesh (`-x`) or Havdalah (`-m 0`) is suppressed. This matches hebcal.com

@@ -19,7 +19,7 @@ github.com/hebcal/hebcal-go/molad
 github.com/hebcal/hebcal-go/omer
 github.com/hebcal/hebcal-go/sedra
 github.com/hebcal/hebcal-go/zmanim
-# github.com/hebcal/learning v0.6.2-0.20261113161605-6e3f09d57ab7
+# github.com/hebcal/learning v0.7.0
 ## explicit; go 1.18
 github.com/hebcal/learning
 github.com/hebcal/learning/dafweekly

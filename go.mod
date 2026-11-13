@@ -6,7 +6,7 @@ require (
 	github.com/hebcal/greg v1.1.0
 	github.com/hebcal/hdate v1.4.0
 	github.com/hebcal/hebcal-go v0.50.0
-	github.com/hebcal/learning v0.6.2-0.20261113161605-6e3f09d57ab7
+	github.com/hebcal/learning v0.7.0
 	github.com/hebcal/locales v1.1.5
 	github.com/pborman/getopt/v2 v2.2.0
 )
