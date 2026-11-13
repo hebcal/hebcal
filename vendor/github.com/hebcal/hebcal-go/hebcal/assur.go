@@ -27,14 +27,14 @@ import (
 	"github.com/hebcal/hebcal-go/zmanim"
 )
 
-// GetHolidaysOnDate returns the holidays observed on the given Hebrew date, for
+// HolidaysOnDate returns the holidays observed on the given Hebrew date, for
 // either the Diaspora (il=false) or Israel (il=true) schedule.
-func GetHolidaysOnDate(hd hdate.HDate, il bool) []event.HolidayEvent {
+func HolidaysOnDate(hd hdate.HDate, il bool) []event.HolidayEvent {
 	abs := hd.Abs()
-	yearEvents := GetHolidaysForYear(hd.Year(), il)
+	yearEvents := HolidaysForYear(hd.Year(), il)
 	var result []event.HolidayEvent
 	for _, ev := range yearEvents {
-		if ev.Date.Abs() == abs {
+		if ev.Date().Abs() == abs {
 			result = append(result, ev)
 		}
 	}
@@ -43,7 +43,7 @@ func GetHolidaysOnDate(hd hdate.HDate, il bool) []event.HolidayEvent {
 
 // lightCandlesMask matches @hebcal/core: an event that begins a candle-lighting
 // (erev) period.
-const lightCandlesMask = event.LIGHT_CANDLES | event.LIGHT_CANDLES_TZEIS
+const lightCandlesMask = event.LightCandles | event.LightCandlesTzeis
 
 // isTomorrowShabbosOrYomTov reports whether the following day is Shabbat or a Yom
 // Tov (i.e. the given day is erev Shabbat / erev Yom Tov / Yom Tov sheni).
@@ -52,7 +52,7 @@ func isTomorrowShabbosOrYomTov(dow time.Weekday, events []event.HolidayEvent) bo
 		return true
 	}
 	for _, ev := range events {
-		if ev.GetFlags().HasAny(lightCandlesMask) {
+		if ev.Flags().HasAny(lightCandlesMask) {
 			return true
 		}
 	}
@@ -66,14 +66,14 @@ func isTodayAssurBemelacha(dow time.Weekday, events []event.HolidayEvent) bool {
 		return true
 	}
 	for _, ev := range events {
-		if ev.GetFlags().Has(event.CHAG) {
+		if ev.Flags().Has(event.Chag) {
 			return true
 		}
 	}
 	return false
 }
 
-// IsAssurBemlacha reports whether the given moment (date and time) falls within a
+// IsAssurBemelacha reports whether the given moment (date and time) falls within a
 // period when melacha (work) is prohibited — that is, Shabbat or a Yom Tov.
 //
 // The Shabbat / Yom Tov window is taken to begin at sunset (shkiah) on the
@@ -87,10 +87,14 @@ func isTodayAssurBemelacha(dow time.Weekday, events []event.HolidayEvent) bool {
 // location's elevation when computing sunset (it has no effect on the
 // degree-based tzais calculation).
 //
-// It returns an error if sunset (or tzais) cannot be computed for the location
-// on that day, e.g. in polar regions.
-func IsAssurBemlacha(currentTime time.Time, loc *zmanim.Location, il bool, useElevation bool) (bool, error) {
-	z := zmanim.New(loc, currentTime)
+// It returns an error if the location cannot be used (see zmanim.New), or if
+// sunset (or tzais) cannot be computed for the location on that day, e.g. in
+// polar regions.
+func IsAssurBemelacha(currentTime time.Time, loc *zmanim.Location, il bool, useElevation bool) (bool, error) {
+	z, err := zmanim.New(loc, currentTime)
+	if err != nil {
+		return false, err
+	}
 	z.UseElevation = useElevation
 	sunset := z.Sunset()
 	if sunset.IsZero() {
@@ -98,7 +102,7 @@ func IsAssurBemlacha(currentTime time.Time, loc *zmanim.Location, il bool, useEl
 	}
 	hd := hdate.FromTime(currentTime)
 	dow := hd.Weekday()
-	events := GetHolidaysOnDate(hd, il)
+	events := HolidaysOnDate(hd, il)
 	// erev Shabbat, Yom Tov or Yom Tov sheni and after shkiah
 	if isTomorrowShabbosOrYomTov(dow, events) && !currentTime.Before(sunset) {
 		return true, nil

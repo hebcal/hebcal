@@ -2,17 +2,17 @@
 //
 // Source of truth is the .po files in these npm packages:
 //   @hebcal/hdate@0.23.1
-//   @hebcal/core@6.14.1
-//   @hebcal/locales@6.5.3
+//   @hebcal/core@6.16.0
+//   @hebcal/locales@6.7.0
 //   @hebcal/leyning@10.1.0
-//   @hebcal/rest-api@7.3.1
-//   @hebcal/learning@6.12.0
+//   @hebcal/rest-api@7.3.3
+//   @hebcal/learning@6.13.1
 //
 // Regenerate with: npm run generate
 
 package locales
 
-// Translations for nl (196 entries) -> tag nl
+// Translations for nl (200 entries) -> tag nl
 func init() {
 	Catalog.SetString(tag_nl, "Achrei Mot", "Acharei Mot")
 	Catalog.SetString(tag_nl, "after", "na")
@@ -84,6 +84,8 @@ func init() {
 	Catalog.SetString(tag_nl, "Nedarim", "Nedariem")
 	Catalog.SetString(tag_nl, "Niddah", "Nidda")
 	Catalog.SetString(tag_nl, "Nitzavim", "Nitsaviem")
+	Catalog.SetString(tag_nl, "occurs on", "valt op")
+	Catalog.SetString(tag_nl, "on", "op")
 	Catalog.SetString(tag_nl, "Parashat", "Parasja")
 	Catalog.SetString(tag_nl, "Pekudei", "Pekoedei")
 	Catalog.SetString(tag_nl, "Pesach Chol ha-Moed Day 1", "Pesach Chol haMoëd dag 1")
@@ -136,6 +138,7 @@ func init() {
 	Catalog.SetString(tag_nl, "Shabbat Shekalim", "Sjabbat Sjekaliem")
 	Catalog.SetString(tag_nl, "Shabbat Shirah", "Sjabbat Sjira")
 	Catalog.SetString(tag_nl, "Shabbat Shuva", "Sjabbat Sjoeva")
+	Catalog.SetString(tag_nl, "Shabbat Times for", "Sjabbat-tijden voor")
 	Catalog.SetString(tag_nl, "Shabbat Zachor", "Sjabbat Zachor")
 	Catalog.SetString(tag_nl, "Shavuot", "Sjavoeot")
 	Catalog.SetString(tag_nl, "Shavuot I", "Sjavoeot I")
@@ -177,6 +180,7 @@ func init() {
 	Catalog.SetString(tag_nl, "Temurah", "Temoera")
 	Catalog.SetString(tag_nl, "Terumah", "Teroema")
 	Catalog.SetString(tag_nl, "Tetzaveh", "Tetsave")
+	Catalog.SetString(tag_nl, "This week’s Torah portion is", "De Toraportie van deze week is")
 	Catalog.SetString(tag_nl, "Tish'a B'Av", "Tisja BeAv")
 	Catalog.SetString(tag_nl, "Tish'a B'Av (observed)", "Tisja BeAv (waargenomen)")
 	Catalog.SetString(tag_nl, "Tishrei", "Tisjri")

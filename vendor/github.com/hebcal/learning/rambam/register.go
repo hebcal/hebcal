@@ -12,7 +12,7 @@ import (
 func init() {
 	start := hdate.FromRD(Rambam1Start)
 
-	dailylearning.AddCalendar("rambam1", func(hd hdate.HDate, il bool) event.CalEvent {
+	dailylearning.AddCalendarFrom("rambam1", func(hd hdate.HDate, il bool) event.CalEvent {
 		reading, ok := New1(hd)
 		if !ok {
 			return nil
@@ -20,7 +20,7 @@ func init() {
 		return NewDailyRambam1Event(hd, reading)
 	}, start)
 
-	dailylearning.AddCalendar("rambam3", func(hd hdate.HDate, il bool) event.CalEvent {
+	dailylearning.AddCalendarFrom("rambam3", func(hd hdate.HDate, il bool) event.CalEvent {
 		readings, ok := New3(hd)
 		if !ok {
 			return nil

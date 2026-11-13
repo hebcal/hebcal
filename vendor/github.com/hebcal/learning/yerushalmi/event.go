@@ -29,7 +29,7 @@ import (
 )
 
 type yyomiEvent struct {
-	Date    hdate.HDate
+	date    hdate.HDate
 	Daf     dafyomi.Daf
 	Edition Edition
 }
@@ -38,36 +38,45 @@ type yyomiEvent struct {
 // (Jerusalem Talmud) on the given date. edition is Vilna or Schottenstein;
 // only the Vilna edition carries a sefaria.org URL.
 func NewYerushalmiYomiEvent(hd hdate.HDate, daf dafyomi.Daf, edition Edition) event.CalEvent {
-	return yyomiEvent{Date: hd, Daf: daf, Edition: edition}
+	return yyomiEvent{date: hd, Daf: daf, Edition: edition}
 }
 
-func (ev yyomiEvent) GetDate() hdate.HDate {
-	return ev.Date
+func (ev yyomiEvent) Date() hdate.HDate {
+	return ev.date
 }
 
 func (ev yyomiEvent) Render(locale string) string {
 	yerushalmiStr, _ := locales.LookupTranslation("Yerushalmi", locale)
+	return yerushalmiStr + " " + ev.RenderBrief(locale)
+}
+
+// RenderBrief returns the tractate and page without the "Yerushalmi" prefix,
+// e.g. "Beitzah 21" or "ביצה דף כא".
+func (ev yyomiEvent) RenderBrief(locale string) string {
 	name, _ := locales.LookupTranslation(ev.Daf.Name, locale)
 	locale = strings.ToLower(locale)
 	if locale == "he" || locale == "he-x-nonikud" {
-		return yerushalmiStr + " " + name + " דף " + hebrew.GematriyaNN(ev.Daf.Blatt)
+		return name + " דף " + hebrew.GematriyaNN(ev.Daf.Blatt)
 	}
-	return yerushalmiStr + " " + name + " " + strconv.Itoa(ev.Daf.Blatt)
+	return name + " " + strconv.Itoa(ev.Daf.Blatt)
 }
 
-func (ev yyomiEvent) GetFlags() event.HolidayFlags {
-	return event.YERUSHALMI_YOMI
+func (ev yyomiEvent) Flags() event.Flags {
+	return event.YerushalmiYomi | event.DailyLearning
 }
 
-func (ev yyomiEvent) GetEmoji() string {
+func (ev yyomiEvent) Emoji() string {
 	return ""
 }
+
+// Desc returns the untranslated description, the same as Basename.
+func (ev yyomiEvent) Desc() string { return ev.Basename() }
 
 func (ev yyomiEvent) Basename() string {
 	return ev.Daf.String()
 }
 
-func (ev yyomiEvent) GetCategories() []string {
+func (ev yyomiEvent) Categories() []string {
 	return []string{"yerushalmi"}
 }
 

@@ -18,6 +18,8 @@ package zmanim
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 import (
+	"errors"
+	"fmt"
 	"math"
 	"time"
 
@@ -69,18 +71,25 @@ type Zmanim struct {
 //
 // The Location's elevation is used only when UseElevation is set to true.
 //
-// This function panics if the latitude or longitude are out of range, or if
-// the timezone cannot be loaded.
-func New(location *Location, date time.Time) Zmanim {
+// It returns an error if the location cannot be used: ErrLatitude or
+// ErrLongitude for a coordinate out of range, and an error wrapping
+// ErrTimeZone for a time zone that cannot be loaded.
+func New(location *Location, date time.Time) (Zmanim, error) {
+	if location == nil {
+		return Zmanim{}, errors.New("zmanim: nil location")
+	}
+	if err := checkCoordinates(location.Latitude, location.Longitude); err != nil {
+		return Zmanim{}, err
+	}
 	year, month, day := date.Date()
-	loc, err := LoadLocation(location.TimeZoneId)
+	loc, err := LoadLocation(location.TimeZoneID)
 	if err != nil {
-		panic(err)
+		return Zmanim{}, fmt.Errorf("%w %q: %v", ErrTimeZone, location.TimeZoneID, err)
 	}
 	geo, err := noaa.NewGeoLocation(location.Name, location.Latitude,
 		location.Longitude, float64(location.Elevation), loc)
 	if err != nil {
-		panic(err)
+		return Zmanim{}, fmt.Errorf("zmanim: %w", err)
 	}
 	return Zmanim{
 		Location: location,
@@ -90,7 +99,17 @@ func New(location *Location, date time.Time) Zmanim {
 		TimeZone: loc,
 		geo:      geo,
 		calc:     noaa.NewNOAACalculator(),
+	}, nil
+}
+
+// MustNew is like New but panics if the location cannot be used. It is meant
+// for locations known to be good, such as those of LookupCity.
+func MustNew(location *Location, date time.Time) Zmanim {
+	z, err := New(location, date)
+	if err != nil {
+		panic(err)
 	}
+	return z
 }
 
 func (z *Zmanim) inLoc(dt time.Time) time.Time {
@@ -209,8 +228,9 @@ func (z *Zmanim) Hour() float64 {
 // which is the beginning of the Hebrew calendar day.
 func (z *Zmanim) GregEve() time.Time {
 	prev := time.Date(z.Year, z.Month, z.Day-1, 0, 0, 0, 0, z.TimeZone)
-	zman := New(z.Location, prev)
-	zman.UseElevation = z.UseElevation
+	zman := *z
+	zman.Year, zman.Month, zman.Day = prev.Date()
+	zman.calc = noaa.NewNOAACalculator()
 	return zman.Sunset()
 }
 

@@ -26,18 +26,18 @@ import (
 )
 
 type mishnaYomiEvent struct {
-	Date   hdate.HDate
+	date   hdate.HDate
 	Mishna MishnaPair
 }
 
 // NewMishnaYomiEvent returns a calendar event for the Mishna Yomi on the
 // given date.
 func NewMishnaYomiEvent(hd hdate.HDate, mishna MishnaPair) event.CalEvent {
-	return mishnaYomiEvent{Date: hd, Mishna: mishna}
+	return mishnaYomiEvent{date: hd, Mishna: mishna}
 }
 
-func (ev mishnaYomiEvent) GetDate() hdate.HDate {
-	return ev.Date
+func (ev mishnaYomiEvent) Date() hdate.HDate {
+	return ev.date
 }
 
 func (ev mishnaYomiEvent) Render(locale string) string {
@@ -58,19 +58,22 @@ func (ev mishnaYomiEvent) Render(locale string) string {
 	return s
 }
 
-func (ev mishnaYomiEvent) GetFlags() event.HolidayFlags {
-	return event.MISHNA_YOMI
+func (ev mishnaYomiEvent) Flags() event.Flags {
+	return event.MishnaYomi | event.DailyLearning
 }
 
-func (ev mishnaYomiEvent) GetEmoji() string {
+func (ev mishnaYomiEvent) Emoji() string {
 	return ""
 }
+
+// Desc returns the untranslated description, the same as Basename.
+func (ev mishnaYomiEvent) Desc() string { return ev.Basename() }
 
 func (ev mishnaYomiEvent) Basename() string {
 	return ev.Mishna.String()
 }
 
-func (ev mishnaYomiEvent) GetCategories() []string {
+func (ev mishnaYomiEvent) Categories() []string {
 	return []string{"mishnayomi"}
 }
 

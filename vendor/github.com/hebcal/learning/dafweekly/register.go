@@ -14,7 +14,7 @@ import (
 func init() {
 	start := hdate.FromRD(DafWeeklyStart)
 
-	dailylearning.AddCalendar("dafWeekly", func(hd hdate.HDate, il bool) event.CalEvent {
+	dailylearning.AddCalendarFrom("dafWeekly", func(hd hdate.HDate, il bool) event.CalEvent {
 		daf, ok := New(hd)
 		if !ok {
 			return nil
@@ -22,7 +22,7 @@ func init() {
 		return NewDafWeeklyEvent(hd, daf)
 	}, start)
 
-	dailylearning.AddCalendar("dafWeeklySunday", func(hd hdate.HDate, il bool) event.CalEvent {
+	dailylearning.AddCalendarFrom("dafWeeklySunday", func(hd hdate.HDate, il bool) event.CalEvent {
 		if hd.Weekday() != time.Sunday {
 			return nil
 		}

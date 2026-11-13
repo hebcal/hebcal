@@ -2,17 +2,17 @@
 //
 // Source of truth is the .po files in these npm packages:
 //   @hebcal/hdate@0.23.1
-//   @hebcal/core@6.14.1
-//   @hebcal/locales@6.5.3
+//   @hebcal/core@6.16.0
+//   @hebcal/locales@6.7.0
 //   @hebcal/leyning@10.1.0
-//   @hebcal/rest-api@7.3.1
-//   @hebcal/learning@6.12.0
+//   @hebcal/rest-api@7.3.3
+//   @hebcal/learning@6.13.1
 //
 // Regenerate with: npm run generate
 
 package locales
 
-// Translations for es (137 entries) -> tag es
+// Translations for es (141 entries) -> tag es
 func init() {
 	Catalog.SetString(tag_es, "Achrei Mot", "Ajarei Mot")
 	Catalog.SetString(tag_es, "Arachin", "Arajin")
@@ -64,6 +64,8 @@ func init() {
 	Catalog.SetString(tag_es, "Niddah", "Nidá")
 	Catalog.SetString(tag_es, "Nisan", "Nisán")
 	Catalog.SetString(tag_es, "Noach", "Noaj")
+	Catalog.SetString(tag_es, "occurs on", "se celebra el")
+	Catalog.SetString(tag_es, "on", "en el")
 	Catalog.SetString(tag_es, "Parashat", "Parashá")
 	Catalog.SetString(tag_es, "Pesach", "Pésaj")
 	Catalog.SetString(tag_es, "Pesach Chol ha-Moed Day 1", "Pésaj Jol ha-Moed Día 1")
@@ -113,6 +115,7 @@ func init() {
 	Catalog.SetString(tag_es, "Shabbat Rosh Chodesh", "Shabat Rosh Jodesh")
 	Catalog.SetString(tag_es, "Shabbat Shekalim", "Shabat Shekalim")
 	Catalog.SetString(tag_es, "Shabbat Shirah", "Shabat Shira")
+	Catalog.SetString(tag_es, "Shabbat Times for", "Horarios de Shabat para")
 	Catalog.SetString(tag_es, "Shabbat Zachor", "Shabat Zajor")
 	Catalog.SetString(tag_es, "Shavuot II (on Shabbat)", "Shavuot II (en Shabat)")
 	Catalog.SetString(tag_es, "Shevuot", "Shavuot")
@@ -137,6 +140,7 @@ func init() {
 	Catalog.SetString(tag_es, "Ta'anit Bechorot", "Ta'anit Bejorot")
 	Catalog.SetString(tag_es, "Ta'anit Esther", "Ta'anit Ester")
 	Catalog.SetString(tag_es, "Taanit", "Tanit")
+	Catalog.SetString(tag_es, "This week’s Torah portion is", "La parashá de la semana es")
 	Catalog.SetString(tag_es, "Tish'a B'Av (observed)", "Tish'a B'Av (observado)")
 	Catalog.SetString(tag_es, "Tu B'Shvat", "Tu BiShvat")
 	Catalog.SetString(tag_es, "Vaetchanan", "Vaetjanan")

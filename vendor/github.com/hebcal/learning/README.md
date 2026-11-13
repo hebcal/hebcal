@@ -49,7 +49,7 @@ import (
 	_ "github.com/hebcal/learning" // registers all learning schedules
 )
 
-opts := &hebcal.CalOptions{
+opts := &hebcal.Options{
 	Start:         hdate.New(5783, hdate.Cheshvan, 18),
 	End:           hdate.New(5783, hdate.Cheshvan, 23),
 	DailyLearning: []string{"dafYomi", "rambam3"},
@@ -71,6 +71,52 @@ calendar:
 daf, _ := dafyomi.New(hdate.FromGregorian(1995, time.December, 17))
 fmt.Println(daf) // Avodah Zarah 68
 ```
+
+## Event URLs
+
+Every learning event implements `URL()`, part of the `event.CalEvent`
+interface from `hebcal-go`, returning a canonical link to the day's reading
+(or `""` for an event that carries no page):
+
+```go
+ev := dailylearning.Lookup("dafYomi", hdate.FromGregorian(2020, time.June, 18), false)
+fmt.Println(ev.URL()) // https://www.sefaria.org/Shabbat.104a?lang=bi
+```
+
+Most schedules link to [sefaria.org](https://www.sefaria.org/); Daf Yomi
+and Daf-a-Week fall back to [dafyomi.org](https://www.dafyomi.org/) for the
+Kinnim and Midot tractates. A few events have no page and return `""`:
+
+  - `yerushalmi-schottenstein` — only the Vilna edition is mapped to
+    Sefaria references, so the Schottenstein edition has no URL.
+  - `rambam3` — a URL is returned only when the day's three chapters
+    collapse to a single Mishneh Torah section; days spanning multiple
+    sections return `""`; their links are in the event's memo (below).
+
+The generated URLs match those produced by `@hebcal/learning` exactly,
+verified day-by-day across all schedules over a 50-year span.
+
+## Brief renderings and memos
+
+Where `@hebcal/learning`'s `renderBrief()` differs from `render()`, the event
+also has a `RenderBrief(locale)` method (hebcal-go's `event.BriefRenderer`),
+for calendars with little room per row:
+
+  - `929` — the chapter without its day in the cycle: `Job 11` for
+    `Job 11 (759)`.
+  - `yerushalmi-vilna`, `yerushalmi-schottenstein` — no "Yerushalmi" prefix:
+    `Shekalim 17`.
+  - `tanakhYomi` — "Seder" abbreviated: `Samuel S31 (II Samuel 18:27-19:39)`.
+
+Every other schedule's `Render` is already the brief form. (Daf Yomi's is too:
+`@hebcal/learning`'s `render()` prefixes "Daf Yomi:", this one does not.)
+
+Two schedules carry a `Memo(locale)` with the longer description
+`@hebcal/learning` puts in the event's memo, in English in every locale:
+
+  - `tanakhYomi` — the verse range with its book: `II Samuel 18:27-19:39`.
+  - `rambam3` — on days spanning more than one section, each reading and its
+    sefaria.org link, separated by a blank line.
 
 ## Registered calendar names
 

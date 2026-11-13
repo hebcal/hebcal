@@ -6,143 +6,149 @@ import (
 	"strings"
 )
 
-// HolidayFlags is a bitmask of event attributes and categories.
-type HolidayFlags uint32
+// Flags is a bitmask of event attributes and categories. An event carries
+// the flags that apply to it, and Options.Mask selects events by them.
+type Flags uint32
 
 // When adding a flag, also add its name to flagNames below.
 const (
 	// Chag, yontiff, yom tov
-	CHAG HolidayFlags = 1 << iota
+	Chag Flags = 1 << iota
 	// Light candles 18 minutes before sundown
-	LIGHT_CANDLES
+	LightCandles
 	// End of holiday (end of Yom Tov)
-	YOM_TOV_ENDS
+	YomTovEnds
 	// Observed only in the Diaspora (chutz l'aretz)
-	CHUL_ONLY
+	ChulOnly
 	// Observed only in Israel
-	IL_ONLY
+	ILOnly
 	// Light candles in the evening at Tzeit time (3 small stars)
-	LIGHT_CANDLES_TZEIS
+	LightCandlesTzeis
 	// Candle-lighting for Chanukah
-	CHANUKAH_CANDLES
+	ChanukahCandles
 	// Rosh Chodesh, beginning of a new Hebrew month
-	ROSH_CHODESH
+	RoshChodesh
 	// Minor fasts like Tzom Tammuz, Ta'anit Esther, ...
-	MINOR_FAST
+	MinorFast
 	// Shabbat Shekalim, Zachor, ...
-	SPECIAL_SHABBAT
+	SpecialShabbat
 	// Weekly sedrot on Saturdays
-	PARSHA_HASHAVUA
+	ParshaHashavua
 	// Daily page of Talmud (Bavli)
-	DAF_YOMI
+	DafYomi
 	// Days of the Omer
-	OMER_COUNT
+	OmerCount
 	// Yom HaShoah, Yom HaAtzma'ut, ...
-	MODERN_HOLIDAY
+	ModernHoliday
 	// Yom Kippur and Tish'a B'Av
-	MAJOR_FAST
+	MajorFast
 	// On the Saturday before Rosh Chodesh
-	SHABBAT_MEVARCHIM
+	ShabbatMevarchim
 	// Molad
-	MOLAD
-	// Yahrzeit or Hebrew Anniversary
-	USER_EVENT
+	Molad
+	// A personal event: a Yahrzeit, birthday or Hebrew anniversary
+	// (see UserEvent).
+	User
 	// Daily Hebrew date ("11th of Sivan, 5780")
-	HEBREW_DATE
+	HebrewDate
 	// A holiday that's not major, modern, rosh chodesh, or a fast day
-	MINOR_HOLIDAY
+	MinorHoliday
 	// Evening before a major or minor holiday
-	EREV
+	Erev
 	// Chol haMoed, intermediate days of Pesach or Sukkot
-	CHOL_HAMOED
+	CholHamoed
 	// Mishna Yomi
-	MISHNA_YOMI
+	MishnaYomi
 	// Yom Kippur Katan, minor day of atonement on the day preceding each Rosh Chodesh
-	YOM_KIPPUR_KATAN
+	YomKippurKatan
 	// Zemanim, halachic times of day
-	ZMANIM
+	Zmanim
 	// Daily page of Jerusalem Talmud (Yerushalmi)
-	YERUSHALMI_YOMI
+	YerushalmiYomi
 	// Daily page of Nach (Nevi'im + Ketuvim)
-	NACH_YOMI
+	NachYomi
 	// Daily learning schedule supplied by a plugin (e.g. 929, Daily Rambam)
 	// via the dailylearning registry, with no dedicated flag of its own.
-	DAILY_LEARNING
+	DailyLearning
 	// BeHaB fast days on Monday, Thursday and Monday after Pesach and Sukkot
-	BEHAB
+	BeHaB
 	// Latest time for Kiddush Levana, according to the Maharil
-	KIDDUSH_LEVANA
+	KiddushLevana
+	// Yizkor, the memorial prayer recited on Yom Kippur, Shmini Atzeret, the
+	// last day of Pesach and the last day of Shavuot
+	Yizkor
 )
 
 // Has reports whether f contains every flag set in flags.
-// For a single flag, e.g. ev.GetFlags().Has(event.CHAG), this is
+// For a single flag, e.g. ev.Flags().Has(event.Chag), this is
 // simply "is this flag set". Has(0) is always true.
-func (f HolidayFlags) Has(flags HolidayFlags) bool {
+func (f Flags) Has(flags Flags) bool {
 	return f&flags == flags
 }
 
 // HasAny reports whether f contains at least one of the flags set in flags,
-// e.g. ev.GetFlags().HasAny(event.MAJOR_FAST | event.MINOR_FAST).
+// e.g. ev.Flags().HasAny(event.MajorFast | event.MinorFast).
 // HasAny(0) is always false.
-func (f HolidayFlags) HasAny(flags HolidayFlags) bool {
+func (f Flags) HasAny(flags Flags) bool {
 	return f&flags != 0
 }
 
 // With returns a copy of f with the given flags set.
-func (f HolidayFlags) With(flags HolidayFlags) HolidayFlags {
+func (f Flags) With(flags Flags) Flags {
 	return f | flags
 }
 
 // Without returns a copy of f with the given flags cleared.
-func (f HolidayFlags) Without(flags HolidayFlags) HolidayFlags {
+func (f Flags) Without(flags Flags) Flags {
 	return f &^ flags
 }
 
-// flagNames holds the constant name for each flag, indexed by bit position.
+// flagNames holds the name of each flag's constant, indexed by bit position.
 var flagNames = [...]string{
-	"CHAG",
-	"LIGHT_CANDLES",
-	"YOM_TOV_ENDS",
-	"CHUL_ONLY",
-	"IL_ONLY",
-	"LIGHT_CANDLES_TZEIS",
-	"CHANUKAH_CANDLES",
-	"ROSH_CHODESH",
-	"MINOR_FAST",
-	"SPECIAL_SHABBAT",
-	"PARSHA_HASHAVUA",
-	"DAF_YOMI",
-	"OMER_COUNT",
-	"MODERN_HOLIDAY",
-	"MAJOR_FAST",
-	"SHABBAT_MEVARCHIM",
-	"MOLAD",
-	"USER_EVENT",
-	"HEBREW_DATE",
-	"MINOR_HOLIDAY",
-	"EREV",
-	"CHOL_HAMOED",
-	"MISHNA_YOMI",
-	"YOM_KIPPUR_KATAN",
-	"ZMANIM",
-	"YERUSHALMI_YOMI",
-	"NACH_YOMI",
-	"DAILY_LEARNING",
-	"BEHAB",
-	"KIDDUSH_LEVANA",
+	"Chag",
+	"LightCandles",
+	"YomTovEnds",
+	"ChulOnly",
+	"ILOnly",
+	"LightCandlesTzeis",
+	"ChanukahCandles",
+	"RoshChodesh",
+	"MinorFast",
+	"SpecialShabbat",
+	"ParshaHashavua",
+	"DafYomi",
+	"OmerCount",
+	"ModernHoliday",
+	"MajorFast",
+	"ShabbatMevarchim",
+	"Molad",
+	"User",
+	"HebrewDate",
+	"MinorHoliday",
+	"Erev",
+	"CholHamoed",
+	"MishnaYomi",
+	"YomKippurKatan",
+	"Zmanim",
+	"YerushalmiYomi",
+	"NachYomi",
+	"DailyLearning",
+	"BeHaB",
+	"KiddushLevana",
+	"Yizkor",
 }
 
 // String returns the names of the flags set in f joined by "|",
-// e.g. "CHAG|LIGHT_CANDLES". It returns "0" when no flags are set.
+// e.g. "Chag|LightCandles". It returns "0" when no flags are set.
 // Bits without a defined flag are rendered in hex.
-func (f HolidayFlags) String() string {
+func (f Flags) String() string {
 	if f == 0 {
 		return "0"
 	}
 	var sb strings.Builder
 	for rest := f; rest != 0; {
 		i := bits.TrailingZeros32(uint32(rest))
-		bit := HolidayFlags(1) << i
+		bit := Flags(1) << i
 		rest &^= bit
 		if sb.Len() != 0 {
 			sb.WriteByte('|')

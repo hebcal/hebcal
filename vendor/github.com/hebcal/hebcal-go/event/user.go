@@ -4,32 +4,51 @@ import (
 	"github.com/hebcal/hdate"
 )
 
-// UserEvent is for Yahrzeit or Birthday
+// UserEvent is a personal event: a Yahrzeit, a birthday, an anniversary.
+// Construct one with NewUserEvent.
 type UserEvent struct {
-	Date hdate.HDate // Date of occurrence
-	Desc string      // Description
+	date hdate.HDate
+	desc string
 }
 
-func (ev UserEvent) GetDate() hdate.HDate {
-	return ev.Date
+// NewUserEvent constructs a personal event on date. desc is its description,
+// which is not translated.
+func NewUserEvent(date hdate.HDate, desc string) UserEvent {
+	return UserEvent{date: date, desc: desc}
 }
 
+// Date returns the Hebrew date on which the event occurs.
+func (ev UserEvent) Date() hdate.HDate {
+	return ev.date
+}
+
+// Desc returns the description the event was constructed with.
+func (ev UserEvent) Desc() string {
+	return ev.desc
+}
+
+// Render returns the description, whatever the locale.
 func (ev UserEvent) Render(locale string) string {
-	return ev.Desc
+	return ev.desc
 }
 
-func (ev UserEvent) GetFlags() HolidayFlags {
-	return USER_EVENT
+// URL returns "": a personal event has no page.
+func (ev UserEvent) URL() string {
+	return ""
 }
 
-func (ev UserEvent) GetEmoji() string {
+func (ev UserEvent) Flags() Flags {
+	return User
+}
+
+func (ev UserEvent) Emoji() string {
 	return ""
 }
 
 func (ev UserEvent) Basename() string {
-	return ev.Desc
+	return ev.desc
 }
 
-func (ev UserEvent) GetCategories() []string {
-	return CategoriesFromFlags(ev.GetFlags())
+func (ev UserEvent) Categories() []string {
+	return CategoriesFromFlags(ev.Flags())
 }

@@ -1,4 +1,4 @@
-// Hebcal's dailylearning package is a registry for daily learning
+// Package dailylearning is a registry for daily learning
 // calendars such as Daf Yomi, Mishna Yomi and Yerushalmi Yomi.
 //
 // This package intentionally contains no schedules of its own. Instead,
@@ -28,6 +28,7 @@ package dailylearning
 import (
 	"sort"
 	"strings"
+	"sync"
 
 	"github.com/hebcal/hdate"
 	"github.com/hebcal/hebcal-go/event"
@@ -44,61 +45,84 @@ type calendar struct {
 	startDate *hdate.HDate
 }
 
-var calendars = make(map[string]calendar)
+// The registry. Schedule providers normally register from package init
+// functions, before anything reads it, but registering at run time is
+// allowed, so every access goes through mu.
+var (
+	mu        sync.RWMutex
+	calendars = make(map[string]calendar)
+)
 
-// AddCalendar registers a new learning calendar with a case-insensitive name.
-//
-// The optional startDate marks the first date for which the calendar is
-// valid; it is exposed via GetStartDate and is otherwise advisory (the
-// CalendarFunc itself is responsible for returning nil before its cycle
-// begins).
-//
+// AddCalendar registers a learning calendar under a case-insensitive name.
 // Registering a name that already exists overwrites the previous entry.
-func AddCalendar(name string, fn CalendarFunc, startDate ...hdate.HDate) {
-	c := calendar{fn: fn}
-	if len(startDate) > 0 {
-		hd := startDate[0]
-		c.startDate = &hd
+// It panics if fn is nil.
+//
+// Use AddCalendarFrom for a calendar whose cycle began on a known date.
+func AddCalendar(name string, fn CalendarFunc) {
+	add(name, calendar{fn: fn})
+}
+
+// AddCalendarFrom is like AddCalendar, and also records startDate, the first
+// date for which the calendar is valid. StartDate reports it; it is
+// otherwise advisory, and fn itself is responsible for returning nil before
+// its cycle begins.
+func AddCalendarFrom(name string, fn CalendarFunc, startDate hdate.HDate) {
+	add(name, calendar{fn: fn, startDate: &startDate})
+}
+
+func add(name string, c calendar) {
+	if c.fn == nil {
+		// A mistake in the registering package, found at start-up, like
+		// database/sql.Register with a nil driver.
+		panic("dailylearning: AddCalendar with a nil CalendarFunc")
 	}
+	mu.Lock()
+	defer mu.Unlock()
 	calendars[strings.ToLower(name)] = c
 }
 
-// Lookup retrieves the learning event for a given Hebrew date from a
-// registered calendar. Name matching is case-insensitive.
-//
-// It returns nil if the calendar isn't registered or if there is no
-// learning on that day.
-func Lookup(name string, hd hdate.HDate, il bool) event.CalEvent {
+func get(name string) (calendar, bool) {
+	mu.RLock()
+	defer mu.RUnlock()
 	c, ok := calendars[strings.ToLower(name)]
+	return c, ok
+}
+
+// Lookup returns the event of the named calendar on hd, for the Israel (il)
+// or Diaspora schedule. It returns nil if no calendar of that name is
+// registered, or if the calendar has no learning on that day.
+func Lookup(name string, hd hdate.HDate, il bool) event.CalEvent {
+	c, ok := get(name)
 	if !ok {
 		return nil
 	}
+	// called outside the lock: fn may itself use the registry
 	return c.fn(hd, il)
 }
 
-// Has reports whether a calendar with the given name has been registered.
-// Name matching is case-insensitive.
+// Has reports whether a calendar of that name is registered.
 func Has(name string) bool {
-	_, ok := calendars[strings.ToLower(name)]
+	_, ok := get(name)
 	return ok
 }
 
-// GetCalendars returns the names of all registered calendars (lowercased),
-// sorted alphabetically.
-func GetCalendars() []string {
+// Calendars returns the names of the registered calendars, in lower case
+// and sorted.
+func Calendars() []string {
+	mu.RLock()
 	names := make([]string, 0, len(calendars))
 	for name := range calendars {
 		names = append(names, name)
 	}
+	mu.RUnlock()
 	sort.Strings(names)
 	return names
 }
 
-// GetStartDate returns the first Hebrew date a calendar is valid for, as
-// registered. The boolean is false if the calendar is unregistered or was
-// registered without a start date.
-func GetStartDate(name string) (hdate.HDate, bool) {
-	c, ok := calendars[strings.ToLower(name)]
+// StartDate returns the first date for which the named calendar is valid,
+// and false if the calendar is unknown or was registered without one.
+func StartDate(name string) (hdate.HDate, bool) {
+	c, ok := get(name)
 	if !ok || c.startDate == nil {
 		return hdate.HDate{}, false
 	}

@@ -7,7 +7,10 @@ Hebcal incorporates and uses several related packages:
   - hdate: converts between Hebrew and Gregorian dates.
     Also includes functions for calculating personal anniversaries
     (Yahrzeit, Birthday) according to the Hebrew calendar.
-  - dafyomi: Daf Yomi, a daily regimen of learning the Talmud.
+  - dailylearning: a registry for daily learning schedules (Daf Yomi,
+    Mishna Yomi, ...). The schedules themselves are in the separate module
+    github.com/hebcal/learning; import it to enable them.
+  - event: the CalEvent interface and the shared event types.
   - greg: converts between Gregorian dates and R.D. (Rata Die)
     day numbers.
   - sedra: weekly Torah reading (Parashat HaShavua).
